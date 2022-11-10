@@ -8,3 +8,4 @@ export 'mute_type.dart';
 export 'notification_settings.dart';
 export 'online_status.dart';
 export 'user_id.dart';
+export 'user_info.dart';
