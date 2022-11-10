@@ -5,5 +5,6 @@ export 'chat_id.dart';
 export 'chat_notifications.dart';
 export 'message_id.dart';
 export 'mute_type.dart';
+export 'notification_settings.dart';
 export 'online_status.dart';
 export 'user_id.dart';
