@@ -4,7 +4,7 @@ import '../value/value.dart';
 class Chat {
   const Chat({
     required this.id,
-    required this.avatarUrl,
+    this.avatarUrl,
     required this.title,
     required this.lastMessage,
     required this.unreadAmount,
@@ -12,7 +12,7 @@ class Chat {
   });
 
   final ChatID id;
-  final String avatarUrl;
+  final String? avatarUrl;
   final String title;
   final Message lastMessage;
   final int unreadAmount;
