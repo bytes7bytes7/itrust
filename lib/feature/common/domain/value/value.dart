@@ -1,11 +1,11 @@
-export 'burn_settings.dart';
+export 'burn_setting.dart';
 export 'burn_type.dart';
 export 'chat_burn.dart';
 export 'chat_id.dart';
-export 'chat_notifications.dart';
+export 'chat_notification.dart';
 export 'message_id.dart';
 export 'mute_type.dart';
-export 'notification_settings.dart';
+export 'notification_setting.dart';
 export 'online_status.dart';
 export 'user_id.dart';
 export 'user_info.dart';

@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'chat_id.dart';
 import 'mute_type.dart';
 
-class ChatNotifications extends Equatable {
-  const ChatNotifications({
+class ChatNotification extends Equatable {
+  const ChatNotification({
     required this.chatID,
     required this.muteType,
   });

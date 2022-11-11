@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'burn_type.dart';
 import 'chat_burn.dart';
 
-class BurnSettings extends Equatable {
-  const BurnSettings({
+class BurnSetting extends Equatable {
+  const BurnSetting({
     required this.burnType,
     required this.exceptions,
   });

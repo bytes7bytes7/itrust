@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-import 'chat_notifications.dart';
+import 'chat_notification.dart';
 import 'mute_type.dart';
 
-class NotificationSettings extends Equatable {
-  const NotificationSettings({
+class NotificationSetting extends Equatable {
+  const NotificationSetting({
     required this.muteType,
     required this.exceptions,
   });
 
   final MuteType muteType;
-  final List<ChatNotifications> exceptions;
+  final List<ChatNotification> exceptions;
 
   @override
   List<Object?> get props => [
