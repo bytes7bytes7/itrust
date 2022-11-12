@@ -4,4 +4,5 @@ export 'burn_settings.dart';
 export 'chat_burns.dart';
 export 'chat_notifications.dart';
 export 'chat_participants.dart';
+export 'chat_roles.dart';
 export 'chats.dart';
