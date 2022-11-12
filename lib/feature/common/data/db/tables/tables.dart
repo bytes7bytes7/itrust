@@ -11,4 +11,5 @@ export 'media_urls.dart';
 export 'messages.dart';
 export 'notification_settings.dart';
 export 'tokens.dart';
+export 'user_searches.dart';
 export 'users.dart';
