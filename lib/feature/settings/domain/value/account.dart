@@ -9,7 +9,7 @@ class Account extends Equatable {
   });
 
   final User user;
-  final NotificationSettings notificationSettings;
+  final NotificationSetting notificationSettings;
 
   @override
   List<Object?> get props => [

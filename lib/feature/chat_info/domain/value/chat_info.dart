@@ -15,7 +15,7 @@ class ChatInfo extends Equatable {
   final ChatID chatID;
   final List<UserID> participantIDs;
   final Map<UserID, ChatRole> roles;
-  final ChatNotifications? notifications;
+  final ChatNotification? notifications;
   final ChatBurn? burn;
 
   @override
