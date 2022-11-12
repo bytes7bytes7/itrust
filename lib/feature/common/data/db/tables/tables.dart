@@ -8,3 +8,4 @@ export 'chat_roles.dart';
 export 'chat_searches.dart';
 export 'chats.dart';
 export 'media_urls.dart';
+export 'messages.dart';
