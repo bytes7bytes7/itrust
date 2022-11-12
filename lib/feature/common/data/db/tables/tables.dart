@@ -5,4 +5,5 @@ export 'chat_burns.dart';
 export 'chat_notifications.dart';
 export 'chat_participants.dart';
 export 'chat_roles.dart';
+export 'chat_searches.dart';
 export 'chats.dart';
