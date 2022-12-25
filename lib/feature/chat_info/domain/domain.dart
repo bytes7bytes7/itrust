@@ -1,1 +1,1 @@
-export 'value/value.dart';
+export 'value_object/value_object.dart';
