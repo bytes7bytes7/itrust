@@ -104,7 +104,7 @@ linter:
     leading_newlines_in_multiline_strings: true
     library_names: true
     library_prefixes: true
-    library_private_types_in_public_api: true
+    library_private_types_in_public_api: false
     # lines_longer_than_80_chars
     # missing_whitespace_between_adjacent_strings
     # no_default_cases
