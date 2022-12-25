@@ -1,4 +1,4 @@
-import '../value/value.dart';
+import '../value_object/value_object.dart';
 
 class Message {
   const Message({
