@@ -1,30 +1,29 @@
 import 'dart:async';
 
-import 'package:collection/collection.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/application/persistence/search_repository.dart';
 
-part 'search_store.g.dart';
+part 'multi_search_store.g.dart';
 
 const _defaultLimit = 10;
 
-typedef IsSelectedAlgorithm<T> = bool Function(T);
+typedef IsMultiSelectedAlgorithm<T> = bool Function(T);
 
-class SearchStore<T> = _SearchStore<T> with _$SearchStore<T>;
+class MultiSearchStore<T> = _MultiSearchStore<T> with _$MultiSearchStore<T>;
 
-abstract class _SearchStore<T> with Store, Loadable, Errorable {
-  _SearchStore({
+abstract class _MultiSearchStore<T> with Store, Loadable, Errorable {
+  _MultiSearchStore({
     required SearchRepository<T> searchRepository,
-    required IsSelectedAlgorithm<T> isSelectedAlgorithm,
+    required IsMultiSelectedAlgorithm<T> isSelectedAlgorithm,
     int limit = _defaultLimit,
   })  : _searchRepository = searchRepository,
         _isSelectedAlgorithm = isSelectedAlgorithm,
         _limit = limit;
 
   final SearchRepository<T> _searchRepository;
-  final IsSelectedAlgorithm<T> _isSelectedAlgorithm;
+  final IsMultiSelectedAlgorithm<T> _isSelectedAlgorithm;
   final int _limit;
 
   @readonly
@@ -37,7 +36,7 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
   String _query = '';
 
   @readonly
-  T? _selected;
+  List<T> _selected = const [];
 
   @readonly
   List<T> _suggestions = const [];
@@ -50,8 +49,6 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
 
   @action
   Future<void> load() async {
-    _error = null;
-
     if (_hasMoreSuggestions) {
       if (_page == 0) {
         _wrapBefore();
@@ -76,7 +73,12 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
 
   @action
   Future<void> selectItem(T item) async {
-    _selected = item;
+    _selected = List.unmodifiable(List.from(_selected)..add(item));
+  }
+
+  @action
+  Future<void> unselectItem(T item) async {
+    _selected = List.unmodifiable(List.from(_selected)..remove(item));
   }
 
   Future<void> _loadData({
@@ -86,7 +88,7 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
     try {
       final data = await _searchRepository.load(
         limit: _limit,
-        offset: _limit * _page,
+        offset: _limit * page,
         query: query ?? _query,
       );
 
@@ -97,13 +99,11 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
         suggestions = List.from(_suggestions)..addAll(data);
       }
 
-      T? selected;
-      if (_selected == null) {
-        selected = suggestions.firstWhereOrNull(_isSelectedAlgorithm);
-      }
+      final selected = List<T>.from(_selected)
+        ..addAll(suggestions.where(_isSelectedAlgorithm));
 
       _suggestions = List.unmodifiable(suggestions);
-      _selected = selected;
+      _selected = List.unmodifiable(selected);
       _hasMoreSuggestions = data.isNotEmpty && data.length == _limit;
       if (query != null) {
         _query = query;

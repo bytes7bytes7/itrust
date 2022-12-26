@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'search_store.dart';
+part of 'multi_search_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'search_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$SearchStore<T> on _SearchStore<T>, Store {
+mixin _$MultiSearchStore<T> on _MultiSearchStore<T>, Store {
   late final _$_isLoadingAtom =
-      Atom(name: '_SearchStore._isLoading', context: context);
+      Atom(name: '_MultiSearchStore._isLoading', context: context);
 
   bool get isLoading {
     _$_isLoadingAtom.reportRead();
@@ -27,7 +27,8 @@ mixin _$SearchStore<T> on _SearchStore<T>, Store {
     });
   }
 
-  late final _$_errorAtom = Atom(name: '_SearchStore._error', context: context);
+  late final _$_errorAtom =
+      Atom(name: '_MultiSearchStore._error', context: context);
 
   Object? get error {
     _$_errorAtom.reportRead();
@@ -44,7 +45,8 @@ mixin _$SearchStore<T> on _SearchStore<T>, Store {
     });
   }
 
-  late final _$_queryAtom = Atom(name: '_SearchStore._query', context: context);
+  late final _$_queryAtom =
+      Atom(name: '_MultiSearchStore._query', context: context);
 
   String get query {
     _$_queryAtom.reportRead();
@@ -62,25 +64,25 @@ mixin _$SearchStore<T> on _SearchStore<T>, Store {
   }
 
   late final _$_selectedAtom =
-      Atom(name: '_SearchStore._selected', context: context);
+      Atom(name: '_MultiSearchStore._selected', context: context);
 
-  T? get selected {
+  List<T> get selected {
     _$_selectedAtom.reportRead();
     return super._selected;
   }
 
   @override
-  T? get _selected => selected;
+  List<T> get _selected => selected;
 
   @override
-  set _selected(T? value) {
+  set _selected(List<T> value) {
     _$_selectedAtom.reportWrite(value, super._selected, () {
       super._selected = value;
     });
   }
 
   late final _$_suggestionsAtom =
-      Atom(name: '_SearchStore._suggestions', context: context);
+      Atom(name: '_MultiSearchStore._suggestions', context: context);
 
   List<T> get suggestions {
     _$_suggestionsAtom.reportRead();
@@ -98,7 +100,7 @@ mixin _$SearchStore<T> on _SearchStore<T>, Store {
   }
 
   late final _$_hasMoreSuggestionsAtom =
-      Atom(name: '_SearchStore._hasMoreSuggestions', context: context);
+      Atom(name: '_MultiSearchStore._hasMoreSuggestions', context: context);
 
   bool get hasMoreSuggestions {
     _$_hasMoreSuggestionsAtom.reportRead();
@@ -115,7 +117,8 @@ mixin _$SearchStore<T> on _SearchStore<T>, Store {
     });
   }
 
-  late final _$_pageAtom = Atom(name: '_SearchStore._page', context: context);
+  late final _$_pageAtom =
+      Atom(name: '_MultiSearchStore._page', context: context);
 
   int get page {
     _$_pageAtom.reportRead();
@@ -133,7 +136,7 @@ mixin _$SearchStore<T> on _SearchStore<T>, Store {
   }
 
   late final _$loadAsyncAction =
-      AsyncAction('_SearchStore.load', context: context);
+      AsyncAction('_MultiSearchStore.load', context: context);
 
   @override
   Future<void> load() {
@@ -141,7 +144,7 @@ mixin _$SearchStore<T> on _SearchStore<T>, Store {
   }
 
   late final _$setQueryAsyncAction =
-      AsyncAction('_SearchStore.setQuery', context: context);
+      AsyncAction('_MultiSearchStore.setQuery', context: context);
 
   @override
   Future<void> setQuery(String query) {
@@ -149,11 +152,19 @@ mixin _$SearchStore<T> on _SearchStore<T>, Store {
   }
 
   late final _$selectItemAsyncAction =
-      AsyncAction('_SearchStore.selectItem', context: context);
+      AsyncAction('_MultiSearchStore.selectItem', context: context);
 
   @override
   Future<void> selectItem(T item) {
     return _$selectItemAsyncAction.run(() => super.selectItem(item));
+  }
+
+  late final _$unselectItemAsyncAction =
+      AsyncAction('_MultiSearchStore.unselectItem', context: context);
+
+  @override
+  Future<void> unselectItem(T item) {
+    return _$unselectItemAsyncAction.run(() => super.unselectItem(item));
   }
 
   @override
