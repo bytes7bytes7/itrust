@@ -1,3 +1,3 @@
 mixin Errorable {
-  Exception get exception;
+  Object? get error;
 }

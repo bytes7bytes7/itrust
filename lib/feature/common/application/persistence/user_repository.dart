@@ -1,7 +1,7 @@
 import '../../domain/domain.dart';
 
 abstract class UserRepository {
-  abstract User user;
+  abstract User? user;
 
   Stream<User> get onUserChanged;
 }
