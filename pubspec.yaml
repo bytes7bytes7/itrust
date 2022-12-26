@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  collection: ^1.16.0
   connectivity_plus: ^3.0.2
   cupertino_icons: ^1.0.5
   drift: ^2.3.0
