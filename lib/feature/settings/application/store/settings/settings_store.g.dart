@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'lock_store.dart';
+part of 'settings_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'lock_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$LockStore on _LockStore, Store {
+mixin _$SettingsStore on _SettingsStore, Store {
   late final _$_isLoadingAtom =
-      Atom(name: '_LockStore._isLoading', context: context);
+      Atom(name: '_SettingsStore._isLoading', context: context);
 
   bool get isLoading {
     _$_isLoadingAtom.reportRead();
@@ -27,7 +27,8 @@ mixin _$LockStore on _LockStore, Store {
     });
   }
 
-  late final _$_errorAtom = Atom(name: '_LockStore._error', context: context);
+  late final _$_errorAtom =
+      Atom(name: '_SettingsStore._error', context: context);
 
   Object? get error {
     _$_errorAtom.reportRead();
@@ -44,34 +45,18 @@ mixin _$LockStore on _LockStore, Store {
     });
   }
 
-  late final _$selectedUserAtom =
-      Atom(name: '_LockStore.selectedUser', context: context);
+  late final _$changeNameAsyncAction =
+      AsyncAction('_SettingsStore.changeName', context: context);
 
   @override
-  User? get selectedUser {
-    _$selectedUserAtom.reportRead();
-    return super.selectedUser;
-  }
-
-  @override
-  set selectedUser(User? value) {
-    _$selectedUserAtom.reportWrite(value, super.selectedUser, () {
-      super.selectedUser = value;
-    });
-  }
-
-  late final _$unlockAsyncAction =
-      AsyncAction('_LockStore.unlock', context: context);
-
-  @override
-  Future<void> unlock({required String passphrase}) {
-    return _$unlockAsyncAction.run(() => super.unlock(passphrase: passphrase));
+  Future<void> changeName({required String name}) {
+    return _$changeNameAsyncAction.run(() => super.changeName(name: name));
   }
 
   @override
   String toString() {
     return '''
-selectedUser: ${selectedUser}
+
     ''';
   }
 }
