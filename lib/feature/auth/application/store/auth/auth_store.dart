@@ -20,13 +20,11 @@ abstract class _AuthStore with Store, Errorable, Loadable {
   final AuthRepository _authRepository;
   final UserRepository _userRepository;
 
-  @override
-  @observable
-  Object? error;
+  @readonly
+  bool _isLoading = false;
 
-  @override
-  @observable
-  bool isLoading = false;
+  @readonly
+  Object? _error;
 
   @action
   Future<void> authenticate({
@@ -42,7 +40,7 @@ abstract class _AuthStore with Store, Errorable, Loadable {
 
         _userRepository.user = user;
       } catch (e) {
-        error = e;
+        _error = e;
       }
     });
   }
@@ -54,17 +52,17 @@ abstract class _AuthStore with Store, Errorable, Loadable {
         await _authRepository.logOut();
         _userRepository.user = null;
       } catch (e) {
-        error = e;
+        _error = e;
       }
     });
   }
 
   Future<void> _wrap(FutureOr<void> Function() callback) async {
-    isLoading = true;
-    error = null;
+    _isLoading = true;
+    _error = null;
 
     await callback();
 
-    isLoading = false;
+    _isLoading = false;
   }
 }
