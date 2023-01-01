@@ -4,6 +4,8 @@ import 'package:transparent_image/transparent_image.dart';
 import '../../../../theme/theme.dart';
 
 const _radius = 28.0;
+const _loadingPadding = 3.0;
+const _loadingStrokeWidth = 2.0;
 
 class FadeInCircleAvatar extends StatelessWidget {
   const FadeInCircleAvatar({
@@ -23,24 +25,33 @@ class FadeInCircleAvatar extends StatelessWidget {
     return CircleAvatar(
       backgroundColor: colorSchemeTX.circleAvatarBackground,
       radius: _radius,
-      child: url != null
-          ? Stack(
-              children: [
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                Center(
-                  child: FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: url!,
+      child: ClipOval(
+        child: url != null
+            ? Stack(
+                children: [
+                  Positioned.fill(
+                    child: Padding(
+                      padding: const EdgeInsets.all(_loadingPadding),
+                      child: CircularProgressIndicator(
+                        color: colorSchemeTX.circleAvatarForeground,
+                        strokeWidth: _loadingStrokeWidth,
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            )
-          : Icon(
-              iconData,
-              color: colorSchemeTX.circleAvatarForeground,
-            ),
+                  Positioned.fill(
+                    child: FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage,
+                      image: url!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              )
+            : Icon(
+                iconData,
+                color: colorSchemeTX.circleAvatarForeground,
+              ),
+      ),
     );
   }
 }

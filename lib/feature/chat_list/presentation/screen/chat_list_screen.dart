@@ -56,6 +56,9 @@ final _chats = List.generate(
               dialogOnlineStatuses.length,
             )],
       unreadAmount: unreadAmount,
+      avatarUrl: _rand.nextBool()
+          ? 'https://i0.wp.com/evanstonroundtable.com/wp-content/uploads/2022/05/Lushina-scaled-e1652827479814.jpg?fit=1200%2C900&ssl=1'
+          : null,
       lastMessage: _rand.nextInt(5) == 0
           ? null
           : Message(
