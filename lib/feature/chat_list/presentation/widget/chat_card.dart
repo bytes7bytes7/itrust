@@ -8,10 +8,11 @@ import 'unread_indicator.dart';
 
 const _paddingH = 20.0;
 const _paddingV = 15.0;
-const _avatarLeftPadding = 30.0;
-const _messagePadding = 5.0;
+const _avatarAndTitleSeparator = 30.0;
+const _titleAndMessageSeparator = 5.0;
+const _authorAndMessageSeparator = 5.0;
+const _titleAndTimeSeparator = 8.0;
 const _messageFlex = 2;
-const _timeRightPadding = 5.0;
 const _chatInfoFlex = 5;
 
 class ChatCard extends StatelessWidget {
@@ -44,7 +45,7 @@ class ChatCard extends StatelessWidget {
               onlineStatus: chat.onlineStatus,
             ),
             const SizedBox(
-              width: _avatarLeftPadding,
+              width: _avatarAndTitleSeparator,
             ),
             Expanded(
               flex: _chatInfoFlex,
@@ -56,7 +57,10 @@ class ChatCard extends StatelessWidget {
                     style: theme.textTheme.headline5,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  if (lastMessage != null)
+                  if (lastMessage != null) ...[
+                    const SizedBox(
+                      height: _titleAndMessageSeparator,
+                    ),
                     Row(
                       children: [
                         Flexible(
@@ -71,7 +75,7 @@ class ChatCard extends StatelessWidget {
                           style: theme.textTheme.subtitle1,
                         ),
                         const SizedBox(
-                          width: _messagePadding,
+                          width: _authorAndMessageSeparator,
                         ),
                         Flexible(
                           flex: _messageFlex,
@@ -83,6 +87,7 @@ class ChatCard extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ],
                 ],
               ),
             ),
@@ -91,7 +96,7 @@ class ChatCard extends StatelessWidget {
                 unread: chat.unreadAmount,
               ),
             const SizedBox(
-              width: _timeRightPadding,
+              width: _titleAndTimeSeparator,
             ),
             if (lastMessage != null)
               Flexible(
