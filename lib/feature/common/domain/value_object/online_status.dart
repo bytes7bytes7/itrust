@@ -23,3 +23,7 @@ class LastSeenOnlineStatus extends OnlineStatus {
   @override
   List<Object?> get props => [dateTime];
 }
+
+class NoOnlineStatus extends OnlineStatus {
+  const NoOnlineStatus();
+}

@@ -1,10 +1,11 @@
 import '../value_object/value_object.dart';
+import 'user.dart';
 
 class Message {
   const Message({
     required this.id,
     required this.chatID,
-    required this.senderID,
+    required this.sender,
     required this.text,
     required this.mediaUrls,
     required this.sentAt,
@@ -15,7 +16,7 @@ class Message {
 
   final MessageID id;
   final ChatID chatID;
-  final UserID senderID;
+  final User sender;
   final String text;
   final List<String> mediaUrls;
   final DateTime sentAt;
