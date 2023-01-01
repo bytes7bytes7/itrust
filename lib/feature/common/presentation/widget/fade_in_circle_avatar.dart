@@ -3,6 +3,8 @@ import 'package:transparent_image/transparent_image.dart';
 
 import '../../../../theme/theme.dart';
 
+const _radius = 28.0;
+
 class FadeInCircleAvatar extends StatelessWidget {
   const FadeInCircleAvatar({
     super.key,
@@ -17,11 +19,10 @@ class FadeInCircleAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
-    final sizeTX = theme.extension<SizeTX>()!;
 
     return CircleAvatar(
       backgroundColor: colorSchemeTX.circleAvatarBackground,
-      radius: sizeTX.circleAvatarRadius,
+      radius: _radius,
       child: url != null
           ? Stack(
               children: [

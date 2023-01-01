@@ -9,11 +9,14 @@ class Chat {
     required this.chatType,
     required this.onlineStatus,
     this.avatarUrl,
+    this.icon,
     this.lastMessage,
   });
 
   final ChatID id;
   final String? avatarUrl;
+  // Name of icon if [avatarUrl] == null
+  final String? icon;
   final String title;
   final Message? lastMessage;
   final int unreadAmount;

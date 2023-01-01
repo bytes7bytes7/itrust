@@ -51,6 +51,8 @@ final lightTheme = ThemeData.light().copyWith(
       circleAvatarBackground: _LightColors.cFF000000,
       circleAvatarForeground: _LightColors.cFFFFFFFF,
       unreadBackground: _LightColors.cFF000000,
+      onlineMarkStroke: _LightColors.cFF000000,
+      onlineMarkCenter: _LightColors.cFFFFFFFF,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(
@@ -81,9 +83,6 @@ final lightTheme = ThemeData.light().copyWith(
           },
         ),
       ),
-    ),
-    const SizeTX(
-      circleAvatarRadius: 28,
     ),
   ],
 );

@@ -1,9 +1,7 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../theme/theme.dart';
+import '../../../common/presentation/widget/user_circle_avatar.dart';
 import '../../../common/presentation/widget/widget.dart';
 import '../../domain/domain.dart';
 import 'unread_indicator.dart';
@@ -29,8 +27,6 @@ class ChatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
-    final sizeTX = theme.extension<SizeTX>()!;
 
     final lastMessage = chat.lastMessage;
 
@@ -43,8 +39,9 @@ class ChatCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            FadeInCircleAvatar(
+            UserCircleAvatar(
               url: chat.avatarUrl,
+              onlineStatus: chat.onlineStatus,
             ),
             const SizedBox(
               width: _avatarLeftPadding,
