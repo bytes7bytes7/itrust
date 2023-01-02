@@ -73,6 +73,19 @@ class InfoMessageCard extends StatelessWidget {
 
   // TODO: move to another place
   String _beautifiedDateTime() {
-    return intl.DateFormat.Hm().format(message.modifiedAt ?? message.sentAt);
+    final dateTime = message.modifiedAt ?? message.sentAt;
+    final now = DateTime.now();
+
+    if (dateTime.year == now.year) {
+      if (dateTime.month == now.month) {
+        if (dateTime.day == now.day) {
+          return intl.DateFormat.Hm().format(dateTime);
+        }
+      }
+
+      return intl.DateFormat.MMMd().format(dateTime);
+    }
+
+    return intl.DateFormat('dd.MM.yyy').format(dateTime);
   }
 }

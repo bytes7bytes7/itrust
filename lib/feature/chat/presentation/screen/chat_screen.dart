@@ -54,15 +54,18 @@ DateTime _randDateTime() {
 final _messages = List.generate(
   _rand.nextInt(10) + 15,
   (index) {
+    final sender = _rand.nextBool()
+        ? _sender
+        : _rand.nextBool()
+            ? _me
+            : null;
     return Message(
       id: '$index',
       chatID: 'chatID',
-      sender: _rand.nextBool()
-          ? _sender
-          : _rand.nextBool()
-              ? _me
-              : null,
-      text: _randString(_rand.nextInt(20) + 8),
+      sender: sender,
+      text: _rand.nextBool() && sender != null
+          ? _randString(_rand.nextInt(20) + 8)
+          : '',
       mediaUrls: [],
       sentAt: _randDateTime(),
       modifiedAt: _rand.nextBool() ? _randDateTime() : null,
