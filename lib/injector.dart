@@ -7,9 +7,9 @@ import 'injector.config.dart';
   preferRelativeImports: true,
   asExtension: false,
 )
-void configInjector() {
+void configInjector({required String env}) {
   init(
     GetIt.instance,
-    environment: const String.fromEnvironment('env', defaultValue: 'test'),
+    environment: env,
   );
 }

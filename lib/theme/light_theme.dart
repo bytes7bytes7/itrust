@@ -24,6 +24,9 @@ final lightTheme = ThemeData.light().copyWith(
   iconTheme: const IconThemeData(
     size: 24,
   ),
+  progressIndicatorTheme: const ProgressIndicatorThemeData(
+    color: _LightColors.cFF000000,
+  ),
   textTheme: const TextTheme(
     headline5: TextStyle(
       fontSize: 18,

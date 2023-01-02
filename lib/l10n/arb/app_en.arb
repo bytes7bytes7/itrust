@@ -1,3 +1,4 @@
 {
-  "chat_tab_title": "Chats"
+  "chat_tab_title": "Chats",
+  "empty_chat_list_message": "No chats"
 }

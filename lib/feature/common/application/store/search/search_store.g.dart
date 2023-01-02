@@ -44,6 +44,24 @@ mixin _$SearchStore<T> on _SearchStore<T>, Store {
     });
   }
 
+  late final _$_isLoadingMoreAtom =
+      Atom(name: '_SearchStore._isLoadingMore', context: context);
+
+  bool get isLoadingMore {
+    _$_isLoadingMoreAtom.reportRead();
+    return super._isLoadingMore;
+  }
+
+  @override
+  bool get _isLoadingMore => isLoadingMore;
+
+  @override
+  set _isLoadingMore(bool value) {
+    _$_isLoadingMoreAtom.reportWrite(value, super._isLoadingMore, () {
+      super._isLoadingMore = value;
+    });
+  }
+
   late final _$_queryAtom = Atom(name: '_SearchStore._query', context: context);
 
   String get query {

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
+import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
@@ -9,8 +10,9 @@ import '../../../../common/application/persistence/search_repository.dart';
 part 'search_store.g.dart';
 
 const _defaultLimit = 10;
+final _logger = Logger('$SearchStore');
 
-typedef IsSelectedAlgorithm<T> = bool Function(T);
+typedef IsSelectedAlgorithm<T> = bool Function(T item, String query);
 
 class SearchStore<T> = _SearchStore<T> with _$SearchStore<T>;
 
@@ -34,6 +36,9 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
   Object? _error;
 
   @readonly
+  bool _isLoadingMore = false;
+
+  @readonly
   String _query = '';
 
   @readonly
@@ -50,15 +55,24 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
 
   @action
   Future<void> load() async {
+    if (_isLoading || _isLoadingMore) {
+      return;
+    }
+
     _error = null;
 
     if (_hasMoreSuggestions) {
+      _isLoadingMore = true;
+
       if (_page == 0) {
         _wrapBefore();
       }
 
+      _logger.fine('try to load data');
+
       await _loadData(page: _page);
 
+      _isLoadingMore = false;
       _wrapAfter();
     }
   }
@@ -68,6 +82,8 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
     if (_query == query) {
       return;
     }
+
+    _logger.fine('update query');
 
     await _wrap(() async {
       await _loadData(page: 0, query: query);
@@ -99,7 +115,9 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
 
       T? selected;
       if (_selected == null) {
-        selected = suggestions.firstWhereOrNull(_isSelectedAlgorithm);
+        selected = suggestions.firstWhereOrNull(
+          (e) => _isSelectedAlgorithm(e, query ?? _query),
+        );
       }
 
       _suggestions = List.unmodifiable(suggestions);
