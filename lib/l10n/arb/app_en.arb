@@ -1,4 +1,8 @@
 {
   "chat_tab_title": "Chats",
-  "empty_chat_list_message": "No chats"
+  "empty_chat_list_message": "No chats",
+  "chat_card_author_and_msg_separator": ":",
+  "thousand_suffix": "K",
+  "million_suffix": "M",
+  "billion_suffix": "G"
 }

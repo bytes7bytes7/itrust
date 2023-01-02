@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../../theme/theme.dart';
 import '../../../../util/extension/double_x.dart';
 
@@ -20,6 +22,8 @@ class UnreadIndicator extends StatelessWidget {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
+    final l10n = context.l10n;
+
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(_borderRadius),
@@ -28,15 +32,14 @@ class UnreadIndicator extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(_textPadding),
         child: Text(
-          _formattedAmount(),
+          _formattedAmount(l10n),
           style: theme.textTheme.caption,
         ),
       ),
     );
   }
 
-  // TODO: add l10n
-  String _formattedAmount() {
+  String _formattedAmount(AppLocalizations l10n) {
     const billion = 1000000000;
     const million = 1000000;
     const thousand = 1000;
@@ -45,21 +48,21 @@ class UnreadIndicator extends StatelessWidget {
       return '${(unread / billion).toStringWithLimitedPrecision(
         _precision,
         floor: true,
-      )}G';
+      )}${l10n.billion_suffix}';
     }
 
     if (unread >= million) {
       return '${(unread / million).toStringWithLimitedPrecision(
         _precision,
         floor: true,
-      )}M';
+      )}${l10n.million_suffix}';
     }
 
     if (unread >= thousand) {
       return '${(unread / thousand).toStringWithLimitedPrecision(
         _precision,
         floor: true,
-      )}K';
+      )}${l10n.thousand_suffix}';
     }
 
     return '$unread';

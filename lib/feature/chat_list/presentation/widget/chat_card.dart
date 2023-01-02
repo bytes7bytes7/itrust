@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../../theme/theme.dart';
 import '../../../common/presentation/widget/user_circle_avatar.dart';
 import '../../../common/presentation/widget/widget.dart';
@@ -30,6 +31,8 @@ class ChatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
+
+    final l10n = context.l10n;
 
     final lastMessage = chat.lastMessage;
 
@@ -75,7 +78,7 @@ class ChatCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            ':',
+                            l10n.chat_card_author_and_msg_separator,
                             style: theme.textTheme.subtitle1,
                           ),
                           const SizedBox(
