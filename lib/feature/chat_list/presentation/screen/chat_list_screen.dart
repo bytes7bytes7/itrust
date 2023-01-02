@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../theme/theme.dart';
 import '../../../../util/hook/autorun.dart';
+import '../../../common/presentation/widget/widget.dart';
 import '../../application/store/chat_list/chat_list_store.dart';
 import '../widget/widget.dart';
 
@@ -54,12 +55,11 @@ class ChatListScreen extends HookWidget {
                 ),
               ),
             ],
+            bottom: chatListStore.isLoading ? const LoadingBottomBar() : null,
           ),
           body: SafeArea(
             child: chatListStore.isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
+                ? const SizedBox.shrink()
                 : chatListStore.suggestions.isEmpty
                     ? Center(
                         child: Text(

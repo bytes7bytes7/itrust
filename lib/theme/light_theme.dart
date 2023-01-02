@@ -6,6 +6,9 @@ import 'font_family.dart';
 part 'light_colors.dart';
 
 final lightTheme = ThemeData.light().copyWith(
+  colorScheme: const ColorScheme.light().copyWith(
+    secondary: _LightColors.cFFEC2885,
+  ),
   appBarTheme: const AppBarTheme(
     elevation: 8,
     backgroundColor: _LightColors.cFFFFFFFF,
@@ -25,7 +28,8 @@ final lightTheme = ThemeData.light().copyWith(
     size: 24,
   ),
   progressIndicatorTheme: const ProgressIndicatorThemeData(
-    color: _LightColors.cFF000000,
+    color: _LightColors.cFFEC2885,
+    linearTrackColor: Colors.transparent,
   ),
   textTheme: const TextTheme(
     headline5: TextStyle(
