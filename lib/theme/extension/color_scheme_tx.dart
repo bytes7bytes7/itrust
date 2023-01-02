@@ -9,6 +9,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.onlineMarkCenter,
     required this.chatCard,
     required this.otherMsgBodyBackground,
+    required this.iconSplash,
+    required this.textFieldBackground,
   });
 
   final Color circleAvatarBackground;
@@ -18,6 +20,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color onlineMarkCenter;
   final Color chatCard;
   final Color otherMsgBodyBackground;
+  final Color iconSplash;
+  final Color textFieldBackground;
 
   ThemeExtension<ColorSchemeTX> copyWith({
     Color? circleAvatarBackground,
@@ -27,6 +31,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? onlineMarkCenter,
     Color? chatCard,
     Color? otherMsgBodyBackground,
+    Color? iconSplash,
+    Color? textFieldBackground,
   }) {
     return ColorSchemeTX(
       circleAvatarBackground:
@@ -39,6 +45,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       chatCard: chatCard ?? this.chatCard,
       otherMsgBodyBackground:
           otherMsgBodyBackground ?? this.otherMsgBodyBackground,
+      iconSplash: iconSplash ?? this.iconSplash,
+      textFieldBackground: textFieldBackground ?? this.textFieldBackground,
     );
   }
 
@@ -85,6 +93,16 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       otherMsgBodyBackground: Color.lerp(
         otherMsgBodyBackground,
         other.otherMsgBodyBackground,
+        t,
+      )!,
+      iconSplash: Color.lerp(
+        iconSplash,
+        other.iconSplash,
+        t,
+      )!,
+      textFieldBackground: Color.lerp(
+        textFieldBackground,
+        other.textFieldBackground,
         t,
       )!,
     );

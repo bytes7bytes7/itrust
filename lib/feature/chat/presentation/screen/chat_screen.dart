@@ -113,6 +113,7 @@ class ChatScreen extends StatelessWidget {
         ),
         centerTitle: true,
         title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               _title,

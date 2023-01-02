@@ -34,44 +34,20 @@ final lightTheme = ThemeData.light().copyWith(
     color: _LightColors.cFFEC2885,
     linearTrackColor: Colors.transparent,
   ),
-  inputDecorationTheme: InputDecorationTheme(
+  inputDecorationTheme: const InputDecorationTheme(
     isDense: true,
-    filled: true,
-    contentPadding: const EdgeInsets.symmetric(
+    contentPadding: EdgeInsets.symmetric(
       vertical: 8,
-      horizontal: 10,
+      horizontal: 0,
     ),
-    fillColor: _LightColors.cFFF0EFEF,
-    hintStyle: const TextStyle(
+    hintStyle: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w400,
       color: _LightColors.cFFC7C7C7,
     ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(_inputBorderRadius),
+    border: UnderlineInputBorder(
       borderSide: BorderSide.none,
     ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(_inputBorderRadius),
-      borderSide: BorderSide.none,
-    ),
-    disabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(_inputBorderRadius),
-      borderSide: BorderSide.none,
-    ),
-    errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(_inputBorderRadius),
-      borderSide: const BorderSide(
-        color: _LightColors.cFFEC2885,
-        width: 1,
-      ),
-    ),
-    focusedErrorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(_inputBorderRadius),
-      borderSide: BorderSide.none,
-    ),
-    prefixIconColor: _LightColors.cFF1A1A1A,
-    suffixIconColor: _LightColors.cFF1A1A1A,
   ),
   textTheme: const TextTheme(
     headline5: TextStyle(
@@ -114,6 +90,8 @@ final lightTheme = ThemeData.light().copyWith(
       onlineMarkCenter: _LightColors.cFFFFFFFF,
       chatCard: _LightColors.cFFFFFFFF,
       otherMsgBodyBackground: _LightColors.cFFF0EFEF,
+      iconSplash: _LightColors.c26000000,
+      textFieldBackground: _LightColors.cFFF0EFEF,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(
