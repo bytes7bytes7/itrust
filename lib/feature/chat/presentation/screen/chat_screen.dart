@@ -18,6 +18,12 @@ final _sender = User(
   avatarUrls: [],
 );
 
+final _me = User(
+  id: 'myID',
+  name: 'bytes7 bytes7',
+  avatarUrls: [],
+);
+
 final _title = 'Tomas White';
 
 final _alpha = 'qwertyuiopasdfghjklzxcvbnm';
@@ -49,7 +55,7 @@ final _messages = List.generate(
     return Message(
       id: '$index',
       chatID: 'chatID',
-      sender: _sender,
+      sender: _rand.nextBool() ? _sender : _me,
       text: _randString(_rand.nextInt(20) + 8),
       mediaUrls: [],
       sentAt: _randDateTime(),

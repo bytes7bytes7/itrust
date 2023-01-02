@@ -5,8 +5,6 @@ import 'font_family.dart';
 
 part 'light_colors.dart';
 
-const _inputBorderRadius = 10.0;
-
 final lightTheme = ThemeData.light().copyWith(
   scaffoldBackgroundColor: _LightColors.cFFFFFFFF,
   colorScheme: const ColorScheme.light().copyWith(
@@ -89,9 +87,14 @@ final lightTheme = ThemeData.light().copyWith(
       onlineMarkStroke: _LightColors.cFF000000,
       onlineMarkCenter: _LightColors.cFFFFFFFF,
       chatCard: _LightColors.cFFFFFFFF,
-      otherMsgBodyBackground: _LightColors.cFFF0EFEF,
-      iconSplash: _LightColors.c26000000,
+      myMsgForeground: _LightColors.cFFFFFFFF,
+      myMsgBackground: _LightColors.cFF000000,
+      othersMsgForeground: _LightColors.cFF000000,
+      othersMsgBackground: _LightColors.cFFF0EFEF,
+      textFieldIcon: _LightColors.cFF1A1A1A,
+      textFieldIconSplash: _LightColors.c26000000,
       textFieldBackground: _LightColors.cFFF0EFEF,
+      simpleIcon: _LightColors.cFF000000,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(

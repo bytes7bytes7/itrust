@@ -75,9 +75,10 @@ class _Icon extends StatelessWidget {
         child: IconButton(
           padding: const EdgeInsets.all(_iconPadding),
           iconSize: theme.iconTheme.size,
-          splashColor: colorSchemeTX.iconSplash,
+          splashColor: colorSchemeTX.textFieldIconSplash,
           onPressed: onPressed,
           icon: icon,
+          color: colorSchemeTX.textFieldIcon,
         ),
       ),
     );
