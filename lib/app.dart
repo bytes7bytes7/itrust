@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 
 import 'feature/chat_list/application/store/chat_list/chat_list_store.dart';
 import 'feature/chat_list/domain/domain.dart';
-import 'feature/chat_list/presentation/screen/screen.dart';
 import 'feature/common/application/persistence/search_repository.dart';
+import 'feature/debug/presentation/screen/screen.dart';
 import 'theme/theme.dart';
 
 final _getIt = GetIt.instance;
@@ -31,7 +31,8 @@ class App extends StatelessWidget {
         theme: lightTheme,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const ChatListScreen(),
+        // TODO: replace with initial screen
+        home: const MasterScreen(),
       ),
     );
   }
