@@ -6,6 +6,7 @@ import 'font_family.dart';
 part 'light_colors.dart';
 
 final lightTheme = ThemeData.light().copyWith(
+  scaffoldBackgroundColor: _LightColors.cFFFFFFFF,
   colorScheme: const ColorScheme.light().copyWith(
     secondary: _LightColors.cFFEC2885,
   ),
@@ -16,7 +17,7 @@ final lightTheme = ThemeData.light().copyWith(
       color: _LightColors.cFFFFFFFF,
       size: 24,
     ),
-    shadowColor: _LightColors.c0F000000,
+    shadowColor: _LightColors.c26000000,
     titleTextStyle: TextStyle(
       fontFamily: FontFamily.roboto,
       fontSize: 24,
@@ -60,6 +61,7 @@ final lightTheme = ThemeData.light().copyWith(
       unreadBackground: _LightColors.cFF000000,
       onlineMarkStroke: _LightColors.cFF000000,
       onlineMarkCenter: _LightColors.cFFFFFFFF,
+      chatCard: _LightColors.cFFFFFFFF,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(

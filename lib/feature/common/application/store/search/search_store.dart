@@ -54,6 +54,13 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
   int _page = 0;
 
   @action
+  Future<void> refresh() async {
+    await _wrap(() async {
+      await _loadData(page: 0);
+    });
+  }
+
+  @action
   Future<void> load() async {
     if (_isLoading || _isLoadingMore) {
       return;

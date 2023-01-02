@@ -150,6 +150,14 @@ mixin _$SearchStore<T> on _SearchStore<T>, Store {
     });
   }
 
+  late final _$refreshAsyncAction =
+      AsyncAction('_SearchStore.refresh', context: context);
+
+  @override
+  Future<void> refresh() {
+    return _$refreshAsyncAction.run(() => super.refresh());
+  }
+
   late final _$loadAsyncAction =
       AsyncAction('_SearchStore.load', context: context);
 

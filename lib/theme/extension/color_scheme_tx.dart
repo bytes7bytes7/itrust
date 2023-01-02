@@ -7,6 +7,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.unreadBackground,
     required this.onlineMarkStroke,
     required this.onlineMarkCenter,
+    required this.chatCard,
   });
 
   final Color circleAvatarBackground;
@@ -14,6 +15,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color unreadBackground;
   final Color onlineMarkStroke;
   final Color onlineMarkCenter;
+  final Color chatCard;
 
   ThemeExtension<ColorSchemeTX> copyWith({
     Color? circleAvatarBackground,
@@ -21,6 +23,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? unreadBackground,
     Color? onlineMarkStroke,
     Color? onlineMarkCenter,
+    Color? chatCard,
   }) {
     return ColorSchemeTX(
       circleAvatarBackground:
@@ -30,6 +33,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       unreadBackground: unreadBackground ?? this.unreadBackground,
       onlineMarkStroke: onlineMarkStroke ?? this.onlineMarkStroke,
       onlineMarkCenter: onlineMarkCenter ?? this.onlineMarkCenter,
+      chatCard: chatCard ?? this.chatCard,
     );
   }
 
@@ -66,6 +70,11 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       onlineMarkCenter: Color.lerp(
         onlineMarkCenter,
         other.onlineMarkCenter,
+        t,
+      )!,
+      chatCard: Color.lerp(
+        chatCard,
+        other.chatCard,
         t,
       )!,
     );

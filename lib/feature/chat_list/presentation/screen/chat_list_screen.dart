@@ -75,24 +75,28 @@ class ChatListScreen extends HookWidget {
 
                           return true;
                         },
-                        child: ListView.builder(
-                          itemCount: chatListStore.suggestions.length +
-                              (chatListStore.hasMoreSuggestions ? 1 : 0),
-                          itemBuilder: (context, index) {
-                            if (index == chatListStore.suggestions.length) {
-                              return const Padding(
-                                padding: EdgeInsets.all(_loadingMorePadding),
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            }
+                        child: RefreshIndicator(
+                          onRefresh: chatListStore.refresh,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: chatListStore.suggestions.length +
+                                (chatListStore.hasMoreSuggestions ? 1 : 0),
+                            itemBuilder: (context, index) {
+                              if (index == chatListStore.suggestions.length) {
+                                return const Padding(
+                                  padding: EdgeInsets.all(_loadingMorePadding),
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                );
+                              }
 
-                            return ChatCard(
-                              chat: chatListStore.suggestions[index],
-                              onPressed: () {},
-                            );
-                          },
+                              return ChatCard(
+                                chat: chatListStore.suggestions[index],
+                                onPressed: () {},
+                              );
+                            },
+                          ),
                         ),
                       ),
           ),
