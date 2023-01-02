@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../chat_list/presentation/screen/chat_list_screen.dart';
+import '../../../chat/presentation/screen/screen.dart';
+import '../../../chat_list/presentation/screen/screen.dart';
 
 final _screens = [
   const ChatListScreen(),
-];
+  const ChatScreen(),
+]..sort((a, b) => '${a.runtimeType}'.compareTo('${b.runtimeType}'));
 
 class MasterScreen extends StatelessWidget {
   const MasterScreen({super.key});
@@ -20,6 +22,7 @@ class MasterScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: ListView.builder(
+          itemCount: _screens.length,
           itemBuilder: (context, index) {
             final widget = _screens[index];
 

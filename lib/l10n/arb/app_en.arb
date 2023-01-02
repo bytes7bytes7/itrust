@@ -4,5 +4,9 @@
   "chat_card_author_and_msg_separator": ":",
   "thousand_suffix": "K",
   "million_suffix": "M",
-  "billion_suffix": "G"
+  "billion_suffix": "G",
+  "is_online_status": "online",
+  "hidden_online_status": "unknown online status",
+  "last_seen_online_status": "last online:",
+  "no_online_status": ""
 }

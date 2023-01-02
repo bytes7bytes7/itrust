@@ -8,4 +8,5 @@ class _LightColors {
   static const cFF000000 = Color(0xFF000000);
   static const c26000000 = Color(0x26000000);
   static const cFFC7C7C7 = Color(0xFFC7C7C7);
+  static const cFFF0EFEF = Color(0xFFF0EFEF);
 }

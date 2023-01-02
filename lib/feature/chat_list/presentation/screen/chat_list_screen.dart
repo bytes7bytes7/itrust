@@ -32,6 +32,7 @@ class ChatListScreen extends HookWidget {
       builder: (context) {
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: Text(
               l10n.chat_tab_title,
             ),

@@ -38,9 +38,19 @@ final lightTheme = ThemeData.light().copyWith(
       fontWeight: FontWeight.w600,
       color: _LightColors.cFF000000,
     ),
+    headline6: TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      color: _LightColors.cFF000000,
+    ),
     subtitle1: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.bold,
+      color: _LightColors.cFF000000,
+    ),
+    bodyText1: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
       color: _LightColors.cFF000000,
     ),
     bodyText2: TextStyle(
@@ -62,6 +72,7 @@ final lightTheme = ThemeData.light().copyWith(
       onlineMarkStroke: _LightColors.cFF000000,
       onlineMarkCenter: _LightColors.cFFFFFFFF,
       chatCard: _LightColors.cFFFFFFFF,
+      otherMsgBodyBackground: _LightColors.cFFF0EFEF,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(

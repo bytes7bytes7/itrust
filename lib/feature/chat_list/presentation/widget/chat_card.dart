@@ -135,6 +135,6 @@ class ChatCard extends StatelessWidget {
       return DateFormat.MMMd().format(dateTime);
     }
 
-    return DateFormat.yMd().format(dateTime);
+    return DateFormat('dd.MM.yyy').format(dateTime);
   }
 }
