@@ -55,50 +55,50 @@ class ChatListScreen extends HookWidget {
                 ),
               ),
             ],
-            bottom: chatListStore.isLoading ? const LoadingBottomBar() : null,
+            bottom: chatListStore.showAppBarLoading
+                ? const LoadingBottomBar()
+                : null,
           ),
           body: SafeArea(
-            child: chatListStore.isLoading
-                ? const SizedBox.shrink()
-                : chatListStore.suggestions.isEmpty
-                    ? Center(
-                        child: Text(
-                          l10n.empty_chat_list_message,
-                        ),
-                      )
-                    : NotificationListener<ScrollNotification>(
-                        onNotification: (notification) {
-                          if (notification.metrics.extentAfter < 10 &&
-                              chatListStore.hasMoreSuggestions) {
-                            chatListStore.load();
+            child: chatListStore.showItems
+                ? NotificationListener<ScrollNotification>(
+                    onNotification: (notification) {
+                      if (notification.metrics.extentAfter < 10 &&
+                          chatListStore.hasMoreSuggestions) {
+                        chatListStore.load();
+                      }
+
+                      return true;
+                    },
+                    child: RefreshIndicator(
+                      onRefresh: chatListStore.refresh,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: chatListStore.suggestions.length +
+                            (chatListStore.showItemLoading ? 1 : 0),
+                        itemBuilder: (context, index) {
+                          if (index == chatListStore.suggestions.length) {
+                            return const Padding(
+                              padding: EdgeInsets.all(_loadingMorePadding),
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            );
                           }
 
-                          return true;
+                          return ChatCard(
+                            chat: chatListStore.suggestions[index],
+                            onPressed: () {},
+                          );
                         },
-                        child: RefreshIndicator(
-                          onRefresh: chatListStore.refresh,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: chatListStore.suggestions.length +
-                                (chatListStore.hasMoreSuggestions ? 1 : 0),
-                            itemBuilder: (context, index) {
-                              if (index == chatListStore.suggestions.length) {
-                                return const Padding(
-                                  padding: EdgeInsets.all(_loadingMorePadding),
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                );
-                              }
-
-                              return ChatCard(
-                                chat: chatListStore.suggestions[index],
-                                onPressed: () {},
-                              );
-                            },
-                          ),
-                        ),
                       ),
+                    ),
+                  )
+                : Center(
+                    child: Text(
+                      l10n.empty_chat_list_message,
+                    ),
+                  ),
           ),
         );
       },
