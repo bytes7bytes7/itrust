@@ -1,3 +1,3 @@
 # ITrust
 
-ITrust messenger.
+ITrust social network.
