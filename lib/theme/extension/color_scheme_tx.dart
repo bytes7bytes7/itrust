@@ -19,6 +19,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.textFieldBackground,
     required this.simpleIcon,
     required this.infoMsgPreviewColor,
+    required this.msgSender,
   });
 
   final Color circleAvatarBackground;
@@ -38,6 +39,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color textFieldBackground;
   final Color simpleIcon;
   final Color infoMsgPreviewColor;
+  final Color msgSender;
 
   ThemeExtension<ColorSchemeTX> copyWith({
     Color? circleAvatarBackground,
@@ -57,6 +59,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? textFieldBackground,
     Color? simpleIcon,
     Color? infoMsgPreviewColor,
+    Color? msgSender,
   }) {
     return ColorSchemeTX(
       circleAvatarBackground:
@@ -78,6 +81,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       textFieldBackground: textFieldBackground ?? this.textFieldBackground,
       simpleIcon: simpleIcon ?? this.simpleIcon,
       infoMsgPreviewColor: infoMsgPreviewColor ?? this.infoMsgPreviewColor,
+      msgSender: msgSender ?? this.msgSender,
     );
   }
 
@@ -174,6 +178,11 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       infoMsgPreviewColor: Color.lerp(
         infoMsgPreviewColor,
         other.infoMsgPreviewColor,
+        t,
+      )!,
+      msgSender: Color.lerp(
+        msgSender,
+        other.msgSender,
         t,
       )!,
     );

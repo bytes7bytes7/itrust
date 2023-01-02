@@ -12,6 +12,8 @@ import '../widget/widget.dart';
 
 final _rand = Random();
 
+final _isGroup = _rand.nextBool();
+
 final _sender = User(
   id: 'senderID',
   name: 'Tomas White',
@@ -180,6 +182,7 @@ class ChatScreen extends StatelessWidget {
 
                     return OthersMessageCard(
                       key: ValueKey(message.id),
+                      showSender: _isGroup,
                       message: message,
                     );
                   },

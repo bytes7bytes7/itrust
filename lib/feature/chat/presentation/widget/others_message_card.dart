@@ -10,20 +10,25 @@ const _borderRadius = 10.0;
 const _messageBodyMaxRatio = 0.5;
 const _messageBodyPadding = 10.0;
 const _messageAndTimeSeparator = 14.0;
+const _messageAndAuthorSeparator = 4.0;
 
 class OthersMessageCard extends StatelessWidget {
   const OthersMessageCard({
     super.key,
     required this.message,
+    required this.showSender,
   });
 
   final Message message;
+  final bool showSender;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
+
+    final sender = message.sender;
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -48,11 +53,28 @@ class OthersMessageCard extends StatelessWidget {
                   bottomLeft: _radius,
                 ),
               ),
-              child: Text(
-                message.text,
-                style: theme.textTheme.bodyText1?.copyWith(
-                  color: colorSchemeTX.othersMsgForeground,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (showSender && sender != null) ...[
+                    Text(
+                      sender.name,
+                      style: theme.textTheme.caption?.copyWith(
+                        color: colorSchemeTX.msgSender,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: _messageAndAuthorSeparator,
+                    ),
+                  ],
+                  Text(
+                    message.text,
+                    style: theme.textTheme.bodyText1?.copyWith(
+                      color: colorSchemeTX.othersMsgForeground,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
