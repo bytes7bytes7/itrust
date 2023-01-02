@@ -12,10 +12,13 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.myMsgBackground,
     required this.othersMsgForeground,
     required this.othersMsgBackground,
+    required this.infoMsgForeground,
+    required this.infoMsgBackground,
     required this.textFieldIcon,
     required this.textFieldIconSplash,
     required this.textFieldBackground,
     required this.simpleIcon,
+    required this.infoMsgPreviewColor,
   });
 
   final Color circleAvatarBackground;
@@ -28,10 +31,13 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color myMsgBackground;
   final Color othersMsgForeground;
   final Color othersMsgBackground;
+  final Color infoMsgForeground;
+  final Color infoMsgBackground;
   final Color textFieldIcon;
   final Color textFieldIconSplash;
   final Color textFieldBackground;
   final Color simpleIcon;
+  final Color infoMsgPreviewColor;
 
   ThemeExtension<ColorSchemeTX> copyWith({
     Color? circleAvatarBackground,
@@ -44,10 +50,13 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? myMsgBackground,
     Color? othersMsgForeground,
     Color? othersMsgBackground,
+    Color? infoMsgForeground,
+    Color? infoMsgBackground,
     Color? textFieldIcon,
     Color? textFieldIconSplash,
     Color? textFieldBackground,
     Color? simpleIcon,
+    Color? infoMsgPreviewColor,
   }) {
     return ColorSchemeTX(
       circleAvatarBackground:
@@ -62,10 +71,13 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       myMsgBackground: myMsgBackground ?? this.myMsgBackground,
       othersMsgForeground: othersMsgForeground ?? this.othersMsgForeground,
       othersMsgBackground: othersMsgBackground ?? this.othersMsgBackground,
+      infoMsgForeground: infoMsgForeground ?? this.infoMsgForeground,
+      infoMsgBackground: infoMsgBackground ?? this.infoMsgBackground,
       textFieldIcon: textFieldIcon ?? this.textFieldIcon,
       textFieldIconSplash: textFieldIconSplash ?? this.textFieldIconSplash,
       textFieldBackground: textFieldBackground ?? this.textFieldBackground,
       simpleIcon: simpleIcon ?? this.simpleIcon,
+      infoMsgPreviewColor: infoMsgPreviewColor ?? this.infoMsgPreviewColor,
     );
   }
 
@@ -129,6 +141,16 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
         other.othersMsgBackground,
         t,
       )!,
+      infoMsgForeground: Color.lerp(
+        infoMsgForeground,
+        other.infoMsgForeground,
+        t,
+      )!,
+      infoMsgBackground: Color.lerp(
+        infoMsgBackground,
+        other.infoMsgBackground,
+        t,
+      )!,
       textFieldIcon: Color.lerp(
         textFieldIcon,
         other.textFieldIcon,
@@ -147,6 +169,11 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       simpleIcon: Color.lerp(
         simpleIcon,
         other.simpleIcon,
+        t,
+      )!,
+      infoMsgPreviewColor: Color.lerp(
+        infoMsgPreviewColor,
+        other.infoMsgPreviewColor,
         t,
       )!,
     );

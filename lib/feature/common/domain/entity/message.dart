@@ -16,7 +16,7 @@ class Message {
 
   final MessageID id;
   final ChatID chatID;
-  final User sender;
+  final User? sender;
   final String text;
   final List<String> mediaUrls;
   final DateTime sentAt;

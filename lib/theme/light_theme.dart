@@ -91,10 +91,13 @@ final lightTheme = ThemeData.light().copyWith(
       myMsgBackground: _LightColors.cFF000000,
       othersMsgForeground: _LightColors.cFF000000,
       othersMsgBackground: _LightColors.cFFF0EFEF,
+      infoMsgForeground: _LightColors.cFF000000,
+      infoMsgBackground: _LightColors.cFFF0EFEF,
       textFieldIcon: _LightColors.cFF1A1A1A,
       textFieldIconSplash: _LightColors.c26000000,
       textFieldBackground: _LightColors.cFFF0EFEF,
       simpleIcon: _LightColors.cFF000000,
+      infoMsgPreviewColor: _LightColors.cFFEC2885,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(

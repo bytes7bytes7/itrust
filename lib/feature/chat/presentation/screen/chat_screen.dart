@@ -55,7 +55,11 @@ final _messages = List.generate(
     return Message(
       id: '$index',
       chatID: 'chatID',
-      sender: _rand.nextBool() ? _sender : _me,
+      sender: _rand.nextBool()
+          ? _sender
+          : _rand.nextBool()
+              ? _me
+              : null,
       text: _randString(_rand.nextInt(20) + 8),
       mediaUrls: [],
       sentAt: _randDateTime(),
@@ -159,6 +163,12 @@ class ChatScreen extends StatelessWidget {
                   },
                   (context, index) {
                     final message = _messages[_messages.length - 1 - index];
+
+                    if (message.sender == null) {
+                      return InfoMessageCard(
+                        message: message,
+                      );
+                    }
 
                     return MessageCard(
                       key: ValueKey(message.id),

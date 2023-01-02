@@ -30,7 +30,7 @@ class MessageCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
-    final isMe = message.sender.id == _myID;
+    final isMe = message.sender?.id == _myID;
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -52,12 +52,10 @@ class MessageCard extends StatelessWidget {
                     ? colorSchemeTX.myMsgBackground
                     : colorSchemeTX.othersMsgBackground,
                 borderRadius: BorderRadius.only(
-                  topLeft:
-                      isMe ? const Radius.circular(_borderRadius) : Radius.zero,
-                  topRight:
-                      isMe ? const Radius.circular(_borderRadius) : Radius.zero,
-                  bottomRight: const Radius.circular(_borderRadius),
-                  bottomLeft: const Radius.circular(_borderRadius),
+                  topLeft: isMe ? _radius : Radius.zero,
+                  topRight: !isMe ? _radius : Radius.zero,
+                  bottomRight: _radius,
+                  bottomLeft: _radius,
                 ),
               ),
               child: Text(
@@ -77,26 +75,29 @@ class MessageCard extends StatelessWidget {
             _beautifiedDateTime(),
             style: theme.textTheme.headline6,
           ),
-          if (isMe)
+          if (isMe) ...[
             const SizedBox(
               width: _readIconAndTimeSeparator,
             ),
-          if (isMe)
-            message.isRead
-                ? Icon(
-                    Icons.done_all,
-                    size: _readIconSize,
-                    color: colorSchemeTX.simpleIcon,
-                  )
-                : Icon(
-                    Icons.done,
-                    size: _readIconSize,
-                    color: colorSchemeTX.simpleIcon,
-                  ),
+            if (message.isRead)
+              Icon(
+                Icons.done_all,
+                size: _readIconSize,
+                color: colorSchemeTX.simpleIcon,
+              )
+            else
+              Icon(
+                Icons.done,
+                size: _readIconSize,
+                color: colorSchemeTX.simpleIcon,
+              ),
+          ],
         ],
       ),
     );
   }
+
+  Radius get _radius => const Radius.circular(_borderRadius);
 
   // TODO: move to another place
   String _beautifiedDateTime() {

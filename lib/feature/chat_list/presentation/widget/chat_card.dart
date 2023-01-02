@@ -68,32 +68,41 @@ class ChatCard extends StatelessWidget {
                       const SizedBox(
                         height: _titleAndMessageSeparator,
                       ),
-                      Row(
-                        children: [
-                          Flexible(
-                            child: Text(
-                              lastMessage.sender.name,
+                      if (lastMessage.sender != null)
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                lastMessage.sender!.name,
+                                style: theme.textTheme.subtitle1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Text(
+                              l10n.chat_card_author_and_msg_separator,
                               style: theme.textTheme.subtitle1,
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          Text(
-                            l10n.chat_card_author_and_msg_separator,
-                            style: theme.textTheme.subtitle1,
-                          ),
-                          const SizedBox(
-                            width: _authorAndMessageSeparator,
-                          ),
-                          Flexible(
-                            flex: _messageFlex,
-                            child: Text(
-                              lastMessage.text,
-                              style: theme.textTheme.bodyText2,
-                              overflow: TextOverflow.ellipsis,
+                            const SizedBox(
+                              width: _authorAndMessageSeparator,
                             ),
+                            Flexible(
+                              flex: _messageFlex,
+                              child: Text(
+                                lastMessage.text,
+                                style: theme.textTheme.bodyText2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        )
+                      else
+                        Text(
+                          lastMessage.text,
+                          style: theme.textTheme.bodyText2?.copyWith(
+                            color: colorSchemeTX.infoMsgPreviewColor,
                           ),
-                        ],
-                      ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                     ],
                   ],
                 ),

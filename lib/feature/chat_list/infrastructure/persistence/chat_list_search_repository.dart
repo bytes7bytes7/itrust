@@ -88,12 +88,14 @@ class TestChatListSearchRepository implements SearchRepository<Chat> {
                   : Message(
                       id: 'message $index',
                       chatID: '$index',
-                      sender: User(
-                        id: '$index',
-                        name: _randString(_rand.nextInt(15) + 5),
-                        avatarUrls: [],
-                      ),
-                      text: _randString(_rand.nextInt(30) + 2),
+                      sender: _rand.nextBool()
+                          ? User(
+                              id: '$index',
+                              name: _randString(_rand.nextInt(15) + 5),
+                              avatarUrls: [],
+                            )
+                          : null,
+                      text: _randString(_rand.nextInt(40) + 5),
                       mediaUrls: [],
                       sentAt: _randDateTime(),
                       modifiedAt: _rand.nextBool() ? _randDateTime() : null,
