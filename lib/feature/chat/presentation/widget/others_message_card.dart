@@ -10,14 +10,9 @@ const _borderRadius = 10.0;
 const _messageBodyMaxRatio = 0.5;
 const _messageBodyPadding = 10.0;
 const _messageAndTimeSeparator = 14.0;
-const _readIconAndTimeSeparator = 6.0;
-const _readIconSize = 12.0;
 
-// TODO: get from store
-const _myID = 'myID';
-
-class MessageCard extends StatelessWidget {
-  const MessageCard({
+class OthersMessageCard extends StatelessWidget {
+  const OthersMessageCard({
     super.key,
     required this.message,
   });
@@ -30,8 +25,6 @@ class MessageCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
-    final isMe = message.sender?.id == _myID;
-
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: _paddingH,
@@ -39,7 +32,6 @@ class MessageCard extends StatelessWidget {
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        textDirection: isMe ? TextDirection.rtl : TextDirection.ltr,
         children: [
           ConstrainedBox(
             constraints: BoxConstraints(
@@ -48,12 +40,10 @@ class MessageCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(_messageBodyPadding),
               decoration: BoxDecoration(
-                color: isMe
-                    ? colorSchemeTX.myMsgBackground
-                    : colorSchemeTX.othersMsgBackground,
+                color: colorSchemeTX.othersMsgBackground,
                 borderRadius: BorderRadius.only(
-                  topLeft: isMe ? _radius : Radius.zero,
-                  topRight: !isMe ? _radius : Radius.zero,
+                  topLeft: Radius.zero,
+                  topRight: _radius,
                   bottomRight: _radius,
                   bottomLeft: _radius,
                 ),
@@ -61,9 +51,7 @@ class MessageCard extends StatelessWidget {
               child: Text(
                 message.text,
                 style: theme.textTheme.bodyText1?.copyWith(
-                  color: isMe
-                      ? colorSchemeTX.myMsgForeground
-                      : colorSchemeTX.othersMsgForeground,
+                  color: colorSchemeTX.othersMsgForeground,
                 ),
               ),
             ),
@@ -75,23 +63,6 @@ class MessageCard extends StatelessWidget {
             _beautifiedDateTime(),
             style: theme.textTheme.headline6,
           ),
-          if (isMe) ...[
-            const SizedBox(
-              width: _readIconAndTimeSeparator,
-            ),
-            if (message.isRead)
-              Icon(
-                Icons.done_all,
-                size: _readIconSize,
-                color: colorSchemeTX.simpleIcon,
-              )
-            else
-              Icon(
-                Icons.done,
-                size: _readIconSize,
-                color: colorSchemeTX.simpleIcon,
-              ),
-          ],
         ],
       ),
     );

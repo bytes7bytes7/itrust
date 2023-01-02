@@ -166,11 +166,19 @@ class ChatScreen extends StatelessWidget {
 
                     if (message.sender == null) {
                       return InfoMessageCard(
+                        key: ValueKey(message.id),
                         message: message,
                       );
                     }
 
-                    return MessageCard(
+                    if (message.sender?.id == _me.id) {
+                      return MyMessageCard(
+                        key: ValueKey(message.id),
+                        message: message,
+                      );
+                    }
+
+                    return OthersMessageCard(
                       key: ValueKey(message.id),
                       message: message,
                     );
