@@ -5,6 +5,8 @@ import 'font_family.dart';
 
 part 'light_colors.dart';
 
+const _inputBorderRadius = 10.0;
+
 final lightTheme = ThemeData.light().copyWith(
   scaffoldBackgroundColor: _LightColors.cFFFFFFFF,
   colorScheme: const ColorScheme.light().copyWith(
@@ -31,6 +33,45 @@ final lightTheme = ThemeData.light().copyWith(
   progressIndicatorTheme: const ProgressIndicatorThemeData(
     color: _LightColors.cFFEC2885,
     linearTrackColor: Colors.transparent,
+  ),
+  inputDecorationTheme: InputDecorationTheme(
+    isDense: true,
+    filled: true,
+    contentPadding: const EdgeInsets.symmetric(
+      vertical: 8,
+      horizontal: 10,
+    ),
+    fillColor: _LightColors.cFFF0EFEF,
+    hintStyle: const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: _LightColors.cFFC7C7C7,
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(_inputBorderRadius),
+      borderSide: BorderSide.none,
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(_inputBorderRadius),
+      borderSide: BorderSide.none,
+    ),
+    disabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(_inputBorderRadius),
+      borderSide: BorderSide.none,
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(_inputBorderRadius),
+      borderSide: const BorderSide(
+        color: _LightColors.cFFEC2885,
+        width: 1,
+      ),
+    ),
+    focusedErrorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(_inputBorderRadius),
+      borderSide: BorderSide.none,
+    ),
+    prefixIconColor: _LightColors.cFF1A1A1A,
+    suffixIconColor: _LightColors.cFF1A1A1A,
   ),
   textTheme: const TextTheme(
     headline5: TextStyle(
@@ -85,6 +126,33 @@ final lightTheme = ThemeData.light().copyWith(
         shape: MaterialStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
+            side: BorderSide.none,
+          ),
+        ),
+        backgroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.disabled)) {
+              return _LightColors.cFFC7C7C7;
+            }
+
+            return _LightColors.cFF000000;
+          },
+        ),
+        foregroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            return _LightColors.cFFFFFFFF;
+          },
+        ),
+      ),
+      roundedFilledIcon: ButtonStyle(
+        padding: MaterialStateProperty.all(
+          EdgeInsets.zero,
+        ),
+        minimumSize: MaterialStateProperty.all(
+          const Size.square(40),
+        ),
+        shape: const MaterialStatePropertyAll(
+          CircleBorder(
             side: BorderSide.none,
           ),
         ),

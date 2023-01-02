@@ -8,5 +8,6 @@
   "is_online_status": "online",
   "hidden_online_status": "unknown online status",
   "last_seen_online_status": "last online:",
-  "no_online_status": ""
+  "no_online_status": "",
+  "message_field_hint": "Type message..."
 }
