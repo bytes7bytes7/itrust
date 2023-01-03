@@ -8,27 +8,32 @@ import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/application/persistence/search_repository.dart';
 import '../../../../common/domain/domain.dart';
 
-part 'chat_list_store.g.dart';
+part 'chat_store.g.dart';
 
 const _defaultLimit = 10;
-final _logger = Logger('$ChatListStore');
+final _logger = Logger('$ChatStore');
 
 typedef IsSelectedAlgorithm<T> = bool Function(T item, String query);
 
-class ChatListStore = _ChatListStore with _$ChatListStore;
+class ChatStore = _ChatStore with _$ChatStore;
 
-abstract class _ChatListStore with Store, Loadable, Errorable {
-  _ChatListStore({
-    required SearchRepository<Chat> searchRepository,
-    required IsSelectedAlgorithm<Chat> isSelectedAlgorithm,
+abstract class _ChatStore with Store, Loadable, Errorable {
+  _ChatStore({
+    required Chat chat,
+    required SearchRepository<Message> searchRepository,
+    required IsSelectedAlgorithm<Message> isSelectedAlgorithm,
     int limit = _defaultLimit,
-  })  : _searchRepository = searchRepository,
+  })  : _chat = chat,
+        _searchRepository = searchRepository,
         _isSelectedAlgorithm = isSelectedAlgorithm,
         _limit = limit;
 
-  final SearchRepository<Chat> _searchRepository;
-  final IsSelectedAlgorithm<Chat> _isSelectedAlgorithm;
+  final SearchRepository<Message> _searchRepository;
+  final IsSelectedAlgorithm<Message> _isSelectedAlgorithm;
   final int _limit;
+
+  @readonly
+  late Chat _chat;
 
   @readonly
   bool _isLoading = false;
@@ -43,16 +48,19 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
   String _query = '';
 
   @readonly
-  Chat? _selected;
+  Message? _selected;
 
   @readonly
-  List<Chat> _suggestions = const [];
+  List<Message> _suggestions = const [];
 
   @readonly
   bool _hasMoreSuggestions = true;
 
   @readonly
   int _page = 0;
+
+  @readonly
+  Map<MessageID, int> _messageKeys = {};
 
   @computed
   bool get showItemLoading => _suggestions.isNotEmpty && _hasMoreSuggestions;
@@ -62,13 +70,6 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
 
   @computed
   bool get showItems => _isLoading || _suggestions.isNotEmpty;
-
-  @action
-  Future<void> refresh() async {
-    await _wrap(() async {
-      await _loadData(page: 0);
-    });
-  }
 
   @action
   Future<void> load() async {
@@ -108,7 +109,7 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
   }
 
   @action
-  Future<void> selectItem(Chat item) async {
+  Future<void> selectItem(Message item) async {
     _selected = item;
   }
 
@@ -123,14 +124,28 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
         query: query ?? _query,
       );
 
-      late List<Chat> suggestions;
+      late List<Message> suggestions;
+      late Map<MessageID, int> messagesKeys;
       if (page == 0) {
         suggestions = data;
+        messagesKeys = Map.fromEntries(
+          data.mapIndexed((index, e) {
+            return MapEntry(e.id, index);
+          }),
+        );
       } else {
         suggestions = List.from(_suggestions)..addAll(data);
+        messagesKeys = Map.from(_messageKeys)
+          ..addAll(
+            Map.fromEntries(
+              data.mapIndexed((index, e) {
+                return MapEntry(e.id, index);
+              }),
+            ),
+          );
       }
 
-      Chat? selected;
+      Message? selected;
       if (_selected == null) {
         selected = suggestions.firstWhereOrNull(
           (e) => _isSelectedAlgorithm(e, query ?? _query),
@@ -138,6 +153,7 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
       }
 
       _suggestions = List.unmodifiable(suggestions);
+      _messageKeys = messagesKeys;
       _selected = selected;
       _hasMoreSuggestions = data.isNotEmpty && data.length == _limit;
       if (query != null) {

@@ -3,9 +3,8 @@ import 'package:intl/intl.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../../theme/theme.dart';
-import '../../../common/presentation/widget/user_circle_avatar.dart';
+import '../../../common/domain/domain.dart';
 import '../../../common/presentation/widget/widget.dart';
-import '../../domain/domain.dart';
 import 'unread_indicator.dart';
 
 const _paddingH = 20.0;

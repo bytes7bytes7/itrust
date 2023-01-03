@@ -1,5 +1,5 @@
-import '../../../common/domain/domain.dart';
 import '../value_object/value_object.dart';
+import 'message.dart';
 
 class Chat {
   const Chat({
@@ -15,6 +15,7 @@ class Chat {
 
   final ChatID id;
   final String? avatarUrl;
+
   // Name of icon if [avatarUrl] == null
   final String? icon;
   final String title;

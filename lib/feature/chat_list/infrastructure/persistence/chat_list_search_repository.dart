@@ -4,21 +4,6 @@ import 'package:injectable/injectable.dart';
 
 import '../../../common/application/persistence/search_repository.dart';
 import '../../../common/domain/domain.dart';
-import '../../domain/domain.dart';
-
-@dev
-@Singleton(as: SearchRepository<Chat>)
-class DevChatListSearchRepository implements SearchRepository<Chat> {
-  @override
-  Future<List<Chat>> load({
-    required int limit,
-    required int offset,
-    required String query,
-  }) {
-    // TODO: implement load
-    throw UnimplementedError();
-  }
-}
 
 @test
 @Singleton(as: SearchRepository<Chat>)

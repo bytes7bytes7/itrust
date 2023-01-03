@@ -9,5 +9,7 @@
   "hidden_online_status": "unknown online status",
   "last_seen_online_status": "last online:",
   "no_online_status": "",
-  "message_field_hint": "Type message..."
+  "message_field_hint": "Type message...",
+  "app_bar_title_error": "Error",
+  "message_list_error": "Loading error.\nTry again later"
 }

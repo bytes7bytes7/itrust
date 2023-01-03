@@ -14,10 +14,4 @@ abstract class _NewChatStore extends SearchStore<User>
     required super.searchRepository,
     required super.isSelectedAlgorithm,
   });
-
-  @readonly
-  bool _isLoading = false;
-
-  @readonly
-  Object? _error;
 }

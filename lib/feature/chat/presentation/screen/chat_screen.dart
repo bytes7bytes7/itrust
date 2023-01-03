@@ -1,122 +1,68 @@
-import 'dart:math';
-
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../../theme/theme.dart';
+import '../../../common/application/persistence/date_time_facade.dart';
 import '../../../common/domain/domain.dart';
+import '../../application/provider/chat_store_provider.dart';
 import '../widget/widget.dart';
 
-final _rand = Random();
+const _appBarHeight = 66.0;
+final _getIt = GetIt.instance;
 
-final _isGroup = _rand.nextBool();
-
-final _sender = User(
-  id: 'senderID',
-  name: 'Tomas White',
-  avatarUrls: [],
-);
-
-final _me = User(
-  id: 'myID',
+// TODO: remove
+const _me = User(
+  id: 'me',
   name: 'bytes7 bytes7',
   avatarUrls: [],
 );
 
-final _title = 'Tomas White';
-
-final _alpha = 'qwertyuiopasdfghjklzxcvbnm';
-
-String _randString(int length) {
-  final buffer = StringBuffer();
-
-  for (var i = 0; i < length; i++) {
-    buffer.write(_alpha[_rand.nextInt(_alpha.length)]);
-  }
-
-  return buffer.toString();
-}
-
-DateTime _randDateTime() {
-  return DateTime(
-    _rand.nextInt(2) + 2022,
-    _rand.nextInt(12) + 1,
-    _rand.nextInt(28) + 1,
-    _rand.nextInt(24),
-    _rand.nextInt(60),
-    _rand.nextInt(60),
-  );
-}
-
-final _messages = List.generate(
-  _rand.nextInt(10) + 15,
-  (index) {
-    final sender = _rand.nextBool()
-        ? _sender
-        : _rand.nextBool()
-            ? _me
-            : null;
-    return Message(
-      id: '$index',
-      chatID: 'chatID',
-      sender: sender,
-      text: _rand.nextBool() && sender != null
-          ? _randString(_rand.nextInt(20) + 8)
-          : '',
-      mediaUrls: [],
-      sentAt: _randDateTime(),
-      modifiedAt: _rand.nextBool() ? _randDateTime() : null,
-      willBeBurntAt: _rand.nextBool() ? _randDateTime() : null,
-      isRead: _rand.nextBool(),
-    );
-  },
-);
-
-final _messagesIndex = Map.fromEntries(
-  _messages.mapIndexed((index, e) {
-    return MapEntry(e.id, index);
-  }),
-);
-
-final _onlineStatus = () {
-  switch (_rand.nextInt(4)) {
-    case 0:
-      return const IsOnlineStatus();
-    case 1:
-      return const HiddenOnlineStatus();
-    case 2:
-      return LastSeenOnlineStatus(
-        dateTime: DateTime(
-          _rand.nextInt(2) + 2022,
-          _rand.nextInt(12) + 1,
-          _rand.nextInt(28) + 1,
-          _rand.nextInt(24),
-          _rand.nextInt(60),
-          _rand.nextInt(60),
-        ),
-      );
-    default:
-      return const NoOnlineStatus();
-  }
-}();
-
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends HookConsumerWidget {
   const ChatScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dateTimeFacade = _getIt.get<DateTimeFacade>();
+
+    return Scaffold(
+      appBar: _AppBar(
+        dateTimeFacade,
+      ),
+      body: SafeArea(
+        child: Column(
+          children: const [
+            Expanded(
+              child: _MessageList(),
+            ),
+            MessageField(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ignore: prefer_mixin
+class _AppBar extends StatelessWidget with PreferredSizeWidget {
+  const _AppBar(this.dateTimeFacade);
+
+  final DateTimeFacade dateTimeFacade;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(_appBarHeight);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
 
-    final l10n = context.l10n;
-
-    final beautifiedOnlineStatus = _beautifyOnlineStatus(l10n, _onlineStatus);
-
-    return Scaffold(
-      appBar: AppBar(
+    return PreferredSize(
+      preferredSize: preferredSize,
+      child: AppBar(
         leading: Align(
           child: ElevatedButton(
             style: buttonStyleTX.filledIcon,
@@ -127,18 +73,8 @@ class ChatScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              _title,
-            ),
-            if (beautifiedOnlineStatus.isNotEmpty)
-              Text(
-                beautifiedOnlineStatus,
-                style: theme.textTheme.headline6,
-              ),
-          ],
+        title: _AppBarTitle(
+          dateTimeFacade,
         ),
         actions: [
           Align(
@@ -152,50 +88,48 @@ class ChatScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SafeArea(
-        child: Column(
+    );
+  }
+}
+
+class _AppBarTitle extends HookConsumerWidget {
+  const _AppBarTitle(this.dateTimeFacade);
+
+  final DateTimeFacade dateTimeFacade;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final chatStore = ref.watch(chatStoreProvider);
+
+    if (chatStore == null) {
+      return const SizedBox.shrink();
+    }
+
+    final theme = Theme.of(context);
+
+    final l10n = context.l10n;
+
+    final beautifiedOnlineStatus = _beautifyOnlineStatus(
+      l10n,
+      chatStore.chat.onlineStatus,
+    );
+
+    return Observer(
+      builder: (context) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: ListView.custom(
-                reverse: true,
-                childrenDelegate: SliverChildBuilderDelegate(
-                  childCount: _messages.length,
-                  findChildIndexCallback: (key) {
-                    final messageKey = key as ValueKey;
-                    final val = _messagesIndex[messageKey.value]!;
-
-                    return _messages.length - 1 - val;
-                  },
-                  (context, index) {
-                    final message = _messages[_messages.length - 1 - index];
-
-                    if (message.sender == null) {
-                      return InfoMessageCard(
-                        key: ValueKey(message.id),
-                        message: message,
-                      );
-                    }
-
-                    if (message.sender?.id == _me.id) {
-                      return MyMessageCard(
-                        key: ValueKey(message.id),
-                        message: message,
-                      );
-                    }
-
-                    return OthersMessageCard(
-                      key: ValueKey(message.id),
-                      showSender: _isGroup,
-                      message: message,
-                    );
-                  },
-                ),
-              ),
+            Text(
+              chatStore.chat.title,
             ),
-            const MessageField(),
+            if (beautifiedOnlineStatus.isNotEmpty)
+              Text(
+                beautifiedOnlineStatus,
+                style: theme.textTheme.headline6,
+              ),
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -212,7 +146,8 @@ class ChatScreen extends StatelessWidget {
     }
 
     if (onlineStatus is LastSeenOnlineStatus) {
-      return '${l10n.last_seen_online_status} ${_formatDateTime(onlineStatus.dateTime)}';
+      return '${l10n.last_seen_online_status} '
+          '${dateTimeFacade.beautifyBasedOnNow(onlineStatus.dateTime)}';
     }
 
     if (onlineStatus is NoOnlineStatus) {
@@ -221,21 +156,58 @@ class ChatScreen extends StatelessWidget {
 
     return '';
   }
+}
 
-  // TODO: move to separated class
-  String _formatDateTime(DateTime dateTime) {
-    final now = DateTime.now();
+class _MessageList extends HookConsumerWidget {
+  const _MessageList();
 
-    if (dateTime.year == now.year) {
-      if (dateTime.month == now.month) {
-        if (dateTime.day == now.day) {
-          return DateFormat.Hm().format(dateTime);
-        }
-      }
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final chatStore = ref.watch(chatStoreProvider);
 
-      return DateFormat.MMMd().format(dateTime);
+    if (chatStore == null) {
+      return const SizedBox.shrink();
     }
 
-    return DateFormat('dd.MM.yyy').format(dateTime);
+    return Observer(
+      builder: (context) {
+        return ListView.custom(
+          reverse: true,
+          childrenDelegate: SliverChildBuilderDelegate(
+            childCount: chatStore.suggestions.length,
+            findChildIndexCallback: (key) {
+              final messageKey = key as ValueKey;
+              final val = chatStore.messageKeys[messageKey.value]!;
+
+              return chatStore.suggestions.length - 1 - val;
+            },
+            (context, index) {
+              final message = chatStore
+                  .suggestions[chatStore.suggestions.length - 1 - index];
+
+              if (message.sender == null) {
+                return InfoMessageCard(
+                  key: ValueKey(message.id),
+                  message: message,
+                );
+              }
+
+              if (message.sender?.id == _me.id) {
+                return MyMessageCard(
+                  key: ValueKey(message.id),
+                  message: message,
+                );
+              }
+
+              return OthersMessageCard(
+                key: ValueKey(message.id),
+                showSender: chatStore.chat.chatType == ChatType.group,
+                message: message,
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 }
