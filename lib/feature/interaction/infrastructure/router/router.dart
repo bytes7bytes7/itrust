@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../chat_list/presentation/screen/screen.dart';
+import '../../../feed/presentation/screen/screen.dart';
+import '../../../menu/presentation/screen/screen.dart';
 import '../../presentation/screen/screen.dart';
 
 part 'transition.dart';
@@ -25,7 +27,7 @@ final router = GoRouter(
           path: '/feed',
           pageBuilder: (context, state) {
             return const NoTransitionPage(
-              child: Scaffold(),
+              child: FeedScreen(),
             );
           },
         ),
@@ -41,7 +43,7 @@ final router = GoRouter(
           path: '/menu',
           pageBuilder: (context, state) {
             return const NoTransitionPage(
-              child: Scaffold(),
+              child: MenuScreen(),
             );
           },
         ),

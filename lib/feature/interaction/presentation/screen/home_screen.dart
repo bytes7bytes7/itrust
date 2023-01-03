@@ -5,6 +5,8 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../util/hook/autorun.dart';
 import '../../../chat_list/presentation/screen/chat_list_screen.dart';
+import '../../../feed/presentation/screen/feed_screen.dart';
+import '../../../menu/presentation/screen/menu_screen.dart';
 import '../../application/store/home_store/home_store.dart';
 
 const _navIcons = [
@@ -33,8 +35,16 @@ class HomeScreen extends StatelessWidget {
   }
 
   int _calcCurrentTabIndex() {
+    if (body is FeedScreen) {
+      return 0;
+    }
+
     if (body is ChatListScreen) {
       return 1;
+    }
+
+    if (body is MenuScreen) {
+      return 2;
     }
 
     return 0;
