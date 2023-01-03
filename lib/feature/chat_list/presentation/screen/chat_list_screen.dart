@@ -136,9 +136,13 @@ class _Body extends HookWidget {
                         );
                       }
 
+                      final chat = chatListStore.suggestions[index];
+
                       return ChatCard(
-                        chat: chatListStore.suggestions[index],
-                        onPressed: () {},
+                        chat: chat,
+                        onPressed: () {
+                          chatListStore.onChatCardPressed(chat);
+                        },
                       );
                     },
                   ),

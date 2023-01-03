@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../chat/presentation/screen/chat_screen.dart';
 import '../../../chat_list/presentation/screen/screen.dart';
 import '../../../feed/presentation/screen/screen.dart';
 import '../../../menu/presentation/screen/screen.dart';
@@ -11,8 +12,19 @@ part 'transition.dart';
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _homeNavigatorKey = GlobalKey<NavigatorState>();
 
+enum AppRoutes {
+  feed('/feed'),
+  chatList('/chat'),
+  menu('/menu'),
+  chat('/chat/:id');
+
+  const AppRoutes(this.path);
+
+  final String path;
+}
+
 final router = GoRouter(
-  initialLocation: '/feed',
+  initialLocation: AppRoutes.feed.path,
   navigatorKey: _rootNavigatorKey,
   routes: [
     ShellRoute(
@@ -24,7 +36,7 @@ final router = GoRouter(
       },
       routes: [
         GoRoute(
-          path: '/feed',
+          path: AppRoutes.feed.path,
           pageBuilder: (context, state) {
             return const NoTransitionPage(
               child: FeedScreen(),
@@ -32,7 +44,7 @@ final router = GoRouter(
           },
         ),
         GoRoute(
-          path: '/chat',
+          path: AppRoutes.chatList.path,
           pageBuilder: (context, state) {
             return const NoTransitionPage(
               child: ChatListScreen(),
@@ -40,7 +52,7 @@ final router = GoRouter(
           },
         ),
         GoRoute(
-          path: '/menu',
+          path: AppRoutes.menu.path,
           pageBuilder: (context, state) {
             return const NoTransitionPage(
               child: MenuScreen(),
@@ -48,6 +60,17 @@ final router = GoRouter(
           },
         ),
       ],
+    ),
+    GoRoute(
+      path: AppRoutes.chat.path,
+      pageBuilder: (context, state) {
+        return CustomTransitionPage(
+          transitionsBuilder: leftward,
+          child: ChatScreen(
+            chatID: state.params['id'] as String,
+          ),
+        );
+      },
     ),
   ],
 );

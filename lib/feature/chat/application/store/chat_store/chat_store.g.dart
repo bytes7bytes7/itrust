@@ -238,6 +238,20 @@ mixin _$ChatStore on _ChatStore, Store {
     return _$selectItemAsyncAction.run(() => super.selectItem(item));
   }
 
+  late final _$_ChatStoreActionController =
+      ActionController(name: '_ChatStore', context: context);
+
+  @override
+  void onBackPressed() {
+    final _$actionInfo = _$_ChatStoreActionController.startAction(
+        name: '_ChatStore.onBackPressed');
+    try {
+      return super.onBackPressed();
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

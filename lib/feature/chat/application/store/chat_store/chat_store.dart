@@ -9,6 +9,7 @@ import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/application/persistence/chat_repository.dart';
 import '../../../../common/application/persistence/search_repository.dart';
 import '../../../../common/domain/domain.dart';
+import '../../service/chat_interaction_service.dart';
 
 part 'chat_store.g.dart';
 
@@ -20,11 +21,14 @@ class ChatStore = _ChatStore with _$ChatStore;
 
 abstract class _ChatStore with Store, Loadable, Errorable {
   _ChatStore({
+    required ChatInteractionService chatInteractionService,
     required ChatRepository chatRepository,
     required SearchRepository<Message> searchRepository,
-  })  : _chatRepository = chatRepository,
+  })  : _chatInteractionService = chatInteractionService,
+        _chatRepository = chatRepository,
         _searchRepository = searchRepository;
 
+  final ChatInteractionService _chatInteractionService;
   final ChatRepository _chatRepository;
   final SearchRepository<Message> _searchRepository;
   final int _limit = _defaultLimit;
@@ -70,15 +74,7 @@ abstract class _ChatStore with Store, Loadable, Errorable {
 
   @action
   Future<void> loadChat(ChatID chatID) async {
-    _isLoading = false;
-    _error = null;
-    _isLoadingMore = false;
-    _query = '';
-    _selected = null;
-    _suggestions = const [];
-    _hasMoreSuggestions = true;
-    _page = 0;
-    _messageKeys = const {};
+    _reset();
 
     await _wrap(() async {
       try {
@@ -88,6 +84,8 @@ abstract class _ChatStore with Store, Loadable, Errorable {
         _error = e;
       }
     });
+
+    await load();
   }
 
   @action
@@ -130,6 +128,26 @@ abstract class _ChatStore with Store, Loadable, Errorable {
   @action
   Future<void> selectItem(Message item) async {
     _selected = item;
+  }
+
+  @action
+  void onBackPressed() {
+    _reset();
+
+    _chatInteractionService.onBackPressed();
+  }
+
+  void _reset() {
+    _isLoading = false;
+    _error = null;
+    _isLoadingMore = false;
+    _query = '';
+    _selected = null;
+    _suggestions = const [];
+    _hasMoreSuggestions = true;
+    _page = 0;
+    _messageKeys = const {};
+    _chat = null;
   }
 
   Future<void> _loadData({

@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/application/persistence/search_repository.dart';
 import '../../../../common/domain/domain.dart';
+import '../../service/chat_list_interaction_service.dart';
 
 part 'chat_list_store.g.dart';
 
@@ -19,9 +20,12 @@ class ChatListStore = _ChatListStore with _$ChatListStore;
 
 abstract class _ChatListStore with Store, Loadable, Errorable {
   _ChatListStore({
+    required ChatListInteractionService chatListInteractionService,
     required SearchRepository<Chat> searchRepository,
-  }) : _searchRepository = searchRepository;
+  })  : _chatListInteractionService = chatListInteractionService,
+        _searchRepository = searchRepository;
 
+  final ChatListInteractionService _chatListInteractionService;
   final SearchRepository<Chat> _searchRepository;
   final int _limit = _defaultLimit;
 
@@ -105,6 +109,11 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
   @action
   Future<void> selectItem(Chat item) async {
     _selected = item;
+  }
+
+  @action
+  void onChatCardPressed(Chat chat) {
+    _chatListInteractionService.onChatCardPressed(chat);
   }
 
   Future<void> _loadData({

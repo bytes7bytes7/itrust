@@ -9,13 +9,13 @@ class HomeInteractionServiceImpl implements HomeInteractionService {
   void onTabChanged(int index) {
     switch (index) {
       case 0:
-        router.go('/feed');
+        router.go(AppRoutes.feed.path);
         break;
       case 1:
-        router.go('/chat');
+        router.go(AppRoutes.chatList.path);
         break;
       case 2:
-        router.go('/menu');
+        router.go(AppRoutes.menu.path);
         break;
     }
   }

@@ -64,13 +64,15 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
     final theme = Theme.of(context);
     final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
 
+    final chatStore = _getIt.get<ChatStore>();
+
     return PreferredSize(
       preferredSize: preferredSize,
       child: AppBar(
         leading: Align(
           child: ElevatedButton(
             style: buttonStyleTX.filledIcon,
-            onPressed: () {},
+            onPressed: chatStore.onBackPressed,
             child: const Icon(
               Icons.arrow_back,
             ),
@@ -104,23 +106,22 @@ class _AppBarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chatStore = _getIt.get<ChatStore>();
-    final chat = chatStore.chat;
-
-    if (chat == null) {
-      return const SizedBox.shrink();
-    }
-
     final theme = Theme.of(context);
-
     final l10n = context.l10n;
-
-    final beautifiedOnlineStatus = _beautifyOnlineStatus(
-      l10n,
-      chat.onlineStatus,
-    );
 
     return Observer(
       builder: (context) {
+        final chat = chatStore.chat;
+
+        if (chat == null) {
+          return const SizedBox.shrink();
+        }
+
+        final beautifiedOnlineStatus = _beautifyOnlineStatus(
+          l10n,
+          chat.onlineStatus,
+        );
+
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -169,14 +170,15 @@ class _MessageList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chatStore = _getIt.get<ChatStore>();
-    final chat = chatStore.chat;
-
-    if (chat == null) {
-      return const SizedBox.shrink();
-    }
 
     return Observer(
       builder: (context) {
+        final chat = chatStore.chat;
+
+        if (chat == null) {
+          return const SizedBox.shrink();
+        }
+
         return ListView.custom(
           reverse: true,
           childrenDelegate: SliverChildBuilderDelegate(
