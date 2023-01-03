@@ -35,10 +35,10 @@ class ChatCard extends StatelessWidget {
 
     final lastMessage = chat.lastMessage;
 
-    return InkWell(
-      onTap: onPressed,
-      child: ColoredBox(
-        color: colorSchemeTX.chatCard,
+    return Material(
+      color: colorSchemeTX.chatCard,
+      child: InkWell(
+        onTap: onPressed,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: _paddingH,

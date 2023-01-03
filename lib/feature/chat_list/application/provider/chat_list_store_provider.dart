@@ -7,7 +7,7 @@ import '../store/chat_list/chat_list_store.dart';
 
 final _getIt = GetIt.instance;
 
-final chatListProvider =
+final chatListStoreProvider =
     StateNotifierProvider<ChatListStoreNotifier, ChatListStore>(
   (ref) => ChatListStoreNotifier(
     ChatListStore(
