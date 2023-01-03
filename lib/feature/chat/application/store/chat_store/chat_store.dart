@@ -6,6 +6,7 @@ import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
+import '../../../../common/application/persistence/chat_repository.dart';
 import '../../../../common/application/persistence/search_repository.dart';
 import '../../../../common/domain/domain.dart';
 
@@ -14,23 +15,19 @@ part 'chat_store.g.dart';
 const _defaultLimit = 10;
 final _logger = Logger('$ChatStore');
 
-typedef IsSelectedAlgorithm<T> = bool Function(T item, String query);
-
-@Singleton()
+@singleton
 class ChatStore = _ChatStore with _$ChatStore;
 
 abstract class _ChatStore with Store, Loadable, Errorable {
   _ChatStore({
+    required ChatRepository chatRepository,
     required SearchRepository<Message> searchRepository,
-    required IsSelectedAlgorithm<Message> isSelectedAlgorithm,
-    int limit = _defaultLimit,
-  })  : _searchRepository = searchRepository,
-        _isSelectedAlgorithm = isSelectedAlgorithm,
-        _limit = limit;
+  })  : _chatRepository = chatRepository,
+        _searchRepository = searchRepository;
 
+  final ChatRepository _chatRepository;
   final SearchRepository<Message> _searchRepository;
-  final IsSelectedAlgorithm<Message> _isSelectedAlgorithm;
-  final int _limit;
+  final int _limit = _defaultLimit;
 
   @readonly
   Chat? _chat;
@@ -72,8 +69,7 @@ abstract class _ChatStore with Store, Loadable, Errorable {
   bool get showItems => _isLoading || _suggestions.isNotEmpty;
 
   @action
-  void setChat(Chat newChat) {
-    _chat = newChat;
+  Future<void> loadChat(ChatID chatID) async {
     _isLoading = false;
     _error = null;
     _isLoadingMore = false;
@@ -83,6 +79,15 @@ abstract class _ChatStore with Store, Loadable, Errorable {
     _hasMoreSuggestions = true;
     _page = 0;
     _messageKeys = const {};
+
+    await _wrap(() async {
+      try {
+        final chat = await _chatRepository.getByID(chatID);
+        _chat = chat;
+      } catch (e) {
+        _error = e;
+      }
+    });
   }
 
   @action
@@ -162,7 +167,7 @@ abstract class _ChatStore with Store, Loadable, Errorable {
       Message? selected;
       if (_selected == null) {
         selected = suggestions.firstWhereOrNull(
-          (e) => _isSelectedAlgorithm(e, query ?? _query),
+          (e) => e.text.toLowerCase().contains(query ?? _query),
         );
       }
 

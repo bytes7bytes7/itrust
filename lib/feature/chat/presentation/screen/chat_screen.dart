@@ -21,7 +21,12 @@ const _me = User(
 );
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+  const ChatScreen({
+    super.key,
+    required this.chatID,
+  });
+
+  final ChatID chatID;
 
   @override
   Widget build(BuildContext context) {

@@ -14,23 +14,16 @@ part 'chat_list_store.g.dart';
 const _defaultLimit = 10;
 final _logger = Logger('$ChatListStore');
 
-typedef IsSelectedAlgorithm<T> = bool Function(T item, String query);
-
-@Singleton()
+@singleton
 class ChatListStore = _ChatListStore with _$ChatListStore;
 
 abstract class _ChatListStore with Store, Loadable, Errorable {
   _ChatListStore({
     required SearchRepository<Chat> searchRepository,
-    required IsSelectedAlgorithm<Chat> isSelectedAlgorithm,
-    int limit = _defaultLimit,
-  })  : _searchRepository = searchRepository,
-        _isSelectedAlgorithm = isSelectedAlgorithm,
-        _limit = limit;
+  }) : _searchRepository = searchRepository;
 
   final SearchRepository<Chat> _searchRepository;
-  final IsSelectedAlgorithm<Chat> _isSelectedAlgorithm;
-  final int _limit;
+  final int _limit = _defaultLimit;
 
   @readonly
   bool _isLoading = false;
@@ -135,7 +128,7 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
       Chat? selected;
       if (_selected == null) {
         selected = suggestions.firstWhereOrNull(
-          (e) => _isSelectedAlgorithm(e, query ?? _query),
+          (e) => e.title.toLowerCase().contains(query ?? _query),
         );
       }
 

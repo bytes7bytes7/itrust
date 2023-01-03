@@ -9,7 +9,7 @@ part 'multi_search_store.g.dart';
 
 const _defaultLimit = 10;
 
-typedef IsMultiSelectedAlgorithm<T> = bool Function(T);
+typedef IsMultiSelectedAlgorithm<T> = bool Function(T item, String query);
 
 class MultiSearchStore<T> = _MultiSearchStore<T> with _$MultiSearchStore<T>;
 
@@ -100,7 +100,9 @@ abstract class _MultiSearchStore<T> with Store, Loadable, Errorable {
       }
 
       final selected = List<T>.from(_selected)
-        ..addAll(suggestions.where(_isSelectedAlgorithm));
+        ..addAll(
+          suggestions.where((e) => _isSelectedAlgorithm(e, query ?? _query)),
+        );
 
       _suggestions = List.unmodifiable(suggestions);
       _selected = List.unmodifiable(selected);
