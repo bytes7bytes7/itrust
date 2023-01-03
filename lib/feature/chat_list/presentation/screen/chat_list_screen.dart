@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../../theme/theme.dart';
 import '../../../../util/hook/autorun.dart';
 import '../../../common/presentation/widget/widget.dart';
-import '../../application/provider/chat_list_store_provider.dart';
+import '../../application/store/chat_list/chat_list_store.dart';
 import '../widget/widget.dart';
 
 const _loadingMorePadding = 8.0;
+final _getIt = GetIt.instance;
 
-class ChatListScreen extends HookWidget {
+class ChatListScreen extends StatelessWidget {
   const ChatListScreen({super.key});
 
   @override
@@ -71,15 +71,15 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 }
 
 // ignore: prefer_mixin
-class _AppBarBottom extends HookConsumerWidget with PreferredSizeWidget {
+class _AppBarBottom extends StatelessWidget with PreferredSizeWidget {
   const _AppBarBottom();
 
   @override
   Size get preferredSize => const Size.fromHeight(2);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final chatListStore = ref.watch(chatListStoreProvider);
+  Widget build(BuildContext context) {
+    final chatListStore = _getIt.get<ChatListStore>();
 
     return Observer(
       builder: (context) {
@@ -94,14 +94,14 @@ class _AppBarBottom extends HookConsumerWidget with PreferredSizeWidget {
   }
 }
 
-class _Body extends HookConsumerWidget {
+class _Body extends StatelessWidget {
   const _Body();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final chatListStore = ref.watch(chatListStoreProvider);
+    final chatListStore = _getIt.get<ChatListStore>();
 
     useAutorun((_) {
       chatListStore.load();

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
+import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
@@ -15,6 +16,7 @@ final _logger = Logger('$ChatListStore');
 
 typedef IsSelectedAlgorithm<T> = bool Function(T item, String query);
 
+@Singleton()
 class ChatListStore = _ChatListStore with _$ChatListStore;
 
 abstract class _ChatListStore with Store, Loadable, Errorable {

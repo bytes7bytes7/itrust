@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:collection/collection.dart';
+import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
@@ -15,16 +16,15 @@ final _logger = Logger('$ChatStore');
 
 typedef IsSelectedAlgorithm<T> = bool Function(T item, String query);
 
+@Singleton()
 class ChatStore = _ChatStore with _$ChatStore;
 
 abstract class _ChatStore with Store, Loadable, Errorable {
   _ChatStore({
-    required Chat chat,
     required SearchRepository<Message> searchRepository,
     required IsSelectedAlgorithm<Message> isSelectedAlgorithm,
     int limit = _defaultLimit,
-  })  : _chat = chat,
-        _searchRepository = searchRepository,
+  })  : _searchRepository = searchRepository,
         _isSelectedAlgorithm = isSelectedAlgorithm,
         _limit = limit;
 
@@ -33,7 +33,7 @@ abstract class _ChatStore with Store, Loadable, Errorable {
   final int _limit;
 
   @readonly
-  late Chat _chat;
+  Chat? _chat;
 
   @readonly
   bool _isLoading = false;
@@ -70,6 +70,20 @@ abstract class _ChatStore with Store, Loadable, Errorable {
 
   @computed
   bool get showItems => _isLoading || _suggestions.isNotEmpty;
+
+  @action
+  void setChat(Chat newChat) {
+    _chat = newChat;
+    _isLoading = false;
+    _error = null;
+    _isLoadingMore = false;
+    _query = '';
+    _selected = null;
+    _suggestions = const [];
+    _hasMoreSuggestions = true;
+    _page = 0;
+    _messageKeys = const {};
+  }
 
   @action
   Future<void> load() async {

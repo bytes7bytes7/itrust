@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../../theme/theme.dart';
 import '../../../common/application/persistence/date_time_facade.dart';
 import '../../../common/domain/domain.dart';
-import '../../application/provider/chat_store_provider.dart';
+import '../../application/store/chat_store/chat_store.dart';
 import '../widget/widget.dart';
 
 const _appBarHeight = 66.0;
@@ -21,11 +20,11 @@ const _me = User(
   avatarUrls: [],
 );
 
-class ChatScreen extends HookConsumerWidget {
+class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final dateTimeFacade = _getIt.get<DateTimeFacade>();
 
     return Scaffold(
@@ -92,16 +91,17 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   }
 }
 
-class _AppBarTitle extends HookConsumerWidget {
+class _AppBarTitle extends StatelessWidget {
   const _AppBarTitle(this.dateTimeFacade);
 
   final DateTimeFacade dateTimeFacade;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final chatStore = ref.watch(chatStoreProvider);
+  Widget build(BuildContext context) {
+    final chatStore = _getIt.get<ChatStore>();
+    final chat = chatStore.chat;
 
-    if (chatStore == null) {
+    if (chat == null) {
       return const SizedBox.shrink();
     }
 
@@ -111,7 +111,7 @@ class _AppBarTitle extends HookConsumerWidget {
 
     final beautifiedOnlineStatus = _beautifyOnlineStatus(
       l10n,
-      chatStore.chat.onlineStatus,
+      chat.onlineStatus,
     );
 
     return Observer(
@@ -120,7 +120,7 @@ class _AppBarTitle extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              chatStore.chat.title,
+              chat.title,
             ),
             if (beautifiedOnlineStatus.isNotEmpty)
               Text(
@@ -158,14 +158,15 @@ class _AppBarTitle extends HookConsumerWidget {
   }
 }
 
-class _MessageList extends HookConsumerWidget {
+class _MessageList extends StatelessWidget {
   const _MessageList();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final chatStore = ref.watch(chatStoreProvider);
+  Widget build(BuildContext context) {
+    final chatStore = _getIt.get<ChatStore>();
+    final chat = chatStore.chat;
 
-    if (chatStore == null) {
+    if (chat == null) {
       return const SizedBox.shrink();
     }
 
@@ -201,7 +202,7 @@ class _MessageList extends HookConsumerWidget {
 
               return OthersMessageCard(
                 key: ValueKey(message.id),
-                showSender: chatStore.chat.chatType == ChatType.group,
+                showSender: chat.chatType == ChatType.group,
                 message: message,
               );
             },

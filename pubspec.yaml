@@ -15,12 +15,12 @@ dependencies:
   collection: ^1.16.0
   connectivity_plus: ^3.0.2
   cupertino_icons: ^1.0.5
-  drift: ^2.4.1
+  drift: ^2.4.2
   equatable: ^2.0.5
   flutter_hooks: ^0.18.5+1
   flutter_mobx: ^2.0.6+5
   get_it: ^7.2.0
-  hooks_riverpod: ^2.1.3
+  go_router: ^6.0.0
   injectable: ^2.1.0
   intl: ^0.17.0
   logging: ^1.1.0

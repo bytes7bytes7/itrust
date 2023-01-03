@@ -32,16 +32,16 @@ mixin _$ChatStore on _ChatStore, Store {
 
   late final _$_chatAtom = Atom(name: '_ChatStore._chat', context: context);
 
-  Chat get chat {
+  Chat? get chat {
     _$_chatAtom.reportRead();
     return super._chat;
   }
 
   @override
-  Chat get _chat => chat;
+  Chat? get _chat => chat;
 
   @override
-  set _chat(Chat value) {
+  set _chat(Chat? value) {
     _$_chatAtom.reportWrite(value, super._chat, () {
       super._chat = value;
     });
@@ -228,6 +228,20 @@ mixin _$ChatStore on _ChatStore, Store {
   @override
   Future<void> selectItem(Message item) {
     return _$selectItemAsyncAction.run(() => super.selectItem(item));
+  }
+
+  late final _$_ChatStoreActionController =
+      ActionController(name: '_ChatStore', context: context);
+
+  @override
+  void setChat(Chat newChat) {
+    final _$actionInfo =
+        _$_ChatStoreActionController.startAction(name: '_ChatStore.setChat');
+    try {
+      return super.setChat(newChat);
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

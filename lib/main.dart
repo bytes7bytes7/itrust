@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'app.dart';
 import 'injector.dart';
@@ -16,8 +15,6 @@ void main() {
   configInjector(env: env);
 
   runApp(
-    const ProviderScope(
-      child: App(),
-    ),
+    const App(),
   );
 }
