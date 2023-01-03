@@ -32,6 +32,20 @@ final lightTheme = ThemeData.light().copyWith(
     color: _LightColors.cFFEC2885,
     linearTrackColor: Colors.transparent,
   ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    elevation: 8,
+    showUnselectedLabels: false,
+    showSelectedLabels: false,
+    backgroundColor: _LightColors.cFFFFFFFF,
+    selectedIconTheme: IconThemeData(
+      size: 24,
+      color: _LightColors.cFF000000,
+    ),
+    unselectedIconTheme: IconThemeData(
+      size: 24,
+      color: _LightColors.cFFC7C7C7,
+    ),
+  ),
   inputDecorationTheme: const InputDecorationTheme(
     isDense: true,
     contentPadding: EdgeInsets.symmetric(
