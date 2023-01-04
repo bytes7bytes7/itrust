@@ -10,30 +10,34 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:itrust/feature/chat/application/service/chat_interaction_service.dart'
     as _i3;
 import 'package:itrust/feature/chat/application/store/chat_store/chat_store.dart'
-    as _i19;
+    as _i21;
 import 'package:itrust/feature/chat/infrastructure/persistence/message_search_repository.dart'
-    as _i16;
+    as _i18;
 import 'package:itrust/feature/chat_list/application/service/chat_list_interaction_service.dart'
     as _i5;
 import 'package:itrust/feature/chat_list/application/store/chat_list/chat_list_store.dart'
-    as _i18;
+    as _i20;
 import 'package:itrust/feature/chat_list/infrastructure/persistence/chat_list_search_repository.dart'
-    as _i17;
+    as _i19;
 import 'package:itrust/feature/common/application/persistence/chat_repository.dart'
     as _i7;
 import 'package:itrust/feature/common/application/persistence/date_time_facade.dart'
-    as _i20;
+    as _i22;
 import 'package:itrust/feature/common/application/persistence/date_time_repository.dart'
     as _i9;
-import 'package:itrust/feature/common/application/persistence/search_repository.dart'
+import 'package:itrust/feature/common/application/persistence/message_repository.dart'
     as _i14;
-import 'package:itrust/feature/common/domain/domain.dart' as _i15;
+import 'package:itrust/feature/common/application/persistence/search_repository.dart'
+    as _i16;
+import 'package:itrust/feature/common/domain/domain.dart' as _i17;
 import 'package:itrust/feature/common/infrastructure/persistence/chat_repository.dart'
     as _i8;
 import 'package:itrust/feature/common/infrastructure/persistence/date_time_facade.dart'
-    as _i21;
+    as _i23;
 import 'package:itrust/feature/common/infrastructure/persistence/date_time_repository.dart'
     as _i10;
+import 'package:itrust/feature/common/infrastructure/persistence/message_repository.dart'
+    as _i15;
 import 'package:itrust/feature/interaction/application/service/home_interaction_service.dart'
     as _i11;
 import 'package:itrust/feature/interaction/application/store/home_store/home_store.dart'
@@ -80,25 +84,30 @@ _i1.GetIt init(
   gh.singleton<_i11.HomeInteractionService>(_i12.HomeInteractionServiceImpl());
   gh.singleton<_i13.HomeStore>(_i13.HomeStore(
       homeInteractionService: gh<_i11.HomeInteractionService>()));
-  gh.singleton<_i14.SearchRepository<_i15.Message>>(
-    _i16.TestMessageSearchRepository(),
+  gh.singleton<_i14.MessageRepository>(
+    _i15.TestMessageRepository(chatRepository: gh<_i7.ChatRepository>()),
     registerFor: {_test},
   );
-  gh.singleton<_i14.SearchRepository<_i15.Chat>>(
-    _i17.TestChatListSearchRepository(chatRepository: gh<_i7.ChatRepository>()),
+  gh.singleton<_i16.SearchRepository<_i17.Message>>(
+    _i18.TestMessageSearchRepository(
+        messageRepository: gh<_i14.MessageRepository>()),
     registerFor: {_test},
   );
-  gh.singleton<_i18.ChatListStore>(_i18.ChatListStore(
+  gh.singleton<_i16.SearchRepository<_i17.Chat>>(
+    _i19.TestChatListSearchRepository(chatRepository: gh<_i7.ChatRepository>()),
+    registerFor: {_test},
+  );
+  gh.singleton<_i20.ChatListStore>(_i20.ChatListStore(
     chatListInteractionService: gh<_i5.ChatListInteractionService>(),
-    searchRepository: gh<_i14.SearchRepository<_i15.Chat>>(),
+    searchRepository: gh<_i16.SearchRepository<_i17.Chat>>(),
   ));
-  gh.singleton<_i19.ChatStore>(_i19.ChatStore(
+  gh.singleton<_i21.ChatStore>(_i21.ChatStore(
     chatInteractionService: gh<_i3.ChatInteractionService>(),
     chatRepository: gh<_i7.ChatRepository>(),
-    searchRepository: gh<_i14.SearchRepository<_i15.Message>>(),
+    searchRepository: gh<_i16.SearchRepository<_i17.Message>>(),
   ));
-  gh.singleton<_i20.DateTimeFacade>(
-    _i21.ProdDateTimeFacade(gh<_i9.DateTimeRepository>()),
+  gh.singleton<_i22.DateTimeFacade>(
+    _i23.ProdDateTimeFacade(gh<_i9.DateTimeRepository>()),
     registerFor: {
       _test,
       _dev,

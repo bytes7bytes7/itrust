@@ -1,17 +1,19 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../common/domain/domain.dart';
-import 'burn_type.dart';
 
-class ChatBurn extends Equatable {
-  const ChatBurn({
-    required this.chatID,
-    required this.burnType,
-  });
+part 'chat_burn.freezed.dart';
 
-  final ChatID chatID;
-  final BurnType burnType;
+part 'chat_burn.g.dart';
 
-  @override
-  List<Object?> get props => [chatID, burnType];
+@freezed
+class ChatBurn with _$ChatBurn {
+  const factory ChatBurn({
+    required ChatID chatID,
+    required bool burn,
+    Duration? burnAfter,
+  }) = _ChatBurn;
+
+  factory ChatBurn.fromJson(Map<String, Object?> json) =>
+      _$ChatBurnFromJson(json);
 }

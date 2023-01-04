@@ -1,17 +1,24 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../common/domain/domain.dart';
-import 'mute_type.dart';
+import '../domain.dart';
 
-class ChatMute extends Equatable {
-  const ChatMute({
-    required this.chatID,
-    required this.muteType,
-  });
+part 'chat_mute.freezed.dart';
+
+part 'chat_mute.g.dart';
+
+@freezed
+class ChatMute with _$ChatMute {
+  const factory ChatMute({
+    required ChatID chatID,
+    required MuteType type,
+    Duration? muteAt,
+  }) = _ChatMute;
 
   final ChatID chatID;
-  final MuteType muteType;
+  final MuteType type;
+  final Duration? muteAt;
 
-  @override
-  List<Object?> get props => [chatID, muteType];
+  factory ChatMute.fromJson(Map<String, Object?> json) =>
+      _$ChatMuteFromJson(json);
 }

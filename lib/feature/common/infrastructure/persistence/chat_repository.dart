@@ -87,25 +87,27 @@ class TestChatRepository implements ChatRepository {
           avatarUrl: _rand.nextBool()
               ? 'https://i0.wp.com/evanstonroundtable.com/wp-content/uploads/2022/05/Lushina-scaled-e1652827479814.jpg?fit=1200%2C900&ssl=1'
               : null,
-          lastMessage: _rand.nextInt(5) == 0
-              ? null
-              : Message(
-                  id: 'message',
-                  chatID: id,
-                  sender: _rand.nextBool()
-                      ? User(
-                          id: _randString(8),
-                          name: _randString(_rand.nextInt(15) + 5),
-                          avatarUrls: [],
-                        )
-                      : null,
-                  text: _randString(_rand.nextInt(40) + 5),
-                  mediaUrls: [],
-                  sentAt: _randDateTime(),
-                  modifiedAt: _rand.nextBool() ? _randDateTime() : null,
-                  willBeBurntAt: _rand.nextBool() ? _randDateTime() : null,
-                  isRead: unreadAmount == 0,
-                ),
+          messages: _rand.nextInt(5) == 0
+              ? []
+              : [
+                  Message(
+                    id: 'message',
+                    chatID: id,
+                    sender: _rand.nextBool()
+                        ? User(
+                            id: _randString(8),
+                            name: _randString(_rand.nextInt(15) + 5),
+                            avatarUrls: [],
+                          )
+                        : null,
+                    text: _randString(_rand.nextInt(40) + 5),
+                    mediaUrls: [],
+                    sentAt: _randDateTime(),
+                    modifiedAt: _rand.nextBool() ? _randDateTime() : null,
+                    willBeBurntAt: _rand.nextBool() ? _randDateTime() : null,
+                    isRead: unreadAmount == 0,
+                  ),
+                ],
         );
       },
     );

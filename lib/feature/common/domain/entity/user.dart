@@ -1,13 +1,20 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../value_object/value_object.dart';
 
-class User {
-  const User({
-    required this.id,
-    required this.name,
-    required this.avatarUrls,
-  });
+part 'user.freezed.dart';
 
-  final UserID id;
-  final String name;
-  final List<String> avatarUrls;
+part 'user.g.dart';
+
+@freezed
+class User with _$User {
+  const factory User({
+    required UserID id,
+    required String name,
+    required List<String> avatarUrls,
+    required bool online,
+    DateTime? lastSeen,
+  }) = _User;
+
+  factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 }

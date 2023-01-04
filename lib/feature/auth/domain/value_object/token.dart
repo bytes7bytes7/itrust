@@ -1,17 +1,15 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Token extends Equatable {
-  const Token({
-    required this.access,
-    required this.refresh,
-  });
+part 'token.freezed.dart';
 
-  final String access;
-  final String refresh;
+part 'token.g.dart';
 
-  @override
-  List<Object?> get props => [
-        access,
-        refresh,
-      ];
+@freezed
+class Token with _$Token {
+  const factory Token({
+    required String access,
+    required String refresh,
+  }) = _Token;
+
+  factory Token.fromJson(Map<String, Object?> json) => _$TokenFromJson(json);
 }

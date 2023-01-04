@@ -191,16 +191,16 @@ mixin _$ChatStore on _ChatStore, Store {
   late final _$_messageKeysAtom =
       Atom(name: '_ChatStore._messageKeys', context: context);
 
-  Map<String, int> get messageKeys {
+  Map<MessageID, int> get messageKeys {
     _$_messageKeysAtom.reportRead();
     return super._messageKeys;
   }
 
   @override
-  Map<String, int> get _messageKeys => messageKeys;
+  Map<MessageID, int> get _messageKeys => messageKeys;
 
   @override
-  set _messageKeys(Map<String, int> value) {
+  set _messageKeys(Map<MessageID, int> value) {
     _$_messageKeysAtom.reportWrite(value, super._messageKeys, () {
       super._messageKeys = value;
     });
@@ -210,7 +210,7 @@ mixin _$ChatStore on _ChatStore, Store {
       AsyncAction('_ChatStore.loadChat', context: context);
 
   @override
-  Future<void> loadChat(String chatID) {
+  Future<void> loadChat(ChatID chatID) {
     return _$loadChatAsyncAction.run(() => super.loadChat(chatID));
   }
 

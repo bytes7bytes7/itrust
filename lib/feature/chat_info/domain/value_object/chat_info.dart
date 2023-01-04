@@ -1,23 +1,19 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../common/domain/domain.dart';
-import 'chat_role.dart';
+import 'user_chat_info.dart';
 
-class ChatInfo extends Equatable {
-  const ChatInfo({
-    required this.chatID,
-    required this.participants,
-    required this.roles,
-  });
+part 'chat_info.freezed.dart';
 
-  final ChatID chatID;
-  final List<User> participants;
-  final Map<UserID, ChatRole> roles;
+part 'chat_info.g.dart';
 
-  @override
-  List<Object?> get props => [
-        chatID,
-        participants,
-        roles,
-      ];
+@freezed
+class ChatInfo with _$ChatInfo {
+  const factory ChatInfo({
+    required ChatID chatID,
+    required List<UserChatInfo> participants,
+  }) = _ChatInfo;
+
+  factory ChatInfo.fromJson(Map<String, Object?> json) =>
+      _$ChatInfoFromJson(json);
 }

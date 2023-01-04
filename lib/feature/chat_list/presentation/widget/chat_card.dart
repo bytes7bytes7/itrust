@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -33,7 +34,7 @@ class ChatCard extends StatelessWidget {
 
     final l10n = context.l10n;
 
-    final lastMessage = chat.lastMessage;
+    final lastMessage = chat.messages.lastOrNull;
 
     return Material(
       color: colorSchemeTX.chatCard,

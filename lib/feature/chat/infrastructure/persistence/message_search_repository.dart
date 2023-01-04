@@ -2,12 +2,65 @@ import 'dart:math';
 
 import 'package:injectable/injectable.dart';
 
+import '../../../common/application/persistence/message_repository.dart';
 import '../../../common/application/persistence/search_repository.dart';
 import '../../../common/domain/domain.dart';
 
 @test
 @Singleton(as: SearchRepository<Message>)
 class TestMessageSearchRepository implements SearchRepository<Message> {
+  TestMessageSearchRepository({
+    required MessageRepository messageRepository,
+  }) : _messageRepository = messageRepository;
+
+  final MessageRepository _messageRepository;
+
+  @override
+  Future<List<Message>> load({
+    required int limit,
+    required int offset,
+    required String query,
+  }) async {
+    final messages = await _genMessages(limit: limit);
+
+    await _messageRepository.addAllByChatID(chatID, messages);
+
+    return messages;
+  }
+
+  Future<List<Message>> _genMessages({
+    required int limit,
+  }) {
+    return Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        return List.generate(
+          limit,
+          (index) {
+            final sender = _rand.nextBool()
+                ? _sender
+                : _rand.nextBool()
+                    ? _me
+                    : null;
+            return Message(
+              id: '$index',
+              chatID: 'chatID',
+              sender: sender,
+              text: _rand.nextBool() && sender != null
+                  ? _randString(_rand.nextInt(20) + 8)
+                  : '',
+              mediaUrls: [],
+              sentAt: _randDateTime(),
+              modifiedAt: _rand.nextBool() ? _randDateTime() : null,
+              willBeBurntAt: _rand.nextBool() ? _randDateTime() : null,
+              isRead: _rand.nextBool(),
+            );
+          },
+        );
+      },
+    );
+  }
+
   final _rand = Random();
 
   final _sender = const User(
@@ -42,42 +95,6 @@ class TestMessageSearchRepository implements SearchRepository<Message> {
       _rand.nextInt(24),
       _rand.nextInt(60),
       _rand.nextInt(60),
-    );
-  }
-
-  @override
-  Future<List<Message>> load({
-    required int limit,
-    required int offset,
-    required String query,
-  }) {
-    return Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        return List.generate(
-          limit,
-          (index) {
-            final sender = _rand.nextBool()
-                ? _sender
-                : _rand.nextBool()
-                    ? _me
-                    : null;
-            return Message(
-              id: '$index',
-              chatID: 'chatID',
-              sender: sender,
-              text: _rand.nextBool() && sender != null
-                  ? _randString(_rand.nextInt(20) + 8)
-                  : '',
-              mediaUrls: [],
-              sentAt: _randDateTime(),
-              modifiedAt: _rand.nextBool() ? _randDateTime() : null,
-              willBeBurntAt: _rand.nextBool() ? _randDateTime() : null,
-              isRead: _rand.nextBool(),
-            );
-          },
-        );
-      },
     );
   }
 }

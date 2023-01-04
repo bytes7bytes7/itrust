@@ -1,26 +1,26 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../value_object/value_object.dart';
 import 'user.dart';
 
-class Message {
-  const Message({
-    required this.id,
-    required this.chatID,
-    required this.sender,
-    required this.text,
-    required this.mediaUrls,
-    required this.sentAt,
-    required this.modifiedAt,
-    required this.willBeBurntAt,
-    required this.isRead,
-  });
+part 'message.freezed.dart';
 
-  final MessageID id;
-  final ChatID chatID;
-  final User? sender;
-  final String text;
-  final List<String> mediaUrls;
-  final DateTime sentAt;
-  final DateTime? modifiedAt;
-  final DateTime? willBeBurntAt;
-  final bool isRead;
+part 'message.g.dart';
+
+@freezed
+class Message with _$Message {
+  const factory Message({
+    required MessageID id,
+    required ChatID chatID,
+    required String text,
+    required List<String> mediaUrls,
+    required DateTime sentAt,
+    required bool isRead,
+    User? sender,
+    DateTime? modifiedAt,
+    DateTime? willBeBurntAt,
+  }) = _Message;
+
+  factory Message.fromJson(Map<String, Object?> json) =>
+      _$MessageFromJson(json);
 }
