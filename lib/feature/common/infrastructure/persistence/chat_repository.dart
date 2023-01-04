@@ -9,6 +9,32 @@ import '../../domain/domain.dart';
 @test
 @Singleton(as: ChatRepository)
 class TestChatRepository implements ChatRepository {
+  final _chats = <ChatID, Chat>{};
+
+  @override
+  int get length => _chats.length;
+
+  @override
+  FutureOr<Chat> getByID(ChatID id) async {
+    final loadedChat = _chats[id];
+
+    if (loadedChat != null) {
+      return loadedChat;
+    }
+
+    final newChat = await _genChat(id);
+    _chats[newChat.id] = newChat;
+
+    return newChat;
+  }
+
+  @override
+  void addAll(List<Chat> chats) {
+    for (final c in chats) {
+      _chats[c.id] = c;
+    }
+  }
+
   late final _rand = Random();
 
   final _alpha = 'qwertyuiopasdfghjklzxcvbnm';
@@ -34,8 +60,7 @@ class TestChatRepository implements ChatRepository {
     );
   }
 
-  @override
-  FutureOr<Chat> getByID(ChatID id) {
+  Future<Chat> _genChat(ChatID id) async {
     return Future.delayed(
       const Duration(seconds: 1),
       () {

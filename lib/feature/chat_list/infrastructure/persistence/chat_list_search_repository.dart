@@ -2,12 +2,32 @@ import 'dart:math';
 
 import 'package:injectable/injectable.dart';
 
+import '../../../common/application/persistence/chat_repository.dart';
 import '../../../common/application/persistence/search_repository.dart';
 import '../../../common/domain/domain.dart';
 
 @test
 @Singleton(as: SearchRepository<Chat>)
 class TestChatListSearchRepository implements SearchRepository<Chat> {
+  TestChatListSearchRepository({
+    required ChatRepository chatRepository,
+  }) : _chatRepository = chatRepository;
+
+  final ChatRepository _chatRepository;
+
+  @override
+  Future<List<Chat>> load({
+    required int limit,
+    required int offset,
+    required String query,
+  }) async {
+    final chats = await _genChats(limit: limit);
+
+    _chatRepository.addAll(chats);
+
+    return chats;
+  }
+
   final _rand = Random();
 
   final _alpha = 'qwertyuiopasdfghjklzxcvbnm';
@@ -33,11 +53,8 @@ class TestChatListSearchRepository implements SearchRepository<Chat> {
     );
   }
 
-  @override
-  Future<List<Chat>> load({
+  Future<List<Chat>> _genChats({
     required int limit,
-    required int offset,
-    required String query,
   }) {
     return Future.delayed(
       const Duration(seconds: 3),

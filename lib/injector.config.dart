@@ -85,7 +85,7 @@ _i1.GetIt init(
     registerFor: {_test},
   );
   gh.singleton<_i14.SearchRepository<_i15.Chat>>(
-    _i17.TestChatListSearchRepository(),
+    _i17.TestChatListSearchRepository(chatRepository: gh<_i7.ChatRepository>()),
     registerFor: {_test},
   );
   gh.singleton<_i18.ChatListStore>(_i18.ChatListStore(
