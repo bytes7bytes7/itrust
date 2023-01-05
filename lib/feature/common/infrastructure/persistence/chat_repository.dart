@@ -65,24 +65,12 @@ class TestChatRepository implements ChatRepository {
       const Duration(seconds: 1),
       () {
         final type = _rand.nextBool() ? ChatType.group : ChatType.dialog;
-        final dialogOnlineStatuses = [
-          const IsOnlineStatus(),
-          const HiddenOnlineStatus(),
-          LastSeenOnlineStatus(
-            dateTime: _randDateTime(),
-          ),
-        ];
         final unreadAmount = _rand.nextInt(2000);
 
         return Chat(
           id: id,
           title: _randString(_rand.nextInt(20) + 5),
           chatType: type,
-          onlineStatus: type == ChatType.group
-              ? const NoOnlineStatus()
-              : dialogOnlineStatuses[_rand.nextInt(
-                  dialogOnlineStatuses.length,
-                )],
           unreadAmount: unreadAmount,
           avatarUrl: _rand.nextBool()
               ? 'https://i0.wp.com/evanstonroundtable.com/wp-content/uploads/2022/05/Lushina-scaled-e1652827479814.jpg?fit=1200%2C900&ssl=1'
@@ -91,15 +79,9 @@ class TestChatRepository implements ChatRepository {
               ? []
               : [
                   Message(
-                    id: 'message',
+                    id: const MessageID('message'),
                     chatID: id,
-                    sender: _rand.nextBool()
-                        ? User(
-                            id: _randString(8),
-                            name: _randString(_rand.nextInt(15) + 5),
-                            avatarUrls: [],
-                          )
-                        : null,
+                    senderID: _rand.nextBool() ? UserID(_randString(8)) : null,
                     text: _randString(_rand.nextInt(40) + 5),
                     mediaUrls: [],
                     sentAt: _randDateTime(),

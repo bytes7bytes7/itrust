@@ -9,16 +9,29 @@ part 'chat.g.dart';
 
 @freezed
 class Chat with _$Chat {
-  const factory Chat({
+  const factory Chat.monologue({
     required ChatID id,
-    String? avatarUrl,
-    // Name of icon if [avatarUrl] == null
-    String? icon,
-    required String title,
-    required List<Message> messages,
     required int unreadAmount,
-    required ChatType chatType,
-  }) = _Chat;
+    required String title,
+    Message? lastMessage,
+    String? pic,
+    String? icon,
+  }) = MonologueChat;
+
+  const factory Chat.dialogue({
+    required ChatID id,
+    required int unreadAmount,
+    required UserID partnerID,
+    Message? lastMessage,
+  }) = DialogueChat;
+
+  const factory Chat.group({
+    required ChatID id,
+    required int unreadAmount,
+    required String title,
+    Message? lastMessage,
+    String? pic,
+  }) = GroupChat;
 
   factory Chat.fromJson(Map<String, Object?> json) => _$ChatFromJson(json);
 }

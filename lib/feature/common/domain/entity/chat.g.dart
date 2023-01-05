@@ -6,29 +6,67 @@ part of 'chat.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Chat _$$_ChatFromJson(Map<String, dynamic> json) => _$_Chat(
+_$MonologueChat _$$MonologueChatFromJson(Map<String, dynamic> json) =>
+    _$MonologueChat(
       id: ChatID.fromJson(json['id'] as Map<String, dynamic>),
-      avatarUrl: json['avatarUrl'] as String?,
-      icon: json['icon'] as String?,
-      title: json['title'] as String,
-      messages: (json['messages'] as List<dynamic>)
-          .map((e) => Message.fromJson(e as Map<String, dynamic>))
-          .toList(),
       unreadAmount: json['unreadAmount'] as int,
-      chatType: $enumDecode(_$ChatTypeEnumMap, json['chatType']),
+      title: json['title'] as String,
+      lastMessage: json['lastMessage'] == null
+          ? null
+          : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
+      pic: json['pic'] as String?,
+      icon: json['icon'] as String?,
+      $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$_ChatToJson(_$_Chat instance) => <String, dynamic>{
+Map<String, dynamic> _$$MonologueChatToJson(_$MonologueChat instance) =>
+    <String, dynamic>{
       'id': instance.id.toJson(),
-      'avatarUrl': instance.avatarUrl,
-      'icon': instance.icon,
-      'title': instance.title,
-      'messages': instance.messages.map((e) => e.toJson()).toList(),
       'unreadAmount': instance.unreadAmount,
-      'chatType': _$ChatTypeEnumMap[instance.chatType]!,
+      'title': instance.title,
+      'lastMessage': instance.lastMessage?.toJson(),
+      'pic': instance.pic,
+      'icon': instance.icon,
+      'runtimeType': instance.$type,
     };
 
-const _$ChatTypeEnumMap = {
-  ChatType.dialog: 0,
-  ChatType.group: 1,
-};
+_$DialogueChat _$$DialogueChatFromJson(Map<String, dynamic> json) =>
+    _$DialogueChat(
+      id: ChatID.fromJson(json['id'] as Map<String, dynamic>),
+      unreadAmount: json['unreadAmount'] as int,
+      partnerID: UserID.fromJson(json['partnerID'] as Map<String, dynamic>),
+      lastMessage: json['lastMessage'] == null
+          ? null
+          : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$DialogueChatToJson(_$DialogueChat instance) =>
+    <String, dynamic>{
+      'id': instance.id.toJson(),
+      'unreadAmount': instance.unreadAmount,
+      'partnerID': instance.partnerID.toJson(),
+      'lastMessage': instance.lastMessage?.toJson(),
+      'runtimeType': instance.$type,
+    };
+
+_$GroupChat _$$GroupChatFromJson(Map<String, dynamic> json) => _$GroupChat(
+      id: ChatID.fromJson(json['id'] as Map<String, dynamic>),
+      unreadAmount: json['unreadAmount'] as int,
+      title: json['title'] as String,
+      lastMessage: json['lastMessage'] == null
+          ? null
+          : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
+      pic: json['pic'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$GroupChatToJson(_$GroupChat instance) =>
+    <String, dynamic>{
+      'id': instance.id.toJson(),
+      'unreadAmount': instance.unreadAmount,
+      'title': instance.title,
+      'lastMessage': instance.lastMessage?.toJson(),
+      'pic': instance.pic,
+      'runtimeType': instance.$type,
+    };

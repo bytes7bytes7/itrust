@@ -13,6 +13,6 @@ class ChatListInteractionServiceImpl implements ChatListInteractionService {
   @override
   void onChatCardPressed(Chat chat) {
     _getIt.get<ChatStore>().loadChat(chat.id);
-    router.push(AppRoutes.chat.path.replaceFirst(':id', chat.id));
+    router.push(AppRoutes.chat.path.replaceFirst(':id', chat.id.value));
   }
 }

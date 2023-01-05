@@ -15,10 +15,6 @@ class ChatMute with _$ChatMute {
     Duration? muteAt,
   }) = _ChatMute;
 
-  final ChatID chatID;
-  final MuteType type;
-  final Duration? muteAt;
-
   factory ChatMute.fromJson(Map<String, Object?> json) =>
       _$ChatMuteFromJson(json);
 }

@@ -28,8 +28,6 @@ class OthersMessageCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
-    final sender = message.sender;
-
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: _paddingH,
@@ -57,9 +55,9 @@ class OthersMessageCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (showSender && sender != null) ...[
+                  if (showSender) ...[
                     Text(
-                      sender.name,
+                      senderName,
                       style: theme.textTheme.caption?.copyWith(
                         color: colorSchemeTX.msgSender,
                       ),

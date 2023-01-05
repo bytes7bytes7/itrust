@@ -8,13 +8,19 @@ part 'user.g.dart';
 
 @freezed
 class User with _$User {
-  const factory User({
+  const factory User.staff({
+    required UserID id,
+    required String name,
+    required List<String> avatarUrls,
+  }) = StaffUser;
+
+  const factory User.end({
     required UserID id,
     required String name,
     required List<String> avatarUrls,
     required bool online,
     DateTime? lastSeen,
-  }) = _User;
+  }) = EndUser;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 }

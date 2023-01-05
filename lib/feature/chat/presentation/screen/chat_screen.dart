@@ -15,9 +15,10 @@ final _getIt = GetIt.instance;
 
 // TODO: remove
 const _me = User(
-  id: 'me',
+  id: UserID('me'),
   name: 'bytes7 bytes7',
   avatarUrls: [],
+  online: true,
 );
 
 class ChatScreen extends StatelessWidget {
@@ -119,7 +120,7 @@ class _AppBarTitle extends StatelessWidget {
 
         final beautifiedOnlineStatus = _beautifyOnlineStatus(
           l10n,
-          chat.onlineStatus,
+          chat.partner,
         );
 
         return Column(
@@ -141,23 +142,26 @@ class _AppBarTitle extends StatelessWidget {
 
   String _beautifyOnlineStatus(
     AppLocalizations l10n,
-    OnlineStatus onlineStatus,
+    User? partner,
   ) {
-    if (onlineStatus is IsOnlineStatus) {
+    if (partner == null) {
+      return l10n.no_online_status;
+    }
+
+    final online = partner.online;
+    final lastSeen = partner.lastSeen;
+
+    if (online) {
       return l10n.is_online_status;
     }
 
-    if (onlineStatus is HiddenOnlineStatus) {
+    if (!online && lastSeen == null) {
       return l10n.hidden_online_status;
     }
 
-    if (onlineStatus is LastSeenOnlineStatus) {
+    if (online && lastSeen != null) {
       return '${l10n.last_seen_online_status} '
-          '${dateTimeFacade.beautifyBasedOnNow(onlineStatus.dateTime)}';
-    }
-
-    if (onlineStatus is NoOnlineStatus) {
-      return l10n.no_online_status;
+          '${dateTimeFacade.beautifyBasedOnNow(lastSeen)}';
     }
 
     return '';
@@ -193,14 +197,14 @@ class _MessageList extends StatelessWidget {
               final message = chatStore
                   .suggestions[chatStore.suggestions.length - 1 - index];
 
-              if (message.sender == null) {
+              if (message.senderID == null) {
                 return InfoMessageCard(
                   key: ValueKey(message.id),
                   message: message,
                 );
               }
 
-              if (message.sender?.id == _me.id) {
+              if (message.senderID == _me.id) {
                 return MyMessageCard(
                   key: ValueKey(message.id),
                   message: message,
@@ -209,8 +213,8 @@ class _MessageList extends StatelessWidget {
 
               return OthersMessageCard(
                 key: ValueKey(message.id),
-                showSender: chat.chatType == ChatType.group,
                 message: message,
+                showSender: chat.chatType == ChatType.group,
               );
             },
           ),

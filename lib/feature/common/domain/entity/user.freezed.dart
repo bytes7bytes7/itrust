@@ -15,7 +15,16 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 User _$UserFromJson(Map<String, dynamic> json) {
-  return _User.fromJson(json);
+  switch (json['runtimeType']) {
+    case 'staff':
+      return StaffUser.fromJson(json);
+    case 'end':
+      return EndUser.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'User',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
 }
 
 /// @nodoc
@@ -23,9 +32,51 @@ mixin _$User {
   UserID get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<String> get avatarUrls => throw _privateConstructorUsedError;
-  bool get online => throw _privateConstructorUsedError;
-  DateTime? get lastSeen => throw _privateConstructorUsedError;
-
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(UserID id, String name, List<String> avatarUrls)
+        staff,
+    required TResult Function(UserID id, String name, List<String> avatarUrls,
+            bool online, DateTime? lastSeen)
+        end,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(UserID id, String name, List<String> avatarUrls)? staff,
+    TResult? Function(UserID id, String name, List<String> avatarUrls,
+            bool online, DateTime? lastSeen)?
+        end,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(UserID id, String name, List<String> avatarUrls)? staff,
+    TResult Function(UserID id, String name, List<String> avatarUrls,
+            bool online, DateTime? lastSeen)?
+        end,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(StaffUser value) staff,
+    required TResult Function(EndUser value) end,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(StaffUser value)? staff,
+    TResult? Function(EndUser value)? end,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(StaffUser value)? staff,
+    TResult Function(EndUser value)? end,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
@@ -36,12 +87,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call(
-      {UserID id,
-      String name,
-      List<String> avatarUrls,
-      bool online,
-      DateTime? lastSeen});
+  $Res call({UserID id, String name, List<String> avatarUrls});
 
   $UserIDCopyWith<$Res> get id;
 }
@@ -62,8 +108,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? id = null,
     Object? name = null,
     Object? avatarUrls = null,
-    Object? online = null,
-    Object? lastSeen = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -78,14 +122,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.avatarUrls
           : avatarUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      online: null == online
-          ? _value.online
-          : online // ignore: cast_nullable_to_non_nullable
-              as bool,
-      lastSeen: freezed == lastSeen
-          ? _value.lastSeen
-          : lastSeen // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
     ) as $Val);
   }
 
@@ -99,9 +135,207 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
 }
 
 /// @nodoc
-abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$_UserCopyWith(_$_User value, $Res Function(_$_User) then) =
-      __$$_UserCopyWithImpl<$Res>;
+abstract class _$$StaffUserCopyWith<$Res> implements $UserCopyWith<$Res> {
+  factory _$$StaffUserCopyWith(
+          _$StaffUser value, $Res Function(_$StaffUser) then) =
+      __$$StaffUserCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({UserID id, String name, List<String> avatarUrls});
+
+  @override
+  $UserIDCopyWith<$Res> get id;
+}
+
+/// @nodoc
+class __$$StaffUserCopyWithImpl<$Res>
+    extends _$UserCopyWithImpl<$Res, _$StaffUser>
+    implements _$$StaffUserCopyWith<$Res> {
+  __$$StaffUserCopyWithImpl(
+      _$StaffUser _value, $Res Function(_$StaffUser) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? avatarUrls = null,
+  }) {
+    return _then(_$StaffUser(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as UserID,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarUrls: null == avatarUrls
+          ? _value._avatarUrls
+          : avatarUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$StaffUser implements StaffUser {
+  const _$StaffUser(
+      {required this.id,
+      required this.name,
+      required final List<String> avatarUrls,
+      final String? $type})
+      : _avatarUrls = avatarUrls,
+        $type = $type ?? 'staff';
+
+  factory _$StaffUser.fromJson(Map<String, dynamic> json) =>
+      _$$StaffUserFromJson(json);
+
+  @override
+  final UserID id;
+  @override
+  final String name;
+  final List<String> _avatarUrls;
+  @override
+  List<String> get avatarUrls {
+    if (_avatarUrls is EqualUnmodifiableListView) return _avatarUrls;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_avatarUrls);
+  }
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'User.staff(id: $id, name: $name, avatarUrls: $avatarUrls)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$StaffUser &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality()
+                .equals(other._avatarUrls, _avatarUrls));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, id, name, const DeepCollectionEquality().hash(_avatarUrls));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StaffUserCopyWith<_$StaffUser> get copyWith =>
+      __$$StaffUserCopyWithImpl<_$StaffUser>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(UserID id, String name, List<String> avatarUrls)
+        staff,
+    required TResult Function(UserID id, String name, List<String> avatarUrls,
+            bool online, DateTime? lastSeen)
+        end,
+  }) {
+    return staff(id, name, avatarUrls);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(UserID id, String name, List<String> avatarUrls)? staff,
+    TResult? Function(UserID id, String name, List<String> avatarUrls,
+            bool online, DateTime? lastSeen)?
+        end,
+  }) {
+    return staff?.call(id, name, avatarUrls);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(UserID id, String name, List<String> avatarUrls)? staff,
+    TResult Function(UserID id, String name, List<String> avatarUrls,
+            bool online, DateTime? lastSeen)?
+        end,
+    required TResult orElse(),
+  }) {
+    if (staff != null) {
+      return staff(id, name, avatarUrls);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(StaffUser value) staff,
+    required TResult Function(EndUser value) end,
+  }) {
+    return staff(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(StaffUser value)? staff,
+    TResult? Function(EndUser value)? end,
+  }) {
+    return staff?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(StaffUser value)? staff,
+    TResult Function(EndUser value)? end,
+    required TResult orElse(),
+  }) {
+    if (staff != null) {
+      return staff(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$StaffUserToJson(
+      this,
+    );
+  }
+}
+
+abstract class StaffUser implements User {
+  const factory StaffUser(
+      {required final UserID id,
+      required final String name,
+      required final List<String> avatarUrls}) = _$StaffUser;
+
+  factory StaffUser.fromJson(Map<String, dynamic> json) = _$StaffUser.fromJson;
+
+  @override
+  UserID get id;
+  @override
+  String get name;
+  @override
+  List<String> get avatarUrls;
+  @override
+  @JsonKey(ignore: true)
+  _$$StaffUserCopyWith<_$StaffUser> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
+  factory _$$EndUserCopyWith(_$EndUser value, $Res Function(_$EndUser) then) =
+      __$$EndUserCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -116,9 +350,9 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
-    implements _$$_UserCopyWith<$Res> {
-  __$$_UserCopyWithImpl(_$_User _value, $Res Function(_$_User) _then)
+class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
+    implements _$$EndUserCopyWith<$Res> {
+  __$$EndUserCopyWithImpl(_$EndUser _value, $Res Function(_$EndUser) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -130,7 +364,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? online = null,
     Object? lastSeen = freezed,
   }) {
-    return _then(_$_User(
+    return _then(_$EndUser(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -157,16 +391,19 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 
 /// @nodoc
 @JsonSerializable()
-class _$_User implements _User {
-  const _$_User(
+class _$EndUser implements EndUser {
+  const _$EndUser(
       {required this.id,
       required this.name,
       required final List<String> avatarUrls,
       required this.online,
-      this.lastSeen})
-      : _avatarUrls = avatarUrls;
+      this.lastSeen,
+      final String? $type})
+      : _avatarUrls = avatarUrls,
+        $type = $type ?? 'end';
 
-  factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
+  factory _$EndUser.fromJson(Map<String, dynamic> json) =>
+      _$$EndUserFromJson(json);
 
   @override
   final UserID id;
@@ -185,16 +422,19 @@ class _$_User implements _User {
   @override
   final DateTime? lastSeen;
 
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
   @override
   String toString() {
-    return 'User(id: $id, name: $name, avatarUrls: $avatarUrls, online: $online, lastSeen: $lastSeen)';
+    return 'User.end(id: $id, name: $name, avatarUrls: $avatarUrls, online: $online, lastSeen: $lastSeen)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_User &&
+            other is _$EndUser &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
@@ -212,26 +452,95 @@ class _$_User implements _User {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserCopyWith<_$_User> get copyWith =>
-      __$$_UserCopyWithImpl<_$_User>(this, _$identity);
+  _$$EndUserCopyWith<_$EndUser> get copyWith =>
+      __$$EndUserCopyWithImpl<_$EndUser>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(UserID id, String name, List<String> avatarUrls)
+        staff,
+    required TResult Function(UserID id, String name, List<String> avatarUrls,
+            bool online, DateTime? lastSeen)
+        end,
+  }) {
+    return end(id, name, avatarUrls, online, lastSeen);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(UserID id, String name, List<String> avatarUrls)? staff,
+    TResult? Function(UserID id, String name, List<String> avatarUrls,
+            bool online, DateTime? lastSeen)?
+        end,
+  }) {
+    return end?.call(id, name, avatarUrls, online, lastSeen);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(UserID id, String name, List<String> avatarUrls)? staff,
+    TResult Function(UserID id, String name, List<String> avatarUrls,
+            bool online, DateTime? lastSeen)?
+        end,
+    required TResult orElse(),
+  }) {
+    if (end != null) {
+      return end(id, name, avatarUrls, online, lastSeen);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(StaffUser value) staff,
+    required TResult Function(EndUser value) end,
+  }) {
+    return end(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(StaffUser value)? staff,
+    TResult? Function(EndUser value)? end,
+  }) {
+    return end?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(StaffUser value)? staff,
+    TResult Function(EndUser value)? end,
+    required TResult orElse(),
+  }) {
+    if (end != null) {
+      return end(this);
+    }
+    return orElse();
+  }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserToJson(
+    return _$$EndUserToJson(
       this,
     );
   }
 }
 
-abstract class _User implements User {
-  const factory _User(
+abstract class EndUser implements User {
+  const factory EndUser(
       {required final UserID id,
       required final String name,
       required final List<String> avatarUrls,
       required final bool online,
-      final DateTime? lastSeen}) = _$_User;
+      final DateTime? lastSeen}) = _$EndUser;
 
-  factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
+  factory EndUser.fromJson(Map<String, dynamic> json) = _$EndUser.fromJson;
 
   @override
   UserID get id;
@@ -239,11 +548,10 @@ abstract class _User implements User {
   String get name;
   @override
   List<String> get avatarUrls;
-  @override
   bool get online;
-  @override
   DateTime? get lastSeen;
   @override
   @JsonKey(ignore: true)
-  _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;
+  _$$EndUserCopyWith<_$EndUser> get copyWith =>
+      throw _privateConstructorUsedError;
 }

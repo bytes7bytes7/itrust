@@ -16,7 +16,7 @@ class TestMessageRepository implements MessageRepository {
   final ChatRepository _chatRepository;
 
   @override
-  FutureOr<List<Message>> getListByChatID(ChatID chatID) async {
+  FutureOr<List<Message>> getAllByChatID(ChatID chatID) async {
     final chat = await _chatRepository.getByID(chatID);
 
     return chat.messages;

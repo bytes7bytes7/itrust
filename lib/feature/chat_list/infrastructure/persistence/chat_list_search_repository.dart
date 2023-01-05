@@ -32,6 +32,8 @@ class TestChatListSearchRepository implements SearchRepository<Chat> {
 
   final _alpha = 'qwertyuiopasdfghjklzxcvbnm';
 
+  final _myID = const UserID('me');
+
   String _randString(int length) {
     final buffer = StringBuffer();
 
@@ -53,6 +55,30 @@ class TestChatListSearchRepository implements SearchRepository<Chat> {
     );
   }
 
+  UserID? _genSenderID(ChatType chatType, UserID partnerID) {
+    if (chatType == ChatType.dialog) {
+      switch (_rand.nextInt(3)) {
+        case 0:
+          return partnerID;
+        case 1:
+          return _myID;
+        default:
+          return null;
+      }
+    }
+
+    switch (_rand.nextInt(4)) {
+      case 0:
+        return partnerID;
+      case 1:
+        return _myID;
+      case 2:
+        return UserID(_randString(8));
+      default:
+        return null;
+    }
+  }
+
   Future<List<Chat>> _genChats({
     required int limit,
   }) {
@@ -62,25 +88,32 @@ class TestChatListSearchRepository implements SearchRepository<Chat> {
         return List.generate(
           limit,
           (index) {
+            final chatID = ChatID('chat $index');
+            final partnerID = UserID('partner $index');
             final type = _rand.nextBool() ? ChatType.group : ChatType.dialog;
-            final dialogOnlineStatuses = [
-              const IsOnlineStatus(),
-              const HiddenOnlineStatus(),
-              LastSeenOnlineStatus(
-                dateTime: _randDateTime(),
-              ),
-            ];
+            final title = _randString(_rand.nextInt(20) + 5);
+            final online = _rand.nextBool();
             final unreadAmount = _rand.nextInt(2000);
 
             return Chat(
-              id: '$index',
-              title: _randString(_rand.nextInt(20) + 5),
+              id: chatID,
+              title: title,
               chatType: type,
-              onlineStatus: type == ChatType.group
-                  ? const NoOnlineStatus()
-                  : dialogOnlineStatuses[_rand.nextInt(
-                      dialogOnlineStatuses.length,
-                    )],
+              partner: type == ChatType.dialog
+                  ? User(
+                      id: partnerID,
+                      name: type == ChatType.dialog
+                          ? title
+                          : _randString(_rand.nextInt(20) + 4),
+                      avatarUrls: [],
+                      online: online,
+                      lastSeen: !online
+                          ? _rand.nextBool()
+                              ? _randDateTime()
+                              : null
+                          : null,
+                    )
+                  : null,
               unreadAmount: unreadAmount,
               avatarUrl: _rand.nextBool()
                   ? 'https://i0.wp.com/evanstonroundtable.com/wp-content/uploads/2022/05/Lushina-scaled-e1652827479814.jpg?fit=1200%2C900&ssl=1'
@@ -89,15 +122,9 @@ class TestChatListSearchRepository implements SearchRepository<Chat> {
                   ? []
                   : [
                       Message(
-                        id: 'message $index',
-                        chatID: '$index',
-                        sender: _rand.nextBool()
-                            ? User(
-                                id: '$index',
-                                name: _randString(_rand.nextInt(15) + 5),
-                                avatarUrls: [],
-                              )
-                            : null,
+                        id: MessageID('message $index'),
+                        chatID: chatID,
+                        senderID: _genSenderID(type, partnerID),
                         text: _randString(_rand.nextInt(40) + 5),
                         mediaUrls: [],
                         sentAt: _randDateTime(),

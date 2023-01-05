@@ -37,16 +37,17 @@ class TestMessageSearchRepository implements SearchRepository<Message> {
         return List.generate(
           limit,
           (index) {
-            final sender = _rand.nextBool()
-                ? _sender
+            final senderID = _rand.nextBool()
+                ? _senderID
                 : _rand.nextBool()
-                    ? _me
+                    ? _myID
                     : null;
+
             return Message(
-              id: '$index',
-              chatID: 'chatID',
-              sender: sender,
-              text: _rand.nextBool() && sender != null
+              id: MessageID('$index'),
+              chatID: const ChatID('chatID'),
+              senderID: senderID,
+              text: _rand.nextBool() && senderID != null
                   ? _randString(_rand.nextInt(20) + 8)
                   : '',
               mediaUrls: [],
@@ -63,17 +64,9 @@ class TestMessageSearchRepository implements SearchRepository<Message> {
 
   final _rand = Random();
 
-  final _sender = const User(
-    id: 'senderID',
-    name: 'Tomas White',
-    avatarUrls: [],
-  );
+  final _senderID = const UserID('senderID');
 
-  final _me = const User(
-    id: 'myID',
-    name: 'bytes7 bytes7',
-    avatarUrls: [],
-  );
+  final _myID = const UserID('me');
 
   final _alpha = 'qwertyuiopasdfghjklzxcvbnm';
 

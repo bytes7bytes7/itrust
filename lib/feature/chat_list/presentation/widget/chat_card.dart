@@ -49,7 +49,7 @@ class ChatCard extends StatelessWidget {
             children: [
               UserCircleAvatar(
                 url: chat.avatarUrl,
-                onlineStatus: chat.onlineStatus,
+                online: chat.online,
               ),
               const SizedBox(
                 width: _avatarAndTitleSeparator,

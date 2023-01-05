@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../theme/theme.dart';
-import '../../domain/domain.dart';
 import 'fade_in_circle_avatar.dart';
 
 const _outerRadius = 7.0;
@@ -10,12 +9,12 @@ const _innerRadius = 5.0;
 class UserCircleAvatar extends StatelessWidget {
   const UserCircleAvatar({
     super.key,
-    required this.onlineStatus,
+    required this.online,
     this.url,
   });
 
   final String? url;
-  final OnlineStatus onlineStatus;
+  final bool online;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class UserCircleAvatar extends StatelessWidget {
           url: url,
           iconData: Icons.person,
         ),
-        if (onlineStatus is IsOnlineStatus)
+        if (online)
           Positioned(
             bottom: 0,
             right: 0,

@@ -15,21 +15,117 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Message _$MessageFromJson(Map<String, dynamic> json) {
-  return _Message.fromJson(json);
+  switch (json['runtimeType']) {
+    case 'info':
+      return InfoMessage.fromJson(json);
+    case 'user':
+      return UserMessage.fromJson(json);
+
+    default:
+      throw CheckedFromJsonException(json, 'runtimeType', 'Message',
+          'Invalid union type "${json['runtimeType']}"!');
+  }
 }
 
 /// @nodoc
 mixin _$Message {
   MessageID get id => throw _privateConstructorUsedError;
   ChatID get chatID => throw _privateConstructorUsedError;
-  String get text => throw _privateConstructorUsedError;
-  List<String> get mediaUrls => throw _privateConstructorUsedError;
   DateTime get sentAt => throw _privateConstructorUsedError;
-  bool get isRead => throw _privateConstructorUsedError;
-  User? get sender => throw _privateConstructorUsedError;
-  DateTime? get modifiedAt => throw _privateConstructorUsedError;
+  List<UserID> get readBy => throw _privateConstructorUsedError;
   DateTime? get willBeBurntAt => throw _privateConstructorUsedError;
-
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String markUp,
+            List<String> markUpData,
+            DateTime? willBeBurntAt)
+        info,
+    required TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String text,
+            List<String> mediaUrls,
+            UserID senderID,
+            DateTime? willBeBurntAt,
+            DateTime? modifiedAt)
+        user,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String markUp,
+            List<String> markUpData,
+            DateTime? willBeBurntAt)?
+        info,
+    TResult? Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String text,
+            List<String> mediaUrls,
+            UserID senderID,
+            DateTime? willBeBurntAt,
+            DateTime? modifiedAt)?
+        user,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String markUp,
+            List<String> markUpData,
+            DateTime? willBeBurntAt)?
+        info,
+    TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String text,
+            List<String> mediaUrls,
+            UserID senderID,
+            DateTime? willBeBurntAt,
+            DateTime? modifiedAt)?
+        user,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InfoMessage value) info,
+    required TResult Function(UserMessage value) user,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InfoMessage value)? info,
+    TResult? Function(UserMessage value)? user,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InfoMessage value)? info,
+    TResult Function(UserMessage value)? user,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $MessageCopyWith<Message> get copyWith => throw _privateConstructorUsedError;
@@ -43,17 +139,12 @@ abstract class $MessageCopyWith<$Res> {
   $Res call(
       {MessageID id,
       ChatID chatID,
-      String text,
-      List<String> mediaUrls,
       DateTime sentAt,
-      bool isRead,
-      User? sender,
-      DateTime? modifiedAt,
+      List<UserID> readBy,
       DateTime? willBeBurntAt});
 
   $MessageIDCopyWith<$Res> get id;
   $ChatIDCopyWith<$Res> get chatID;
-  $UserCopyWith<$Res>? get sender;
 }
 
 /// @nodoc
@@ -71,12 +162,8 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   $Res call({
     Object? id = null,
     Object? chatID = null,
-    Object? text = null,
-    Object? mediaUrls = null,
     Object? sentAt = null,
-    Object? isRead = null,
-    Object? sender = freezed,
-    Object? modifiedAt = freezed,
+    Object? readBy = null,
     Object? willBeBurntAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -88,30 +175,14 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.chatID
           : chatID // ignore: cast_nullable_to_non_nullable
               as ChatID,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      mediaUrls: null == mediaUrls
-          ? _value.mediaUrls
-          : mediaUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       sentAt: null == sentAt
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      isRead: null == isRead
-          ? _value.isRead
-          : isRead // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sender: freezed == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
-              as User?,
-      modifiedAt: freezed == modifiedAt
-          ? _value.modifiedAt
-          : modifiedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      readBy: null == readBy
+          ? _value.readBy
+          : readBy // ignore: cast_nullable_to_non_nullable
+              as List<UserID>,
       willBeBurntAt: freezed == willBeBurntAt
           ? _value.willBeBurntAt
           : willBeBurntAt // ignore: cast_nullable_to_non_nullable
@@ -134,51 +205,36 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
       return _then(_value.copyWith(chatID: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res>? get sender {
-    if (_value.sender == null) {
-      return null;
-    }
-
-    return $UserCopyWith<$Res>(_value.sender!, (value) {
-      return _then(_value.copyWith(sender: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
-  factory _$$_MessageCopyWith(
-          _$_Message value, $Res Function(_$_Message) then) =
-      __$$_MessageCopyWithImpl<$Res>;
+abstract class _$$InfoMessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
+  factory _$$InfoMessageCopyWith(
+          _$InfoMessage value, $Res Function(_$InfoMessage) then) =
+      __$$InfoMessageCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {MessageID id,
       ChatID chatID,
-      String text,
-      List<String> mediaUrls,
       DateTime sentAt,
-      bool isRead,
-      User? sender,
-      DateTime? modifiedAt,
+      List<UserID> readBy,
+      String markUp,
+      List<String> markUpData,
       DateTime? willBeBurntAt});
 
   @override
   $MessageIDCopyWith<$Res> get id;
   @override
   $ChatIDCopyWith<$Res> get chatID;
-  @override
-  $UserCopyWith<$Res>? get sender;
 }
 
 /// @nodoc
-class __$$_MessageCopyWithImpl<$Res>
-    extends _$MessageCopyWithImpl<$Res, _$_Message>
-    implements _$$_MessageCopyWith<$Res> {
-  __$$_MessageCopyWithImpl(_$_Message _value, $Res Function(_$_Message) _then)
+class __$$InfoMessageCopyWithImpl<$Res>
+    extends _$MessageCopyWithImpl<$Res, _$InfoMessage>
+    implements _$$InfoMessageCopyWith<$Res> {
+  __$$InfoMessageCopyWithImpl(
+      _$InfoMessage _value, $Res Function(_$InfoMessage) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -186,15 +242,13 @@ class __$$_MessageCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? chatID = null,
-    Object? text = null,
-    Object? mediaUrls = null,
     Object? sentAt = null,
-    Object? isRead = null,
-    Object? sender = freezed,
-    Object? modifiedAt = freezed,
+    Object? readBy = null,
+    Object? markUp = null,
+    Object? markUpData = null,
     Object? willBeBurntAt = freezed,
   }) {
-    return _then(_$_Message(
+    return _then(_$InfoMessage(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -203,30 +257,22 @@ class __$$_MessageCopyWithImpl<$Res>
           ? _value.chatID
           : chatID // ignore: cast_nullable_to_non_nullable
               as ChatID,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      mediaUrls: null == mediaUrls
-          ? _value._mediaUrls
-          : mediaUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       sentAt: null == sentAt
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      isRead: null == isRead
-          ? _value.isRead
-          : isRead // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sender: freezed == sender
-          ? _value.sender
-          : sender // ignore: cast_nullable_to_non_nullable
-              as User?,
-      modifiedAt: freezed == modifiedAt
-          ? _value.modifiedAt
-          : modifiedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      readBy: null == readBy
+          ? _value._readBy
+          : readBy // ignore: cast_nullable_to_non_nullable
+              as List<UserID>,
+      markUp: null == markUp
+          ? _value.markUp
+          : markUp // ignore: cast_nullable_to_non_nullable
+              as String,
+      markUpData: null == markUpData
+          ? _value._markUpData
+          : markUpData // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       willBeBurntAt: freezed == willBeBurntAt
           ? _value.willBeBurntAt
           : willBeBurntAt // ignore: cast_nullable_to_non_nullable
@@ -237,26 +283,379 @@ class __$$_MessageCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Message implements _Message {
-  const _$_Message(
+class _$InfoMessage implements InfoMessage {
+  const _$InfoMessage(
       {required this.id,
       required this.chatID,
-      required this.text,
-      required final List<String> mediaUrls,
       required this.sentAt,
-      required this.isRead,
-      this.sender,
-      this.modifiedAt,
-      this.willBeBurntAt})
-      : _mediaUrls = mediaUrls;
+      required final List<UserID> readBy,
+      required this.markUp,
+      required final List<String> markUpData,
+      this.willBeBurntAt,
+      final String? $type})
+      : _readBy = readBy,
+        _markUpData = markUpData,
+        $type = $type ?? 'info';
 
-  factory _$_Message.fromJson(Map<String, dynamic> json) =>
-      _$$_MessageFromJson(json);
+  factory _$InfoMessage.fromJson(Map<String, dynamic> json) =>
+      _$$InfoMessageFromJson(json);
 
   @override
   final MessageID id;
   @override
   final ChatID chatID;
+  @override
+  final DateTime sentAt;
+  final List<UserID> _readBy;
+  @override
+  List<UserID> get readBy {
+    if (_readBy is EqualUnmodifiableListView) return _readBy;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_readBy);
+  }
+
+  @override
+  final String markUp;
+  final List<String> _markUpData;
+  @override
+  List<String> get markUpData {
+    if (_markUpData is EqualUnmodifiableListView) return _markUpData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_markUpData);
+  }
+
+  @override
+  final DateTime? willBeBurntAt;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString() {
+    return 'Message.info(id: $id, chatID: $chatID, sentAt: $sentAt, readBy: $readBy, markUp: $markUp, markUpData: $markUpData, willBeBurntAt: $willBeBurntAt)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InfoMessage &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.chatID, chatID) || other.chatID == chatID) &&
+            (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
+            const DeepCollectionEquality().equals(other._readBy, _readBy) &&
+            (identical(other.markUp, markUp) || other.markUp == markUp) &&
+            const DeepCollectionEquality()
+                .equals(other._markUpData, _markUpData) &&
+            (identical(other.willBeBurntAt, willBeBurntAt) ||
+                other.willBeBurntAt == willBeBurntAt));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      chatID,
+      sentAt,
+      const DeepCollectionEquality().hash(_readBy),
+      markUp,
+      const DeepCollectionEquality().hash(_markUpData),
+      willBeBurntAt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InfoMessageCopyWith<_$InfoMessage> get copyWith =>
+      __$$InfoMessageCopyWithImpl<_$InfoMessage>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String markUp,
+            List<String> markUpData,
+            DateTime? willBeBurntAt)
+        info,
+    required TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String text,
+            List<String> mediaUrls,
+            UserID senderID,
+            DateTime? willBeBurntAt,
+            DateTime? modifiedAt)
+        user,
+  }) {
+    return info(id, chatID, sentAt, readBy, markUp, markUpData, willBeBurntAt);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String markUp,
+            List<String> markUpData,
+            DateTime? willBeBurntAt)?
+        info,
+    TResult? Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String text,
+            List<String> mediaUrls,
+            UserID senderID,
+            DateTime? willBeBurntAt,
+            DateTime? modifiedAt)?
+        user,
+  }) {
+    return info?.call(
+        id, chatID, sentAt, readBy, markUp, markUpData, willBeBurntAt);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String markUp,
+            List<String> markUpData,
+            DateTime? willBeBurntAt)?
+        info,
+    TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String text,
+            List<String> mediaUrls,
+            UserID senderID,
+            DateTime? willBeBurntAt,
+            DateTime? modifiedAt)?
+        user,
+    required TResult orElse(),
+  }) {
+    if (info != null) {
+      return info(
+          id, chatID, sentAt, readBy, markUp, markUpData, willBeBurntAt);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InfoMessage value) info,
+    required TResult Function(UserMessage value) user,
+  }) {
+    return info(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InfoMessage value)? info,
+    TResult? Function(UserMessage value)? user,
+  }) {
+    return info?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InfoMessage value)? info,
+    TResult Function(UserMessage value)? user,
+    required TResult orElse(),
+  }) {
+    if (info != null) {
+      return info(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$InfoMessageToJson(
+      this,
+    );
+  }
+}
+
+abstract class InfoMessage implements Message {
+  const factory InfoMessage(
+      {required final MessageID id,
+      required final ChatID chatID,
+      required final DateTime sentAt,
+      required final List<UserID> readBy,
+      required final String markUp,
+      required final List<String> markUpData,
+      final DateTime? willBeBurntAt}) = _$InfoMessage;
+
+  factory InfoMessage.fromJson(Map<String, dynamic> json) =
+      _$InfoMessage.fromJson;
+
+  @override
+  MessageID get id;
+  @override
+  ChatID get chatID;
+  @override
+  DateTime get sentAt;
+  @override
+  List<UserID> get readBy;
+  String get markUp;
+  List<String> get markUpData;
+  @override
+  DateTime? get willBeBurntAt;
+  @override
+  @JsonKey(ignore: true)
+  _$$InfoMessageCopyWith<_$InfoMessage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UserMessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
+  factory _$$UserMessageCopyWith(
+          _$UserMessage value, $Res Function(_$UserMessage) then) =
+      __$$UserMessageCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {MessageID id,
+      ChatID chatID,
+      DateTime sentAt,
+      List<UserID> readBy,
+      String text,
+      List<String> mediaUrls,
+      UserID senderID,
+      DateTime? willBeBurntAt,
+      DateTime? modifiedAt});
+
+  @override
+  $MessageIDCopyWith<$Res> get id;
+  @override
+  $ChatIDCopyWith<$Res> get chatID;
+  $UserIDCopyWith<$Res> get senderID;
+}
+
+/// @nodoc
+class __$$UserMessageCopyWithImpl<$Res>
+    extends _$MessageCopyWithImpl<$Res, _$UserMessage>
+    implements _$$UserMessageCopyWith<$Res> {
+  __$$UserMessageCopyWithImpl(
+      _$UserMessage _value, $Res Function(_$UserMessage) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? chatID = null,
+    Object? sentAt = null,
+    Object? readBy = null,
+    Object? text = null,
+    Object? mediaUrls = null,
+    Object? senderID = null,
+    Object? willBeBurntAt = freezed,
+    Object? modifiedAt = freezed,
+  }) {
+    return _then(_$UserMessage(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as MessageID,
+      chatID: null == chatID
+          ? _value.chatID
+          : chatID // ignore: cast_nullable_to_non_nullable
+              as ChatID,
+      sentAt: null == sentAt
+          ? _value.sentAt
+          : sentAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      readBy: null == readBy
+          ? _value._readBy
+          : readBy // ignore: cast_nullable_to_non_nullable
+              as List<UserID>,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      mediaUrls: null == mediaUrls
+          ? _value._mediaUrls
+          : mediaUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      senderID: null == senderID
+          ? _value.senderID
+          : senderID // ignore: cast_nullable_to_non_nullable
+              as UserID,
+      willBeBurntAt: freezed == willBeBurntAt
+          ? _value.willBeBurntAt
+          : willBeBurntAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      modifiedAt: freezed == modifiedAt
+          ? _value.modifiedAt
+          : modifiedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserIDCopyWith<$Res> get senderID {
+    return $UserIDCopyWith<$Res>(_value.senderID, (value) {
+      return _then(_value.copyWith(senderID: value));
+    });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UserMessage implements UserMessage {
+  const _$UserMessage(
+      {required this.id,
+      required this.chatID,
+      required this.sentAt,
+      required final List<UserID> readBy,
+      required this.text,
+      required final List<String> mediaUrls,
+      required this.senderID,
+      this.willBeBurntAt,
+      this.modifiedAt,
+      final String? $type})
+      : _readBy = readBy,
+        _mediaUrls = mediaUrls,
+        $type = $type ?? 'user';
+
+  factory _$UserMessage.fromJson(Map<String, dynamic> json) =>
+      _$$UserMessageFromJson(json);
+
+  @override
+  final MessageID id;
+  @override
+  final ChatID chatID;
+  @override
+  final DateTime sentAt;
+  final List<UserID> _readBy;
+  @override
+  List<UserID> get readBy {
+    if (_readBy is EqualUnmodifiableListView) return _readBy;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_readBy);
+  }
+
   @override
   final String text;
   final List<String> _mediaUrls;
@@ -268,38 +667,38 @@ class _$_Message implements _Message {
   }
 
   @override
-  final DateTime sentAt;
-  @override
-  final bool isRead;
-  @override
-  final User? sender;
-  @override
-  final DateTime? modifiedAt;
+  final UserID senderID;
   @override
   final DateTime? willBeBurntAt;
+  @override
+  final DateTime? modifiedAt;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
 
   @override
   String toString() {
-    return 'Message(id: $id, chatID: $chatID, text: $text, mediaUrls: $mediaUrls, sentAt: $sentAt, isRead: $isRead, sender: $sender, modifiedAt: $modifiedAt, willBeBurntAt: $willBeBurntAt)';
+    return 'Message.user(id: $id, chatID: $chatID, sentAt: $sentAt, readBy: $readBy, text: $text, mediaUrls: $mediaUrls, senderID: $senderID, willBeBurntAt: $willBeBurntAt, modifiedAt: $modifiedAt)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Message &&
+            other is _$UserMessage &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.chatID, chatID) || other.chatID == chatID) &&
+            (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
+            const DeepCollectionEquality().equals(other._readBy, _readBy) &&
             (identical(other.text, text) || other.text == text) &&
             const DeepCollectionEquality()
                 .equals(other._mediaUrls, _mediaUrls) &&
-            (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
-            (identical(other.isRead, isRead) || other.isRead == isRead) &&
-            (identical(other.sender, sender) || other.sender == sender) &&
-            (identical(other.modifiedAt, modifiedAt) ||
-                other.modifiedAt == modifiedAt) &&
+            (identical(other.senderID, senderID) ||
+                other.senderID == senderID) &&
             (identical(other.willBeBurntAt, willBeBurntAt) ||
-                other.willBeBurntAt == willBeBurntAt));
+                other.willBeBurntAt == willBeBurntAt) &&
+            (identical(other.modifiedAt, modifiedAt) ||
+                other.modifiedAt == modifiedAt));
   }
 
   @JsonKey(ignore: true)
@@ -308,62 +707,178 @@ class _$_Message implements _Message {
       runtimeType,
       id,
       chatID,
+      sentAt,
+      const DeepCollectionEquality().hash(_readBy),
       text,
       const DeepCollectionEquality().hash(_mediaUrls),
-      sentAt,
-      isRead,
-      sender,
-      modifiedAt,
-      willBeBurntAt);
+      senderID,
+      willBeBurntAt,
+      modifiedAt);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MessageCopyWith<_$_Message> get copyWith =>
-      __$$_MessageCopyWithImpl<_$_Message>(this, _$identity);
+  _$$UserMessageCopyWith<_$UserMessage> get copyWith =>
+      __$$UserMessageCopyWithImpl<_$UserMessage>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String markUp,
+            List<String> markUpData,
+            DateTime? willBeBurntAt)
+        info,
+    required TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String text,
+            List<String> mediaUrls,
+            UserID senderID,
+            DateTime? willBeBurntAt,
+            DateTime? modifiedAt)
+        user,
+  }) {
+    return user(id, chatID, sentAt, readBy, text, mediaUrls, senderID,
+        willBeBurntAt, modifiedAt);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String markUp,
+            List<String> markUpData,
+            DateTime? willBeBurntAt)?
+        info,
+    TResult? Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String text,
+            List<String> mediaUrls,
+            UserID senderID,
+            DateTime? willBeBurntAt,
+            DateTime? modifiedAt)?
+        user,
+  }) {
+    return user?.call(id, chatID, sentAt, readBy, text, mediaUrls, senderID,
+        willBeBurntAt, modifiedAt);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String markUp,
+            List<String> markUpData,
+            DateTime? willBeBurntAt)?
+        info,
+    TResult Function(
+            MessageID id,
+            ChatID chatID,
+            DateTime sentAt,
+            List<UserID> readBy,
+            String text,
+            List<String> mediaUrls,
+            UserID senderID,
+            DateTime? willBeBurntAt,
+            DateTime? modifiedAt)?
+        user,
+    required TResult orElse(),
+  }) {
+    if (user != null) {
+      return user(id, chatID, sentAt, readBy, text, mediaUrls, senderID,
+          willBeBurntAt, modifiedAt);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InfoMessage value) info,
+    required TResult Function(UserMessage value) user,
+  }) {
+    return user(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InfoMessage value)? info,
+    TResult? Function(UserMessage value)? user,
+  }) {
+    return user?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InfoMessage value)? info,
+    TResult Function(UserMessage value)? user,
+    required TResult orElse(),
+  }) {
+    if (user != null) {
+      return user(this);
+    }
+    return orElse();
+  }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MessageToJson(
+    return _$$UserMessageToJson(
       this,
     );
   }
 }
 
-abstract class _Message implements Message {
-  const factory _Message(
+abstract class UserMessage implements Message {
+  const factory UserMessage(
       {required final MessageID id,
       required final ChatID chatID,
+      required final DateTime sentAt,
+      required final List<UserID> readBy,
       required final String text,
       required final List<String> mediaUrls,
-      required final DateTime sentAt,
-      required final bool isRead,
-      final User? sender,
-      final DateTime? modifiedAt,
-      final DateTime? willBeBurntAt}) = _$_Message;
+      required final UserID senderID,
+      final DateTime? willBeBurntAt,
+      final DateTime? modifiedAt}) = _$UserMessage;
 
-  factory _Message.fromJson(Map<String, dynamic> json) = _$_Message.fromJson;
+  factory UserMessage.fromJson(Map<String, dynamic> json) =
+      _$UserMessage.fromJson;
 
   @override
   MessageID get id;
   @override
   ChatID get chatID;
   @override
-  String get text;
-  @override
-  List<String> get mediaUrls;
-  @override
   DateTime get sentAt;
   @override
-  bool get isRead;
-  @override
-  User? get sender;
-  @override
-  DateTime? get modifiedAt;
+  List<UserID> get readBy;
+  String get text;
+  List<String> get mediaUrls;
+  UserID get senderID;
   @override
   DateTime? get willBeBurntAt;
+  DateTime? get modifiedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_MessageCopyWith<_$_Message> get copyWith =>
+  _$$UserMessageCopyWith<_$UserMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
