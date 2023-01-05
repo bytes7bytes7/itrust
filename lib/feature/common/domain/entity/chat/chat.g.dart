@@ -14,8 +14,8 @@ _$MonologueChat _$$MonologueChatFromJson(Map<String, dynamic> json) =>
       lastMessage: json['lastMessage'] == null
           ? null
           : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
-      pic: json['pic'] as String?,
-      icon: json['icon'] as String?,
+      picUrl: json['picUrl'] as String?,
+      iconName: json['iconName'] as String?,
       $type: json['type'] as String?,
     );
 
@@ -25,8 +25,8 @@ Map<String, dynamic> _$$MonologueChatToJson(_$MonologueChat instance) =>
       'unreadAmount': instance.unreadAmount,
       'title': instance.title,
       'lastMessage': instance.lastMessage?.toJson(),
-      'pic': instance.pic,
-      'icon': instance.icon,
+      'picUrl': instance.picUrl,
+      'iconName': instance.iconName,
       'type': instance.$type,
     };
 
@@ -57,7 +57,7 @@ _$GroupChat _$$GroupChatFromJson(Map<String, dynamic> json) => _$GroupChat(
       lastMessage: json['lastMessage'] == null
           ? null
           : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
-      pic: json['pic'] as String?,
+      picUrl: json['picUrl'] as String?,
       $type: json['type'] as String?,
     );
 
@@ -67,6 +67,6 @@ Map<String, dynamic> _$$GroupChatToJson(_$GroupChat instance) =>
       'unreadAmount': instance.unreadAmount,
       'title': instance.title,
       'lastMessage': instance.lastMessage?.toJson(),
-      'pic': instance.pic,
+      'picUrl': instance.picUrl,
       'type': instance.$type,
     };

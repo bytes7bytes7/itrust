@@ -1,11 +1,18 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../value_object/value_object.dart';
-import 'message.dart';
+import '../../../../../util/wrapped.dart';
+import '../../value_object/value_object.dart';
+import '../message.dart';
 
 part 'chat.freezed.dart';
 
 part 'chat.g.dart';
+
+part 'dialogue_chat_business_logic.dart';
+
+part 'group_chat_business_logic.dart';
+
+part 'monologue_chat_business_logic.dart';
 
 @Freezed(
   unionKey: 'type',
@@ -17,8 +24,8 @@ class Chat with _$Chat {
     required int unreadAmount,
     required String title,
     Message? lastMessage,
-    String? pic,
-    String? icon,
+    String? picUrl,
+    String? iconName,
   }) = MonologueChat;
 
   const factory Chat.dialogue({
@@ -33,7 +40,7 @@ class Chat with _$Chat {
     required int unreadAmount,
     required String title,
     Message? lastMessage,
-    String? pic,
+    String? picUrl,
   }) = GroupChat;
 
   factory Chat.fromJson(Map<String, Object?> json) => _$ChatFromJson(json);
