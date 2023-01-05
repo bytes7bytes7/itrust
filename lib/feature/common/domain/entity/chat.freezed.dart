@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Chat _$ChatFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType']) {
+  switch (json['type']) {
     case 'monologue':
       return MonologueChat.fromJson(json);
     case 'dialogue':
@@ -24,8 +24,8 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
       return GroupChat.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'Chat',
-          'Invalid union type "${json['runtimeType']}"!');
+      throw CheckedFromJsonException(
+          json, 'type', 'Chat', 'Invalid union type "${json['type']}"!');
   }
 }
 
@@ -97,141 +97,6 @@ mixin _$Chat {
   }) =>
       throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $ChatCopyWith<Chat> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ChatCopyWith<$Res> {
-  factory $ChatCopyWith(Chat value, $Res Function(Chat) then) =
-      _$ChatCopyWithImpl<$Res, Chat>;
-  @useResult
-  $Res call({ChatID id, int unreadAmount, Message? lastMessage});
-
-  $ChatIDCopyWith<$Res> get id;
-  $MessageCopyWith<$Res>? get lastMessage;
-}
-
-/// @nodoc
-class _$ChatCopyWithImpl<$Res, $Val extends Chat>
-    implements $ChatCopyWith<$Res> {
-  _$ChatCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? unreadAmount = null,
-    Object? lastMessage = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as ChatID,
-      unreadAmount: null == unreadAmount
-          ? _value.unreadAmount
-          : unreadAmount // ignore: cast_nullable_to_non_nullable
-              as int,
-      lastMessage: freezed == lastMessage
-          ? _value.lastMessage
-          : lastMessage // ignore: cast_nullable_to_non_nullable
-              as Message?,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ChatIDCopyWith<$Res> get id {
-    return $ChatIDCopyWith<$Res>(_value.id, (value) {
-      return _then(_value.copyWith(id: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $MessageCopyWith<$Res>? get lastMessage {
-    if (_value.lastMessage == null) {
-      return null;
-    }
-
-    return $MessageCopyWith<$Res>(_value.lastMessage!, (value) {
-      return _then(_value.copyWith(lastMessage: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$MonologueChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
-  factory _$$MonologueChatCopyWith(
-          _$MonologueChat value, $Res Function(_$MonologueChat) then) =
-      __$$MonologueChatCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {ChatID id,
-      int unreadAmount,
-      String title,
-      Message? lastMessage,
-      String? pic,
-      String? icon});
-
-  @override
-  $ChatIDCopyWith<$Res> get id;
-  @override
-  $MessageCopyWith<$Res>? get lastMessage;
-}
-
-/// @nodoc
-class __$$MonologueChatCopyWithImpl<$Res>
-    extends _$ChatCopyWithImpl<$Res, _$MonologueChat>
-    implements _$$MonologueChatCopyWith<$Res> {
-  __$$MonologueChatCopyWithImpl(
-      _$MonologueChat _value, $Res Function(_$MonologueChat) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? unreadAmount = null,
-    Object? title = null,
-    Object? lastMessage = freezed,
-    Object? pic = freezed,
-    Object? icon = freezed,
-  }) {
-    return _then(_$MonologueChat(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as ChatID,
-      unreadAmount: null == unreadAmount
-          ? _value.unreadAmount
-          : unreadAmount // ignore: cast_nullable_to_non_nullable
-              as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastMessage: freezed == lastMessage
-          ? _value.lastMessage
-          : lastMessage // ignore: cast_nullable_to_non_nullable
-              as Message?,
-      pic: freezed == pic
-          ? _value.pic
-          : pic // ignore: cast_nullable_to_non_nullable
-              as String?,
-      icon: freezed == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
 }
 
 /// @nodoc
@@ -263,7 +128,7 @@ class _$MonologueChat implements MonologueChat {
   @override
   final String? icon;
 
-  @JsonKey(name: 'runtimeType')
+  @JsonKey(name: 'type')
   final String $type;
 
   @override
@@ -290,12 +155,6 @@ class _$MonologueChat implements MonologueChat {
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, unreadAmount, title, lastMessage, pic, icon);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$MonologueChatCopyWith<_$MonologueChat> get copyWith =>
-      __$$MonologueChatCopyWithImpl<_$MonologueChat>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -412,72 +271,6 @@ abstract class MonologueChat implements Chat {
   Message? get lastMessage;
   String? get pic;
   String? get icon;
-  @override
-  @JsonKey(ignore: true)
-  _$$MonologueChatCopyWith<_$MonologueChat> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$DialogueChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
-  factory _$$DialogueChatCopyWith(
-          _$DialogueChat value, $Res Function(_$DialogueChat) then) =
-      __$$DialogueChatCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {ChatID id, int unreadAmount, UserID partnerID, Message? lastMessage});
-
-  @override
-  $ChatIDCopyWith<$Res> get id;
-  $UserIDCopyWith<$Res> get partnerID;
-  @override
-  $MessageCopyWith<$Res>? get lastMessage;
-}
-
-/// @nodoc
-class __$$DialogueChatCopyWithImpl<$Res>
-    extends _$ChatCopyWithImpl<$Res, _$DialogueChat>
-    implements _$$DialogueChatCopyWith<$Res> {
-  __$$DialogueChatCopyWithImpl(
-      _$DialogueChat _value, $Res Function(_$DialogueChat) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? unreadAmount = null,
-    Object? partnerID = null,
-    Object? lastMessage = freezed,
-  }) {
-    return _then(_$DialogueChat(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as ChatID,
-      unreadAmount: null == unreadAmount
-          ? _value.unreadAmount
-          : unreadAmount // ignore: cast_nullable_to_non_nullable
-              as int,
-      partnerID: null == partnerID
-          ? _value.partnerID
-          : partnerID // ignore: cast_nullable_to_non_nullable
-              as UserID,
-      lastMessage: freezed == lastMessage
-          ? _value.lastMessage
-          : lastMessage // ignore: cast_nullable_to_non_nullable
-              as Message?,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserIDCopyWith<$Res> get partnerID {
-    return $UserIDCopyWith<$Res>(_value.partnerID, (value) {
-      return _then(_value.copyWith(partnerID: value));
-    });
-  }
 }
 
 /// @nodoc
@@ -503,7 +296,7 @@ class _$DialogueChat implements DialogueChat {
   @override
   final Message? lastMessage;
 
-  @JsonKey(name: 'runtimeType')
+  @JsonKey(name: 'type')
   final String $type;
 
   @override
@@ -529,12 +322,6 @@ class _$DialogueChat implements DialogueChat {
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, unreadAmount, partnerID, lastMessage);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$DialogueChatCopyWith<_$DialogueChat> get copyWith =>
-      __$$DialogueChatCopyWithImpl<_$DialogueChat>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -647,72 +434,6 @@ abstract class DialogueChat implements Chat {
   UserID get partnerID;
   @override
   Message? get lastMessage;
-  @override
-  @JsonKey(ignore: true)
-  _$$DialogueChatCopyWith<_$DialogueChat> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$GroupChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
-  factory _$$GroupChatCopyWith(
-          _$GroupChat value, $Res Function(_$GroupChat) then) =
-      __$$GroupChatCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {ChatID id,
-      int unreadAmount,
-      String title,
-      Message? lastMessage,
-      String? pic});
-
-  @override
-  $ChatIDCopyWith<$Res> get id;
-  @override
-  $MessageCopyWith<$Res>? get lastMessage;
-}
-
-/// @nodoc
-class __$$GroupChatCopyWithImpl<$Res>
-    extends _$ChatCopyWithImpl<$Res, _$GroupChat>
-    implements _$$GroupChatCopyWith<$Res> {
-  __$$GroupChatCopyWithImpl(
-      _$GroupChat _value, $Res Function(_$GroupChat) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? unreadAmount = null,
-    Object? title = null,
-    Object? lastMessage = freezed,
-    Object? pic = freezed,
-  }) {
-    return _then(_$GroupChat(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as ChatID,
-      unreadAmount: null == unreadAmount
-          ? _value.unreadAmount
-          : unreadAmount // ignore: cast_nullable_to_non_nullable
-              as int,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastMessage: freezed == lastMessage
-          ? _value.lastMessage
-          : lastMessage // ignore: cast_nullable_to_non_nullable
-              as Message?,
-      pic: freezed == pic
-          ? _value.pic
-          : pic // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
 }
 
 /// @nodoc
@@ -741,7 +462,7 @@ class _$GroupChat implements GroupChat {
   @override
   final String? pic;
 
-  @JsonKey(name: 'runtimeType')
+  @JsonKey(name: 'type')
   final String $type;
 
   @override
@@ -767,12 +488,6 @@ class _$GroupChat implements GroupChat {
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, unreadAmount, title, lastMessage, pic);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$GroupChatCopyWith<_$GroupChat> get copyWith =>
-      __$$GroupChatCopyWithImpl<_$GroupChat>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -886,8 +601,4 @@ abstract class GroupChat implements Chat {
   @override
   Message? get lastMessage;
   String? get pic;
-  @override
-  @JsonKey(ignore: true)
-  _$$GroupChatCopyWith<_$GroupChat> get copyWith =>
-      throw _privateConstructorUsedError;
 }

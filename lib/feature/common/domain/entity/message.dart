@@ -6,7 +6,10 @@ part 'message.freezed.dart';
 
 part 'message.g.dart';
 
-@freezed
+@Freezed(
+  unionKey: 'type',
+  copyWith: false,
+)
 class Message with _$Message {
   const factory Message.info({
     required MessageID id,

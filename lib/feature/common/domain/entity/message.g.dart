@@ -21,7 +21,7 @@ _$InfoMessage _$$InfoMessageFromJson(Map<String, dynamic> json) =>
       willBeBurntAt: json['willBeBurntAt'] == null
           ? null
           : DateTime.parse(json['willBeBurntAt'] as String),
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$InfoMessageToJson(_$InfoMessage instance) =>
@@ -33,7 +33,7 @@ Map<String, dynamic> _$$InfoMessageToJson(_$InfoMessage instance) =>
       'markUp': instance.markUp,
       'markUpData': instance.markUpData,
       'willBeBurntAt': instance.willBeBurntAt?.toIso8601String(),
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };
 
 _$UserMessage _$$UserMessageFromJson(Map<String, dynamic> json) =>
@@ -54,7 +54,7 @@ _$UserMessage _$$UserMessageFromJson(Map<String, dynamic> json) =>
       modifiedAt: json['modifiedAt'] == null
           ? null
           : DateTime.parse(json['modifiedAt'] as String),
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$UserMessageToJson(_$UserMessage instance) =>
@@ -68,5 +68,5 @@ Map<String, dynamic> _$$UserMessageToJson(_$UserMessage instance) =>
       'senderID': instance.senderID.toJson(),
       'willBeBurntAt': instance.willBeBurntAt?.toIso8601String(),
       'modifiedAt': instance.modifiedAt?.toIso8601String(),
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };

@@ -16,7 +16,7 @@ _$MonologueChat _$$MonologueChatFromJson(Map<String, dynamic> json) =>
           : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
       pic: json['pic'] as String?,
       icon: json['icon'] as String?,
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$MonologueChatToJson(_$MonologueChat instance) =>
@@ -27,7 +27,7 @@ Map<String, dynamic> _$$MonologueChatToJson(_$MonologueChat instance) =>
       'lastMessage': instance.lastMessage?.toJson(),
       'pic': instance.pic,
       'icon': instance.icon,
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };
 
 _$DialogueChat _$$DialogueChatFromJson(Map<String, dynamic> json) =>
@@ -38,7 +38,7 @@ _$DialogueChat _$$DialogueChatFromJson(Map<String, dynamic> json) =>
       lastMessage: json['lastMessage'] == null
           ? null
           : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$DialogueChatToJson(_$DialogueChat instance) =>
@@ -47,7 +47,7 @@ Map<String, dynamic> _$$DialogueChatToJson(_$DialogueChat instance) =>
       'unreadAmount': instance.unreadAmount,
       'partnerID': instance.partnerID.toJson(),
       'lastMessage': instance.lastMessage?.toJson(),
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };
 
 _$GroupChat _$$GroupChatFromJson(Map<String, dynamic> json) => _$GroupChat(
@@ -58,7 +58,7 @@ _$GroupChat _$$GroupChatFromJson(Map<String, dynamic> json) => _$GroupChat(
           ? null
           : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
       pic: json['pic'] as String?,
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$GroupChatToJson(_$GroupChat instance) =>
@@ -68,5 +68,5 @@ Map<String, dynamic> _$$GroupChatToJson(_$GroupChat instance) =>
       'title': instance.title,
       'lastMessage': instance.lastMessage?.toJson(),
       'pic': instance.pic,
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };

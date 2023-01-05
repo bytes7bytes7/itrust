@@ -36,8 +36,6 @@ abstract class $UserChatInfoCopyWith<$Res> {
       _$UserChatInfoCopyWithImpl<$Res, UserChatInfo>;
   @useResult
   $Res call({User user, ChatRole role});
-
-  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -67,14 +65,6 @@ class _$UserChatInfoCopyWithImpl<$Res, $Val extends UserChatInfo>
               as ChatRole,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get user {
-    return $UserCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -86,9 +76,6 @@ abstract class _$$_UserChatInfoCopyWith<$Res>
   @override
   @useResult
   $Res call({User user, ChatRole role});
-
-  @override
-  $UserCopyWith<$Res> get user;
 }
 
 /// @nodoc

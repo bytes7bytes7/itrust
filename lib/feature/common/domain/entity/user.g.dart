@@ -12,7 +12,7 @@ _$StaffUser _$$StaffUserFromJson(Map<String, dynamic> json) => _$StaffUser(
       avatarUrls: (json['avatarUrls'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$StaffUserToJson(_$StaffUser instance) =>
@@ -20,7 +20,7 @@ Map<String, dynamic> _$$StaffUserToJson(_$StaffUser instance) =>
       'id': instance.id.toJson(),
       'name': instance.name,
       'avatarUrls': instance.avatarUrls,
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };
 
 _$EndUser _$$EndUserFromJson(Map<String, dynamic> json) => _$EndUser(
@@ -33,7 +33,7 @@ _$EndUser _$$EndUserFromJson(Map<String, dynamic> json) => _$EndUser(
       lastSeen: json['lastSeen'] == null
           ? null
           : DateTime.parse(json['lastSeen'] as String),
-      $type: json['runtimeType'] as String?,
+      $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
@@ -42,5 +42,5 @@ Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
       'avatarUrls': instance.avatarUrls,
       'online': instance.online,
       'lastSeen': instance.lastSeen?.toIso8601String(),
-      'runtimeType': instance.$type,
+      'type': instance.$type,
     };

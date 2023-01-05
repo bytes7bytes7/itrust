@@ -7,7 +7,10 @@ part 'chat.freezed.dart';
 
 part 'chat.g.dart';
 
-@freezed
+@Freezed(
+  unionKey: 'type',
+  copyWith: false,
+)
 class Chat with _$Chat {
   const factory Chat.monologue({
     required ChatID id,

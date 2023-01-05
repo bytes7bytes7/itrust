@@ -6,7 +6,10 @@ part 'user.freezed.dart';
 
 part 'user.g.dart';
 
-@freezed
+@Freezed(
+  unionKey: 'type',
+  copyWith: false,
+)
 class User with _$User {
   const factory User.staff({
     required UserID id,
