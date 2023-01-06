@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../../util/wrapped.dart';
 import '../../value_object/value_object.dart';
 import '../message/message.dart';
 
@@ -8,17 +7,12 @@ part 'chat.freezed.dart';
 
 part 'chat.g.dart';
 
-part 'dialogue_chat_business_logic.dart';
-
-part 'group_chat_business_logic.dart';
-
-part 'monologue_chat_business_logic.dart';
-
 @Freezed(
   unionKey: 'type',
-  copyWith: false,
 )
 class Chat with _$Chat {
+  /// Chat for only 1 user.
+  /// All messages in this chat are always read.
   const factory Chat.monologue({
     required ChatID id,
     required int unreadAmount,
@@ -28,6 +22,8 @@ class Chat with _$Chat {
     String? iconName,
   }) = MonologueChat;
 
+  /// Direct messages between two users.
+  /// There is NO ability to add more users.
   const factory Chat.dialogue({
     required ChatID id,
     required int unreadAmount,
@@ -35,6 +31,7 @@ class Chat with _$Chat {
     Message? lastMessage,
   }) = DialogueChat;
 
+  /// Chat for 1..N user(s).
   const factory Chat.group({
     required ChatID id,
     required int unreadAmount,

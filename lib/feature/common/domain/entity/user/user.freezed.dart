@@ -78,6 +78,105 @@ mixin _$User {
   }) =>
       throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserCopyWith<$Res> {
+  factory $UserCopyWith(User value, $Res Function(User) then) =
+      _$UserCopyWithImpl<$Res, User>;
+  @useResult
+  $Res call({UserID id, String name, List<String> avatarUrls});
+
+  $UserIDCopyWith<$Res> get id;
+}
+
+/// @nodoc
+class _$UserCopyWithImpl<$Res, $Val extends User>
+    implements $UserCopyWith<$Res> {
+  _$UserCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? avatarUrls = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as UserID,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarUrls: null == avatarUrls
+          ? _value.avatarUrls
+          : avatarUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserIDCopyWith<$Res> get id {
+    return $UserIDCopyWith<$Res>(_value.id, (value) {
+      return _then(_value.copyWith(id: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$StaffUserCopyWith<$Res> implements $UserCopyWith<$Res> {
+  factory _$$StaffUserCopyWith(
+          _$StaffUser value, $Res Function(_$StaffUser) then) =
+      __$$StaffUserCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({UserID id, String name, List<String> avatarUrls});
+
+  @override
+  $UserIDCopyWith<$Res> get id;
+}
+
+/// @nodoc
+class __$$StaffUserCopyWithImpl<$Res>
+    extends _$UserCopyWithImpl<$Res, _$StaffUser>
+    implements _$$StaffUserCopyWith<$Res> {
+  __$$StaffUserCopyWithImpl(
+      _$StaffUser _value, $Res Function(_$StaffUser) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? avatarUrls = null,
+  }) {
+    return _then(_$StaffUser(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as UserID,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarUrls: null == avatarUrls
+          ? _value._avatarUrls
+          : avatarUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
 }
 
 /// @nodoc
@@ -129,6 +228,12 @@ class _$StaffUser implements StaffUser {
   @override
   int get hashCode => Object.hash(
       runtimeType, id, name, const DeepCollectionEquality().hash(_avatarUrls));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StaffUserCopyWith<_$StaffUser> get copyWith =>
+      __$$StaffUserCopyWithImpl<_$StaffUser>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -221,6 +326,67 @@ abstract class StaffUser implements User {
   String get name;
   @override
   List<String> get avatarUrls;
+  @override
+  @JsonKey(ignore: true)
+  _$$StaffUserCopyWith<_$StaffUser> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
+  factory _$$EndUserCopyWith(_$EndUser value, $Res Function(_$EndUser) then) =
+      __$$EndUserCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {UserID id,
+      String name,
+      List<String> avatarUrls,
+      bool online,
+      DateTime? lastSeen});
+
+  @override
+  $UserIDCopyWith<$Res> get id;
+}
+
+/// @nodoc
+class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
+    implements _$$EndUserCopyWith<$Res> {
+  __$$EndUserCopyWithImpl(_$EndUser _value, $Res Function(_$EndUser) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? avatarUrls = null,
+    Object? online = null,
+    Object? lastSeen = freezed,
+  }) {
+    return _then(_$EndUser(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as UserID,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarUrls: null == avatarUrls
+          ? _value._avatarUrls
+          : avatarUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      online: null == online
+          ? _value.online
+          : online // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastSeen: freezed == lastSeen
+          ? _value.lastSeen
+          : lastSeen // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
 }
 
 /// @nodoc
@@ -282,6 +448,12 @@ class _$EndUser implements EndUser {
   @override
   int get hashCode => Object.hash(runtimeType, id, name,
       const DeepCollectionEquality().hash(_avatarUrls), online, lastSeen);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EndUserCopyWith<_$EndUser> get copyWith =>
+      __$$EndUserCopyWithImpl<_$EndUser>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -378,4 +550,8 @@ abstract class EndUser implements User {
   List<String> get avatarUrls;
   bool get online;
   DateTime? get lastSeen;
+  @override
+  @JsonKey(ignore: true)
+  _$$EndUserCopyWith<_$EndUser> get copyWith =>
+      throw _privateConstructorUsedError;
 }

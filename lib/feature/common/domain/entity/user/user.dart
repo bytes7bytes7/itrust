@@ -6,11 +6,8 @@ part 'user.freezed.dart';
 
 part 'user.g.dart';
 
-part 'end_user_business_logic.dart';
-
 @Freezed(
   unionKey: 'type',
-  copyWith: false,
 )
 class User with _$User {
   const factory User.staff({
