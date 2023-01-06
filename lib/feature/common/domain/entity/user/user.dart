@@ -1,10 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../value_object/value_object.dart';
+import '../../value_object/value_object.dart';
 
 part 'user.freezed.dart';
 
 part 'user.g.dart';
+
+part 'end_user_business_logic.dart';
 
 @Freezed(
   unionKey: 'type',
