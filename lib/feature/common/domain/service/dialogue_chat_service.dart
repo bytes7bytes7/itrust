@@ -1,25 +1,32 @@
 import 'dart:typed_data';
 
+import '../entity/entity.dart';
 import '../value_object/value_object.dart';
+import 'messages_event.dart';
 
 abstract class DialogueChatService {
+  ChatID? currentChatID;
+
+  Stream<MessagesEvent> get messagesEvents;
+
+  /// Stream of updated chat value.
+  /// If null comes then chat is deleted.
+  Stream<Chat?> get updatedChat;
+
+  // TODO: move to new_chat feature
   Future<void> create({
     required UserID partnerID,
   });
 
-  Future<void> delete({
-    required ChatID chatID,
-  });
+  Future<void> delete();
 
   Future<void> sendMessage({
-    required ChatID chatID,
     String text = '',
     List<Uint8List> media = const [],
     Duration? burnDelay,
   });
 
   Future<void> editMessage({
-    required ChatID chatID,
     required MessageID messageID,
     String? text,
     List<Uint8List> mediaToAdd = const [],
@@ -27,12 +34,10 @@ abstract class DialogueChatService {
   });
 
   Future<void> deleteMessages({
-    required ChatID chatID,
     required List<MessageID> messageIDs,
   });
 
   Future<void> readMessagesUntilMessage({
-    required ChatID chatID,
     required MessageID lastMessageID,
   });
 }
