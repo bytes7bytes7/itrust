@@ -1,10 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../value_object/value_object.dart';
+import '../../../../../util/wrapped.dart';
+import '../../value_object/value_object.dart';
 
 part 'message.freezed.dart';
 
 part 'message.g.dart';
+
+part 'info_message_business_logic.dart';
+
+part 'user_message_business_logic.dart';
 
 @Freezed(
   unionKey: 'type',

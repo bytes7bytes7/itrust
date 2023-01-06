@@ -1,3 +1,3 @@
 export 'chat/chat.dart';
-export 'message.dart';
+export 'message/message.dart';
 export 'user.dart';

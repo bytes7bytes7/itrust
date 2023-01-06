@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../util/wrapped.dart';
 import '../../value_object/value_object.dart';
-import '../message.dart';
+import '../message/message.dart';
 
 part 'chat.freezed.dart';
 
