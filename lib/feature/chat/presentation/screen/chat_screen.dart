@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../theme/theme.dart';
 import '../../../common/domain/domain.dart';
-import '../../../common/domain/persistence/date_time_facade.dart';
 import '../../application/store/chat_store/chat_store.dart';
 import '../widget/widget.dart';
 
@@ -29,12 +28,8 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateTimeFacade = _getIt.get<DateTimeFacade>();
-
     return Scaffold(
-      appBar: _AppBar(
-        dateTimeFacade,
-      ),
+      appBar: const _AppBar(),
       body: SafeArea(
         child: Column(
           children: const [
@@ -51,9 +46,7 @@ class ChatScreen extends StatelessWidget {
 
 // ignore: prefer_mixin
 class _AppBar extends StatelessWidget with PreferredSizeWidget {
-  const _AppBar(this.dateTimeFacade);
-
-  final DateTimeFacade dateTimeFacade;
+  const _AppBar();
 
   @override
   Size get preferredSize => const Size.fromHeight(_appBarHeight);
@@ -78,9 +71,7 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
           ),
         ),
         centerTitle: true,
-        title: _AppBarTitle(
-          dateTimeFacade,
-        ),
+        title: const _AppBarTitle(),
         actions: [
           Align(
             child: ElevatedButton(
@@ -98,9 +89,7 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 }
 
 class _AppBarTitle extends StatelessWidget {
-  const _AppBarTitle(this.dateTimeFacade);
-
-  final DateTimeFacade dateTimeFacade;
+  const _AppBarTitle();
 
   @override
   Widget build(BuildContext context) {

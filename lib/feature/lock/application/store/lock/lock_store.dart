@@ -4,8 +4,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/domain/domain.dart';
-import '../../../../common/domain/persistence/credentials_repository.dart';
-import '../../../domain/persistence/lock_repository.dart';
+import '../../../domain/service/lock_service.dart';
 
 part 'lock_store.g.dart';
 
@@ -13,13 +12,10 @@ class LockStore = _LockStore with _$LockStore;
 
 abstract class _LockStore with Store, Errorable, Loadable {
   _LockStore({
-    required LockRepository lockRepository,
-    required CredentialsRepository credentialsRepository,
-  })  : _lockRepository = lockRepository,
-        _credentialsRepository = credentialsRepository;
+    required LockService lockService,
+  }) : _lockService = lockService;
 
-  final LockRepository _lockRepository;
-  final CredentialsRepository _credentialsRepository;
+  final LockService _lockService;
 
   @readonly
   bool _isLoading = false;
@@ -34,9 +30,7 @@ abstract class _LockStore with Store, Errorable, Loadable {
   Future<void> unlock({required String passphrase}) async {
     await _wrap(() async {
       try {
-        await _lockRepository.unlock(passphrase: passphrase);
-
-        _credentialsRepository.dbPassphrase = passphrase;
+        await _lockService.unlock(passphrase: passphrase);
       } catch (e) {
         _error = e;
       }

@@ -16,8 +16,6 @@ import 'package:itrust/feature/chat_list/application/store/chat_list/chat_list_s
 import 'package:itrust/feature/chat_list/infrastructure/persistence/chat_list_search_repository.dart'
     as _i11;
 import 'package:itrust/feature/common/domain/domain.dart' as _i9;
-import 'package:itrust/feature/common/domain/persistence/date_time_facade.dart'
-    as _i14;
 import 'package:itrust/feature/common/domain/persistence/date_time_repository.dart'
     as _i5;
 import 'package:itrust/feature/common/domain/persistence/search_repository.dart'
@@ -26,8 +24,6 @@ import 'package:itrust/feature/common/domain/service/chat_list_service.dart'
     as _i3;
 import 'package:itrust/feature/common/infrastructure/domain_service/chat_list_service.dart'
     as _i4;
-import 'package:itrust/feature/common/infrastructure/persistence/date_time_facade.dart'
-    as _i15;
 import 'package:itrust/feature/common/infrastructure/persistence/date_time_repository.dart'
     as _i6;
 import 'package:itrust/main/application/store/home_store/home_store.dart'
@@ -78,13 +74,5 @@ _i1.GetIt init(
   ));
   gh.singleton<_i13.ChatStore>(_i13.ChatStore(
       searchRepository: gh<_i8.SearchRepository<_i9.Message>>()));
-  gh.singleton<_i14.DateTimeFacade>(
-    _i15.ProdDateTimeFacade(gh<_i5.DateTimeRepository>()),
-    registerFor: {
-      _test,
-      _dev,
-      _prod,
-    },
-  );
   return getIt;
 }

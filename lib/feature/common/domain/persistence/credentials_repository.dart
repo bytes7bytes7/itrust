@@ -1,7 +1,7 @@
 abstract class CredentialsRepository {
-  abstract String? dbPassphrase;
+  abstract Stream<String> dbPassphrase;
 
-  abstract String? token;
+  abstract Stream<String> token;
 
-  abstract String? refreshToken;
+  abstract Stream<String> refreshToken;
 }
