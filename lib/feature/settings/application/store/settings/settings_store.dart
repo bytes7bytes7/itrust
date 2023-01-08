@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/application.dart';
-import '../../../../common/application/persistence/user_repository.dart';
-import '../../persistence/settings_repository.dart';
+import '../../../../common/domain/persistence/user_repository.dart';
+import '../../../domain/persistence/settings_repository.dart';
 
 part 'settings_store.g.dart';
 

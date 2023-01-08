@@ -17,7 +17,7 @@ class InfoMessageCard extends StatelessWidget {
     required this.message,
   });
 
-  final Message message;
+  final InfoMessage message;
 
   @override
   Widget build(BuildContext context) {
@@ -46,18 +46,19 @@ class InfoMessageCard extends StatelessWidget {
             ),
             child: Column(
               children: [
+                // TODO: adapt for InfoMessage
                 Text(
                   _beautifiedDateTime(),
-                  style: message.text.isNotEmpty
+                  style: message.markUp.isNotEmpty
                       ? theme.textTheme.headline6
                       : theme.textTheme.bodyText1,
                 ),
-                if (message.text.isNotEmpty) ...[
+                if (message.markUp.isNotEmpty) ...[
                   const SizedBox(
                     width: _messageAndTimeSeparator,
                   ),
                   Text(
-                    message.text,
+                    message.markUp,
                     style: theme.textTheme.bodyText1?.copyWith(
                       color: colorSchemeTX.infoMsgForeground,
                     ),
@@ -73,7 +74,7 @@ class InfoMessageCard extends StatelessWidget {
 
   // TODO: move to another place
   String _beautifiedDateTime() {
-    final dateTime = message.modifiedAt ?? message.sentAt;
+    final dateTime = message.sentAt;
     final now = DateTime.now();
 
     if (dateTime.year == now.year) {

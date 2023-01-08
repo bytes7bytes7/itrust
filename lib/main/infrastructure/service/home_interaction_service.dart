@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../application/service/home_interaction_service.dart';
+import '../../../../main/application/service/home_interaction_service.dart';
 import '../router/router.dart';
 
 @Singleton(as: HomeInteractionService)

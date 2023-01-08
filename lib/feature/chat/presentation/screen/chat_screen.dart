@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../../l10n/l10n.dart';
 import '../../../../theme/theme.dart';
-import '../../../common/application/persistence/date_time_facade.dart';
 import '../../../common/domain/domain.dart';
+import '../../../common/domain/persistence/date_time_facade.dart';
 import '../../application/store/chat_store/chat_store.dart';
 import '../widget/widget.dart';
 
@@ -14,7 +12,7 @@ const _appBarHeight = 66.0;
 final _getIt = GetIt.instance;
 
 // TODO: remove
-const _me = User(
+const _me = User.end(
   id: UserID('me'),
   name: 'bytes7 bytes7',
   avatarUrls: [],
@@ -108,7 +106,6 @@ class _AppBarTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final chatStore = _getIt.get<ChatStore>();
     final theme = Theme.of(context);
-    final l10n = context.l10n;
 
     return Observer(
       builder: (context) {
@@ -118,53 +115,27 @@ class _AppBarTitle extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        final beautifiedOnlineStatus = _beautifyOnlineStatus(
-          l10n,
-          chat.partner,
-        );
+        // TODO: get info about user
+        const onlineStatus = '';
+
+        // TODO: get info about user/chat
+        const title = 'title';
 
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              chat.title,
+            const Text(
+              title,
             ),
-            if (beautifiedOnlineStatus.isNotEmpty)
+            if (onlineStatus.isNotEmpty)
               Text(
-                beautifiedOnlineStatus,
+                onlineStatus,
                 style: theme.textTheme.headline6,
               ),
           ],
         );
       },
     );
-  }
-
-  String _beautifyOnlineStatus(
-    AppLocalizations l10n,
-    User? partner,
-  ) {
-    if (partner == null) {
-      return l10n.no_online_status;
-    }
-
-    final online = partner.online;
-    final lastSeen = partner.lastSeen;
-
-    if (online) {
-      return l10n.is_online_status;
-    }
-
-    if (!online && lastSeen == null) {
-      return l10n.hidden_online_status;
-    }
-
-    if (online && lastSeen != null) {
-      return '${l10n.last_seen_online_status} '
-          '${dateTimeFacade.beautifyBasedOnNow(lastSeen)}';
-    }
-
-    return '';
   }
 }
 
@@ -197,24 +168,27 @@ class _MessageList extends StatelessWidget {
               final message = chatStore
                   .suggestions[chatStore.suggestions.length - 1 - index];
 
-              if (message.senderID == null) {
-                return InfoMessageCard(
-                  key: ValueKey(message.id),
-                  message: message,
-                );
-              }
+              return message.map(
+                info: (message) {
+                  return InfoMessageCard(
+                    key: ValueKey(message.id),
+                    message: message,
+                  );
+                },
+                user: (message) {
+                  if (message.senderID == _me.id) {
+                    return MyMessageCard(
+                      key: ValueKey(message.id),
+                      message: message,
+                    );
+                  }
 
-              if (message.senderID == _me.id) {
-                return MyMessageCard(
-                  key: ValueKey(message.id),
-                  message: message,
-                );
-              }
-
-              return OthersMessageCard(
-                key: ValueKey(message.id),
-                message: message,
-                showSender: chat.chatType == ChatType.group,
+                  return OthersMessageCard(
+                    key: ValueKey(message.id),
+                    message: message,
+                    showSender: chatStore.chat is GroupChat,
+                  );
+                },
               );
             },
           ),

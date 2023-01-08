@@ -2,19 +2,12 @@ import 'dart:math';
 
 import 'package:injectable/injectable.dart';
 
-import '../../../common/application/persistence/message_repository.dart';
-import '../../../common/application/persistence/search_repository.dart';
 import '../../../common/domain/domain.dart';
+import '../../../common/domain/persistence/search_repository.dart';
 
 @test
 @Singleton(as: SearchRepository<Message>)
 class TestMessageSearchRepository implements SearchRepository<Message> {
-  TestMessageSearchRepository({
-    required MessageRepository messageRepository,
-  }) : _messageRepository = messageRepository;
-
-  final MessageRepository _messageRepository;
-
   @override
   Future<List<Message>> load({
     required int limit,
@@ -23,7 +16,8 @@ class TestMessageSearchRepository implements SearchRepository<Message> {
   }) async {
     final messages = await _genMessages(limit: limit);
 
-    await _messageRepository.addAllByChatID(chatID, messages);
+    // TODO: solve this
+    // await _messageRepository.addAllByChatID(chatID, messages);
 
     return messages;
   }
@@ -31,30 +25,36 @@ class TestMessageSearchRepository implements SearchRepository<Message> {
   Future<List<Message>> _genMessages({
     required int limit,
   }) {
+    const chatID = ChatID('chatID');
+
     return Future.delayed(
       const Duration(seconds: 2),
       () {
         return List.generate(
           limit,
           (index) {
-            final senderID = _rand.nextBool()
-                ? _senderID
-                : _rand.nextBool()
-                    ? _myID
-                    : null;
+            if (_rand.nextBool()) {
+              return Message.info(
+                id: MessageID('$index'),
+                chatID: chatID,
+                sentAt: _randDateTime(),
+                readBy: [const UserID('some id')],
+                markUp: 'some markup',
+                markUpData: ['markup data'],
+                willBeBurntAt: _rand.nextBool() ? _randDateTime() : null,
+              );
+            }
 
-            return Message(
+            return Message.user(
               id: MessageID('$index'),
               chatID: const ChatID('chatID'),
-              senderID: senderID,
-              text: _rand.nextBool() && senderID != null
-                  ? _randString(_rand.nextInt(20) + 8)
-                  : '',
+              senderID: _senderID,
+              text: _rand.nextBool() ? _randString(_rand.nextInt(20) + 8) : '',
               mediaUrls: [],
+              readBy: [const UserID('some id')],
               sentAt: _randDateTime(),
               modifiedAt: _rand.nextBool() ? _randDateTime() : null,
               willBeBurntAt: _rand.nextBool() ? _randDateTime() : null,
-              isRead: _rand.nextBool(),
             );
           },
         );
@@ -65,8 +65,6 @@ class TestMessageSearchRepository implements SearchRepository<Message> {
   final _rand = Random();
 
   final _senderID = const UserID('senderID');
-
-  final _myID = const UserID('me');
 
   final _alpha = 'qwertyuiopasdfghjklzxcvbnm';
 

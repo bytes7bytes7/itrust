@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'app.dart';
-import 'injector.dart';
 import 'logger.dart';
+import 'main/infrastructure/di/injector.dart';
+import 'main/presentation/app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

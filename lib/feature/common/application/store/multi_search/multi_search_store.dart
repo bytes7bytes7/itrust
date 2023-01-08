@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
-import '../../../../common/application/persistence/search_repository.dart';
+import '../../../domain/persistence/search_repository.dart';
 
 part 'multi_search_store.g.dart';
 

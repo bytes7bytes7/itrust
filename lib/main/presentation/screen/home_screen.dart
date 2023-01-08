@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../../util/hook/autorun.dart';
-import '../../../chat_list/presentation/screen/chat_list_screen.dart';
-import '../../../feed/presentation/screen/feed_screen.dart';
-import '../../../menu/presentation/screen/menu_screen.dart';
+import '../../../feature/chat_list/presentation/screen/chat_list_screen.dart';
+import '../../../feature/feed/presentation/screen/feed_screen.dart';
+import '../../../feature/menu/presentation/screen/menu_screen.dart';
+import '../../../util/hook/autorun.dart';
 import '../../application/store/home_store/home_store.dart';
 
 const _navIcons = [

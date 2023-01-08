@@ -19,7 +19,7 @@ class OthersMessageCard extends StatelessWidget {
     required this.showSender,
   });
 
-  final Message message;
+  final UserMessage message;
   final bool showSender;
 
   @override
@@ -27,6 +27,9 @@ class OthersMessageCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
+
+    // TODO: implement
+    const senderName = 'sender name';
 
     return Padding(
       padding: const EdgeInsets.symmetric(

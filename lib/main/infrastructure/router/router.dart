@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../chat/presentation/screen/chat_screen.dart';
-import '../../../chat_list/presentation/screen/screen.dart';
-import '../../../common/domain/domain.dart';
-import '../../../feed/presentation/screen/screen.dart';
-import '../../../menu/presentation/screen/screen.dart';
+import '../../../feature/chat/presentation/screen/screen.dart';
+import '../../../feature/chat_list/presentation/screen/screen.dart';
+import '../../../feature/common/domain/domain.dart';
+import '../../../feature/feed/presentation/screen/screen.dart';
+import '../../../feature/menu/presentation/screen/screen.dart';
 import '../../presentation/screen/screen.dart';
 
 part 'transition.dart';

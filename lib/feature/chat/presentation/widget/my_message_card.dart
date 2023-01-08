@@ -19,7 +19,7 @@ class MyMessageCard extends StatelessWidget {
     required this.message,
   });
 
-  final Message message;
+  final UserMessage message;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,8 @@ class MyMessageCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          if (message.isRead)
+          // TODO: adapt for readBy
+          if (message.readBy.isNotEmpty)
             Icon(
               Icons.done_all,
               size: _readIconSize,

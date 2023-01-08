@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
-import '../../../../common/application/persistence/credentials_repository.dart';
 import '../../../../common/domain/domain.dart';
-import '../../persistence/lock_repository.dart';
+import '../../../../common/domain/persistence/credentials_repository.dart';
+import '../../../domain/persistence/lock_repository.dart';
 
 part 'lock_store.g.dart';
 

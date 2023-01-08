@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
-import '../../application/persistence/date_time_repository.dart';
+import '../../domain/persistence/date_time_repository.dart';
 
 @test
 @dev

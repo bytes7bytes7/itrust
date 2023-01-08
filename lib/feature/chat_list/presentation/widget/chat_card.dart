@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -34,7 +33,18 @@ class ChatCard extends StatelessWidget {
 
     final l10n = context.l10n;
 
-    final lastMessage = chat.messages.lastOrNull;
+    final lastMessage = chat.lastMessage;
+
+    // TODO: implement
+    const avatarUrl = null;
+    const online = true;
+
+    // TODO: implement
+    final title = chat.map(
+      monologue: (chat) => chat.title,
+      dialogue: (chat) => 'dialog title',
+      group: (chat) => chat.title,
+    );
 
     return Material(
       color: colorSchemeTX.chatCard,
@@ -47,9 +57,9 @@ class ChatCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              UserCircleAvatar(
-                url: chat.avatarUrl,
-                online: chat.online,
+              const UserCircleAvatar(
+                url: avatarUrl,
+                online: online,
               ),
               const SizedBox(
                 width: _avatarAndTitleSeparator,
@@ -60,7 +70,7 @@ class ChatCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      chat.title,
+                      title,
                       style: theme.textTheme.headline5,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -68,41 +78,48 @@ class ChatCard extends StatelessWidget {
                       const SizedBox(
                         height: _titleAndMessageSeparator,
                       ),
-                      if (lastMessage.sender != null)
-                        Row(
-                          children: [
-                            Flexible(
-                              child: Text(
-                                lastMessage.sender!.name,
+                      lastMessage.map(
+                        info: (message) {
+                          return Text(
+                            message.markUp,
+                            style: theme.textTheme.bodyText2?.copyWith(
+                              color: colorSchemeTX.infoMsgPreviewColor,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          );
+                        },
+                        user: (message) {
+                          // TODO: implement
+                          final senderName = 'sender ${message.senderID}';
+
+                          return Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  senderName,
+                                  style: theme.textTheme.subtitle1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Text(
+                                l10n.chat_card_author_and_msg_separator,
                                 style: theme.textTheme.subtitle1,
-                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                            Text(
-                              l10n.chat_card_author_and_msg_separator,
-                              style: theme.textTheme.subtitle1,
-                            ),
-                            const SizedBox(
-                              width: _authorAndMessageSeparator,
-                            ),
-                            Flexible(
-                              flex: _messageFlex,
-                              child: Text(
-                                lastMessage.text,
-                                style: theme.textTheme.bodyText2,
-                                overflow: TextOverflow.ellipsis,
+                              const SizedBox(
+                                width: _authorAndMessageSeparator,
                               ),
-                            ),
-                          ],
-                        )
-                      else
-                        Text(
-                          lastMessage.text,
-                          style: theme.textTheme.bodyText2?.copyWith(
-                            color: colorSchemeTX.infoMsgPreviewColor,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                              Flexible(
+                                flex: _messageFlex,
+                                child: Text(
+                                  message.text,
+                                  style: theme.textTheme.bodyText2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ],
                   ],
                 ),
@@ -117,9 +134,7 @@ class ChatCard extends StatelessWidget {
               if (lastMessage != null)
                 Flexible(
                   child: Text(
-                    _formattedDateTime(
-                      lastMessage.modifiedAt ?? lastMessage.sentAt,
-                    ),
+                    _formattedDateTime(lastMessage.sentAt),
                     style: theme.textTheme.bodyText2,
                   ),
                 ),

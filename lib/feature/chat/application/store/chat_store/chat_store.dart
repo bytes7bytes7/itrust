@@ -6,9 +6,8 @@ import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
-import '../../../../common/application/persistence/chat_repository.dart';
-import '../../../../common/application/persistence/search_repository.dart';
 import '../../../../common/domain/domain.dart';
+import '../../../../common/domain/persistence/search_repository.dart';
 import '../../service/chat_interaction_service.dart';
 
 part 'chat_store.g.dart';
@@ -22,14 +21,11 @@ class ChatStore = _ChatStore with _$ChatStore;
 abstract class _ChatStore with Store, Loadable, Errorable {
   _ChatStore({
     required ChatInteractionService chatInteractionService,
-    required ChatRepository chatRepository,
     required SearchRepository<Message> searchRepository,
   })  : _chatInteractionService = chatInteractionService,
-        _chatRepository = chatRepository,
         _searchRepository = searchRepository;
 
   final ChatInteractionService _chatInteractionService;
-  final ChatRepository _chatRepository;
   final SearchRepository<Message> _searchRepository;
   final int _limit = _defaultLimit;
 
@@ -78,7 +74,13 @@ abstract class _ChatStore with Store, Loadable, Errorable {
 
     await _wrap(() async {
       try {
-        final chat = await _chatRepository.getByID(chatID);
+        // TODO: implement
+        final chat = Chat.monologue(
+          id: chatID,
+          unreadAmount: 0,
+          title: 'title $chatID',
+        );
+
         _chat = chat;
       } catch (e) {
         _error = e;
@@ -185,7 +187,10 @@ abstract class _ChatStore with Store, Loadable, Errorable {
       Message? selected;
       if (_selected == null) {
         selected = suggestions.firstWhereOrNull(
-          (e) => e.text.toLowerCase().contains(query ?? _query),
+          (e) => e.map(
+            info: (_) => false,
+            user: (e) => e.text.toLowerCase().contains(query ?? _query),
+          ),
         );
       }
 

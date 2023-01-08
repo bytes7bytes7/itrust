@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
-import '../../../../common/application/persistence/user_repository.dart';
-import '../../persistence/auth_repository.dart';
+import '../../../../common/domain/persistence/user_repository.dart';
+import '../../../domain/persistence/auth_repository.dart';
 
 part 'auth_store.g.dart';
 

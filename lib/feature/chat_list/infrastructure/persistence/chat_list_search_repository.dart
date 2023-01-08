@@ -2,18 +2,13 @@ import 'dart:math';
 
 import 'package:injectable/injectable.dart';
 
-import '../../../common/application/persistence/chat_repository.dart';
-import '../../../common/application/persistence/search_repository.dart';
 import '../../../common/domain/domain.dart';
+import '../../../common/domain/persistence/search_repository.dart';
 
 @test
 @Singleton(as: SearchRepository<Chat>)
 class TestChatListSearchRepository implements SearchRepository<Chat> {
-  TestChatListSearchRepository({
-    required ChatRepository chatRepository,
-  }) : _chatRepository = chatRepository;
 
-  final ChatRepository _chatRepository;
 
   @override
   Future<List<Chat>> load({
@@ -23,7 +18,6 @@ class TestChatListSearchRepository implements SearchRepository<Chat> {
   }) async {
     final chats = await _genChats(limit: limit);
 
-    _chatRepository.addAll(chats);
 
     return chats;
   }
@@ -55,28 +49,30 @@ class TestChatListSearchRepository implements SearchRepository<Chat> {
     );
   }
 
-  UserID? _genSenderID(ChatType chatType, UserID partnerID) {
-    if (chatType == ChatType.dialog) {
-      switch (_rand.nextInt(3)) {
-        case 0:
-          return partnerID;
-        case 1:
-          return _myID;
-        default:
-          return null;
-      }
+  Message _genMessage(UserID? senderID, ChatID chatID) {
+    final id = MessageID('${_rand.nextInt(1000)}');
+    final sentAt = _randDateTime();
+
+    if (senderID == null) {
+      return Message.info(
+        id: id,
+        chatID: chatID,
+        sentAt: sentAt,
+        readBy: [],
+        markUp: 'mark up ${_rand.nextInt(1000)}',
+        markUpData: ['mark up date ${_rand.nextInt(1000)}'],
+      );
     }
 
-    switch (_rand.nextInt(4)) {
-      case 0:
-        return partnerID;
-      case 1:
-        return _myID;
-      case 2:
-        return UserID(_randString(8));
-      default:
-        return null;
-    }
+    return Message.user(
+      id: id,
+      chatID: chatID,
+      sentAt: sentAt,
+      readBy: [],
+      text: 'text ${_rand.nextInt(1000)}',
+      mediaUrls: [],
+      senderID: senderID,
+    );
   }
 
   Future<List<Chat>> _genChats({
@@ -89,52 +85,69 @@ class TestChatListSearchRepository implements SearchRepository<Chat> {
           limit,
           (index) {
             final chatID = ChatID('chat $index');
-            final partnerID = UserID('partner $index');
-            final type = _rand.nextBool() ? ChatType.group : ChatType.dialog;
             final title = _randString(_rand.nextInt(20) + 5);
-            final online = _rand.nextBool();
-            final unreadAmount = _rand.nextInt(2000);
+            final unreadAmount = _rand.nextBool() ? _rand.nextInt(2000) : 0;
 
-            return Chat(
-              id: chatID,
-              title: title,
-              chatType: type,
-              partner: type == ChatType.dialog
-                  ? User(
-                      id: partnerID,
-                      name: type == ChatType.dialog
-                          ? title
-                          : _randString(_rand.nextInt(20) + 4),
-                      avatarUrls: [],
-                      online: online,
-                      lastSeen: !online
-                          ? _rand.nextBool()
-                              ? _randDateTime()
-                              : null
-                          : null,
-                    )
-                  : null,
-              unreadAmount: unreadAmount,
-              avatarUrl: _rand.nextBool()
-                  ? 'https://i0.wp.com/evanstonroundtable.com/wp-content/uploads/2022/05/Lushina-scaled-e1652827479814.jpg?fit=1200%2C900&ssl=1'
-                  : null,
-              messages: _rand.nextInt(5) == 0
-                  ? []
-                  : [
-                      Message(
-                        id: MessageID('message $index'),
-                        chatID: chatID,
-                        senderID: _genSenderID(type, partnerID),
-                        text: _randString(_rand.nextInt(40) + 5),
-                        mediaUrls: [],
-                        sentAt: _randDateTime(),
-                        modifiedAt: _rand.nextBool() ? _randDateTime() : null,
-                        willBeBurntAt:
-                            _rand.nextBool() ? _randDateTime() : null,
-                        isRead: unreadAmount == 0,
-                      ),
-                    ],
-            );
+            switch (_rand.nextInt(3)) {
+              case 0:
+                return Chat.monologue(
+                  id: chatID,
+                  unreadAmount: unreadAmount,
+                  title: title,
+                  lastMessage: _genMessage(_myID, chatID),
+                );
+              case 1:
+                final partnerID = UserID('partner $index');
+
+                Message? message;
+                switch (_rand.nextInt(3)) {
+                  case 0:
+                    message = _genMessage(_myID, chatID);
+                    break;
+                  case 1:
+                    message = _genMessage(partnerID, chatID);
+                    break;
+                  default:
+                    message = _genMessage(null, chatID);
+                }
+
+                if (unreadAmount == 0) {
+                  message = _rand.nextBool() ? message : null;
+                }
+
+                return Chat.dialogue(
+                  id: chatID,
+                  unreadAmount: unreadAmount,
+                  partnerID: partnerID,
+                  lastMessage: message,
+                );
+              default:
+                Message? message;
+                switch (_rand.nextInt(3)) {
+                  case 0:
+                    message = _genMessage(_myID, chatID);
+                    break;
+                  case 1:
+                    message = _genMessage(
+                      UserID('user ${_rand.nextInt(1000)}'),
+                      chatID,
+                    );
+                    break;
+                  default:
+                    message = _genMessage(null, chatID);
+                }
+
+                if (unreadAmount == 0) {
+                  message = _rand.nextBool() ? message : null;
+                }
+
+                return Chat.group(
+                  id: chatID,
+                  unreadAmount: unreadAmount,
+                  title: title,
+                  lastMessage: message,
+                );
+            }
           },
         );
       },

@@ -5,7 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
-import '../../../../common/application/persistence/search_repository.dart';
+import '../../../domain/persistence/search_repository.dart';
 
 part 'search_store.g.dart';
 

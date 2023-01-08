@@ -6,8 +6,10 @@ import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
-import '../../../../common/application/persistence/search_repository.dart';
 import '../../../../common/domain/domain.dart';
+import '../../../../common/domain/persistence/search_repository.dart';
+import '../../../../common/domain/service/chat_list_service.dart';
+import '../../../../common/domain/service/chats_event.dart';
 import '../../service/chat_list_interaction_service.dart';
 
 part 'chat_list_store.g.dart';
@@ -20,14 +22,75 @@ class ChatListStore = _ChatListStore with _$ChatListStore;
 
 abstract class _ChatListStore with Store, Loadable, Errorable {
   _ChatListStore({
+    required ChatListService chatListService,
     required ChatListInteractionService chatListInteractionService,
     required SearchRepository<Chat> searchRepository,
-  })  : _chatListInteractionService = chatListInteractionService,
-        _searchRepository = searchRepository;
+  })  : _chatListService = chatListService,
+        _chatListInteractionService = chatListInteractionService,
+        _searchRepository = searchRepository {
+    _chatListSub = _chatListService.chatsEvents.listen((event) {
+      if (event is UpdateChatsEvent) {
+        if (_suggestions.isNotEmpty) {
+          final result = List<Chat>.from(_suggestions);
 
+          for (final chat in event.chats) {
+            final oldIndex = result.indexWhere((e) => e.id == chat.id);
+            if (oldIndex == -1) {
+              result.add(chat);
+            } else {
+              final updateChatDT = chat.lastMessage?.map(
+                info: (m) => m.sentAt,
+                user: (m) => m.modifiedAt ?? m.sentAt,
+              );
+
+              if (updateChatDT == null) {
+                result[oldIndex] = chat;
+              } else {
+                result.removeAt(oldIndex);
+
+                for (var i = 0; i < result.length; i++) {
+                  final oldChat = result[i];
+
+                  final oldChatDT = oldChat.lastMessage?.map(
+                    info: (m) => m.sentAt,
+                    user: (m) => m.modifiedAt ?? m.sentAt,
+                  );
+
+                  if (oldChatDT != null && oldChatDT.isBefore(updateChatDT)) {
+                    result.insert(i, chat);
+                    break;
+                  }
+                }
+
+                result.add(chat);
+              }
+            }
+          }
+
+          _suggestions = result;
+        }
+      } else if (event is DeleteChatsEvent) {
+        final result = List<Chat>.from(_suggestions);
+
+        for (final e in event.chatIDs) {
+          result.removeWhere((chat) => chat.id == e);
+        }
+
+        _suggestions = result;
+      }
+    });
+  }
+
+  final ChatListService _chatListService;
   final ChatListInteractionService _chatListInteractionService;
   final SearchRepository<Chat> _searchRepository;
   final int _limit = _defaultLimit;
+  StreamSubscription? _chatListSub;
+
+  @disposeMethod
+  void dispose() {
+    _chatListSub?.cancel();
+  }
 
   @readonly
   bool _isLoading = false;
@@ -136,8 +199,20 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
 
       Chat? selected;
       if (_selected == null) {
+        // TODO: implement
         selected = suggestions.firstWhereOrNull(
-          (e) => e.title.toLowerCase().contains(query ?? _query),
+          (e) => e.map(
+            monologue: (chat) {
+              return chat.title.toLowerCase().contains(query ?? _query);
+            },
+            dialogue: (chat) {
+              // TODO: get user info
+              return true;
+            },
+            group: (chat) {
+              return chat.title.toLowerCase().contains(query ?? _query);
+            },
+          ),
         );
       }
 
