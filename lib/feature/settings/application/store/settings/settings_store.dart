@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/application.dart';
-import '../../../../common/domain/persistence/user_repository.dart';
-import '../../../domain/persistence/settings_repository.dart';
+import '../../../domain/service/settings_service.dart';
 
 part 'settings_store.g.dart';
 
@@ -12,13 +11,10 @@ class SettingsStore = _SettingsStore with _$SettingsStore;
 
 abstract class _SettingsStore with Store, Loadable, Errorable {
   _SettingsStore({
-    required SettingsRepository settingsRepository,
-    required UserRepository userRepository,
-  })  : _settingsRepository = settingsRepository,
-        _userRepository = userRepository;
+    required SettingsService settingsService,
+  }) : _settingsService = settingsService;
 
-  final SettingsRepository _settingsRepository;
-  final UserRepository _userRepository;
+  final SettingsService _settingsService;
 
   @readonly
   bool _isLoading = false;
@@ -30,9 +26,7 @@ abstract class _SettingsStore with Store, Loadable, Errorable {
   Future<void> changeName({required String name}) async {
     await _wrap(() async {
       try {
-        final user = await _settingsRepository.changeName(name: name);
-
-        _userRepository.user = user;
+        await _settingsService.changeName(name: name);
       } catch (e) {
         _error = e;
       }

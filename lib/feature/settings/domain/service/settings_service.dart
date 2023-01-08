@@ -1,3 +1,3 @@
-abstract class SettingsRepository {
+abstract class SettingsService {
   Future<void> changeName({required String name});
 }

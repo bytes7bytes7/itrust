@@ -10,7 +10,6 @@ import '../../../../common/domain/domain.dart';
 import '../../../../common/domain/persistence/search_repository.dart';
 import '../../../../common/domain/service/chat_list_service.dart';
 import '../../../../common/domain/service/chats_event.dart';
-import '../../service/chat_list_interaction_service.dart';
 
 part 'chat_list_store.g.dart';
 
@@ -23,10 +22,8 @@ class ChatListStore = _ChatListStore with _$ChatListStore;
 abstract class _ChatListStore with Store, Loadable, Errorable {
   _ChatListStore({
     required ChatListService chatListService,
-    required ChatListInteractionService chatListInteractionService,
     required SearchRepository<Chat> searchRepository,
   })  : _chatListService = chatListService,
-        _chatListInteractionService = chatListInteractionService,
         _searchRepository = searchRepository {
     _chatListSub = _chatListService.chatsEvents.listen((event) {
       if (event is UpdateChatsEvent) {
@@ -82,7 +79,6 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
   }
 
   final ChatListService _chatListService;
-  final ChatListInteractionService _chatListInteractionService;
   final SearchRepository<Chat> _searchRepository;
   final int _limit = _defaultLimit;
   StreamSubscription? _chatListSub;
@@ -176,7 +172,8 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
 
   @action
   void onChatCardPressed(Chat chat) {
-    _chatListInteractionService.onChatCardPressed(chat);
+    // TODO: implement
+    // _chatListService.onChatSelected(chat.id);
   }
 
   Future<void> _loadData({

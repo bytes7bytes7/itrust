@@ -8,7 +8,6 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/domain/domain.dart';
 import '../../../../common/domain/persistence/search_repository.dart';
-import '../../service/chat_interaction_service.dart';
 
 part 'chat_store.g.dart';
 
@@ -20,12 +19,9 @@ class ChatStore = _ChatStore with _$ChatStore;
 
 abstract class _ChatStore with Store, Loadable, Errorable {
   _ChatStore({
-    required ChatInteractionService chatInteractionService,
     required SearchRepository<Message> searchRepository,
-  })  : _chatInteractionService = chatInteractionService,
-        _searchRepository = searchRepository;
+  }) : _searchRepository = searchRepository;
 
-  final ChatInteractionService _chatInteractionService;
   final SearchRepository<Message> _searchRepository;
   final int _limit = _defaultLimit;
 
@@ -136,7 +132,8 @@ abstract class _ChatStore with Store, Loadable, Errorable {
   void onBackPressed() {
     _reset();
 
-    _chatInteractionService.onBackPressed();
+    // TODO: implement
+    // _chatService.onLeaveChat();
   }
 
   void _reset() {

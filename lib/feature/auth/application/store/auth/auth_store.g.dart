@@ -53,14 +53,6 @@ mixin _$AuthStore on _AuthStore, Store {
         .run(() => super.authenticate(login: login, password: password));
   }
 
-  late final _$logOutAsyncAction =
-      AsyncAction('_AuthStore.logOut', context: context);
-
-  @override
-  Future<void> logOut() {
-    return _$logOutAsyncAction.run(() => super.logOut());
-  }
-
   @override
   String toString() {
     return '''
