@@ -13,9 +13,9 @@ Future<void> main() async {
 
   configLogger(printLogs: printLogs);
 
-  configInjector(env: env);
-
   await configFirebase();
+
+  configInjector(env: env);
 
   runApp(
     const App(),

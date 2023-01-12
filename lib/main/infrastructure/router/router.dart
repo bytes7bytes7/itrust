@@ -33,6 +33,6 @@ final _router = GoRouter(
 
 void initRouter() {
   GetIt.instance
-    ..registerSingleton<GoRouter>(_router)
-    ..registerSingleton<NavigatorKey>(_rootKey);
+    ..registerSingleton<NavigatorKey>(_rootKey)
+    ..registerSingleton<GoRouter>(_router);
 }

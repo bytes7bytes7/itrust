@@ -37,7 +37,7 @@ class ProdHomeService implements HomeService {
   late final _navigatorKey = _getIt.get<NavigatorKey>();
 
   BuildContext get _context {
-    final ctx = _navigatorKey.currentState?.context;
+    final ctx = _navigatorKey.currentContext;
 
     if (ctx == null) {
       _logger.shout('Context is null');

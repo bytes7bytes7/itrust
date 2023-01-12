@@ -44,6 +44,24 @@ mixin _$AuthStore on _AuthStore, Store {
     });
   }
 
+  late final _$_isLoggedInAtom =
+      Atom(name: '_AuthStore._isLoggedIn', context: context);
+
+  bool get isLoggedIn {
+    _$_isLoggedInAtom.reportRead();
+    return super._isLoggedIn;
+  }
+
+  @override
+  bool get _isLoggedIn => isLoggedIn;
+
+  @override
+  set _isLoggedIn(bool value) {
+    _$_isLoggedInAtom.reportWrite(value, super._isLoggedIn, () {
+      super._isLoggedIn = value;
+    });
+  }
+
   late final _$authenticateAsyncAction =
       AsyncAction('_AuthStore.authenticate', context: context);
 

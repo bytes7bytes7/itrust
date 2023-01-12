@@ -7,4 +7,8 @@ abstract class AuthService {
     required String login,
     required String password,
   });
+
+  Future<void> finishAuthentication();
+
+  Future<void> logOut();
 }
