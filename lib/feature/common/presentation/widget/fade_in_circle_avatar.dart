@@ -4,7 +4,7 @@ import 'package:transparent_image/transparent_image.dart';
 import '../../../../theme/theme.dart';
 
 const _radius = 28.0;
-const _loadingPadding = 3.0;
+const _loadingPadding = 4.0;
 const _loadingStrokeWidth = 2.0;
 
 class FadeInCircleAvatar extends StatelessWidget {

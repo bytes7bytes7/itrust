@@ -11,6 +11,9 @@ import '../../application/store/chat_list/chat_list_store.dart';
 import '../widget/widget.dart';
 
 const _loadingMorePadding = 8.0;
+const _appBarHeight = 66.0;
+const _appBarBottomHeight = 2.0;
+const _loadMoreOffset = 10;
 final _getIt = GetIt.instance;
 
 class ChatListScreen extends StatelessWidget {
@@ -32,7 +35,7 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   const _AppBar();
 
   @override
-  Size get preferredSize => const Size.fromHeight(66.0);
+  Size get preferredSize => const Size.fromHeight(_appBarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +79,7 @@ class _AppBarBottom extends StatelessWidget with PreferredSizeWidget {
   const _AppBarBottom();
 
   @override
-  Size get preferredSize => const Size.fromHeight(2);
+  Size get preferredSize => const Size.fromHeight(_appBarBottomHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +116,7 @@ class _Body extends HookWidget {
         return chatListStore.showItems
             ? NotificationListener<ScrollNotification>(
                 onNotification: (notification) {
-                  if (notification.metrics.extentAfter < 10 &&
+                  if (notification.metrics.extentAfter < _loadMoreOffset &&
                       chatListStore.hasMoreChats) {
                     chatListStore.load();
                   }

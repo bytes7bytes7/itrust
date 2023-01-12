@@ -46,6 +46,36 @@ final lightTheme = ThemeData.light().copyWith(
       color: _LightColors.cFFC7C7C7,
     ),
   ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      padding: const MaterialStatePropertyAll(
+        EdgeInsets.all(14),
+      ),
+      shape: MaterialStatePropertyAll(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide.none,
+        ),
+      ),
+      textStyle: const MaterialStatePropertyAll(
+        TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: _LightColors.cFFFFFFFF,
+        ),
+      ),
+      foregroundColor: const MaterialStatePropertyAll(_LightColors.cFFFFFFFF),
+      backgroundColor: MaterialStateProperty.resolveWith(
+        (states) {
+          if (states.contains(MaterialState.disabled)) {
+            return _LightColors.c26000000;
+          }
+
+          return _LightColors.cFF000000;
+        },
+      ),
+    ),
+  ),
   inputDecorationTheme: const InputDecorationTheme(
     isDense: true,
     contentPadding: EdgeInsets.symmetric(

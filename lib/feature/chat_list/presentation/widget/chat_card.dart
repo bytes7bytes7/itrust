@@ -8,10 +8,10 @@ import '../../../common/presentation/widget/widget.dart';
 import 'unread_indicator.dart';
 
 const _paddingH = 20.0;
-const _paddingV = 15.0;
+const _paddingV = 14.0;
 const _avatarAndTitleSeparator = 30.0;
-const _titleAndMessageSeparator = 5.0;
-const _authorAndMessageSeparator = 5.0;
+const _titleAndMessageSeparator = 4.0;
+const _authorAndMessageSeparator = 4.0;
 const _titleAndTimeSeparator = 8.0;
 const _messageFlex = 2;
 const _chatInfoFlex = 5;

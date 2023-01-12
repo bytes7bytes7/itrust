@@ -42,11 +42,11 @@ mixin _$HomeStore on _HomeStore, Store {
   }
 
   @override
-  void checkOrSetTab(int index) {
-    final _$actionInfo = _$_HomeStoreActionController.startAction(
-        name: '_HomeStore.checkOrSetTab');
+  void reset() {
+    final _$actionInfo =
+        _$_HomeStoreActionController.startAction(name: '_HomeStore.reset');
     try {
-      return super.checkOrSetTab(index);
+      return super.reset();
     } finally {
       _$_HomeStoreActionController.endAction(_$actionInfo);
     }

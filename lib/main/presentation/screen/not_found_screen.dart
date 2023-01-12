@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../l10n/l10n.dart';
+import '../../application/store/home_store/home_store.dart';
+
+const _paddingH = 20.0;
+const _paddingV = 15.0;
+final _getIt = GetIt.instance;
 
 class NotFoundScreen extends StatelessWidget {
   const NotFoundScreen({super.key});
@@ -10,6 +16,8 @@ class NotFoundScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
+    final homeStore = _getIt.get<HomeStore>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -17,9 +25,27 @@ class NotFoundScreen extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Text(
-          l10n.navi_not_found_body,
-          style: theme.textTheme.bodyText1,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: _paddingH,
+            vertical: _paddingV,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Spacer(),
+              Text(
+                l10n.navi_not_found_body,
+                style: theme.textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: homeStore.reset,
+                child: Text(l10n.not_found_btn),
+              ),
+            ],
+          ),
         ),
       ),
     );

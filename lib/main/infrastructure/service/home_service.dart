@@ -11,18 +11,6 @@ final _logger = Logger('$HomeService');
 
 @Singleton(as: HomeService)
 class ProdHomeService implements HomeService {
-  late final _navigatorKey = _getIt.get<NavigatorKey>();
-
-  BuildContext get _context {
-    final ctx = _navigatorKey.currentState?.context;
-
-    if (ctx == null) {
-      _logger.shout('Context is null');
-    }
-
-    return ctx!;
-  }
-
   @override
   List<IconData> get tabIcons => _tabs.map((e) => e.key).toList();
 
@@ -44,5 +32,17 @@ class ProdHomeService implements HomeService {
   @override
   void setTab(int index) {
     _tabs[index].value.go(_context);
+  }
+
+  late final _navigatorKey = _getIt.get<NavigatorKey>();
+
+  BuildContext get _context {
+    final ctx = _navigatorKey.currentState?.context;
+
+    if (ctx == null) {
+      _logger.shout('Context is null');
+    }
+
+    return ctx!;
   }
 }

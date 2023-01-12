@@ -13,5 +13,6 @@
   "feed_tab_title": "ITrust",
   "menu_tab_title": "Menu",
   "navi_not_found_title": "Hmm...",
-  "navi_not_found_body": "You are in a wrong place\uD83E\uDDD0"
+  "navi_not_found_body": "You are in a wrong place\n\uD83E\uDDD0",
+  "not_found_btn": "Back to home"
 }

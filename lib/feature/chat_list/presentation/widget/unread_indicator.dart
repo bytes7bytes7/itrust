@@ -39,6 +39,7 @@ class UnreadIndicator extends StatelessWidget {
     );
   }
 
+  // TODO: move logic
   String _formattedAmount(AppLocalizations l10n) {
     const billion = 1000000000;
     const million = 1000000;

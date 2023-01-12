@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../theme/theme.dart';
 import 'fade_in_circle_avatar.dart';
 
-const _outerRadius = 7.0;
-const _innerRadius = 5.0;
+const _outerRadius = 8.0;
+const _innerRadius = 6.0;
 
 class UserCircleAvatar extends StatelessWidget {
   const UserCircleAvatar({

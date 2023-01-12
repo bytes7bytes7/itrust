@@ -6,6 +6,8 @@ import '../../../domain/service/home_service.dart';
 
 part 'home_store.g.dart';
 
+const _defaultTabIndex = 0;
+
 @singleton
 class HomeStore = _HomeStore with _$HomeStore;
 
@@ -17,7 +19,7 @@ abstract class _HomeStore with Store {
   final HomeService _homeService;
 
   @readonly
-  int _currentTabIndex = 0;
+  int _currentTabIndex = _defaultTabIndex;
 
   List<IconData> get tabIcons => _homeService.tabIcons;
 
@@ -31,9 +33,11 @@ abstract class _HomeStore with Store {
   }
 
   @action
-  void checkOrSetTab(int index) {
-    if (index != _currentTabIndex) {
-      _currentTabIndex = index;
+  void reset() {
+    if (_currentTabIndex != _defaultTabIndex) {
+      _homeService.setTab(_defaultTabIndex);
+
+      _currentTabIndex = _defaultTabIndex;
     }
   }
 }
