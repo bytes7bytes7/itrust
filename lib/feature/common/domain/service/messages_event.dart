@@ -5,12 +5,6 @@ abstract class MessagesEvent {
   const MessagesEvent();
 }
 
-class NewMessagesEvent extends MessagesEvent {
-  const NewMessagesEvent(this.messages);
-
-  final List<Message> messages;
-}
-
 class UpdateMessagesEvent extends MessagesEvent {
   const UpdateMessagesEvent(this.messages);
 

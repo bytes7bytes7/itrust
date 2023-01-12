@@ -114,7 +114,7 @@ class _Body extends HookWidget {
             ? NotificationListener<ScrollNotification>(
                 onNotification: (notification) {
                   if (notification.metrics.extentAfter < 10 &&
-                      chatListStore.hasMoreSuggestions) {
+                      chatListStore.hasMoreChats) {
                     chatListStore.load();
                   }
 
@@ -124,10 +124,10 @@ class _Body extends HookWidget {
                   onRefresh: chatListStore.refresh,
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: chatListStore.suggestions.length +
+                    itemCount: chatListStore.chats.length +
                         (chatListStore.showItemLoading ? 1 : 0),
                     itemBuilder: (context, index) {
-                      if (index == chatListStore.suggestions.length) {
+                      if (index == chatListStore.chats.length) {
                         return const Padding(
                           padding: EdgeInsets.all(_loadingMorePadding),
                           child: Center(
@@ -136,7 +136,7 @@ class _Body extends HookWidget {
                         );
                       }
 
-                      final chat = chatListStore.suggestions[index];
+                      final chat = chatListStore.chats[index];
 
                       return ChatCard(
                         chat: chat,

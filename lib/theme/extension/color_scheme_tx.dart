@@ -41,6 +41,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color infoMsgPreviewColor;
   final Color msgSender;
 
+  @override
   ThemeExtension<ColorSchemeTX> copyWith({
     Color? circleAvatarBackground,
     Color? circleAvatarForeground,

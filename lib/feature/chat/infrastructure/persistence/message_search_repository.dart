@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:injectable/injectable.dart';
 
 import '../../../common/domain/domain.dart';
-import '../../../common/domain/persistence/search_repository.dart';
 
 @test
 @Singleton(as: SearchRepository<Message>)

@@ -9,6 +9,7 @@ class ButtonStyleTX extends ThemeExtension<ButtonStyleTX> {
   final ButtonStyle filledIcon;
   final ButtonStyle roundedFilledIcon;
 
+  @override
   ThemeExtension<ButtonStyleTX> copyWith({
     ButtonStyle? filledIcon,
     ButtonStyle? roundedFilledIcon,

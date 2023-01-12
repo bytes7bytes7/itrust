@@ -33,43 +33,43 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 mixin _$Chat {
   ChatID get id => throw _privateConstructorUsedError;
   int get unreadAmount => throw _privateConstructorUsedError;
-  Message? get lastMessage => throw _privateConstructorUsedError;
+  MessageID? get lastMessageID => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)
+            MessageID? lastMessageID, String? picUrl, String? iconName)
         monologue,
-    required TResult Function(
-            ChatID id, int unreadAmount, UserID partnerID, Message? lastMessage)
+    required TResult Function(ChatID id, int unreadAmount, UserID partnerID,
+            MessageID? lastMessageID)
         dialogue,
     required TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)
+            MessageID? lastMessageID, String? picUrl)
         group,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)?
+            MessageID? lastMessageID, String? picUrl, String? iconName)?
         monologue,
     TResult? Function(ChatID id, int unreadAmount, UserID partnerID,
-            Message? lastMessage)?
+            MessageID? lastMessageID)?
         dialogue,
     TResult? Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)?
+            MessageID? lastMessageID, String? picUrl)?
         group,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)?
+            MessageID? lastMessageID, String? picUrl, String? iconName)?
         monologue,
     TResult Function(ChatID id, int unreadAmount, UserID partnerID,
-            Message? lastMessage)?
+            MessageID? lastMessageID)?
         dialogue,
     TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)?
+            MessageID? lastMessageID, String? picUrl)?
         group,
     required TResult orElse(),
   }) =>
@@ -106,10 +106,10 @@ abstract class $ChatCopyWith<$Res> {
   factory $ChatCopyWith(Chat value, $Res Function(Chat) then) =
       _$ChatCopyWithImpl<$Res, Chat>;
   @useResult
-  $Res call({ChatID id, int unreadAmount, Message? lastMessage});
+  $Res call({ChatID id, int unreadAmount, MessageID? lastMessageID});
 
   $ChatIDCopyWith<$Res> get id;
-  $MessageCopyWith<$Res>? get lastMessage;
+  $MessageIDCopyWith<$Res>? get lastMessageID;
 }
 
 /// @nodoc
@@ -127,7 +127,7 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
   $Res call({
     Object? id = null,
     Object? unreadAmount = null,
-    Object? lastMessage = freezed,
+    Object? lastMessageID = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -138,10 +138,10 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
           ? _value.unreadAmount
           : unreadAmount // ignore: cast_nullable_to_non_nullable
               as int,
-      lastMessage: freezed == lastMessage
-          ? _value.lastMessage
-          : lastMessage // ignore: cast_nullable_to_non_nullable
-              as Message?,
+      lastMessageID: freezed == lastMessageID
+          ? _value.lastMessageID
+          : lastMessageID // ignore: cast_nullable_to_non_nullable
+              as MessageID?,
     ) as $Val);
   }
 
@@ -155,13 +155,13 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
 
   @override
   @pragma('vm:prefer-inline')
-  $MessageCopyWith<$Res>? get lastMessage {
-    if (_value.lastMessage == null) {
+  $MessageIDCopyWith<$Res>? get lastMessageID {
+    if (_value.lastMessageID == null) {
       return null;
     }
 
-    return $MessageCopyWith<$Res>(_value.lastMessage!, (value) {
-      return _then(_value.copyWith(lastMessage: value) as $Val);
+    return $MessageIDCopyWith<$Res>(_value.lastMessageID!, (value) {
+      return _then(_value.copyWith(lastMessageID: value) as $Val);
     });
   }
 }
@@ -177,14 +177,14 @@ abstract class _$$MonologueChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
       {ChatID id,
       int unreadAmount,
       String title,
-      Message? lastMessage,
+      MessageID? lastMessageID,
       String? picUrl,
       String? iconName});
 
   @override
   $ChatIDCopyWith<$Res> get id;
   @override
-  $MessageCopyWith<$Res>? get lastMessage;
+  $MessageIDCopyWith<$Res>? get lastMessageID;
 }
 
 /// @nodoc
@@ -201,7 +201,7 @@ class __$$MonologueChatCopyWithImpl<$Res>
     Object? id = null,
     Object? unreadAmount = null,
     Object? title = null,
-    Object? lastMessage = freezed,
+    Object? lastMessageID = freezed,
     Object? picUrl = freezed,
     Object? iconName = freezed,
   }) {
@@ -218,10 +218,10 @@ class __$$MonologueChatCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      lastMessage: freezed == lastMessage
-          ? _value.lastMessage
-          : lastMessage // ignore: cast_nullable_to_non_nullable
-              as Message?,
+      lastMessageID: freezed == lastMessageID
+          ? _value.lastMessageID
+          : lastMessageID // ignore: cast_nullable_to_non_nullable
+              as MessageID?,
       picUrl: freezed == picUrl
           ? _value.picUrl
           : picUrl // ignore: cast_nullable_to_non_nullable
@@ -241,7 +241,7 @@ class _$MonologueChat implements MonologueChat {
       {required this.id,
       required this.unreadAmount,
       required this.title,
-      this.lastMessage,
+      this.lastMessageID,
       this.picUrl,
       this.iconName,
       final String? $type})
@@ -257,7 +257,7 @@ class _$MonologueChat implements MonologueChat {
   @override
   final String title;
   @override
-  final Message? lastMessage;
+  final MessageID? lastMessageID;
   @override
   final String? picUrl;
   @override
@@ -268,7 +268,7 @@ class _$MonologueChat implements MonologueChat {
 
   @override
   String toString() {
-    return 'Chat.monologue(id: $id, unreadAmount: $unreadAmount, title: $title, lastMessage: $lastMessage, picUrl: $picUrl, iconName: $iconName)';
+    return 'Chat.monologue(id: $id, unreadAmount: $unreadAmount, title: $title, lastMessageID: $lastMessageID, picUrl: $picUrl, iconName: $iconName)';
   }
 
   @override
@@ -280,8 +280,8 @@ class _$MonologueChat implements MonologueChat {
             (identical(other.unreadAmount, unreadAmount) ||
                 other.unreadAmount == unreadAmount) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.lastMessage, lastMessage) ||
-                other.lastMessage == lastMessage) &&
+            (identical(other.lastMessageID, lastMessageID) ||
+                other.lastMessageID == lastMessageID) &&
             (identical(other.picUrl, picUrl) || other.picUrl == picUrl) &&
             (identical(other.iconName, iconName) ||
                 other.iconName == iconName));
@@ -290,7 +290,7 @@ class _$MonologueChat implements MonologueChat {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, unreadAmount, title, lastMessage, picUrl, iconName);
+      runtimeType, id, unreadAmount, title, lastMessageID, picUrl, iconName);
 
   @JsonKey(ignore: true)
   @override
@@ -302,51 +302,52 @@ class _$MonologueChat implements MonologueChat {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)
+            MessageID? lastMessageID, String? picUrl, String? iconName)
         monologue,
-    required TResult Function(
-            ChatID id, int unreadAmount, UserID partnerID, Message? lastMessage)
+    required TResult Function(ChatID id, int unreadAmount, UserID partnerID,
+            MessageID? lastMessageID)
         dialogue,
     required TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)
+            MessageID? lastMessageID, String? picUrl)
         group,
   }) {
-    return monologue(id, unreadAmount, title, lastMessage, picUrl, iconName);
+    return monologue(id, unreadAmount, title, lastMessageID, picUrl, iconName);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)?
+            MessageID? lastMessageID, String? picUrl, String? iconName)?
         monologue,
     TResult? Function(ChatID id, int unreadAmount, UserID partnerID,
-            Message? lastMessage)?
+            MessageID? lastMessageID)?
         dialogue,
     TResult? Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)?
+            MessageID? lastMessageID, String? picUrl)?
         group,
   }) {
     return monologue?.call(
-        id, unreadAmount, title, lastMessage, picUrl, iconName);
+        id, unreadAmount, title, lastMessageID, picUrl, iconName);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)?
+            MessageID? lastMessageID, String? picUrl, String? iconName)?
         monologue,
     TResult Function(ChatID id, int unreadAmount, UserID partnerID,
-            Message? lastMessage)?
+            MessageID? lastMessageID)?
         dialogue,
     TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)?
+            MessageID? lastMessageID, String? picUrl)?
         group,
     required TResult orElse(),
   }) {
     if (monologue != null) {
-      return monologue(id, unreadAmount, title, lastMessage, picUrl, iconName);
+      return monologue(
+          id, unreadAmount, title, lastMessageID, picUrl, iconName);
     }
     return orElse();
   }
@@ -398,7 +399,7 @@ abstract class MonologueChat implements Chat {
       {required final ChatID id,
       required final int unreadAmount,
       required final String title,
-      final Message? lastMessage,
+      final MessageID? lastMessageID,
       final String? picUrl,
       final String? iconName}) = _$MonologueChat;
 
@@ -411,7 +412,7 @@ abstract class MonologueChat implements Chat {
   int get unreadAmount;
   String get title;
   @override
-  Message? get lastMessage;
+  MessageID? get lastMessageID;
   String? get picUrl;
   String? get iconName;
   @override
@@ -428,13 +429,16 @@ abstract class _$$DialogueChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {ChatID id, int unreadAmount, UserID partnerID, Message? lastMessage});
+      {ChatID id,
+      int unreadAmount,
+      UserID partnerID,
+      MessageID? lastMessageID});
 
   @override
   $ChatIDCopyWith<$Res> get id;
   $UserIDCopyWith<$Res> get partnerID;
   @override
-  $MessageCopyWith<$Res>? get lastMessage;
+  $MessageIDCopyWith<$Res>? get lastMessageID;
 }
 
 /// @nodoc
@@ -451,7 +455,7 @@ class __$$DialogueChatCopyWithImpl<$Res>
     Object? id = null,
     Object? unreadAmount = null,
     Object? partnerID = null,
-    Object? lastMessage = freezed,
+    Object? lastMessageID = freezed,
   }) {
     return _then(_$DialogueChat(
       id: null == id
@@ -466,10 +470,10 @@ class __$$DialogueChatCopyWithImpl<$Res>
           ? _value.partnerID
           : partnerID // ignore: cast_nullable_to_non_nullable
               as UserID,
-      lastMessage: freezed == lastMessage
-          ? _value.lastMessage
-          : lastMessage // ignore: cast_nullable_to_non_nullable
-              as Message?,
+      lastMessageID: freezed == lastMessageID
+          ? _value.lastMessageID
+          : lastMessageID // ignore: cast_nullable_to_non_nullable
+              as MessageID?,
     ));
   }
 
@@ -489,7 +493,7 @@ class _$DialogueChat implements DialogueChat {
       {required this.id,
       required this.unreadAmount,
       required this.partnerID,
-      this.lastMessage,
+      this.lastMessageID,
       final String? $type})
       : $type = $type ?? 'dialogue';
 
@@ -503,14 +507,14 @@ class _$DialogueChat implements DialogueChat {
   @override
   final UserID partnerID;
   @override
-  final Message? lastMessage;
+  final MessageID? lastMessageID;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'Chat.dialogue(id: $id, unreadAmount: $unreadAmount, partnerID: $partnerID, lastMessage: $lastMessage)';
+    return 'Chat.dialogue(id: $id, unreadAmount: $unreadAmount, partnerID: $partnerID, lastMessageID: $lastMessageID)';
   }
 
   @override
@@ -523,14 +527,14 @@ class _$DialogueChat implements DialogueChat {
                 other.unreadAmount == unreadAmount) &&
             (identical(other.partnerID, partnerID) ||
                 other.partnerID == partnerID) &&
-            (identical(other.lastMessage, lastMessage) ||
-                other.lastMessage == lastMessage));
+            (identical(other.lastMessageID, lastMessageID) ||
+                other.lastMessageID == lastMessageID));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, unreadAmount, partnerID, lastMessage);
+      Object.hash(runtimeType, id, unreadAmount, partnerID, lastMessageID);
 
   @JsonKey(ignore: true)
   @override
@@ -542,50 +546,50 @@ class _$DialogueChat implements DialogueChat {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)
+            MessageID? lastMessageID, String? picUrl, String? iconName)
         monologue,
-    required TResult Function(
-            ChatID id, int unreadAmount, UserID partnerID, Message? lastMessage)
+    required TResult Function(ChatID id, int unreadAmount, UserID partnerID,
+            MessageID? lastMessageID)
         dialogue,
     required TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)
+            MessageID? lastMessageID, String? picUrl)
         group,
   }) {
-    return dialogue(id, unreadAmount, partnerID, lastMessage);
+    return dialogue(id, unreadAmount, partnerID, lastMessageID);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)?
+            MessageID? lastMessageID, String? picUrl, String? iconName)?
         monologue,
     TResult? Function(ChatID id, int unreadAmount, UserID partnerID,
-            Message? lastMessage)?
+            MessageID? lastMessageID)?
         dialogue,
     TResult? Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)?
+            MessageID? lastMessageID, String? picUrl)?
         group,
   }) {
-    return dialogue?.call(id, unreadAmount, partnerID, lastMessage);
+    return dialogue?.call(id, unreadAmount, partnerID, lastMessageID);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)?
+            MessageID? lastMessageID, String? picUrl, String? iconName)?
         monologue,
     TResult Function(ChatID id, int unreadAmount, UserID partnerID,
-            Message? lastMessage)?
+            MessageID? lastMessageID)?
         dialogue,
     TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)?
+            MessageID? lastMessageID, String? picUrl)?
         group,
     required TResult orElse(),
   }) {
     if (dialogue != null) {
-      return dialogue(id, unreadAmount, partnerID, lastMessage);
+      return dialogue(id, unreadAmount, partnerID, lastMessageID);
     }
     return orElse();
   }
@@ -637,7 +641,7 @@ abstract class DialogueChat implements Chat {
       {required final ChatID id,
       required final int unreadAmount,
       required final UserID partnerID,
-      final Message? lastMessage}) = _$DialogueChat;
+      final MessageID? lastMessageID}) = _$DialogueChat;
 
   factory DialogueChat.fromJson(Map<String, dynamic> json) =
       _$DialogueChat.fromJson;
@@ -648,7 +652,7 @@ abstract class DialogueChat implements Chat {
   int get unreadAmount;
   UserID get partnerID;
   @override
-  Message? get lastMessage;
+  MessageID? get lastMessageID;
   @override
   @JsonKey(ignore: true)
   _$$DialogueChatCopyWith<_$DialogueChat> get copyWith =>
@@ -666,13 +670,13 @@ abstract class _$$GroupChatCopyWith<$Res> implements $ChatCopyWith<$Res> {
       {ChatID id,
       int unreadAmount,
       String title,
-      Message? lastMessage,
+      MessageID? lastMessageID,
       String? picUrl});
 
   @override
   $ChatIDCopyWith<$Res> get id;
   @override
-  $MessageCopyWith<$Res>? get lastMessage;
+  $MessageIDCopyWith<$Res>? get lastMessageID;
 }
 
 /// @nodoc
@@ -689,7 +693,7 @@ class __$$GroupChatCopyWithImpl<$Res>
     Object? id = null,
     Object? unreadAmount = null,
     Object? title = null,
-    Object? lastMessage = freezed,
+    Object? lastMessageID = freezed,
     Object? picUrl = freezed,
   }) {
     return _then(_$GroupChat(
@@ -705,10 +709,10 @@ class __$$GroupChatCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      lastMessage: freezed == lastMessage
-          ? _value.lastMessage
-          : lastMessage // ignore: cast_nullable_to_non_nullable
-              as Message?,
+      lastMessageID: freezed == lastMessageID
+          ? _value.lastMessageID
+          : lastMessageID // ignore: cast_nullable_to_non_nullable
+              as MessageID?,
       picUrl: freezed == picUrl
           ? _value.picUrl
           : picUrl // ignore: cast_nullable_to_non_nullable
@@ -724,7 +728,7 @@ class _$GroupChat implements GroupChat {
       {required this.id,
       required this.unreadAmount,
       required this.title,
-      this.lastMessage,
+      this.lastMessageID,
       this.picUrl,
       final String? $type})
       : $type = $type ?? 'group';
@@ -739,7 +743,7 @@ class _$GroupChat implements GroupChat {
   @override
   final String title;
   @override
-  final Message? lastMessage;
+  final MessageID? lastMessageID;
   @override
   final String? picUrl;
 
@@ -748,7 +752,7 @@ class _$GroupChat implements GroupChat {
 
   @override
   String toString() {
-    return 'Chat.group(id: $id, unreadAmount: $unreadAmount, title: $title, lastMessage: $lastMessage, picUrl: $picUrl)';
+    return 'Chat.group(id: $id, unreadAmount: $unreadAmount, title: $title, lastMessageID: $lastMessageID, picUrl: $picUrl)';
   }
 
   @override
@@ -760,15 +764,15 @@ class _$GroupChat implements GroupChat {
             (identical(other.unreadAmount, unreadAmount) ||
                 other.unreadAmount == unreadAmount) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.lastMessage, lastMessage) ||
-                other.lastMessage == lastMessage) &&
+            (identical(other.lastMessageID, lastMessageID) ||
+                other.lastMessageID == lastMessageID) &&
             (identical(other.picUrl, picUrl) || other.picUrl == picUrl));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, unreadAmount, title, lastMessage, picUrl);
+      Object.hash(runtimeType, id, unreadAmount, title, lastMessageID, picUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -780,50 +784,50 @@ class _$GroupChat implements GroupChat {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)
+            MessageID? lastMessageID, String? picUrl, String? iconName)
         monologue,
-    required TResult Function(
-            ChatID id, int unreadAmount, UserID partnerID, Message? lastMessage)
+    required TResult Function(ChatID id, int unreadAmount, UserID partnerID,
+            MessageID? lastMessageID)
         dialogue,
     required TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)
+            MessageID? lastMessageID, String? picUrl)
         group,
   }) {
-    return group(id, unreadAmount, title, lastMessage, picUrl);
+    return group(id, unreadAmount, title, lastMessageID, picUrl);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)?
+            MessageID? lastMessageID, String? picUrl, String? iconName)?
         monologue,
     TResult? Function(ChatID id, int unreadAmount, UserID partnerID,
-            Message? lastMessage)?
+            MessageID? lastMessageID)?
         dialogue,
     TResult? Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)?
+            MessageID? lastMessageID, String? picUrl)?
         group,
   }) {
-    return group?.call(id, unreadAmount, title, lastMessage, picUrl);
+    return group?.call(id, unreadAmount, title, lastMessageID, picUrl);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl, String? iconName)?
+            MessageID? lastMessageID, String? picUrl, String? iconName)?
         monologue,
     TResult Function(ChatID id, int unreadAmount, UserID partnerID,
-            Message? lastMessage)?
+            MessageID? lastMessageID)?
         dialogue,
     TResult Function(ChatID id, int unreadAmount, String title,
-            Message? lastMessage, String? picUrl)?
+            MessageID? lastMessageID, String? picUrl)?
         group,
     required TResult orElse(),
   }) {
     if (group != null) {
-      return group(id, unreadAmount, title, lastMessage, picUrl);
+      return group(id, unreadAmount, title, lastMessageID, picUrl);
     }
     return orElse();
   }
@@ -875,7 +879,7 @@ abstract class GroupChat implements Chat {
       {required final ChatID id,
       required final int unreadAmount,
       required final String title,
-      final Message? lastMessage,
+      final MessageID? lastMessageID,
       final String? picUrl}) = _$GroupChat;
 
   factory GroupChat.fromJson(Map<String, dynamic> json) = _$GroupChat.fromJson;
@@ -886,7 +890,7 @@ abstract class GroupChat implements Chat {
   int get unreadAmount;
   String get title;
   @override
-  Message? get lastMessage;
+  MessageID? get lastMessageID;
   String? get picUrl;
   @override
   @JsonKey(ignore: true)

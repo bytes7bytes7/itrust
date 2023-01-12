@@ -8,30 +8,26 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:itrust/feature/chat/application/store/chat_store/chat_store.dart'
-    as _i13;
-import 'package:itrust/feature/chat/infrastructure/persistence/message_search_repository.dart'
-    as _i10;
-import 'package:itrust/feature/chat_list/application/store/chat_list/chat_list_store.dart'
     as _i12;
-import 'package:itrust/feature/chat_list/infrastructure/persistence/chat_list_search_repository.dart'
-    as _i11;
-import 'package:itrust/feature/common/domain/domain.dart' as _i9;
-import 'package:itrust/feature/common/domain/persistence/date_time_repository.dart'
-    as _i5;
-import 'package:itrust/feature/common/domain/persistence/search_repository.dart'
-    as _i8;
-import 'package:itrust/feature/common/domain/service/chat_list_service.dart'
-    as _i3;
-import 'package:itrust/feature/common/infrastructure/domain_service/chat_list_service.dart'
-    as _i4;
-import 'package:itrust/feature/common/infrastructure/persistence/date_time_repository.dart'
+import 'package:itrust/feature/chat/infrastructure/persistence/message_search_repository.dart'
     as _i6;
-import 'package:itrust/main/application/store/home_store/home_store.dart'
+import 'package:itrust/feature/chat_list/application/store/chat_list/chat_list_store.dart'
+    as _i11;
+import 'package:itrust/feature/chat_list/infrastructure/persistence/chat_list_search_repository.dart'
     as _i7;
+import 'package:itrust/feature/common/domain/domain.dart' as _i3;
+import 'package:itrust/feature/common/domain/persistence/chat_repository.dart'
+    as _i10;
+import 'package:itrust/feature/common/domain/service/chat_list_service.dart'
+    as _i8;
+import 'package:itrust/feature/common/infrastructure/persistence/chat_repository.dart'
+    as _i4;
+import 'package:itrust/feature/common/infrastructure/service/chat_list_service.dart'
+    as _i9;
+import 'package:itrust/main/application/store/home_store/home_store.dart'
+    as _i5;
 
 const String _test = 'test';
-const String _dev = 'dev';
-const String _prod = 'prod';
 
 /// ignore_for_file: unnecessary_lambdas
 /// ignore_for_file: lines_longer_than_80_chars
@@ -46,33 +42,27 @@ _i1.GetIt init(
     environment,
     environmentFilter,
   );
-  gh.singleton<_i3.ChatListService>(
-    _i4.TestChatListService()..init(),
+  gh.lazySingleton<_i3.ChatRepository>(
+    () => _i4.TestChatRepository(),
     registerFor: {_test},
+  );
+  gh.singleton<_i5.HomeStore>(_i5.HomeStore());
+  gh.singleton<_i3.SearchRepository<_i3.Message>>(
+    _i6.TestMessageSearchRepository(),
+    registerFor: {_test},
+  );
+  gh.singleton<_i3.SearchRepository<_i3.Chat>>(
+    _i7.TestChatListSearchRepository(),
+    registerFor: {_test},
+  );
+  gh.lazySingleton<_i8.ChatListService>(
+    () => _i9.ProdChatListService(chatRepository: gh<_i10.ChatRepository>())
+      ..init(),
     dispose: (i) => i.dispose(),
   );
-  gh.singleton<_i5.DateTimeRepository>(
-    _i6.ProdDateTimeRepository(),
-    registerFor: {
-      _test,
-      _dev,
-      _prod,
-    },
-  );
-  gh.singleton<_i7.HomeStore>(_i7.HomeStore());
-  gh.singleton<_i8.SearchRepository<_i9.Message>>(
-    _i10.TestMessageSearchRepository(),
-    registerFor: {_test},
-  );
-  gh.singleton<_i8.SearchRepository<_i9.Chat>>(
-    _i11.TestChatListSearchRepository(),
-    registerFor: {_test},
-  );
-  gh.singleton<_i12.ChatListStore>(_i12.ChatListStore(
-    chatListService: gh<_i3.ChatListService>(),
-    searchRepository: gh<_i8.SearchRepository<_i9.Chat>>(),
-  ));
-  gh.singleton<_i13.ChatStore>(_i13.ChatStore(
-      searchRepository: gh<_i8.SearchRepository<_i9.Message>>()));
+  gh.singleton<_i11.ChatListStore>(
+      _i11.ChatListStore(chatListService: gh<_i3.ChatListService>()));
+  gh.singleton<_i12.ChatStore>(_i12.ChatStore(
+      searchRepository: gh<_i3.SearchRepository<_i3.Message>>()));
   return getIt;
 }

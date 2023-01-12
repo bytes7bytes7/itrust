@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'firebase.dart';
 import 'logger.dart';
 import 'main/infrastructure/di/injector.dart';
 import 'main/presentation/app.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   const env = String.fromEnvironment('ENV', defaultValue: 'prod');
@@ -13,6 +14,8 @@ void main() {
   configLogger(printLogs: printLogs);
 
   configInjector(env: env);
+
+  await configFirebase();
 
   runApp(
     const App(),

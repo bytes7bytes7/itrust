@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../value_object/value_object.dart';
-import '../message/message.dart';
 
 part 'chat.freezed.dart';
 
@@ -17,7 +16,7 @@ class Chat with _$Chat {
     required ChatID id,
     required int unreadAmount,
     required String title,
-    Message? lastMessage,
+    MessageID? lastMessageID,
     String? picUrl,
     String? iconName,
   }) = MonologueChat;
@@ -28,7 +27,7 @@ class Chat with _$Chat {
     required ChatID id,
     required int unreadAmount,
     required UserID partnerID,
-    Message? lastMessage,
+    MessageID? lastMessageID,
   }) = DialogueChat;
 
   /// Chat for 1..N user(s).
@@ -36,7 +35,7 @@ class Chat with _$Chat {
     required ChatID id,
     required int unreadAmount,
     required String title,
-    Message? lastMessage,
+    MessageID? lastMessageID,
     String? picUrl,
   }) = GroupChat;
 

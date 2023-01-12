@@ -33,7 +33,17 @@ class ChatCard extends StatelessWidget {
 
     final l10n = context.l10n;
 
-    final lastMessage = chat.lastMessage;
+    // TODO: implement
+    final lastMessageID = chat.lastMessageID;
+    final lastMessage = lastMessageID != null ? Message.user(
+      id: lastMessageID,
+      chatID: chat.id,
+      sentAt: DateTime.now(),
+      readBy: [],
+      text: 'some text $lastMessageID',
+      mediaUrls: [],
+      senderID: UserID('some id $lastMessageID'),
+    ) : null;
 
     // TODO: implement
     const avatarUrl = null;

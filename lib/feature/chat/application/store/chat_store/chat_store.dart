@@ -7,7 +7,6 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/domain/domain.dart';
-import '../../../../common/domain/persistence/search_repository.dart';
 
 part 'chat_store.g.dart';
 
