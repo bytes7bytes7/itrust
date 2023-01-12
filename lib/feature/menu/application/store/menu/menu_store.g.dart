@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'settings_store.dart';
+part of 'menu_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'settings_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$SettingsStore on _SettingsStore, Store {
+mixin _$MenuStore on _MenuStore, Store {
   late final _$_isLoadingAtom =
-      Atom(name: '_SettingsStore._isLoading', context: context);
+      Atom(name: '_MenuStore._isLoading', context: context);
 
   bool get isLoading {
     _$_isLoadingAtom.reportRead();
@@ -27,8 +27,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$_errorAtom =
-      Atom(name: '_SettingsStore._error', context: context);
+  late final _$_errorAtom = Atom(name: '_MenuStore._error', context: context);
 
   Object? get error {
     _$_errorAtom.reportRead();
@@ -45,12 +44,18 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  late final _$logOutAsyncAction =
-      AsyncAction('_SettingsStore.logOut', context: context);
+  late final _$_MenuStoreActionController =
+      ActionController(name: '_MenuStore', context: context);
 
   @override
-  Future<void> logOut() {
-    return _$logOutAsyncAction.run(() => super.logOut());
+  void onMoreBtnPressed() {
+    final _$actionInfo = _$_MenuStoreActionController.startAction(
+        name: '_MenuStore.onMoreBtnPressed');
+    try {
+      return super.onMoreBtnPressed();
+    } finally {
+      _$_MenuStoreActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

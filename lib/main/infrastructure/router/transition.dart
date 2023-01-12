@@ -1,6 +1,6 @@
 part of 'router.dart';
 
-Widget upward(
+Widget _upward(
   BuildContext context,
   Animation<double> animation,
   Animation<double> secondaryAnimation,
@@ -18,7 +18,7 @@ Widget upward(
       child: child,
     );
 
-Widget downward(
+Widget _downward(
   BuildContext context,
   Animation<double> animation,
   Animation<double> secondaryAnimation,
@@ -36,7 +36,7 @@ Widget downward(
       child: child,
     );
 
-Widget leftward(
+Widget _leftward(
   BuildContext context,
   Animation<double> animation,
   Animation<double> secondaryAnimation,
@@ -54,7 +54,7 @@ Widget leftward(
       child: child,
     );
 
-Widget rightward(
+Widget _rightward(
   BuildContext context,
   Animation<double> animation,
   Animation<double> secondaryAnimation,

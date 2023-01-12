@@ -3,7 +3,7 @@
   "login_hint": "Login",
   "password_hint": "Password",
   "rules_btn": "Rules of the app",
-  "login_btn": "Log In",
+  "log_in_btn": "Log In",
   "chat_tab_title": "Chats",
   "empty_chat_list_message": "No chats",
   "chat_card_author_and_msg_separator": ":",
@@ -19,5 +19,7 @@
   "menu_tab_title": "Menu",
   "navi_not_found_title": "Hmm...",
   "navi_not_found_body": "You are in a wrong place\n\uD83E\uDDD0",
-  "not_found_btn": "Back to home"
+  "not_found_btn": "Back to home",
+  "settings_tab_title": "Settings",
+  "log_out_btn": "Log out"
 }

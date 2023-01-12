@@ -91,4 +91,18 @@ class _AppRoutes {
       menu,
     ],
   );
+
+  static final settings = GoRoute(
+    path: '/settings',
+    name: 'settings',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const SettingsScreen(),
+      );
+    },
+  );
 }

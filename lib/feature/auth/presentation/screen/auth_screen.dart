@@ -33,70 +33,85 @@ class AuthScreen extends HookWidget {
     final loginController = useTextEditingController();
     final passwordController = useTextEditingController();
     final obscureText = useValueNotifier(true);
+    final commonFocusNode = useFocusNode();
 
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height: availableHeight,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: _paddingH,
-                vertical: _paddingV,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Spacer(
-                    flex: _aboveIconFlex,
-                  ),
-                  FractionallySizedBox(
-                    widthFactor: _logoWidthFactor,
-                    child: Assets.image.png.logo.image(),
-                  ),
-                  Text(
-                    l10n.app_name,
-                    style: theme.textTheme.headline1,
-                    textAlign: TextAlign.center,
-                  ),
-                  const Spacer(
-                    flex: _underAppTitleFlex,
-                  ),
-                  OutlinedTextField(
-                    controller: loginController,
-                    hintText: l10n.login_hint,
-                  ),
-                  const SizedBox(
-                    height: _textFieldsSeparator,
-                  ),
-                  OutlinedTextField(
-                    controller: passwordController,
-                    hintText: l10n.password_hint,
-                    obscureText: obscureText.value,
-                    suffix: const Icon(
-                      Icons.remove_red_eye,
+    // TODO: separate on widgets and add Observer
+
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(commonFocusNode);
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: availableHeight,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: _paddingH,
+                  vertical: _paddingV,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Spacer(
+                      flex: _aboveIconFlex,
                     ),
-                    onSuffixPressed: () {},
-                  ),
-                  const Spacer(
-                    flex: _underTextFieldsFlex,
-                  ),
-                  TextButton(
-                    child: Text(l10n.rules_btn),
-                    onPressed: () {},
-                  ),
-                  ElevatedButton(
-                    onPressed: authStore.isLoading
-                        ? null
-                        : () {
-                            authStore.authenticate(
-                              login: loginController.text,
-                              password: passwordController.text,
-                            );
+                    FractionallySizedBox(
+                      widthFactor: _logoWidthFactor,
+                      child: Assets.image.png.logo.image(),
+                    ),
+                    Text(
+                      l10n.app_name,
+                      style: theme.textTheme.headline1,
+                      textAlign: TextAlign.center,
+                    ),
+                    const Spacer(
+                      flex: _underAppTitleFlex,
+                    ),
+                    OutlinedTextField(
+                      controller: loginController,
+                      hintText: l10n.login_hint,
+                    ),
+                    const SizedBox(
+                      height: _textFieldsSeparator,
+                    ),
+                    ValueListenableBuilder(
+                      valueListenable: obscureText,
+                      builder: (context, value, child) {
+                        return OutlinedTextField(
+                          controller: passwordController,
+                          hintText: l10n.password_hint,
+                          obscureText: obscureText.value,
+                          suffix: const Icon(
+                            Icons.remove_red_eye,
+                          ),
+                          onSuffixPressed: () {
+                            obscureText.value = !value;
                           },
-                    child: Text(l10n.login_btn),
-                  ),
-                ],
+                        );
+                      },
+                    ),
+                    const Spacer(
+                      flex: _underTextFieldsFlex,
+                    ),
+                    TextButton(
+                      child: Text(l10n.rules_btn),
+                      onPressed: () {},
+                    ),
+                    ElevatedButton(
+                      onPressed: authStore.isLoading
+                          ? null
+                          : () {
+                              authStore.authenticate(
+                                login: loginController.text,
+                                password: passwordController.text,
+                              );
+                            },
+                      child: Text(l10n.log_in_btn),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

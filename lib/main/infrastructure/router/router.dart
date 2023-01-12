@@ -6,6 +6,7 @@ import '../../../feature/auth/presentation/screen/screen.dart';
 import '../../../feature/chat_list/presentation/screen/screen.dart';
 import '../../../feature/feed/presentation/screen/screen.dart';
 import '../../../feature/menu/presentation/screen/screen.dart';
+import '../../../feature/settings/presentation/screen/screen.dart';
 import '../../presentation/screen/screen.dart';
 
 part 'transition.dart';
@@ -28,6 +29,7 @@ final _router = GoRouter(
     NotFoundRoute().route,
     AuthRoute().route,
     HomeRoute().route,
+    SettingsRoute().route,
   ],
 );
 

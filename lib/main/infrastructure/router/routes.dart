@@ -29,3 +29,8 @@ class MenuRoute extends CosyRoute {
   @override
   final route = _AppRoutes.menu;
 }
+
+class SettingsRoute extends CosyRoute {
+  @override
+  final route = _AppRoutes.settings;
+}

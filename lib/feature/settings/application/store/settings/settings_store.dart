@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/application.dart';
@@ -7,6 +8,7 @@ import '../../../domain/service/settings_service.dart';
 
 part 'settings_store.g.dart';
 
+@singleton
 class SettingsStore = _SettingsStore with _$SettingsStore;
 
 abstract class _SettingsStore with Store, Loadable, Errorable {
@@ -23,17 +25,11 @@ abstract class _SettingsStore with Store, Loadable, Errorable {
   Object? _error;
 
   @action
-  Future<void> changeName({required String name}) async {
+  Future<void> logOut() async {
     await _wrap(() async {
-      try {
-        await _settingsService.changeName(name: name);
-      } catch (e) {
-        _error = e;
-      }
+      await _settingsService.logOut();
     });
   }
-
-  // TODO: add other methods
 
   Future<void> _wrap(FutureOr<void> Function() callback) async {
     _isLoading = true;
