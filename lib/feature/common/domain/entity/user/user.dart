@@ -18,9 +18,10 @@ class User with _$User {
 
   const factory User.end({
     required UserID id,
-    required String name,
     required List<String> avatarUrls,
     required bool online,
+    String? email,
+    String? name,
     DateTime? lastSeen,
   }) = EndUser;
 

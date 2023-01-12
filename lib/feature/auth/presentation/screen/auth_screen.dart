@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../common/presentation/widget/widget.dart';
+import '../../application/store/auth/auth_store.dart';
 
 const _paddingH = 20.0;
 const _paddingV = 14.0;
@@ -11,8 +14,9 @@ const _textFieldsSeparator = 16.0;
 const _aboveIconFlex = 1;
 const _underAppTitleFlex = 1;
 const _underTextFieldsFlex = 4;
+final _getIt = GetIt.instance;
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends HookWidget {
   const AuthScreen({super.key});
 
   @override
@@ -23,6 +27,12 @@ class AuthScreen extends StatelessWidget {
     final viewPadding = mediaQuery.viewPadding;
     final availableHeight = size.height - viewPadding.top - viewPadding.bottom;
     final l10n = context.l10n;
+
+    final authStore = _getIt.get<AuthStore>();
+
+    final loginController = useTextEditingController();
+    final passwordController = useTextEditingController();
+    final obscureText = useValueNotifier(true);
 
     return Scaffold(
       body: SafeArea(
@@ -53,14 +63,16 @@ class AuthScreen extends StatelessWidget {
                     flex: _underAppTitleFlex,
                   ),
                   OutlinedTextField(
+                    controller: loginController,
                     hintText: l10n.login_hint,
                   ),
                   const SizedBox(
                     height: _textFieldsSeparator,
                   ),
                   OutlinedTextField(
+                    controller: passwordController,
                     hintText: l10n.password_hint,
-                    obscureText: true,
+                    obscureText: obscureText.value,
                     suffix: const Icon(
                       Icons.remove_red_eye,
                     ),
@@ -74,8 +86,15 @@ class AuthScreen extends StatelessWidget {
                     onPressed: () {},
                   ),
                   ElevatedButton(
+                    onPressed: authStore.isLoading
+                        ? null
+                        : () {
+                            authStore.authenticate(
+                              login: loginController.text,
+                              password: passwordController.text,
+                            );
+                          },
                     child: Text(l10n.login_btn),
-                    onPressed: () {},
                   ),
                 ],
               ),

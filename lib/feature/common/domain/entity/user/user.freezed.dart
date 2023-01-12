@@ -30,30 +30,30 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   UserID get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   List<String> get avatarUrls => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(UserID id, String name, List<String> avatarUrls)
         staff,
-    required TResult Function(UserID id, String name, List<String> avatarUrls,
-            bool online, DateTime? lastSeen)
+    required TResult Function(UserID id, List<String> avatarUrls, bool online,
+            String? email, String? name, DateTime? lastSeen)
         end,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult? Function(UserID id, String name, List<String> avatarUrls,
-            bool online, DateTime? lastSeen)?
+    TResult? Function(UserID id, List<String> avatarUrls, bool online,
+            String? email, String? name, DateTime? lastSeen)?
         end,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult Function(UserID id, String name, List<String> avatarUrls,
-            bool online, DateTime? lastSeen)?
+    TResult Function(UserID id, List<String> avatarUrls, bool online,
+            String? email, String? name, DateTime? lastSeen)?
         end,
     required TResult orElse(),
   }) =>
@@ -115,7 +115,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           : id // ignore: cast_nullable_to_non_nullable
               as UserID,
       name: null == name
-          ? _value.name
+          ? _value.name!
           : name // ignore: cast_nullable_to_non_nullable
               as String,
       avatarUrls: null == avatarUrls
@@ -240,8 +240,8 @@ class _$StaffUser implements StaffUser {
   TResult when<TResult extends Object?>({
     required TResult Function(UserID id, String name, List<String> avatarUrls)
         staff,
-    required TResult Function(UserID id, String name, List<String> avatarUrls,
-            bool online, DateTime? lastSeen)
+    required TResult Function(UserID id, List<String> avatarUrls, bool online,
+            String? email, String? name, DateTime? lastSeen)
         end,
   }) {
     return staff(id, name, avatarUrls);
@@ -251,8 +251,8 @@ class _$StaffUser implements StaffUser {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult? Function(UserID id, String name, List<String> avatarUrls,
-            bool online, DateTime? lastSeen)?
+    TResult? Function(UserID id, List<String> avatarUrls, bool online,
+            String? email, String? name, DateTime? lastSeen)?
         end,
   }) {
     return staff?.call(id, name, avatarUrls);
@@ -262,8 +262,8 @@ class _$StaffUser implements StaffUser {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult Function(UserID id, String name, List<String> avatarUrls,
-            bool online, DateTime? lastSeen)?
+    TResult Function(UserID id, List<String> avatarUrls, bool online,
+            String? email, String? name, DateTime? lastSeen)?
         end,
     required TResult orElse(),
   }) {
@@ -340,9 +340,10 @@ abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {UserID id,
-      String name,
       List<String> avatarUrls,
       bool online,
+      String? email,
+      String? name,
       DateTime? lastSeen});
 
   @override
@@ -359,9 +360,10 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
     Object? avatarUrls = null,
     Object? online = null,
+    Object? email = freezed,
+    Object? name = freezed,
     Object? lastSeen = freezed,
   }) {
     return _then(_$EndUser(
@@ -369,10 +371,6 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UserID,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       avatarUrls: null == avatarUrls
           ? _value._avatarUrls
           : avatarUrls // ignore: cast_nullable_to_non_nullable
@@ -381,6 +379,14 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
           ? _value.online
           : online // ignore: cast_nullable_to_non_nullable
               as bool,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       lastSeen: freezed == lastSeen
           ? _value.lastSeen
           : lastSeen // ignore: cast_nullable_to_non_nullable
@@ -394,9 +400,10 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
 class _$EndUser implements EndUser {
   const _$EndUser(
       {required this.id,
-      required this.name,
       required final List<String> avatarUrls,
       required this.online,
+      this.email,
+      this.name,
       this.lastSeen,
       final String? $type})
       : _avatarUrls = avatarUrls,
@@ -407,8 +414,6 @@ class _$EndUser implements EndUser {
 
   @override
   final UserID id;
-  @override
-  final String name;
   final List<String> _avatarUrls;
   @override
   List<String> get avatarUrls {
@@ -420,6 +425,10 @@ class _$EndUser implements EndUser {
   @override
   final bool online;
   @override
+  final String? email;
+  @override
+  final String? name;
+  @override
   final DateTime? lastSeen;
 
   @JsonKey(name: 'type')
@@ -427,7 +436,7 @@ class _$EndUser implements EndUser {
 
   @override
   String toString() {
-    return 'User.end(id: $id, name: $name, avatarUrls: $avatarUrls, online: $online, lastSeen: $lastSeen)';
+    return 'User.end(id: $id, avatarUrls: $avatarUrls, online: $online, email: $email, name: $name, lastSeen: $lastSeen)';
   }
 
   @override
@@ -436,18 +445,25 @@ class _$EndUser implements EndUser {
         (other.runtimeType == runtimeType &&
             other is _$EndUser &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
                 .equals(other._avatarUrls, _avatarUrls) &&
             (identical(other.online, online) || other.online == online) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.lastSeen, lastSeen) ||
                 other.lastSeen == lastSeen));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name,
-      const DeepCollectionEquality().hash(_avatarUrls), online, lastSeen);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      const DeepCollectionEquality().hash(_avatarUrls),
+      online,
+      email,
+      name,
+      lastSeen);
 
   @JsonKey(ignore: true)
   @override
@@ -460,35 +476,35 @@ class _$EndUser implements EndUser {
   TResult when<TResult extends Object?>({
     required TResult Function(UserID id, String name, List<String> avatarUrls)
         staff,
-    required TResult Function(UserID id, String name, List<String> avatarUrls,
-            bool online, DateTime? lastSeen)
+    required TResult Function(UserID id, List<String> avatarUrls, bool online,
+            String? email, String? name, DateTime? lastSeen)
         end,
   }) {
-    return end(id, name, avatarUrls, online, lastSeen);
+    return end(id, avatarUrls, online, email, name, lastSeen);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult? Function(UserID id, String name, List<String> avatarUrls,
-            bool online, DateTime? lastSeen)?
+    TResult? Function(UserID id, List<String> avatarUrls, bool online,
+            String? email, String? name, DateTime? lastSeen)?
         end,
   }) {
-    return end?.call(id, name, avatarUrls, online, lastSeen);
+    return end?.call(id, avatarUrls, online, email, name, lastSeen);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult Function(UserID id, String name, List<String> avatarUrls,
-            bool online, DateTime? lastSeen)?
+    TResult Function(UserID id, List<String> avatarUrls, bool online,
+            String? email, String? name, DateTime? lastSeen)?
         end,
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id, name, avatarUrls, online, lastSeen);
+      return end(id, avatarUrls, online, email, name, lastSeen);
     }
     return orElse();
   }
@@ -535,9 +551,10 @@ class _$EndUser implements EndUser {
 abstract class EndUser implements User {
   const factory EndUser(
       {required final UserID id,
-      required final String name,
       required final List<String> avatarUrls,
       required final bool online,
+      final String? email,
+      final String? name,
       final DateTime? lastSeen}) = _$EndUser;
 
   factory EndUser.fromJson(Map<String, dynamic> json) = _$EndUser.fromJson;
@@ -545,10 +562,11 @@ abstract class EndUser implements User {
   @override
   UserID get id;
   @override
-  String get name;
-  @override
   List<String> get avatarUrls;
   bool get online;
+  String? get email;
+  @override
+  String? get name;
   DateTime? get lastSeen;
   @override
   @JsonKey(ignore: true)

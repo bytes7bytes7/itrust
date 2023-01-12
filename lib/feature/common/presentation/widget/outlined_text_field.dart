@@ -8,6 +8,7 @@ const _iconPadding = 8.0;
 class OutlinedTextField extends StatelessWidget {
   const OutlinedTextField({
     super.key,
+    this.controller,
     this.obscureText = false,
     this.hintText,
     this.prefix,
@@ -16,6 +17,7 @@ class OutlinedTextField extends StatelessWidget {
     this.onSuffixPressed,
   });
 
+  final TextEditingController? controller;
   final String? hintText;
   final bool obscureText;
   final Icon? prefix;
@@ -42,6 +44,7 @@ class OutlinedTextField extends StatelessWidget {
             ),
           Expanded(
             child: TextField(
+              controller: controller,
               obscureText: obscureText,
               decoration: InputDecoration(
                 hintText: hintText,

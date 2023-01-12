@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
@@ -7,6 +8,7 @@ import '../../../domain/service/auth_service.dart';
 
 part 'auth_store.g.dart';
 
+@singleton
 class AuthStore = _AuthStore with _$AuthStore;
 
 abstract class _AuthStore with Store, Errorable, Loadable {

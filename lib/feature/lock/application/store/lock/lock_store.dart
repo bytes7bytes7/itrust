@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/mixin/mixin.dart';
