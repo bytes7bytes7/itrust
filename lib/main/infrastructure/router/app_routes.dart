@@ -13,6 +13,19 @@ Map<String, Object?> _getArgs(GoRouterState state) => {
 class _AppRoutes {
   const _AppRoutes._();
 
+  static final notFound = GoRoute(
+    path: '/not_found',
+    name: 'not_found',
+    pageBuilder: (context, state) {
+      return NoTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        child: const NotFoundScreen(),
+      );
+    },
+  );
+
   static final feed = GoRoute(
     path: '/feed',
     name: 'feed',

@@ -5,6 +5,11 @@ class HomeRoute {
   final route = _AppRoutes.home;
 }
 
+class NotFoundRoute extends CosyRoute {
+  @override
+  final route = _AppRoutes.notFound;
+}
+
 class FeedRoute extends CosyRoute {
   @override
   final route = _AppRoutes.feed;

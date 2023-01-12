@@ -11,5 +11,7 @@
   "no_online_status": "",
   "message_field_hint": "Type message...",
   "feed_tab_title": "ITrust",
-  "menu_tab_title": "Menu"
+  "menu_tab_title": "Menu",
+  "navi_not_found_title": "Hmm...",
+  "navi_not_found_body": "You are in a wrong place\uD83E\uDDD0"
 }

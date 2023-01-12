@@ -22,7 +22,9 @@ final _rootKey = NavigatorKey();
 final _router = GoRouter(
   navigatorKey: _rootKey,
   initialLocation: FeedRoute().route.path,
+  errorPageBuilder: NotFoundRoute().route.pageBuilder,
   routes: [
+    NotFoundRoute().route,
     HomeRoute().route,
   ],
 );
