@@ -1,77 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../feature/chat/presentation/screen/screen.dart';
 import '../../../feature/chat_list/presentation/screen/screen.dart';
-import '../../../feature/common/domain/domain.dart';
 import '../../../feature/feed/presentation/screen/screen.dart';
 import '../../../feature/menu/presentation/screen/screen.dart';
 import '../../presentation/screen/screen.dart';
 
 part 'transition.dart';
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _homeNavigatorKey = GlobalKey<NavigatorState>();
+part 'routes.dart';
 
-enum AppRoutes {
-  feed('/feed'),
-  chatList('/chat'),
-  menu('/menu'),
-  chat('/chat/:id');
+part 'cosy_route.dart';
 
-  const AppRoutes(this.path);
+part 'app_routes.dart';
 
-  final String path;
-}
+typedef NavigatorKey = GlobalKey<NavigatorState>;
 
-final router = GoRouter(
-  initialLocation: AppRoutes.feed.path,
-  navigatorKey: _rootNavigatorKey,
+final _rootKey = NavigatorKey();
+
+final _router = GoRouter(
+  navigatorKey: _rootKey,
+  initialLocation: FeedRoute().route.path,
   routes: [
-    ShellRoute(
-      navigatorKey: _homeNavigatorKey,
-      builder: (context, st1ate, child) {
-        return HomeScreen(
-          body: child,
-        );
-      },
-      routes: [
-        GoRoute(
-          path: AppRoutes.feed.path,
-          pageBuilder: (context, state) {
-            return const NoTransitionPage(
-              child: FeedScreen(),
-            );
-          },
-        ),
-        GoRoute(
-          path: AppRoutes.chatList.path,
-          pageBuilder: (context, state) {
-            return const NoTransitionPage(
-              child: ChatListScreen(),
-            );
-          },
-        ),
-        GoRoute(
-          path: AppRoutes.menu.path,
-          pageBuilder: (context, state) {
-            return const NoTransitionPage(
-              child: MenuScreen(),
-            );
-          },
-        ),
-      ],
-    ),
-    GoRoute(
-      path: AppRoutes.chat.path,
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          transitionsBuilder: leftward,
-          child: ChatScreen(
-            chatID: ChatID(state.params['id'] as String),
-          ),
-        );
-      },
-    ),
+    HomeRoute().route,
   ],
 );
+
+void initRouter() {
+  GetIt.instance
+    ..registerSingleton<GoRouter>(_router)
+    ..registerSingleton<NavigatorKey>(_rootKey);
+}

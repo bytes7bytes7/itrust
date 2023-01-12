@@ -8,24 +8,26 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:itrust/feature/chat/application/store/chat_store/chat_store.dart'
-    as _i12;
+    as _i14;
 import 'package:itrust/feature/chat/infrastructure/persistence/message_search_repository.dart'
-    as _i6;
+    as _i8;
 import 'package:itrust/feature/chat_list/application/store/chat_list/chat_list_store.dart'
-    as _i11;
+    as _i13;
 import 'package:itrust/feature/chat_list/infrastructure/persistence/chat_list_search_repository.dart'
-    as _i7;
+    as _i9;
 import 'package:itrust/feature/common/domain/domain.dart' as _i3;
 import 'package:itrust/feature/common/domain/persistence/chat_repository.dart'
-    as _i10;
+    as _i12;
 import 'package:itrust/feature/common/domain/service/chat_list_service.dart'
-    as _i8;
+    as _i10;
 import 'package:itrust/feature/common/infrastructure/persistence/chat_repository.dart'
     as _i4;
 import 'package:itrust/feature/common/infrastructure/service/chat_list_service.dart'
-    as _i9;
+    as _i11;
 import 'package:itrust/main/application/store/home_store/home_store.dart'
-    as _i5;
+    as _i7;
+import 'package:itrust/main/domain/service/home_service.dart' as _i5;
+import 'package:itrust/main/infrastructure/service/home_service.dart' as _i6;
 
 const String _test = 'test';
 
@@ -46,23 +48,25 @@ _i1.GetIt init(
     () => _i4.TestChatRepository(),
     registerFor: {_test},
   );
-  gh.singleton<_i5.HomeStore>(_i5.HomeStore());
+  gh.singleton<_i5.HomeService>(_i6.ProdHomeService());
+  gh.singleton<_i7.HomeStore>(
+      _i7.HomeStore(homeService: gh<_i5.HomeService>()));
   gh.singleton<_i3.SearchRepository<_i3.Message>>(
-    _i6.TestMessageSearchRepository(),
+    _i8.TestMessageSearchRepository(),
     registerFor: {_test},
   );
   gh.singleton<_i3.SearchRepository<_i3.Chat>>(
-    _i7.TestChatListSearchRepository(),
+    _i9.TestChatListSearchRepository(),
     registerFor: {_test},
   );
-  gh.lazySingleton<_i8.ChatListService>(
-    () => _i9.ProdChatListService(chatRepository: gh<_i10.ChatRepository>())
+  gh.lazySingleton<_i10.ChatListService>(
+    () => _i11.ProdChatListService(chatRepository: gh<_i12.ChatRepository>())
       ..init(),
     dispose: (i) => i.dispose(),
   );
-  gh.singleton<_i11.ChatListStore>(
-      _i11.ChatListStore(chatListService: gh<_i3.ChatListService>()));
-  gh.singleton<_i12.ChatStore>(_i12.ChatStore(
+  gh.singleton<_i13.ChatListStore>(
+      _i13.ChatListStore(chatListService: gh<_i3.ChatListService>()));
+  gh.singleton<_i14.ChatStore>(_i14.ChatStore(
       searchRepository: gh<_i3.SearchRepository<_i3.Message>>()));
   return getIt;
 }

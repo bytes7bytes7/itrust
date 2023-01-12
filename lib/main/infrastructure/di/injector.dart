@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
+import '../router/router.dart';
 import 'injector.config.dart';
 
 @InjectableInit(
@@ -12,4 +13,6 @@ void configInjector({required String env}) {
     GetIt.instance,
     environment: env,
   );
+
+  initRouter();
 }
