@@ -10,6 +10,11 @@ class NotFoundRoute extends CosyRoute {
   final route = _AppRoutes.notFound;
 }
 
+class AuthRoute extends CosyRoute {
+  @override
+  final route = _AppRoutes.auth;
+}
+
 class FeedRoute extends CosyRoute {
   @override
   final route = _AppRoutes.feed;

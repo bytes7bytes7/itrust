@@ -1,4 +1,9 @@
 {
+  "app_name": "ITrust",
+  "login_hint": "Login",
+  "password_hint": "Password",
+  "rules_btn": "Rules of the app",
+  "login_btn": "Log In",
   "chat_tab_title": "Chats",
   "empty_chat_list_message": "No chats",
   "chat_card_author_and_msg_separator": ":",

@@ -8,7 +8,8 @@ part 'light_colors.dart';
 final lightTheme = ThemeData.light().copyWith(
   scaffoldBackgroundColor: _LightColors.cFFFFFFFF,
   colorScheme: const ColorScheme.light().copyWith(
-    secondary: _LightColors.cFFEC2885,
+    primary: _LightColors.cFFEC2885,
+    secondary: _LightColors.cFF000000,
   ),
   appBarTheme: const AppBarTheme(
     elevation: 8,
@@ -76,22 +77,45 @@ final lightTheme = ThemeData.light().copyWith(
       ),
     ),
   ),
+  textButtonTheme: TextButtonThemeData(
+    style: ButtonStyle(
+      textStyle: const MaterialStatePropertyAll(
+        TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+      foregroundColor: MaterialStateProperty.resolveWith(
+        (states) {
+          if (states.contains(MaterialState.disabled)) {
+            return _LightColors.c3CEC2885;
+          }
+
+          return _LightColors.cFFEC2885;
+        },
+      ),
+    ),
+  ),
   inputDecorationTheme: const InputDecorationTheme(
-    isDense: true,
     contentPadding: EdgeInsets.symmetric(
       vertical: 8,
-      horizontal: 0,
+      horizontal: 10,
     ),
     hintStyle: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w400,
-      color: _LightColors.cFFC7C7C7,
+      color: _LightColors.cFF888888,
     ),
     border: UnderlineInputBorder(
       borderSide: BorderSide.none,
     ),
   ),
   textTheme: const TextTheme(
+    headline1: TextStyle(
+      fontSize: 50,
+      fontWeight: FontWeight.bold,
+      color: _LightColors.cFF000000,
+    ),
     headline5: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w600,
@@ -137,7 +161,7 @@ final lightTheme = ThemeData.light().copyWith(
       othersMsgBackground: _LightColors.cFFF0EFEF,
       infoMsgForeground: _LightColors.cFF000000,
       infoMsgBackground: _LightColors.cFFF0EFEF,
-      textFieldIcon: _LightColors.cFF1A1A1A,
+      textFieldIcon: _LightColors.cFF000000,
       textFieldIconSplash: _LightColors.c26000000,
       textFieldBackground: _LightColors.cFFF0EFEF,
       simpleIcon: _LightColors.cFF000000,

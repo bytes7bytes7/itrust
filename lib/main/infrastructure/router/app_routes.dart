@@ -26,6 +26,19 @@ class _AppRoutes {
     },
   );
 
+  static final auth = GoRoute(
+    path: '/auth',
+    name: 'auth',
+    pageBuilder: (context, state) {
+      return NoTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        child: const AuthScreen(),
+      );
+    },
+  );
+
   static final feed = GoRoute(
     path: '/feed',
     name: 'feed',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/l10n.dart';
 import '../../../../theme/theme.dart';
 import '../../../common/presentation/widget/widget.dart';
 
@@ -14,6 +15,7 @@ class MessageField extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
+    final l10n = context.l10n;
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -24,6 +26,7 @@ class MessageField extends StatelessWidget {
         children: [
           Expanded(
             child: OutlinedTextField(
+              hintText: l10n.message_field_hint,
               prefix: const Icon(
                 Icons.emoji_emotions_outlined,
               ),

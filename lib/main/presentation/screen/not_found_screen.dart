@@ -5,7 +5,7 @@ import '../../../l10n/l10n.dart';
 import '../../application/store/home_store/home_store.dart';
 
 const _paddingH = 20.0;
-const _paddingV = 15.0;
+const _paddingV = 14.0;
 final _getIt = GetIt.instance;
 
 class NotFoundScreen extends StatelessWidget {

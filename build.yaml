@@ -1,5 +1,10 @@
 targets:
   $default:
+    sources:
+      include:
+        - pubspec.yaml
+        - lib/**
+        - $package$
     builders:
       json_serializable:
         options:
