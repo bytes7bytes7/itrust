@@ -2,35 +2,49 @@ part of 'router.dart';
 
 // Only for [ShellRoute]
 class HomeRoute {
-  final route = _AppRoutes.home;
+  const HomeRoute();
+
+  ShellRoute get route => _AppRoutes.home;
 }
 
 class NotFoundRoute extends CosyRoute {
+  const NotFoundRoute();
+
   @override
-  final route = _AppRoutes.notFound;
+  GoRoute get route => _AppRoutes.notFound;
 }
 
 class AuthRoute extends CosyRoute {
+  const AuthRoute();
+
   @override
-  final route = _AppRoutes.auth;
+  GoRoute get route => _AppRoutes.auth;
 }
 
 class FeedRoute extends CosyRoute {
+  const FeedRoute();
+
   @override
-  final route = _AppRoutes.feed;
+  GoRoute get route => _AppRoutes.feed;
 }
 
 class ChatsRoute extends CosyRoute {
+  const ChatsRoute();
+
   @override
-  final route = _AppRoutes.chats;
+  GoRoute get route => _AppRoutes.chats;
 }
 
 class MenuRoute extends CosyRoute {
+  const MenuRoute();
+
   @override
-  final route = _AppRoutes.menu;
+  GoRoute get route => _AppRoutes.menu;
 }
 
 class SettingsRoute extends CosyRoute {
+  const SettingsRoute();
+
   @override
-  final route = _AppRoutes.settings;
+  GoRoute get route => _AppRoutes.settings;
 }

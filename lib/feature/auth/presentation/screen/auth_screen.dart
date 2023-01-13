@@ -107,7 +107,7 @@ class AuthScreen extends HookWidget {
   }
 }
 
-class _LoginField extends HookWidget {
+class _LoginField extends StatelessWidget {
   const _LoginField({
     required this.authStore,
     required this.l10n,
@@ -118,12 +118,12 @@ class _LoginField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginController = useTextEditingController();
-
     return Observer(
       builder: (context) {
         return OutlinedTextField(
-          controller: loginController,
+          onChanged: (value) {
+            authStore.login = value;
+          },
           hintText: l10n.login_hint,
           enabled: !authStore.isLoading,
         );
@@ -143,7 +143,6 @@ class _PasswordField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final passwordController = useTextEditingController();
     final obscureText = useValueNotifier(true);
 
     return ValueListenableBuilder(
@@ -152,7 +151,9 @@ class _PasswordField extends HookWidget {
         return Observer(
           builder: (context) {
             return OutlinedTextField(
-              controller: passwordController,
+              onChanged: (value) {
+                authStore.password = value;
+              },
               hintText: l10n.password_hint,
               obscureText: obscureText.value,
               enabled: !authStore.isLoading,
@@ -206,7 +207,7 @@ class _LogInButton extends StatelessWidget {
     return Observer(
       builder: (context) {
         return ElevatedButton(
-          onPressed: authStore.isLoading ? null : authStore.authenticate,
+          onPressed: authStore.canLogIn ? authStore.authenticate : null,
           child: Text(l10n.log_in_btn),
         );
       },

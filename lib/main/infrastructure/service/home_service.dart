@@ -14,7 +14,7 @@ class ProdHomeService implements HomeService {
   @override
   List<IconData> get tabIcons => _tabs.map((e) => e.key).toList();
 
-  final _tabs = [
+  final _tabs = const [
     MapEntry(
       Icons.home_outlined,
       FeedRoute(),

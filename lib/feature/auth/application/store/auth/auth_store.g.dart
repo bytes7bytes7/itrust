@@ -9,6 +9,13 @@ part of 'auth_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AuthStore on _AuthStore, Store {
+  Computed<bool>? _$canLogInComputed;
+
+  @override
+  bool get canLogIn => (_$canLogInComputed ??=
+          Computed<bool>(() => super.canLogIn, name: '_AuthStore.canLogIn'))
+      .value;
+
   late final _$_isLoadingAtom =
       Atom(name: '_AuthStore._isLoading', context: context);
 
@@ -41,24 +48,6 @@ mixin _$AuthStore on _AuthStore, Store {
   set _error(String value) {
     _$_errorAtom.reportWrite(value, super._error, () {
       super._error = value;
-    });
-  }
-
-  late final _$_isLoggedInAtom =
-      Atom(name: '_AuthStore._isLoggedIn', context: context);
-
-  bool get isLoggedIn {
-    _$_isLoggedInAtom.reportRead();
-    return super._isLoggedIn;
-  }
-
-  @override
-  bool get _isLoggedIn => isLoggedIn;
-
-  @override
-  set _isLoggedIn(bool value) {
-    _$_isLoggedInAtom.reportWrite(value, super._isLoggedIn, () {
-      super._isLoggedIn = value;
     });
   }
 
@@ -105,7 +94,8 @@ mixin _$AuthStore on _AuthStore, Store {
   String toString() {
     return '''
 login: ${login},
-password: ${password}
+password: ${password},
+canLogIn: ${canLogIn}
     ''';
   }
 }

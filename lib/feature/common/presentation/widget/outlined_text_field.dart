@@ -9,6 +9,7 @@ class OutlinedTextField extends StatelessWidget {
   const OutlinedTextField({
     super.key,
     this.controller,
+    this.onChanged,
     this.obscureText = false,
     this.hintText,
     this.enabled,
@@ -19,6 +20,7 @@ class OutlinedTextField extends StatelessWidget {
   });
 
   final TextEditingController? controller;
+  final void Function(String)? onChanged;
   final String? hintText;
   final bool? enabled;
   final bool obscureText;
@@ -49,6 +51,7 @@ class OutlinedTextField extends StatelessWidget {
               controller: controller,
               obscureText: obscureText,
               enabled: enabled,
+              onChanged: onChanged,
               decoration: InputDecoration(
                 hintText: hintText,
               ),

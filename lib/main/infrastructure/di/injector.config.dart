@@ -9,7 +9,6 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:itrust/feature/auth/application/store/auth/auth_store.dart'
     as _i5;
-import 'package:itrust/feature/auth/domain/service/auth_service.dart' as _i3;
 import 'package:itrust/feature/chat/application/store/chat_store/chat_store.dart'
     as _i24;
 import 'package:itrust/feature/chat/infrastructure/persistence/message_search_repository.dart'
@@ -21,6 +20,7 @@ import 'package:itrust/feature/chat_list/infrastructure/persistence/chat_list_se
 import 'package:itrust/feature/common/domain/domain.dart' as _i6;
 import 'package:itrust/feature/common/domain/persistence/chat_repository.dart'
     as _i22;
+import 'package:itrust/feature/common/domain/service/auth_service.dart' as _i3;
 import 'package:itrust/feature/common/domain/service/chat_list_service.dart'
     as _i20;
 import 'package:itrust/feature/common/infrastructure/persistence/chat_repository.dart'
@@ -61,8 +61,8 @@ _i1.GetIt init(
     environmentFilter,
   );
   gh.singleton<_i3.AuthService>(_i4.ProdAuthService());
-  gh.singleton<_i5.AuthStore>(
-      _i5.AuthStore(authService: gh<_i3.AuthService>()));
+  gh.lazySingleton<_i5.AuthStore>(
+      () => _i5.AuthStore(authService: gh<_i3.AuthService>()));
   gh.lazySingleton<_i6.ChatRepository>(
     () => _i7.TestChatRepository(),
     registerFor: {_test},

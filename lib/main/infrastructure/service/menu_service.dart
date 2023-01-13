@@ -13,7 +13,7 @@ final _logger = Logger('$MenuService');
 class ProdMenuService implements MenuService {
   @override
   void onMoreBtnPressed() {
-    SettingsRoute().push(_context);
+    const SettingsRoute().push(_context);
   }
 
   late final _navigatorKey = _getIt.get<NavigatorKey>();

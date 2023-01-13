@@ -1,4 +1,4 @@
-import '../../../common/domain/domain.dart';
+import '../domain.dart';
 
 abstract class AuthService {
   Stream<EndUser?> get users;
@@ -7,8 +7,6 @@ abstract class AuthService {
     required String login,
     required String password,
   });
-
-  Future<void> finishAuthentication();
 
   Future<void> logOut();
 }
