@@ -25,6 +25,11 @@ abstract class _SettingsStore with Store, Loadable, Errorable {
   String _error = '';
 
   @action
+  void onBackButtonPressed() {
+    _settingsService.onBackButtonPressed();
+  }
+
+  @action
   Future<void> logOut() async {
     await _wrap(() async {
       await _settingsService.logOut();

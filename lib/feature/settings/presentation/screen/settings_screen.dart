@@ -25,7 +25,7 @@ class SettingsScreen extends StatelessWidget {
         leading: Align(
           child: ElevatedButton(
             style: buttonStyleTX.filledIcon,
-            onPressed: () {},
+            onPressed: settingsStore.onBackButtonPressed,
             child: const Icon(
               Icons.arrow_back,
             ),
