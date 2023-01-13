@@ -34,16 +34,19 @@ abstract class _AuthStore with Store, Errorable, Loadable {
   bool _isLoading = false;
 
   @readonly
-  Object? _error;
+  String _error = '';
 
   @readonly
   bool _isLoggedIn = false;
 
+  @observable
+  String login = '';
+
+  @observable
+  String password = '';
+
   @action
-  Future<void> authenticate({
-    required String login,
-    required String password,
-  }) async {
+  Future<void> authenticate() async {
     await _wrap(() async {
       try {
         await _authService.authenticate(
@@ -51,14 +54,14 @@ abstract class _AuthStore with Store, Errorable, Loadable {
           password: password,
         );
       } catch (e) {
-        _error = e;
+        _error = 'Some error';
       }
     });
   }
 
   Future<void> _wrap(FutureOr<void> Function() callback) async {
     _isLoading = true;
-    _error = null;
+    _error = '';
 
     await callback();
 

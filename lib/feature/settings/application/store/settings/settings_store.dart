@@ -22,7 +22,7 @@ abstract class _SettingsStore with Store, Loadable, Errorable {
   bool _isLoading = false;
 
   @readonly
-  Object? _error;
+  String _error = '';
 
   @action
   Future<void> logOut() async {
@@ -33,7 +33,7 @@ abstract class _SettingsStore with Store, Loadable, Errorable {
 
   Future<void> _wrap(FutureOr<void> Function() callback) async {
     _isLoading = true;
-    _error = null;
+    _error = '';
 
     await callback();
 

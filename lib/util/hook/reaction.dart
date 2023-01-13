@@ -13,7 +13,7 @@ ReactionDisposer useReaction<T>(
   void Function(Object, Reaction)? onError,
 }) {
   return use(
-    _ReactionHook(
+    _ReactionHook<T>(
       fn,
       effect,
       name: name,
@@ -48,11 +48,13 @@ class _ReactionHook<T> extends Hook<ReactionDisposer> {
   final void Function(Object, Reaction)? onError;
 
   @override
-  _ReactionHookState<T> createState() => _ReactionHookState();
+  HookState<ReactionDisposer, _ReactionHook> createState() =>
+      _ReactionHookState<T>();
 }
 
-class _ReactionHookState<T> extends HookState<ReactionDisposer, _ReactionHook> {
-  late final _reactionDispose = reaction(
+class _ReactionHookState<T>
+    extends HookState<ReactionDisposer, _ReactionHook<T>> {
+  late final _reactionDispose = reaction<T>(
     hook.fn,
     hook.effect,
     name: hook.name,

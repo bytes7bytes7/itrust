@@ -27,7 +27,7 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
   bool _isLoading = false;
 
   @readonly
-  Object? _error;
+  String _error = '';
 
   @readonly
   bool _isLoadingMore = false;
@@ -67,7 +67,7 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
       return;
     }
 
-    _error = null;
+    _error = '';
 
     if (_hasMoreChats) {
       _isLoadingMore = true;
@@ -99,7 +99,7 @@ abstract class _ChatListStore with Store, Loadable, Errorable {
 
   void _wrapBefore() {
     _isLoading = true;
-    _error = null;
+    _error = '';
   }
 
   void _wrapAfter() {

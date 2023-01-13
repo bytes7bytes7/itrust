@@ -96,6 +96,19 @@ final lightTheme = ThemeData.light().copyWith(
       ),
     ),
   ),
+  snackBarTheme: SnackBarThemeData(
+    backgroundColor: _LightColors.cFFEC2885,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+      side: BorderSide.none,
+    ),
+    contentTextStyle: const TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.normal,
+      color: _LightColors.cFFFFFFFF,
+    ),
+    behavior: SnackBarBehavior.floating,
+  ),
   inputDecorationTheme: const InputDecorationTheme(
     contentPadding: EdgeInsets.symmetric(
       vertical: 8,
@@ -167,6 +180,7 @@ final lightTheme = ThemeData.light().copyWith(
       simpleIcon: _LightColors.cFF000000,
       infoMsgPreviewColor: _LightColors.cFFEC2885,
       msgSender: _LightColors.cFFEC2885,
+      snackBarBackgroundDefault: _LightColors.cFFEC2885,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(

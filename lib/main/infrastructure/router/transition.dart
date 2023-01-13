@@ -1,5 +1,6 @@
 part of 'router.dart';
 
+// ignore: unused_element
 Widget _upward(
   BuildContext context,
   Animation<double> animation,
@@ -18,6 +19,7 @@ Widget _upward(
       child: child,
     );
 
+// ignore: unused_element
 Widget _downward(
   BuildContext context,
   Animation<double> animation,
@@ -36,6 +38,7 @@ Widget _downward(
       child: child,
     );
 
+// ignore: unused_element
 Widget _leftward(
   BuildContext context,
   Animation<double> animation,
@@ -54,6 +57,7 @@ Widget _leftward(
       child: child,
     );
 
+// ignore: unused_element
 Widget _rightward(
   BuildContext context,
   Animation<double> animation,

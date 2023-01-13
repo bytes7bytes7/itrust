@@ -33,7 +33,7 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
   bool _isLoading = false;
 
   @readonly
-  Object? _error;
+  String _error = '';
 
   @readonly
   bool _isLoadingMore = false;
@@ -66,7 +66,7 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
       return;
     }
 
-    _error = null;
+    _error = '';
 
     if (_hasMoreSuggestions) {
       _isLoadingMore = true;
@@ -135,7 +135,7 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
       }
       _page = page + 1;
     } catch (e) {
-      _error = e;
+      _error = 'Some error';
     }
   }
 
@@ -147,7 +147,7 @@ abstract class _SearchStore<T> with Store, Loadable, Errorable {
 
   void _wrapBefore() {
     _isLoading = true;
-    _error = null;
+    _error = '';
   }
 
   void _wrapAfter() {

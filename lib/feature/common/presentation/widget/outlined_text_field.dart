@@ -11,6 +11,7 @@ class OutlinedTextField extends StatelessWidget {
     this.controller,
     this.obscureText = false,
     this.hintText,
+    this.enabled,
     this.prefix,
     this.suffix,
     this.onPrefixPressed,
@@ -19,6 +20,7 @@ class OutlinedTextField extends StatelessWidget {
 
   final TextEditingController? controller;
   final String? hintText;
+  final bool? enabled;
   final bool obscureText;
   final Icon? prefix;
   final Icon? suffix;
@@ -46,6 +48,7 @@ class OutlinedTextField extends StatelessWidget {
             child: TextField(
               controller: controller,
               obscureText: obscureText,
+              enabled: enabled,
               decoration: InputDecoration(
                 hintText: hintText,
               ),

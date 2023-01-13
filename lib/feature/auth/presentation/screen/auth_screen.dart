@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../util/hook/reaction.dart';
 import '../../../common/presentation/widget/widget.dart';
 import '../../application/store/auth/auth_store.dart';
 
@@ -29,13 +32,15 @@ class AuthScreen extends HookWidget {
     final l10n = context.l10n;
 
     final authStore = _getIt.get<AuthStore>();
-
-    final loginController = useTextEditingController();
-    final passwordController = useTextEditingController();
-    final obscureText = useValueNotifier(true);
     final commonFocusNode = useFocusNode();
 
-    // TODO: separate on widgets and add Observer
+    useReaction<String>((_) => authStore.error, (error) {
+      if (error.isNotEmpty) {
+        CustomSnackBar(
+          message: error,
+        ).build(context);
+      }
+    });
 
     return GestureDetector(
       onTap: () {
@@ -69,46 +74,27 @@ class AuthScreen extends HookWidget {
                     const Spacer(
                       flex: _underAppTitleFlex,
                     ),
-                    OutlinedTextField(
-                      controller: loginController,
-                      hintText: l10n.login_hint,
+                    _LoginField(
+                      authStore: authStore,
+                      l10n: l10n,
                     ),
                     const SizedBox(
                       height: _textFieldsSeparator,
                     ),
-                    ValueListenableBuilder(
-                      valueListenable: obscureText,
-                      builder: (context, value, child) {
-                        return OutlinedTextField(
-                          controller: passwordController,
-                          hintText: l10n.password_hint,
-                          obscureText: obscureText.value,
-                          suffix: const Icon(
-                            Icons.remove_red_eye,
-                          ),
-                          onSuffixPressed: () {
-                            obscureText.value = !value;
-                          },
-                        );
-                      },
+                    _PasswordField(
+                      authStore: authStore,
+                      l10n: l10n,
                     ),
                     const Spacer(
                       flex: _underTextFieldsFlex,
                     ),
-                    TextButton(
-                      child: Text(l10n.rules_btn),
-                      onPressed: () {},
+                    _RulesButton(
+                      authStore: authStore,
+                      l10n: l10n,
                     ),
-                    ElevatedButton(
-                      onPressed: authStore.isLoading
-                          ? null
-                          : () {
-                              authStore.authenticate(
-                                login: loginController.text,
-                                password: passwordController.text,
-                              );
-                            },
-                      child: Text(l10n.log_in_btn),
+                    _LogInButton(
+                      authStore: authStore,
+                      l10n: l10n,
                     ),
                   ],
                 ),
@@ -117,6 +103,113 @@ class AuthScreen extends HookWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _LoginField extends HookWidget {
+  const _LoginField({
+    required this.authStore,
+    required this.l10n,
+  });
+
+  final AuthStore authStore;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final loginController = useTextEditingController();
+
+    return Observer(
+      builder: (context) {
+        return OutlinedTextField(
+          controller: loginController,
+          hintText: l10n.login_hint,
+          enabled: !authStore.isLoading,
+        );
+      },
+    );
+  }
+}
+
+class _PasswordField extends HookWidget {
+  const _PasswordField({
+    required this.authStore,
+    required this.l10n,
+  });
+
+  final AuthStore authStore;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final passwordController = useTextEditingController();
+    final obscureText = useValueNotifier(true);
+
+    return ValueListenableBuilder(
+      valueListenable: obscureText,
+      builder: (context, value, child) {
+        return Observer(
+          builder: (context) {
+            return OutlinedTextField(
+              controller: passwordController,
+              hintText: l10n.password_hint,
+              obscureText: obscureText.value,
+              enabled: !authStore.isLoading,
+              suffix: const Icon(
+                Icons.remove_red_eye,
+              ),
+              onSuffixPressed: () {
+                obscureText.value = !value;
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _RulesButton extends StatelessWidget {
+  const _RulesButton({
+    required this.authStore,
+    required this.l10n,
+  });
+
+  final AuthStore authStore;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(
+      builder: (context) {
+        return TextButton(
+          onPressed: authStore.isLoading ? null : () {},
+          child: Text(l10n.rules_btn),
+        );
+      },
+    );
+  }
+}
+
+class _LogInButton extends StatelessWidget {
+  const _LogInButton({
+    required this.authStore,
+    required this.l10n,
+  });
+
+  final AuthStore authStore;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(
+      builder: (context) {
+        return ElevatedButton(
+          onPressed: authStore.isLoading ? null : authStore.authenticate,
+          child: Text(l10n.log_in_btn),
+        );
+      },
     );
   }
 }

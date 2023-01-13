@@ -1,3 +1,3 @@
 mixin Errorable {
-  Object? get error;
+  String get error;
 }

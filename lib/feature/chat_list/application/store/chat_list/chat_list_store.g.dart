@@ -52,16 +52,16 @@ mixin _$ChatListStore on _ChatListStore, Store {
   late final _$_errorAtom =
       Atom(name: '_ChatListStore._error', context: context);
 
-  Object? get error {
+  String get error {
     _$_errorAtom.reportRead();
     return super._error;
   }
 
   @override
-  Object? get _error => error;
+  String get _error => error;
 
   @override
-  set _error(Object? value) {
+  set _error(String value) {
     _$_errorAtom.reportWrite(value, super._error, () {
       super._error = value;
     });

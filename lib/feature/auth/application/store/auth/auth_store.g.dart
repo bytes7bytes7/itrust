@@ -29,16 +29,16 @@ mixin _$AuthStore on _AuthStore, Store {
 
   late final _$_errorAtom = Atom(name: '_AuthStore._error', context: context);
 
-  Object? get error {
+  String get error {
     _$_errorAtom.reportRead();
     return super._error;
   }
 
   @override
-  Object? get _error => error;
+  String get _error => error;
 
   @override
-  set _error(Object? value) {
+  set _error(String value) {
     _$_errorAtom.reportWrite(value, super._error, () {
       super._error = value;
     });
@@ -62,19 +62,50 @@ mixin _$AuthStore on _AuthStore, Store {
     });
   }
 
+  late final _$loginAtom = Atom(name: '_AuthStore.login', context: context);
+
+  @override
+  String get login {
+    _$loginAtom.reportRead();
+    return super.login;
+  }
+
+  @override
+  set login(String value) {
+    _$loginAtom.reportWrite(value, super.login, () {
+      super.login = value;
+    });
+  }
+
+  late final _$passwordAtom =
+      Atom(name: '_AuthStore.password', context: context);
+
+  @override
+  String get password {
+    _$passwordAtom.reportRead();
+    return super.password;
+  }
+
+  @override
+  set password(String value) {
+    _$passwordAtom.reportWrite(value, super.password, () {
+      super.password = value;
+    });
+  }
+
   late final _$authenticateAsyncAction =
       AsyncAction('_AuthStore.authenticate', context: context);
 
   @override
-  Future<void> authenticate({required String login, required String password}) {
-    return _$authenticateAsyncAction
-        .run(() => super.authenticate(login: login, password: password));
+  Future<void> authenticate() {
+    return _$authenticateAsyncAction.run(() => super.authenticate());
   }
 
   @override
   String toString() {
     return '''
-
+login: ${login},
+password: ${password}
     ''';
   }
 }

@@ -21,7 +21,7 @@ abstract class _LockStore with Store, Errorable, Loadable {
   bool _isLoading = false;
 
   @readonly
-  Object? _error;
+  String _error = '';
 
   @observable
   User? selectedUser;
@@ -32,14 +32,14 @@ abstract class _LockStore with Store, Errorable, Loadable {
       try {
         await _lockService.unlock(passphrase: passphrase);
       } catch (e) {
-        _error = e;
+        _error = 'Some error';
       }
     });
   }
 
   Future<void> _wrap(FutureOr<void> Function() callback) async {
     _isLoading = true;
-    _error = null;
+    _error = '';
 
     await callback();
 

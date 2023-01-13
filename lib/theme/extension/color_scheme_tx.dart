@@ -20,6 +20,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.simpleIcon,
     required this.infoMsgPreviewColor,
     required this.msgSender,
+    required this.snackBarBackgroundDefault,
   });
 
   final Color circleAvatarBackground;
@@ -41,6 +42,9 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color infoMsgPreviewColor;
   final Color msgSender;
 
+  /// Use this color if backgroundColor of [SnackBarTheme] is NOT specified.
+  final Color snackBarBackgroundDefault;
+
   @override
   ThemeExtension<ColorSchemeTX> copyWith({
     Color? circleAvatarBackground,
@@ -61,6 +65,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? simpleIcon,
     Color? infoMsgPreviewColor,
     Color? msgSender,
+    Color? snackBarBackgroundDefault,
   }) {
     return ColorSchemeTX(
       circleAvatarBackground:
@@ -83,6 +88,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       simpleIcon: simpleIcon ?? this.simpleIcon,
       infoMsgPreviewColor: infoMsgPreviewColor ?? this.infoMsgPreviewColor,
       msgSender: msgSender ?? this.msgSender,
+      snackBarBackgroundDefault:
+          snackBarBackgroundDefault ?? this.snackBarBackgroundDefault,
     );
   }
 
@@ -184,6 +191,11 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       msgSender: Color.lerp(
         msgSender,
         other.msgSender,
+        t,
+      )!,
+      snackBarBackgroundDefault: Color.lerp(
+        snackBarBackgroundDefault,
+        other.snackBarBackgroundDefault,
         t,
       )!,
     );

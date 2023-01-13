@@ -15,12 +15,6 @@ abstract class _MenuStore with Store {
 
   final MenuService _menuService;
 
-  @readonly
-  bool _isLoading = false;
-
-  @readonly
-  Object? _error;
-
   @action
   void onMoreBtnPressed() {
     _menuService.onMoreBtnPressed();
