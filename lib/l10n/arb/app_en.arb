@@ -4,6 +4,8 @@
   "password_hint": "Password",
   "rules_btn": "Rules of the app",
   "log_in_btn": "Log In",
+  "wrong_password": "Wrong password",
+  "unknown_error": "Unknown error",
   "chat_tab_title": "Chats",
   "empty_chat_list_message": "No chats",
   "chat_card_author_and_msg_separator": ":",

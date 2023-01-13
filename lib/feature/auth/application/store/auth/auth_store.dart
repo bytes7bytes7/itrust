@@ -1,16 +1,23 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../../../../../l10n/l10n.dart';
+import '../../../../../main/infrastructure/router/router.dart';
 import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/domain/domain.dart';
+import '../../../../common/domain/exception/wrong_password_exception.dart';
 import '../../../../common/domain/service/auth_service.dart';
 
 part 'auth_store.g.dart';
 
+final _getIt = GetIt.instance;
 final _logger = Logger('$AuthStore');
 
 @lazySingleton
@@ -26,6 +33,7 @@ abstract class _AuthStore with Store, Errorable, Loadable {
   final AuthService _authService;
   StreamSubscription? _userSub;
   final _isLoggedInController = BehaviorSubject<bool>();
+  late final _navigatorKey = _getIt.get<NavigatorKey>();
 
   @disposeMethod
   void dispose() {
@@ -64,8 +72,10 @@ abstract class _AuthStore with Store, Errorable, Loadable {
           login: login,
           password: password,
         );
+      } on WrongPasswordException {
+        _error = _l10n.wrong_password;
       } catch (e) {
-        _error = 'Some error';
+        _error = _l10n.unknown_error;
       }
     });
   }
@@ -96,4 +106,16 @@ abstract class _AuthStore with Store, Errorable, Loadable {
       _logger.severe(e);
     }
   }
+
+  BuildContext get _context {
+    final ctx = _navigatorKey.currentContext;
+
+    if (ctx == null) {
+      _logger.shout('Context is null');
+    }
+
+    return ctx!;
+  }
+
+  AppLocalizations get _l10n => _context.l10n;
 }

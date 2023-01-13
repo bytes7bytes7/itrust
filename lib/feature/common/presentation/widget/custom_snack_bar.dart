@@ -6,6 +6,7 @@ import '../../../../theme/theme.dart';
 const _duration = Duration(seconds: 3);
 const _margin = EdgeInsets.symmetric(
   horizontal: 20,
+  vertical: 4,
 );
 const _borderRadius = 10.0;
 

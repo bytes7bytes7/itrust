@@ -17,6 +17,8 @@ const _textFieldsSeparator = 16.0;
 const _aboveIconFlex = 1;
 const _underAppTitleFlex = 1;
 const _underTextFieldsFlex = 4;
+const _rulesBtnAndAuthBtnSeparator = 10.0;
+
 final _getIt = GetIt.instance;
 
 class AuthScreen extends HookWidget {
@@ -57,7 +59,6 @@ class AuthScreen extends HookWidget {
                   vertical: _paddingV,
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const Spacer(
                       flex: _aboveIconFlex,
@@ -91,6 +92,9 @@ class AuthScreen extends HookWidget {
                     _RulesButton(
                       authStore: authStore,
                       l10n: l10n,
+                    ),
+                    const SizedBox(
+                      height: _rulesBtnAndAuthBtnSeparator,
                     ),
                     _LogInButton(
                       authStore: authStore,
@@ -206,9 +210,14 @@ class _LogInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        return ElevatedButton(
-          onPressed: authStore.canLogIn ? authStore.authenticate : null,
-          child: Text(l10n.log_in_btn),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ElevatedButton(
+              onPressed: authStore.canLogIn ? authStore.authenticate : null,
+              child: Text(l10n.log_in_btn),
+            ),
+          ],
         );
       },
     );

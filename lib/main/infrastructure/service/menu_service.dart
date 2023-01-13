@@ -11,12 +11,12 @@ final _logger = Logger('$MenuService');
 
 @Singleton(as: MenuService)
 class ProdMenuService implements MenuService {
+  late final _navigatorKey = _getIt.get<NavigatorKey>();
+
   @override
   void onMoreBtnPressed() {
     const SettingsRoute().push(_context);
   }
-
-  late final _navigatorKey = _getIt.get<NavigatorKey>();
 
   BuildContext get _context {
     final ctx = _navigatorKey.currentContext;

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../feature/common/domain/domain.dart';
+import '../../../feature/common/domain/exception/wrong_password_exception.dart';
 import '../../../feature/common/domain/service/auth_service.dart';
 
 @Singleton(as: AuthService)
@@ -29,10 +30,25 @@ class ProdAuthService implements AuthService {
     required String login,
     required String password,
   }) async {
-    await _firebaseAuth.createUserWithEmailAndPassword(
-      email: login,
-      password: password,
-    );
+    try {
+      await _firebaseAuth.createUserWithEmailAndPassword(
+        email: login,
+        password: password,
+      );
+    } on FirebaseAuthException {
+      try {
+        await _firebaseAuth.signInWithEmailAndPassword(
+          email: login,
+          password: password,
+        );
+      } on FirebaseAuthException catch (e){
+        if (e.code == 'wrong-password') {
+          throw const WrongPasswordException();
+        }
+
+        rethrow;
+      }
+    }
   }
 
   @override
