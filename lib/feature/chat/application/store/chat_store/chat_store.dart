@@ -5,8 +5,8 @@ import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/domain/domain.dart';
+import '../../../domain/service/chat_service.dart';
 
 part 'chat_store.g.dart';
 
@@ -16,12 +16,12 @@ final _logger = Logger('$ChatStore');
 @singleton
 class ChatStore = _ChatStore with _$ChatStore;
 
-abstract class _ChatStore with Store, Loadable, Errorable {
+abstract class _ChatStore with Store {
   _ChatStore({
-    required SearchRepository<Message> searchRepository,
-  }) : _searchRepository = searchRepository;
+    required ChatService chatService,
+  }) : _chatService = chatService;
 
-  final SearchRepository<Message> _searchRepository;
+  final ChatService _chatService;
   final int _limit = _defaultLimit;
 
   @readonly
@@ -37,16 +37,10 @@ abstract class _ChatStore with Store, Loadable, Errorable {
   bool _isLoadingMore = false;
 
   @readonly
-  String _query = '';
+  List<Message> _messages = const [];
 
   @readonly
-  Message? _selected;
-
-  @readonly
-  List<Message> _suggestions = const [];
-
-  @readonly
-  bool _hasMoreSuggestions = true;
+  bool _hasMoreMessages = true;
 
   @readonly
   int _page = 0;
@@ -55,13 +49,13 @@ abstract class _ChatStore with Store, Loadable, Errorable {
   Map<MessageID, int> _messageKeys = {};
 
   @computed
-  bool get showItemLoading => _suggestions.isNotEmpty && _hasMoreSuggestions;
+  bool get showItemLoading => _messages.isNotEmpty && _hasMoreMessages;
 
   @computed
-  bool get showAppBarLoading => _suggestions.isEmpty && _isLoading;
+  bool get showAppBarLoading => _messages.isEmpty && _isLoading;
 
   @computed
-  bool get showItems => _isLoading || _suggestions.isNotEmpty;
+  bool get showItems => _isLoading || _messages.isNotEmpty;
 
   @action
   Future<void> loadChat(ChatID chatID) async {
@@ -93,7 +87,7 @@ abstract class _ChatStore with Store, Loadable, Errorable {
 
     _error = '';
 
-    if (_hasMoreSuggestions) {
+    if (_hasMoreMessages) {
       _isLoadingMore = true;
 
       if (_page == 0) {
@@ -110,24 +104,6 @@ abstract class _ChatStore with Store, Loadable, Errorable {
   }
 
   @action
-  Future<void> setQuery(String query) async {
-    if (_query == query) {
-      return;
-    }
-
-    _logger.fine('update query');
-
-    await _wrap(() async {
-      await _loadData(page: 0, query: query);
-    });
-  }
-
-  @action
-  Future<void> selectItem(Message item) async {
-    _selected = item;
-  }
-
-  @action
   void onBackPressed() {
     _reset();
 
@@ -139,10 +115,8 @@ abstract class _ChatStore with Store, Loadable, Errorable {
     _isLoading = false;
     _error = '';
     _isLoadingMore = false;
-    _query = '';
-    _selected = null;
-    _suggestions = const [];
-    _hasMoreSuggestions = true;
+    _messages = const [];
+    _hasMoreMessages = true;
     _page = 0;
     _messageKeys = const {};
     _chat = null;
@@ -150,13 +124,11 @@ abstract class _ChatStore with Store, Loadable, Errorable {
 
   Future<void> _loadData({
     required int page,
-    String? query,
   }) async {
     try {
-      final data = await _searchRepository.load(
+      final data = await _chatService.load(
         limit: _limit,
         offset: _limit * _page,
-        query: query ?? _query,
       );
 
       late List<Message> suggestions;
@@ -169,7 +141,7 @@ abstract class _ChatStore with Store, Loadable, Errorable {
           }),
         );
       } else {
-        suggestions = List.from(_suggestions)..addAll(data);
+        suggestions = List.from(_messages)..addAll(data);
         messagesKeys = Map.from(_messageKeys)
           ..addAll(
             Map.fromEntries(
@@ -180,23 +152,9 @@ abstract class _ChatStore with Store, Loadable, Errorable {
           );
       }
 
-      Message? selected;
-      if (_selected == null) {
-        selected = suggestions.firstWhereOrNull(
-          (e) => e.map(
-            info: (_) => false,
-            user: (e) => e.text.toLowerCase().contains(query ?? _query),
-          ),
-        );
-      }
-
-      _suggestions = List.unmodifiable(suggestions);
+      _messages = List.unmodifiable(suggestions);
       _messageKeys = messagesKeys;
-      _selected = selected;
-      _hasMoreSuggestions = data.isNotEmpty && data.length == _limit;
-      if (query != null) {
-        _query = query;
-      }
+      _hasMoreMessages = data.isNotEmpty && data.length == _limit;
       _page = page + 1;
     } catch (e) {
       _error = 'Some error';

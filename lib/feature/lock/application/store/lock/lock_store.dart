@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:mobx/mobx.dart';
 
-import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/domain/domain.dart';
 import '../../../domain/service/lock_service.dart';
 
@@ -10,7 +9,7 @@ part 'lock_store.g.dart';
 
 class LockStore = _LockStore with _$LockStore;
 
-abstract class _LockStore with Store, Errorable, Loadable {
+abstract class _LockStore with Store {
   _LockStore({
     required LockService lockService,
   }) : _lockService = lockService;

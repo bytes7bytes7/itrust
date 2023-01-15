@@ -9,7 +9,6 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../../l10n/l10n.dart';
 import '../../../../../main/infrastructure/router/router.dart';
-import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/domain/exception/wrong_password_exception.dart';
 import '../../../../common/domain/service/auth_service.dart';
 
@@ -21,7 +20,7 @@ final _logger = Logger('$AuthStore');
 @lazySingleton
 class AuthStore = _AuthStore with _$AuthStore;
 
-abstract class _AuthStore with Store, Errorable, Loadable {
+abstract class _AuthStore with Store {
   _AuthStore({
     required AuthService authService,
   }) : _authService = authService {

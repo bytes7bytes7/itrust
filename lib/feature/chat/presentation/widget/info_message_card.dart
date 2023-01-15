@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' as intl;
 
 import '../../../../theme/theme.dart';
-import '../../../common/domain/domain.dart';
 
 const _paddingH = 20.0;
 const _paddingV = 6.0;
@@ -14,10 +12,12 @@ const _messageAndTimeSeparator = 4.0;
 class InfoMessageCard extends StatelessWidget {
   const InfoMessageCard({
     super.key,
-    required this.message,
+    required this.text,
+    required this.dateTime,
   });
 
-  final InfoMessage message;
+  final String text;
+  final String dateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -46,19 +46,18 @@ class InfoMessageCard extends StatelessWidget {
             ),
             child: Column(
               children: [
-                // TODO: adapt for InfoMessage
                 Text(
-                  _beautifiedDateTime(),
-                  style: message.markUp.isNotEmpty
+                  dateTime,
+                  style: text.isNotEmpty
                       ? theme.textTheme.headline6
                       : theme.textTheme.bodyText1,
                 ),
-                if (message.markUp.isNotEmpty) ...[
+                if (text.isNotEmpty) ...[
                   const SizedBox(
                     width: _messageAndTimeSeparator,
                   ),
                   Text(
-                    message.markUp,
+                    text,
                     style: theme.textTheme.bodyText1?.copyWith(
                       color: colorSchemeTX.infoMsgForeground,
                     ),
@@ -70,23 +69,5 @@ class InfoMessageCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  // TODO: move to another place
-  String _beautifiedDateTime() {
-    final dateTime = message.sentAt;
-    final now = DateTime.now();
-
-    if (dateTime.year == now.year) {
-      if (dateTime.month == now.month) {
-        if (dateTime.day == now.day) {
-          return intl.DateFormat.Hm().format(dateTime);
-        }
-      }
-
-      return intl.DateFormat.MMMd().format(dateTime);
-    }
-
-    return intl.DateFormat('dd.MM.yyy').format(dateTime);
   }
 }

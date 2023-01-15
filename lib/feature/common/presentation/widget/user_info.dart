@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../theme/theme.dart';
 
+const _paddingV = 24.0;
 const _userAvatarBorderRadius = 8.0;
 const _userAvatarSize = 100.0;
 const _userIconSize = 32.0;
@@ -28,45 +29,50 @@ class UserInfo extends StatelessWidget {
 
     return Align(
       alignment: Alignment.center,
-      child: Column(
-        children: [
-          Container(
-            height: _userAvatarSize,
-            width: _userAvatarSize,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                _userAvatarBorderRadius,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: _paddingV,
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: _userAvatarSize,
+              width: _userAvatarSize,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  _userAvatarBorderRadius,
+                ),
+                color: colorSchemeTX.avatarBackground,
               ),
-              color: colorSchemeTX.avatarBackground,
+              clipBehavior: Clip.hardEdge,
+              child: hasAvatar
+                  ? Image.network(
+                      avatarUrl!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Icon(
+                          Icons.person,
+                          color: colorSchemeTX.avatarForeground,
+                        );
+                      },
+                    )
+                  : Icon(
+                      Icons.add_a_photo,
+                      size: _userIconSize,
+                      color: colorSchemeTX.avatarForeground,
+                    ),
             ),
-            clipBehavior: Clip.hardEdge,
-            child: hasAvatar
-                ? Image.network(
-                    avatarUrl!,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(
-                        Icons.person,
-                        color: colorSchemeTX.avatarForeground,
-                      );
-                    },
-                  )
-                : Icon(
-                    Icons.add_a_photo,
-                    size: _userIconSize,
-                    color: colorSchemeTX.avatarForeground,
-                  ),
-          ),
-          if (hasNameOrEmail)
+            if (hasNameOrEmail)
+              Text(
+                nameOrEmail!,
+                style: theme.textTheme.headline3,
+              ),
             Text(
-              nameOrEmail!,
-              style: theme.textTheme.headline3,
+              id,
+              style: theme.textTheme.bodyText1,
             ),
-          Text(
-            id,
-            style: theme.textTheme.bodyText1,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

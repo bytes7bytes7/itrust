@@ -133,36 +133,47 @@ class _MessageList extends StatelessWidget {
         return ListView.custom(
           reverse: true,
           childrenDelegate: SliverChildBuilderDelegate(
-            childCount: chatStore.suggestions.length,
+            childCount: chatStore.messages.length,
             findChildIndexCallback: (key) {
               final messageKey = key as ValueKey;
               final val = chatStore.messageKeys[messageKey.value]!;
 
-              return chatStore.suggestions.length - 1 - val;
+              return chatStore.messages.length - 1 - val;
             },
             (context, index) {
-              final message = chatStore
-                  .suggestions[chatStore.suggestions.length - 1 - index];
+              final message =
+                  chatStore.messages[chatStore.messages.length - 1 - index];
 
               return message.map(
                 info: (message) {
+                  // TODO: use markUp and markUpData
                   return InfoMessageCard(
                     key: ValueKey(message.id),
-                    message: message,
+                    text: message.markUp,
+                    // TODO: beautify datetime
+                    dateTime: 'DT',
                   );
                 },
                 user: (message) {
                   if (message.senderID == _me.id) {
                     return MyMessageCard(
                       key: ValueKey(message.id),
-                      message: message,
+                      text: message.text,
+                      // TODO: calculate in MobX
+                      isRead: false,
+                      // TODO: beautify datetime
+                      dateTime: 'DT',
                     );
                   }
 
                   return OthersMessageCard(
                     key: ValueKey(message.id),
-                    message: message,
                     showSender: chatStore.chat is GroupChat,
+                    // TODO: beautify datetime
+                    dateTime: 'DT',
+                    text: message.text,
+                    // TODO: get name
+                    senderName: 'sender',
                   );
                 },
               );

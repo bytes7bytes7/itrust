@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' as intl;
 
 import '../../../../theme/theme.dart';
-import '../../../common/domain/domain.dart';
 
 const _paddingH = 20.0;
 const _paddingV = 6.0;
@@ -15,21 +13,23 @@ const _messageAndAuthorSeparator = 4.0;
 class OthersMessageCard extends StatelessWidget {
   const OthersMessageCard({
     super.key,
-    required this.message,
     required this.showSender,
+    required this.senderName,
+    required this.text,
+    required this.dateTime,
   });
 
-  final UserMessage message;
+  // TODO: add media support
   final bool showSender;
+  final String senderName;
+  final String text;
+  final String dateTime;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
-
-    // TODO: implement
-    const senderName = 'sender name';
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -70,7 +70,7 @@ class OthersMessageCard extends StatelessWidget {
                     ),
                   ],
                   Text(
-                    message.text,
+                    text,
                     style: theme.textTheme.bodyText1?.copyWith(
                       color: colorSchemeTX.othersMsgForeground,
                     ),
@@ -83,7 +83,7 @@ class OthersMessageCard extends StatelessWidget {
             width: _messageAndTimeSeparator,
           ),
           Text(
-            _beautifiedDateTime(),
+            dateTime,
             style: theme.textTheme.headline6,
           ),
         ],
@@ -92,9 +92,4 @@ class OthersMessageCard extends StatelessWidget {
   }
 
   Radius get _radius => const Radius.circular(_borderRadius);
-
-  // TODO: move to another place
-  String _beautifiedDateTime() {
-    return intl.DateFormat.Hm().format(message.modifiedAt ?? message.sentAt);
-  }
 }

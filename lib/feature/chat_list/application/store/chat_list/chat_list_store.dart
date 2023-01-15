@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../common/application/mixin/mixin.dart';
 import '../../../../common/domain/domain.dart';
 
 part 'chat_list_store.g.dart';
@@ -15,7 +14,7 @@ final _logger = Logger('$ChatListStore');
 @singleton
 class ChatListStore = _ChatListStore with _$ChatListStore;
 
-abstract class _ChatListStore with Store, Loadable, Errorable {
+abstract class _ChatListStore with Store {
   _ChatListStore({
     required ChatListService chatListService,
   }) : _chatListService = chatListService;

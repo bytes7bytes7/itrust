@@ -100,74 +100,39 @@ mixin _$ChatStore on _ChatStore, Store {
     });
   }
 
-  late final _$_queryAtom = Atom(name: '_ChatStore._query', context: context);
+  late final _$_messagesAtom =
+      Atom(name: '_ChatStore._messages', context: context);
 
-  String get query {
-    _$_queryAtom.reportRead();
-    return super._query;
+  List<Message> get messages {
+    _$_messagesAtom.reportRead();
+    return super._messages;
   }
 
   @override
-  String get _query => query;
+  List<Message> get _messages => messages;
 
   @override
-  set _query(String value) {
-    _$_queryAtom.reportWrite(value, super._query, () {
-      super._query = value;
+  set _messages(List<Message> value) {
+    _$_messagesAtom.reportWrite(value, super._messages, () {
+      super._messages = value;
     });
   }
 
-  late final _$_selectedAtom =
-      Atom(name: '_ChatStore._selected', context: context);
+  late final _$_hasMoreMessagesAtom =
+      Atom(name: '_ChatStore._hasMoreMessages', context: context);
 
-  Message? get selected {
-    _$_selectedAtom.reportRead();
-    return super._selected;
+  bool get hasMoreMessages {
+    _$_hasMoreMessagesAtom.reportRead();
+    return super._hasMoreMessages;
   }
 
   @override
-  Message? get _selected => selected;
+  bool get _hasMoreMessages => hasMoreMessages;
 
   @override
-  set _selected(Message? value) {
-    _$_selectedAtom.reportWrite(value, super._selected, () {
-      super._selected = value;
-    });
-  }
-
-  late final _$_suggestionsAtom =
-      Atom(name: '_ChatStore._suggestions', context: context);
-
-  List<Message> get suggestions {
-    _$_suggestionsAtom.reportRead();
-    return super._suggestions;
-  }
-
-  @override
-  List<Message> get _suggestions => suggestions;
-
-  @override
-  set _suggestions(List<Message> value) {
-    _$_suggestionsAtom.reportWrite(value, super._suggestions, () {
-      super._suggestions = value;
-    });
-  }
-
-  late final _$_hasMoreSuggestionsAtom =
-      Atom(name: '_ChatStore._hasMoreSuggestions', context: context);
-
-  bool get hasMoreSuggestions {
-    _$_hasMoreSuggestionsAtom.reportRead();
-    return super._hasMoreSuggestions;
-  }
-
-  @override
-  bool get _hasMoreSuggestions => hasMoreSuggestions;
-
-  @override
-  set _hasMoreSuggestions(bool value) {
-    _$_hasMoreSuggestionsAtom.reportWrite(value, super._hasMoreSuggestions, () {
-      super._hasMoreSuggestions = value;
+  set _hasMoreMessages(bool value) {
+    _$_hasMoreMessagesAtom.reportWrite(value, super._hasMoreMessages, () {
+      super._hasMoreMessages = value;
     });
   }
 
@@ -220,22 +185,6 @@ mixin _$ChatStore on _ChatStore, Store {
   @override
   Future<void> load() {
     return _$loadAsyncAction.run(() => super.load());
-  }
-
-  late final _$setQueryAsyncAction =
-      AsyncAction('_ChatStore.setQuery', context: context);
-
-  @override
-  Future<void> setQuery(String query) {
-    return _$setQueryAsyncAction.run(() => super.setQuery(query));
-  }
-
-  late final _$selectItemAsyncAction =
-      AsyncAction('_ChatStore.selectItem', context: context);
-
-  @override
-  Future<void> selectItem(Message item) {
-    return _$selectItemAsyncAction.run(() => super.selectItem(item));
   }
 
   late final _$_ChatStoreActionController =
