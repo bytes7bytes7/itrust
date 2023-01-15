@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../feature/auth/application/store/auth/auth_store.dart';
 import '../../../feature/auth/presentation/screen/screen.dart';
 import '../../../feature/chat_list/presentation/screen/screen.dart';
+import '../../../feature/common/domain/service/auth_service.dart';
 import '../../../feature/feed/presentation/screen/screen.dart';
 import '../../../feature/menu/presentation/screen/screen.dart';
 import '../../../feature/settings/presentation/screen/screen.dart';
@@ -36,12 +36,12 @@ final _router = GoRouter(
     const SettingsRoute().route,
   ],
   refreshListenable: StreamToChangeNotifierAdapter(
-    _getIt.get<AuthStore>().onLoggedInChanged,
+    _getIt.get<AuthService>().onIsLoggedInChanged,
   ),
   redirect: (BuildContext context, GoRouterState state) {
-    final authStore = _getIt.get<AuthStore>();
+    final authService = _getIt.get<AuthService>();
 
-    final isLoggedIn = authStore.isLoggedIn ?? false;
+    final isLoggedIn = authService.isLoggedIn;
     final isLoggingIn = state.location == const AuthRoute().route.path;
 
     if (!isLoggedIn && !isLoggingIn) {

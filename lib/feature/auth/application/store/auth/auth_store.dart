@@ -6,12 +6,10 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../../../../../l10n/l10n.dart';
 import '../../../../../main/infrastructure/router/router.dart';
 import '../../../../common/application/mixin/mixin.dart';
-import '../../../../common/domain/domain.dart';
 import '../../../../common/domain/exception/wrong_password_exception.dart';
 import '../../../../common/domain/service/auth_service.dart';
 
@@ -27,26 +25,16 @@ abstract class _AuthStore with Store, Errorable, Loadable {
   _AuthStore({
     required AuthService authService,
   }) : _authService = authService {
-    _userSub = _authService.users.listen(_onUserChanged);
+    _userSub = _authService.onIsLoggedInChanged.listen(_onUserChanged);
   }
 
   final AuthService _authService;
   StreamSubscription? _userSub;
-  final _isLoggedInController = BehaviorSubject<bool>();
   late final _navigatorKey = _getIt.get<NavigatorKey>();
 
   @disposeMethod
   void dispose() {
     _userSub?.cancel();
-    _isLoggedInController.close();
-  }
-
-  Stream<bool> get onLoggedInChanged => _isLoggedInController.stream;
-
-  bool? get isLoggedIn => _isLoggedInController.value;
-
-  Future<void> init() async {
-    await _isLoggedInController.first;
   }
 
   @readonly
@@ -54,6 +42,9 @@ abstract class _AuthStore with Store, Errorable, Loadable {
 
   @readonly
   String _error = '';
+
+  @readonly
+  bool? _isLoggedIn;
 
   @observable
   String login = '';
@@ -89,19 +80,15 @@ abstract class _AuthStore with Store, Errorable, Loadable {
     _isLoading = false;
   }
 
-  Future<void> _onUserChanged(User? user) async {
+  Future<void> _onUserChanged(bool isLoggedIn) async {
     try {
-      final lastIsLoggedIn =
-          _isLoggedInController.hasValue ? _isLoggedInController.value : null;
+      final lastIsLoggedIn = _isLoggedIn;
 
-      if (user == null && lastIsLoggedIn != false) {
+      if (!isLoggedIn && lastIsLoggedIn != false) {
         await _authService.logOut();
-        _isLoggedInController.add(false);
-      } else if (user != null && lastIsLoggedIn != true) {
-        _isLoggedInController.add(true);
-      } else {
-        _logger.warning(user);
       }
+
+      _isLoggedIn = isLoggedIn;
     } catch (e) {
       _logger.severe(e);
     }

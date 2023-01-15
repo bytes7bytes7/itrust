@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,7 @@ import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-import 'feature/auth/application/store/auth/auth_store.dart';
+import 'feature/common/domain/service/auth_service.dart';
 import 'main/infrastructure/di/injector.dart';
 import 'main/presentation/app.dart';
 import 'secure/firebase_data.dart';
@@ -75,7 +77,7 @@ Future<void> _configFirebase() async {
 }
 
 Future<void> _checkAuth() async {
-  final authStore = GetIt.instance.get<AuthStore>();
+  final authService = GetIt.instance.get<AuthService>();
 
-  await authStore.init();
+  await authService.init();
 }

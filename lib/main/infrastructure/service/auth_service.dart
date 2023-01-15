@@ -1,29 +1,37 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../feature/common/domain/domain.dart';
 import '../../../feature/common/domain/exception/wrong_password_exception.dart';
 import '../../../feature/common/domain/service/auth_service.dart';
 
 @Singleton(as: AuthService)
 class ProdAuthService implements AuthService {
   late final _firebaseAuth = FirebaseAuth.instance;
+  final _isInitialized = Completer();
+  late bool _isLoggedIn;
 
   @override
-  Stream<EndUser?> get users => _firebaseAuth.authStateChanges().map(
+  bool get isLoggedIn => _isLoggedIn;
+
+  @override
+  Stream<bool> get onIsLoggedInChanged => _firebaseAuth.authStateChanges().map(
         (event) {
-          if (event == null) {
-            return null;
+          _isLoggedIn = event != null;
+
+          if (!_isInitialized.isCompleted) {
+            _isInitialized.complete();
           }
 
-          return EndUser(
-            id: UserID(event.uid),
-            email: event.email,
-            avatarUrls: const [],
-            online: true,
-          );
+          return _isLoggedIn;
         },
       );
+
+  @override
+  Future<void> init() async {
+    await _isInitialized.future;
+  }
 
   @override
   Future<void> authenticate({
@@ -41,7 +49,7 @@ class ProdAuthService implements AuthService {
           email: login,
           password: password,
         );
-      } on FirebaseAuthException catch (e){
+      } on FirebaseAuthException catch (e) {
         if (e.code == 'wrong-password') {
           throw const WrongPasswordException();
         }
