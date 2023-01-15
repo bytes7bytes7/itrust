@@ -91,8 +91,8 @@ class __$$_ChatIDCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ChatID implements _ChatID {
-  const _$_ChatID(this.value);
+class _$_ChatID extends _ChatID {
+  const _$_ChatID(this.value) : super._();
 
   factory _$_ChatID.fromJson(Map<String, dynamic> json) =>
       _$$_ChatIDFromJson(json);
@@ -131,8 +131,9 @@ class _$_ChatID implements _ChatID {
   }
 }
 
-abstract class _ChatID implements ChatID {
+abstract class _ChatID extends ChatID {
   const factory _ChatID(final String value) = _$_ChatID;
+  const _ChatID._() : super._();
 
   factory _ChatID.fromJson(Map<String, dynamic> json) = _$_ChatID.fromJson;
 

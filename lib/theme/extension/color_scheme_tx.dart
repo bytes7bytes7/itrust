@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   const ColorSchemeTX({
-    required this.circleAvatarBackground,
-    required this.circleAvatarForeground,
+    required this.avatarBackground,
+    required this.avatarForeground,
     required this.unreadBackground,
     required this.onlineMarkStroke,
     required this.onlineMarkCenter,
@@ -21,10 +21,18 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.infoMsgPreviewColor,
     required this.msgSender,
     required this.snackBarBackgroundDefault,
+    required this.casualFilledIconForeground,
+    required this.warningFilledIconForeground,
+    required this.casualFilledIconBackground,
+    required this.warningFilledIconBackground,
+    required this.casualIcon,
+    required this.warningIcon,
+    required this.casualTitle,
+    required this.warningTitle,
   });
 
-  final Color circleAvatarBackground;
-  final Color circleAvatarForeground;
+  final Color avatarBackground;
+  final Color avatarForeground;
   final Color unreadBackground;
   final Color onlineMarkStroke;
   final Color onlineMarkCenter;
@@ -44,11 +52,19 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
 
   /// Use this color if backgroundColor of [SnackBarTheme] is NOT specified.
   final Color snackBarBackgroundDefault;
+  final Color casualFilledIconForeground;
+  final Color warningFilledIconForeground;
+  final Color casualFilledIconBackground;
+  final Color warningFilledIconBackground;
+  final Color casualIcon;
+  final Color warningIcon;
+  final Color casualTitle;
+  final Color warningTitle;
 
   @override
   ThemeExtension<ColorSchemeTX> copyWith({
-    Color? circleAvatarBackground,
-    Color? circleAvatarForeground,
+    Color? avatarBackground,
+    Color? avatarForeground,
     Color? unreadBackground,
     Color? onlineMarkStroke,
     Color? onlineMarkCenter,
@@ -66,12 +82,18 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? infoMsgPreviewColor,
     Color? msgSender,
     Color? snackBarBackgroundDefault,
+    Color? casualFilledIconForeground,
+    Color? warningFilledIconForeground,
+    Color? casualFilledIconBackground,
+    Color? warningFilledIconBackground,
+    Color? casualIcon,
+    Color? warningIcon,
+    Color? casualTitle,
+    Color? warningTitle,
   }) {
     return ColorSchemeTX(
-      circleAvatarBackground:
-          circleAvatarBackground ?? this.circleAvatarBackground,
-      circleAvatarForeground:
-          circleAvatarForeground ?? this.circleAvatarForeground,
+      avatarBackground: avatarBackground ?? this.avatarBackground,
+      avatarForeground: avatarForeground ?? this.avatarForeground,
       unreadBackground: unreadBackground ?? this.unreadBackground,
       onlineMarkStroke: onlineMarkStroke ?? this.onlineMarkStroke,
       onlineMarkCenter: onlineMarkCenter ?? this.onlineMarkCenter,
@@ -90,6 +112,18 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       msgSender: msgSender ?? this.msgSender,
       snackBarBackgroundDefault:
           snackBarBackgroundDefault ?? this.snackBarBackgroundDefault,
+      casualFilledIconForeground:
+          casualFilledIconForeground ?? this.casualFilledIconForeground,
+      warningFilledIconForeground:
+          warningFilledIconForeground ?? this.warningFilledIconForeground,
+      casualFilledIconBackground:
+          casualFilledIconBackground ?? this.casualFilledIconBackground,
+      warningFilledIconBackground:
+          warningFilledIconBackground ?? this.warningFilledIconBackground,
+      casualIcon: casualIcon ?? this.casualIcon,
+      warningIcon: warningIcon ?? this.warningIcon,
+      casualTitle: casualTitle ?? this.casualTitle,
+      warningTitle: warningTitle ?? this.warningTitle,
     );
   }
 
@@ -103,14 +137,14 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     }
 
     return ColorSchemeTX(
-      circleAvatarBackground: Color.lerp(
-        circleAvatarBackground,
-        other.circleAvatarBackground,
+      avatarBackground: Color.lerp(
+        avatarBackground,
+        other.avatarBackground,
         t,
       )!,
-      circleAvatarForeground: Color.lerp(
-        circleAvatarForeground,
-        other.circleAvatarForeground,
+      avatarForeground: Color.lerp(
+        avatarForeground,
+        other.avatarForeground,
         t,
       )!,
       unreadBackground: Color.lerp(
@@ -196,6 +230,46 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       snackBarBackgroundDefault: Color.lerp(
         snackBarBackgroundDefault,
         other.snackBarBackgroundDefault,
+        t,
+      )!,
+      casualFilledIconForeground: Color.lerp(
+        casualFilledIconForeground,
+        other.casualFilledIconForeground,
+        t,
+      )!,
+      warningFilledIconForeground: Color.lerp(
+        warningFilledIconForeground,
+        other.warningFilledIconForeground,
+        t,
+      )!,
+      casualFilledIconBackground: Color.lerp(
+        casualFilledIconBackground,
+        other.casualFilledIconBackground,
+        t,
+      )!,
+      warningFilledIconBackground: Color.lerp(
+        warningFilledIconBackground,
+        other.warningFilledIconBackground,
+        t,
+      )!,
+      casualIcon: Color.lerp(
+        casualIcon,
+        other.casualIcon,
+        t,
+      )!,
+      warningIcon: Color.lerp(
+        warningIcon,
+        other.warningIcon,
+        t,
+      )!,
+      casualTitle: Color.lerp(
+        casualTitle,
+        other.casualTitle,
+        t,
+      )!,
+      warningTitle: Color.lerp(
+        warningTitle,
+        other.warningTitle,
         t,
       )!,
     );

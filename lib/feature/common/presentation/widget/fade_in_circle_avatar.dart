@@ -23,7 +23,7 @@ class FadeInCircleAvatar extends StatelessWidget {
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
     return CircleAvatar(
-      backgroundColor: colorSchemeTX.circleAvatarBackground,
+      backgroundColor: colorSchemeTX.avatarBackground,
       radius: _radius,
       child: ClipOval(
         child: url != null
@@ -33,7 +33,7 @@ class FadeInCircleAvatar extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(_loadingPadding),
                       child: CircularProgressIndicator(
-                        color: colorSchemeTX.circleAvatarForeground,
+                        color: colorSchemeTX.avatarForeground,
                         strokeWidth: _loadingStrokeWidth,
                       ),
                     ),
@@ -49,7 +49,7 @@ class FadeInCircleAvatar extends StatelessWidget {
               )
             : Icon(
                 iconData,
-                color: colorSchemeTX.circleAvatarForeground,
+                color: colorSchemeTX.avatarForeground,
               ),
       ),
     );

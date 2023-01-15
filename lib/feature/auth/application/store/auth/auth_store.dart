@@ -30,6 +30,7 @@ abstract class _AuthStore with Store, Errorable, Loadable {
 
   final AuthService _authService;
   StreamSubscription? _userSub;
+  bool? _isLoggedIn;
   late final _navigatorKey = _getIt.get<NavigatorKey>();
 
   @disposeMethod
@@ -42,9 +43,6 @@ abstract class _AuthStore with Store, Errorable, Loadable {
 
   @readonly
   String _error = '';
-
-  @readonly
-  bool? _isLoggedIn;
 
   @observable
   String login = '';

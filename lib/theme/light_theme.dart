@@ -79,6 +79,9 @@ final lightTheme = ThemeData.light().copyWith(
   ),
   textButtonTheme: TextButtonThemeData(
     style: ButtonStyle(
+      padding: const MaterialStatePropertyAll(
+        EdgeInsets.all(2),
+      ),
       textStyle: const MaterialStatePropertyAll(
         TextStyle(
           fontSize: 16,
@@ -129,6 +132,16 @@ final lightTheme = ThemeData.light().copyWith(
       fontWeight: FontWeight.bold,
       color: _LightColors.cFF000000,
     ),
+    headline3: TextStyle(
+      fontSize: 22,
+      fontWeight: FontWeight.normal,
+      color: _LightColors.cFF000000,
+    ),
+    headline4: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.normal,
+      color: _LightColors.cFF000000,
+    ),
     headline5: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w600,
@@ -162,8 +175,8 @@ final lightTheme = ThemeData.light().copyWith(
   ),
   extensions: [
     const ColorSchemeTX(
-      circleAvatarBackground: _LightColors.cFF000000,
-      circleAvatarForeground: _LightColors.cFFFFFFFF,
+      avatarBackground: _LightColors.cFF000000,
+      avatarForeground: _LightColors.cFFFFFFFF,
       unreadBackground: _LightColors.cFF000000,
       onlineMarkStroke: _LightColors.cFF000000,
       onlineMarkCenter: _LightColors.cFFFFFFFF,
@@ -181,6 +194,14 @@ final lightTheme = ThemeData.light().copyWith(
       infoMsgPreviewColor: _LightColors.cFFEC2885,
       msgSender: _LightColors.cFFEC2885,
       snackBarBackgroundDefault: _LightColors.cFFEC2885,
+      casualFilledIconForeground: _LightColors.cFFFFFFFF,
+      warningFilledIconForeground: _LightColors.cFFFFFFFF,
+      casualFilledIconBackground: _LightColors.cFF000000,
+      warningFilledIconBackground: _LightColors.cFFEC2885,
+      casualIcon: _LightColors.cFF000000,
+      warningIcon: _LightColors.cFFEC2885,
+      casualTitle: _LightColors.cFF000000,
+      warningTitle: _LightColors.cFFEC2885,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(

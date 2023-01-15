@@ -4,7 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../l10n/l10n.dart';
-import '../../../../theme/theme.dart';
 import '../../../../util/hook/autorun.dart';
 import '../../../common/presentation/widget/widget.dart';
 import '../../application/store/chat_list/chat_list_store.dart';
@@ -39,9 +38,6 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
-
     final l10n = context.l10n;
 
     return AppBar(
@@ -50,23 +46,13 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
         l10n.chat_tab_title,
       ),
       actions: [
-        Align(
-          child: ElevatedButton(
-            style: buttonStyleTX.filledIcon,
-            onPressed: () {},
-            child: const Icon(
-              Icons.add,
-            ),
-          ),
+        FilledIconButton(
+          iconData: Icons.add,
+          onPressed: () {},
         ),
-        Align(
-          child: ElevatedButton(
-            style: buttonStyleTX.filledIcon,
-            onPressed: () {},
-            child: const Icon(
-              Icons.search,
-            ),
-          ),
+        FilledIconButton(
+          iconData: Icons.search,
+          onPressed: () {},
         ),
       ],
       bottom: const _AppBarBottom(),

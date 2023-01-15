@@ -13,7 +13,12 @@ final _logger = Logger('name$SettingsService');
 
 @Singleton(as: SettingsService)
 class ProdSettingsService implements SettingsService {
-  late final _firebaseAuth = FirebaseAuth.instance;
+  ProdSettingsService({
+    required FirebaseAuth firebaseAuth,
+  }) : _firebaseAuth = firebaseAuth;
+
+  final FirebaseAuth _firebaseAuth;
+
   late final _navigatorKey = _getIt.get<NavigatorKey>();
 
   @override

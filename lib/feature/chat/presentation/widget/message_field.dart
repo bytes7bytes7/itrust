@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../l10n/l10n.dart';
-import '../../../../theme/theme.dart';
 import '../../../common/presentation/widget/widget.dart';
 
 const _paddingH = 20.0;
@@ -13,8 +12,6 @@ class MessageField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
     final l10n = context.l10n;
 
     return Container(
@@ -40,14 +37,9 @@ class MessageField extends StatelessWidget {
           const SizedBox(
             width: _textFieldAndButtonSeparator,
           ),
-          Align(
-            child: ElevatedButton(
-              style: buttonStyleTX.roundedFilledIcon,
-              onPressed: () {},
-              child: const Icon(
-                Icons.send,
-              ),
-            ),
+          FilledIconButton(
+            iconData: Icons.send,
+            onPressed: () {},
           ),
         ],
       ),

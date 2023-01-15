@@ -94,8 +94,8 @@ class __$$_MessageIDCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MessageID implements _MessageID {
-  const _$_MessageID(this.value);
+class _$_MessageID extends _MessageID {
+  const _$_MessageID(this.value) : super._();
 
   factory _$_MessageID.fromJson(Map<String, dynamic> json) =>
       _$$_MessageIDFromJson(json);
@@ -134,8 +134,9 @@ class _$_MessageID implements _MessageID {
   }
 }
 
-abstract class _MessageID implements MessageID {
+abstract class _MessageID extends MessageID {
   const factory _MessageID(final String value) = _$_MessageID;
+  const _MessageID._() : super._();
 
   factory _MessageID.fromJson(Map<String, dynamic> json) =
       _$_MessageID.fromJson;

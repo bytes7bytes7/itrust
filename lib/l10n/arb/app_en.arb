@@ -23,5 +23,9 @@
   "navi_not_found_body": "You are in a wrong place\n\uD83E\uDDD0",
   "not_found_btn": "Back to home",
   "settings_tab_title": "Settings",
-  "log_out_btn": "Log out"
+  "log_out_btn": "Log out",
+  "account_btn_title": "Account",
+  "log_out_btn_title": "Log out",
+  "mute_notifications_btn_title": "Mute notifications",
+  "burn_messages_btn_title": "Burn messages"
 }

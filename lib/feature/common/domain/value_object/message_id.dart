@@ -10,6 +10,10 @@ class MessageID with _$MessageID {
     String value,
   ) = _MessageID;
 
+  const MessageID._();
+
   factory MessageID.fromJson(Map<String, Object?> json) =>
       _$MessageIDFromJson(json);
+
+  String get str => value;
 }

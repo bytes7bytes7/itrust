@@ -10,5 +10,9 @@ class ChatID with _$ChatID {
     String value,
   ) = _ChatID;
 
+  const ChatID._();
+
   factory ChatID.fromJson(Map<String, Object?> json) => _$ChatIDFromJson(json);
+
+  String get str => value;
 }

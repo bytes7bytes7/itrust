@@ -91,19 +91,14 @@ class __$$_UserIDCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserID implements _UserID {
-  const _$_UserID(this.value);
+class _$_UserID extends _UserID {
+  const _$_UserID(this.value) : super._();
 
   factory _$_UserID.fromJson(Map<String, dynamic> json) =>
       _$$_UserIDFromJson(json);
 
   @override
   final String value;
-
-  @override
-  String toString() {
-    return 'UserID(value: $value)';
-  }
 
   @override
   bool operator ==(dynamic other) {
@@ -131,8 +126,9 @@ class _$_UserID implements _UserID {
   }
 }
 
-abstract class _UserID implements UserID {
+abstract class _UserID extends UserID {
   const factory _UserID(final String value) = _$_UserID;
+  const _UserID._() : super._();
 
   factory _UserID.fromJson(Map<String, dynamic> json) = _$_UserID.fromJson;
 

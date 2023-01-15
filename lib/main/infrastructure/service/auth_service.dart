@@ -8,7 +8,12 @@ import '../../../feature/common/domain/service/auth_service.dart';
 
 @Singleton(as: AuthService)
 class ProdAuthService implements AuthService {
-  late final _firebaseAuth = FirebaseAuth.instance;
+  ProdAuthService({
+    required FirebaseAuth firebaseAuth,
+  }) : _firebaseAuth = firebaseAuth;
+
+  final FirebaseAuth _firebaseAuth;
+
   final _isInitialized = Completer();
   late bool _isLoggedIn;
 
