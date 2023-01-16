@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
@@ -8,22 +7,22 @@ import 'package:logging/logging.dart';
 import '../../../feature/settings/domain/service/settings_service.dart';
 import '../router/router.dart';
 
-final _getIt = GetIt.instance;
 final _logger = Logger('name$SettingsService');
 
 @Singleton(as: SettingsService)
 class ProdSettingsService implements SettingsService {
   ProdSettingsService({
     required FirebaseAuth firebaseAuth,
-  }) : _firebaseAuth = firebaseAuth;
+    required NavigatorKey navigatorKey,
+  })  : _firebaseAuth = firebaseAuth,
+        _navigatorKey = navigatorKey;
 
   final FirebaseAuth _firebaseAuth;
-
-  late final _navigatorKey = _getIt.get<NavigatorKey>();
+  final NavigatorKey _navigatorKey;
 
   @override
   void onBackButtonPressed() {
-    final router = _getIt.get<GoRouter>();
+    final router = GoRouter.of(_context);
 
     if (router.canPop()) {
       router.pop();

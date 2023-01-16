@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
@@ -14,23 +13,25 @@ import '../../../../common/domain/service/auth_service.dart';
 
 part 'auth_store.g.dart';
 
-final _getIt = GetIt.instance;
 final _logger = Logger('$AuthStore');
 
-@lazySingleton
+@injectable
 class AuthStore = _AuthStore with _$AuthStore;
 
 abstract class _AuthStore with Store {
   _AuthStore({
     required AuthService authService,
-  }) : _authService = authService {
+    required NavigatorKey navigatorKey,
+  })  : _authService = authService,
+        _navigatorKey = navigatorKey {
     _userSub = _authService.onIsLoggedInChanged.listen(_onUserChanged);
   }
 
   final AuthService _authService;
+  final NavigatorKey _navigatorKey;
+
   StreamSubscription? _userSub;
   bool? _isLoggedIn;
-  late final _navigatorKey = _getIt.get<NavigatorKey>();
 
   @disposeMethod
   void dispose() {

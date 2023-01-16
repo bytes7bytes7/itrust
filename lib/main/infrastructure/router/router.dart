@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../feature/auth/presentation/screen/screen.dart';
 import '../../../feature/chat_list/presentation/screen/screen.dart';
@@ -21,43 +21,43 @@ part 'app_routes.dart';
 
 typedef NavigatorKey = GlobalKey<NavigatorState>;
 
-final _getIt = GetIt.instance;
+@module
+abstract class RouterModule {
+  @singleton
+  NavigatorKey get rootKey => NavigatorKey();
 
-final _rootKey = NavigatorKey();
+  @singleton
+  GoRouter router(
+    NavigatorKey key,
+    AuthService authService,
+  ) {
+    return GoRouter(
+      navigatorKey: key,
+      initialLocation: const AuthRoute().route.path,
+      errorPageBuilder: const NotFoundRoute().route.pageBuilder,
+      routes: [
+        const NotFoundRoute().route,
+        const AuthRoute().route,
+        const HomeRoute().route,
+        const SettingsRoute().route,
+      ],
+      refreshListenable: StreamToChangeNotifierAdapter(
+        authService.onIsLoggedInChanged,
+      ),
+      redirect: (BuildContext context, GoRouterState state) {
+        final isLoggedIn = authService.isLoggedIn;
+        final isLoggingIn = state.location == const AuthRoute().route.path;
 
-final _router = GoRouter(
-  navigatorKey: _rootKey,
-  initialLocation: const AuthRoute().route.path,
-  errorPageBuilder: const NotFoundRoute().route.pageBuilder,
-  routes: [
-    const NotFoundRoute().route,
-    const AuthRoute().route,
-    const HomeRoute().route,
-    const SettingsRoute().route,
-  ],
-  refreshListenable: StreamToChangeNotifierAdapter(
-    _getIt.get<AuthService>().onIsLoggedInChanged,
-  ),
-  redirect: (BuildContext context, GoRouterState state) {
-    final authService = _getIt.get<AuthService>();
+        if (!isLoggedIn && !isLoggingIn) {
+          return const AuthRoute().route.path;
+        }
 
-    final isLoggedIn = authService.isLoggedIn;
-    final isLoggingIn = state.location == const AuthRoute().route.path;
+        if (isLoggedIn && isLoggingIn) {
+          return const FeedRoute().route.path;
+        }
 
-    if (!isLoggedIn && !isLoggingIn) {
-      return const AuthRoute().route.path;
-    }
-
-    if (isLoggedIn && isLoggingIn) {
-      return const FeedRoute().route.path;
-    }
-
-    return null;
-  },
-);
-
-void initRouter() {
-  _getIt
-    ..registerSingleton<NavigatorKey>(_rootKey)
-    ..registerSingleton<GoRouter>(_router);
+        return null;
+      },
+    );
+  }
 }

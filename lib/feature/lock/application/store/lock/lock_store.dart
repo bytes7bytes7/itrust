@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/domain/domain.dart';
@@ -7,6 +8,7 @@ import '../../../domain/service/lock_service.dart';
 
 part 'lock_store.g.dart';
 
+@injectable
 class LockStore = _LockStore with _$LockStore;
 
 abstract class _LockStore with Store {

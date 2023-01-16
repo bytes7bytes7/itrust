@@ -7,7 +7,7 @@ import '../../../domain/service/settings_service.dart';
 
 part 'settings_store.g.dart';
 
-@singleton
+@injectable
 class SettingsStore = _SettingsStore with _$SettingsStore;
 
 abstract class _SettingsStore with Store {

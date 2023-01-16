@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 
 part 'connection_store.g.dart';
 
-@singleton
+@injectable
 class ConnectionStore = _ConnectionStore with _$ConnectionStore;
 
 abstract class _ConnectionStore with Store {

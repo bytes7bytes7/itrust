@@ -8,7 +8,7 @@ part 'home_store.g.dart';
 
 const _defaultTabIndex = 0;
 
-@singleton
+@injectable
 class HomeStore = _HomeStore with _$HomeStore;
 
 abstract class _HomeStore with Store {

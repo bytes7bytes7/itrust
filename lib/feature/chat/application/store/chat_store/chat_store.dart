@@ -13,7 +13,7 @@ part 'chat_store.g.dart';
 const _defaultLimit = 10;
 final _logger = Logger('$ChatStore');
 
-@singleton
+@injectable
 class ChatStore = _ChatStore with _$ChatStore;
 
 abstract class _ChatStore with Store {

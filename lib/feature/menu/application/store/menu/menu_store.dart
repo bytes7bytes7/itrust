@@ -5,7 +5,7 @@ import '../../../domain/service/menu_service.dart';
 
 part 'menu_store.g.dart';
 
-@singleton
+@injectable
 class MenuStore = _MenuStore with _$MenuStore;
 
 abstract class _MenuStore with Store {
