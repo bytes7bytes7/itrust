@@ -71,7 +71,7 @@ class _Body extends StatelessWidget {
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: _paddingV,
+              horizontal: _paddingH,
               vertical: _paddingV,
             ),
             child: Column(

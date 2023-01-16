@@ -26,7 +26,7 @@ class MenuScreen extends StatelessWidget {
         actions: [
           FilledIconButton(
             iconData: Icons.settings,
-            onPressed: menuStore.onMoreBtnPressed,
+            onPressed: menuStore.onSettingsButtonPressed,
           ),
         ],
       ),

@@ -13,11 +13,11 @@ mixin _$MenuStore on _MenuStore, Store {
       ActionController(name: '_MenuStore', context: context);
 
   @override
-  void onMoreBtnPressed() {
+  void onSettingsButtonPressed() {
     final _$actionInfo = _$_MenuStoreActionController.startAction(
-        name: '_MenuStore.onMoreBtnPressed');
+        name: '_MenuStore.onSettingsButtonPressed');
     try {
-      return super.onMoreBtnPressed();
+      return super.onSettingsButtonPressed();
     } finally {
       _$_MenuStoreActionController.endAction(_$actionInfo);
     }

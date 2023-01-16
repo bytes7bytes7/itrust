@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../domain/service/menu_service.dart';
+import '../../coordinator/menu_coordinator.dart';
 
 part 'menu_store.g.dart';
 
@@ -10,13 +10,13 @@ class MenuStore = _MenuStore with _$MenuStore;
 
 abstract class _MenuStore with Store {
   _MenuStore({
-    required MenuService menuService,
-  }) : _menuService = menuService;
+    required MenuCoordinator menuCoordinator,
+  }) : _menuCoordinator = menuCoordinator;
 
-  final MenuService _menuService;
+  final MenuCoordinator _menuCoordinator;
 
   @action
-  void onMoreBtnPressed() {
-    _menuService.onMoreBtnPressed();
+  void onSettingsButtonPressed() {
+    _menuCoordinator.onSettingsButtonPressed();
   }
 }
