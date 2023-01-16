@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../feature/settings/application/coordinator/settings_coordinator.dart';
 import '../router/router.dart';
-import 'core.dart';
+import 'coordinator.dart';
 
 @Singleton(as: SettingsCoordinator)
 class ProdSettingsCoordinator extends Coordinator
@@ -16,7 +16,7 @@ class ProdSettingsCoordinator extends Coordinator
     if (goRouter.canPop()) {
       goRouter.pop();
     } else {
-      goRouter.go(const MenuRoute().route.path);
+      goRouter.goNamed(const MenuRoute().route.name!);
     }
   }
 }

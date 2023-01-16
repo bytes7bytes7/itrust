@@ -25,7 +25,7 @@ abstract class _RulesStore with Store {
   bool _isLoading = false;
 
   @readonly
-  Object? _error;
+  String _error = '';
 
   @readonly
   String? _rules;

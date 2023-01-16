@@ -8,6 +8,7 @@ import '../../../feature/common/domain/service/auth_service.dart';
 import '../../../feature/feed/presentation/screen/screen.dart';
 import '../../../feature/menu/presentation/screen/screen.dart';
 import '../../../feature/settings/presentation/screen/screen.dart';
+import '../../../util/typedef.dart';
 import '../../presentation/screen/screen.dart';
 
 part 'transition.dart';
@@ -17,8 +18,6 @@ part 'routes.dart';
 part 'cosy_route.dart';
 
 part 'app_routes.dart';
-
-typedef NavigatorKey = GlobalKey<NavigatorState>;
 
 @module
 abstract class RouterModule {

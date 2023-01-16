@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../domain/service/home_service.dart';
+import '../../coordinator/home_coordinator.dart';
 
 part 'home_store.g.dart';
 
@@ -13,31 +14,35 @@ class HomeStore = _HomeStore with _$HomeStore;
 
 abstract class _HomeStore with Store {
   _HomeStore({
-    required HomeService homeService,
-  }) : _homeService = homeService;
+    required HomeCoordinator homeCoordinator,
+  }) : _homeCoordinator = homeCoordinator {
+    _currentIndexSub = homeCoordinator.onSelectedIndexChanged.listen((index) {
+      _currentTabIndex = index;
+    });
+  }
 
-  final HomeService _homeService;
+  final HomeCoordinator _homeCoordinator;
+  StreamSubscription? _currentIndexSub;
 
   @readonly
   int _currentTabIndex = _defaultTabIndex;
 
-  List<IconData> get tabIcons => _homeService.tabIcons;
+  @disposeMethod
+  void dispose() {
+    _currentIndexSub?.cancel();
+  }
 
   @action
   void onTabSelect(int index) {
-    if (index != _currentTabIndex) {
-      _homeService.setTab(index);
-
-      _currentTabIndex = index;
+    if (_currentTabIndex != index) {
+      _homeCoordinator.onTabSelected(index);
     }
   }
 
   @action
   void reset() {
     if (_currentTabIndex != _defaultTabIndex) {
-      _homeService.setTab(_defaultTabIndex);
-
-      _currentTabIndex = _defaultTabIndex;
+      _homeCoordinator.onTabSelected(_defaultTabIndex);
     }
   }
 }

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../l10n/l10n.dart';
@@ -38,14 +39,14 @@ final _user = EndUser(
   name: _rand.nextBool() ? _randString(_rand.nextInt(8) + 10) : null,
 );
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends HookWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final settingsStore = _getIt.get<SettingsStore>();
+    final settingsStore = useMemoized(() => _getIt.get<SettingsStore>());
 
     // TODO: separate on widgets and add Observer
 

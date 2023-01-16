@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
@@ -16,13 +17,13 @@ const _underTitlePadding = 30.0;
 
 final _getIt = GetIt.instance;
 
-class RulesScreen extends StatelessWidget {
+class RulesScreen extends HookWidget {
   const RulesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final rulesStore = _getIt.get<RulesStore>();
+    final rulesStore = useMemoized(() => _getIt.get<RulesStore>());
 
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +44,7 @@ class RulesScreen extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends HookWidget {
   const _Body({
     required this.l10n,
     required this.rulesStore,
@@ -56,13 +57,16 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    useEffect(() {
+      rulesStore.getRules();
+      return null;
+    });
+
     return Observer(
       builder: (context) {
         final rules = rulesStore.rules;
 
         if (rules == null) {
-          rulesStore.getRules();
-
           return const Center(
             child: CircularProgressIndicator(),
           );

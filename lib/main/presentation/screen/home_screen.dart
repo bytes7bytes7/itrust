@@ -7,6 +7,12 @@ import '../../application/application.dart';
 
 final _getIt = GetIt.instance;
 
+const _tabIcons = [
+  Icons.home_outlined,
+  Icons.mode_comment_outlined,
+  Icons.menu,
+];
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
     super.key,
@@ -29,14 +35,14 @@ class _BottomNavBar extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeStore = _getIt.get<HomeStore>();
+    final homeStore = useMemoized(() => _getIt.get<HomeStore>());
 
     return Observer(
       builder: (context) {
         return BottomNavigationBar(
           currentIndex: homeStore.currentTabIndex,
           onTap: homeStore.onTabSelect,
-          items: homeStore.tabIcons.map(
+          items: _tabIcons.map(
             (icon) {
               return BottomNavigationBarItem(
                 icon: Icon(icon),

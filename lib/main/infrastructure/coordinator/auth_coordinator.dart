@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import '../../../feature/auth/application/coordinator/auth_coordinator.dart';
 import '../../../feature/common/common.dart';
 import '../infrastructure.dart';
-import 'core.dart';
+import 'coordinator.dart';
 
 @Singleton(as: AuthCoordinator)
 class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
@@ -29,11 +29,11 @@ class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
           location == '/';
 
       if (!isLoggedIn && !isLoggingIn) {
-        return goRouter.push(const AuthRoute().route.path);
+        return goRouter.goNamed(const AuthRoute().route.name!);
       }
 
       if (isLoggedIn && isLoggingIn) {
-        return goRouter.go(const FeedRoute().route.path);
+        return goRouter.goNamed(const FeedRoute().route.name!);
       }
     });
   }
@@ -46,6 +46,6 @@ class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
 
   @override
   void onRulesButtonPressed() {
-    goRouter.push(const RulesRoute().route.path);
+    goRouter.pushNamed(const RulesRoute().route.name!);
   }
 }

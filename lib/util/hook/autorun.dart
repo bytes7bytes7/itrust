@@ -8,6 +8,7 @@ ReactionDisposer useAutorun<T>(
   int? delay,
   ReactiveContext? context,
   void Function(Object, Reaction)? onError,
+  List<Object?>? keys,
 }) {
   return use(
     _AutorunHook(
@@ -16,6 +17,7 @@ ReactionDisposer useAutorun<T>(
       delay: delay,
       context: context,
       onError: onError,
+      keys: keys,
     ),
   );
 }
@@ -23,6 +25,7 @@ ReactionDisposer useAutorun<T>(
 class _AutorunHook<T> extends Hook<ReactionDisposer> {
   const _AutorunHook(
     this.fn, {
+    super.keys,
     this.name,
     this.delay,
     this.context,

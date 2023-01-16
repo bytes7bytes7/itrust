@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../domain/service/settings_service.dart';
+import '../../../../common/common.dart';
 import '../../coordinator/settings_coordinator.dart';
 
 part 'settings_store.g.dart';
@@ -13,12 +13,12 @@ class SettingsStore = _SettingsStore with _$SettingsStore;
 
 abstract class _SettingsStore with Store {
   _SettingsStore({
-    required SettingsService settingsService,
+    required AuthService authService,
     required SettingsCoordinator settingsCoordinator,
-  })  : _settingsService = settingsService,
+  })  : _authService = authService,
         _settingsCoordinator = settingsCoordinator;
 
-  final SettingsService _settingsService;
+  final AuthService _authService;
   final SettingsCoordinator _settingsCoordinator;
 
   @readonly
@@ -30,7 +30,7 @@ abstract class _SettingsStore with Store {
   @action
   Future<void> logOut() async {
     await _wrap(() async {
-      await _settingsService.logOut();
+      await _authService.logOut();
     });
   }
 

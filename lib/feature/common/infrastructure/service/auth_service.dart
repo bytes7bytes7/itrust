@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/exception/wrong_password_exception.dart';
+import '../../domain/exception/exception.dart';
 import '../../domain/service/auth_service.dart';
 
 @Singleton(as: AuthService)
@@ -22,8 +22,10 @@ class ProdAuthService implements AuthService {
 
   @override
   Stream<bool> get onIsLoggedInChanged => _firebaseAuth.authStateChanges().map(
-        (event) {
-          _isLoggedIn = event != null;
+        (user) {
+          final isLoggedIn = user != null;
+
+          _isLoggedIn = isLoggedIn;
 
           if (!_isInitialized.isCompleted) {
             _isInitialized.complete();
@@ -61,6 +63,10 @@ class ProdAuthService implements AuthService {
       } on FirebaseAuthException catch (e) {
         if (e.code == 'wrong-password') {
           throw const WrongPasswordException();
+        }
+
+        if (e.code == 'user-not-found') {
+          throw const UserNotFoundException();
         }
 
         rethrow;

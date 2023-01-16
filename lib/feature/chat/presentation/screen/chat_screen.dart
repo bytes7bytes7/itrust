@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
@@ -45,7 +46,7 @@ class ChatScreen extends StatelessWidget {
 }
 
 // ignore: prefer_mixin
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
+class _AppBar extends HookWidget with PreferredSizeWidget {
   const _AppBar();
 
   @override
@@ -53,7 +54,7 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chatStore = _getIt.get<ChatStore>();
+    final chatStore = useMemoized(() => _getIt.get<ChatStore>());
 
     return PreferredSize(
       preferredSize: preferredSize,
@@ -75,12 +76,12 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   }
 }
 
-class _AppBarTitle extends StatelessWidget {
+class _AppBarTitle extends HookWidget {
   const _AppBarTitle();
 
   @override
   Widget build(BuildContext context) {
-    final chatStore = _getIt.get<ChatStore>();
+    final chatStore = useMemoized(() => _getIt.get<ChatStore>());
     final theme = Theme.of(context);
 
     return Observer(
@@ -115,12 +116,12 @@ class _AppBarTitle extends StatelessWidget {
   }
 }
 
-class _MessageList extends StatelessWidget {
+class _MessageList extends HookWidget {
   const _MessageList();
 
   @override
   Widget build(BuildContext context) {
-    final chatStore = _getIt.get<ChatStore>();
+    final chatStore = useMemoized(() => _getIt.get<ChatStore>());
 
     return Observer(
       builder: (context) {

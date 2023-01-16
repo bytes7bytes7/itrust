@@ -11,6 +11,7 @@ ReactionDisposer useReaction<T>(
   EqualityComparer<T>? equals,
   ReactiveContext? context,
   void Function(Object, Reaction)? onError,
+  List<Object?>? keys,
 }) {
   return use(
     _ReactionHook<T>(
@@ -22,6 +23,7 @@ ReactionDisposer useReaction<T>(
       equals: equals,
       context: context,
       onError: onError,
+      keys: keys,
     ),
   );
 }
@@ -30,6 +32,7 @@ class _ReactionHook<T> extends Hook<ReactionDisposer> {
   const _ReactionHook(
     this.fn,
     this.effect, {
+    super.keys,
     this.name,
     this.delay,
     this.fireImmediately,
@@ -48,30 +51,37 @@ class _ReactionHook<T> extends Hook<ReactionDisposer> {
   final void Function(Object, Reaction)? onError;
 
   @override
-  HookState<ReactionDisposer, _ReactionHook> createState() =>
+  HookState<ReactionDisposer, Hook<ReactionDisposer>> createState() =>
       _ReactionHookState<T>();
 }
 
 class _ReactionHookState<T>
     extends HookState<ReactionDisposer, _ReactionHook<T>> {
-  late final _reactionDispose = reaction<T>(
-    hook.fn,
-    hook.effect,
-    name: hook.name,
-    delay: hook.delay,
-    fireImmediately: hook.fireImmediately,
-    equals: hook.equals,
-    context: hook.context,
-    onError: hook.onError,
-  );
+  late ReactionDisposer _reactionDisposer;
 
   @override
-  void dispose() {
-    _reactionDispose.call();
+  void initHook() {
+    super.initHook();
+
+    _reactionDisposer = reaction<T>(
+      hook.fn,
+      hook.effect,
+      name: hook.name,
+      delay: hook.delay,
+      fireImmediately: hook.fireImmediately,
+      equals: hook.equals,
+      context: hook.context,
+      onError: hook.onError,
+    );
   }
 
   @override
-  ReactionDisposer build(BuildContext context) => _reactionDispose;
+  void dispose() {
+    _reactionDisposer.call();
+  }
+
+  @override
+  ReactionDisposer build(BuildContext context) => _reactionDisposer;
 
   @override
   String get debugLabel => 'useReaction<$T>';

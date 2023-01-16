@@ -61,7 +61,7 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 }
 
 // ignore: prefer_mixin
-class _AppBarBottom extends StatelessWidget with PreferredSizeWidget {
+class _AppBarBottom extends HookWidget with PreferredSizeWidget {
   const _AppBarBottom();
 
   @override
@@ -69,7 +69,7 @@ class _AppBarBottom extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chatListStore = _getIt.get<ChatListStore>();
+    final chatListStore = useMemoized(() => _getIt.get<ChatListStore>());
 
     return Observer(
       builder: (context) {
@@ -91,7 +91,7 @@ class _Body extends HookWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final chatListStore = _getIt.get<ChatListStore>();
+    final chatListStore = useMemoized(() => _getIt.get<ChatListStore>());
 
     useAutorun((_) {
       chatListStore.load();

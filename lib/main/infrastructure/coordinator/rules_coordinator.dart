@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../feature/auth/application/coordinator/rules_coordinator.dart';
 import '../router/router.dart';
-import 'core.dart';
+import 'coordinator.dart';
 
 @Singleton(as: RulesCoordinator)
 class ProdRulesCoordinator extends Coordinator implements RulesCoordinator {
@@ -15,7 +15,7 @@ class ProdRulesCoordinator extends Coordinator implements RulesCoordinator {
     if (goRouter.canPop()) {
       goRouter.pop();
     } else {
-      goRouter.go(const AuthRoute().route.path);
+      goRouter.goNamed(const AuthRoute().route.name!);
     }
   }
 }
