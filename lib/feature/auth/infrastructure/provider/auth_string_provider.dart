@@ -9,6 +9,9 @@ class ProdAuthStringProvider extends StringProvider
   ProdAuthStringProvider({required super.navigatorKey});
 
   @override
+  String get tooManyRequests => l10n.too_many_requests;
+
+  @override
   String get unknownError => l10n.unknown_error;
 
   @override

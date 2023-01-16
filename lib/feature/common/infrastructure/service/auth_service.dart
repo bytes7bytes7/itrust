@@ -69,6 +69,10 @@ class ProdAuthService implements AuthService {
           throw const UserNotFoundException();
         }
 
+        if (e.code == 'too-many-requests') {
+          throw const TooManyRequestsException();
+        }
+
         rethrow;
       }
     }

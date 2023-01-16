@@ -6,6 +6,7 @@
   "log_in_btn": "Log In",
   "wrong_password_error": "Wrong password",
   "user_not_found_error": "User not found",
+  "too_many_requests": "Too many requests. Try again later",
   "unknown_error": "Unknown error",
   "chat_tab_title": "Chats",
   "empty_chat_list_message": "No chats",

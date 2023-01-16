@@ -3,8 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:logging/logging.dart';
-import 'package:mobx/mobx.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
@@ -22,7 +20,6 @@ const _underTextFieldsFlex = 4;
 const _rulesBtnAndAuthBtnSeparator = 10.0;
 
 final _getIt = GetIt.instance;
-final _logger = Logger('$AuthScreen');
 
 class AuthScreen extends HookWidget {
   const AuthScreen({super.key});

@@ -53,6 +53,8 @@ abstract class _AuthStore with Store {
         _error = _authStringProvider.wrongPassword;
       } on UserNotFoundException {
         _error = _authStringProvider.userNotFound;
+      } on TooManyRequestsException {
+        _error = _authStringProvider.tooManyRequests;
       } catch (e) {
         _error = _authStringProvider.unknownError;
       }
