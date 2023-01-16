@@ -9,6 +9,10 @@ import '../../../common/common.dart';
 import '../../application/application.dart';
 
 const _logoWidthFactor = 0.4;
+const _paddingH = 20.0;
+const _paddingV = 20.0;
+const _aboveLogoPadding = 10.0;
+const _underTitlePadding = 30.0;
 
 final _getIt = GetIt.instance;
 
@@ -64,22 +68,36 @@ class _Body extends StatelessWidget {
           );
         }
 
-        return ListView(
-          children: [
-            FractionallySizedBox(
-              widthFactor: _logoWidthFactor,
-              child: Assets.image.png.logo.image(),
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: _paddingV,
+              vertical: _paddingV,
             ),
-            Text(
-              l10n.app_name,
-              style: theme.textTheme.headline1,
-              textAlign: TextAlign.center,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: _aboveLogoPadding,
+                ),
+                FractionallySizedBox(
+                  widthFactor: _logoWidthFactor,
+                  child: Assets.image.png.logo.image(),
+                ),
+                Text(
+                  l10n.app_name,
+                  style: theme.textTheme.headline1,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: _underTitlePadding,
+                ),
+                Text(
+                  rules,
+                  style: theme.textTheme.bodyText1,
+                ),
+              ],
             ),
-            Text(
-              rules,
-              style: theme.textTheme.bodyText1,
-            ),
-          ],
+          ),
         );
       },
     );

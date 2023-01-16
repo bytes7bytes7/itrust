@@ -26,7 +26,7 @@ class TestRulesService implements RulesService {
     return Future.delayed(
       Duration(seconds: _rand.nextInt(5)),
       () {
-        return _randString(_rand.nextInt(100) + 500);
+        return _randString(_rand.nextInt(100) + 2000);
       },
     );
   }
