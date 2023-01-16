@@ -1,49 +1,39 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:logging/logging.dart';
 
 import '../../../feature/auth/application/coordinator/auth_coordinator.dart';
 import '../../../feature/common/common.dart';
 import '../infrastructure.dart';
-
-final _logger = Logger('$AuthCoordinator');
+import 'core.dart';
 
 @Singleton(as: AuthCoordinator)
-class ProdAuthCoordinator implements AuthCoordinator {
+class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
   ProdAuthCoordinator({
-    required NavigatorKey navigatorKey,
+    required super.navigatorKey,
     required AuthService authService,
-  })  : _navigatorKey = navigatorKey,
-        _authService = authService;
+  }) : _authService = authService;
 
-  final NavigatorKey _navigatorKey;
   final AuthService _authService;
   StreamSubscription? _authSub;
-  bool _isInitialized = false;
 
   @override
   @postConstruct
   void init() {
     _authSub = _authService.onIsLoggedInChanged.listen((isLoggedIn) {
-      final context = _context;
+      final context = contextOrNull;
 
       // Context can be null on app start
       if (context == null) {
         return;
       }
 
-      final router = GoRouter.of(context);
+      final location = goRouter.location;
 
-      final location = router.location;
-
-      final isLoggingIn = location ==
-              context.namedLocation(const AuthRoute().route.name!) ||
-          location == context.namedLocation(const RulesRoute().route.name!);
-
-      _isInitialized = true;
+      final isLoggingIn =
+          location == context.namedLocation(const AuthRoute().route.name!) ||
+              location == context.namedLocation(const RulesRoute().route.name!);
 
       if (!isLoggedIn && !isLoggingIn) {
         return const AuthRoute().go(context);
@@ -63,16 +53,6 @@ class ProdAuthCoordinator implements AuthCoordinator {
 
   @override
   void onRulesButtonPressed() {
-    const RulesRoute().push(_context!);
-  }
-
-  BuildContext? get _context {
-    final ctx = _navigatorKey.currentContext;
-
-    if (ctx == null && _isInitialized) {
-      _logger.shout('Context is null');
-    }
-
-    return ctx;
+    const RulesRoute().push(context);
   }
 }

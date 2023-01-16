@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../domain/service/settings_service.dart';
+import '../../coordinator/settings_coordinator.dart';
 
 part 'settings_store.g.dart';
 
@@ -13,9 +14,12 @@ class SettingsStore = _SettingsStore with _$SettingsStore;
 abstract class _SettingsStore with Store {
   _SettingsStore({
     required SettingsService settingsService,
-  }) : _settingsService = settingsService;
+    required SettingsCoordinator settingsCoordinator,
+  })  : _settingsService = settingsService,
+        _settingsCoordinator = settingsCoordinator;
 
   final SettingsService _settingsService;
+  final SettingsCoordinator _settingsCoordinator;
 
   @readonly
   bool _isLoading = false;
@@ -24,15 +28,14 @@ abstract class _SettingsStore with Store {
   String _error = '';
 
   @action
-  void onBackButtonPressed() {
-    _settingsService.onBackButtonPressed();
-  }
-
-  @action
   Future<void> logOut() async {
     await _wrap(() async {
       await _settingsService.logOut();
     });
+  }
+
+  void onBackButtonPressed() {
+    _settingsCoordinator.onBackButtonPressed();
   }
 
   Future<void> _wrap(FutureOr<void> Function() callback) async {

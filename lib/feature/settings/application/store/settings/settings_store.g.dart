@@ -53,20 +53,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     return _$logOutAsyncAction.run(() => super.logOut());
   }
 
-  late final _$_SettingsStoreActionController =
-      ActionController(name: '_SettingsStore', context: context);
-
-  @override
-  void onBackButtonPressed() {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(
-        name: '_SettingsStore.onBackButtonPressed');
-    try {
-      return super.onBackButtonPressed();
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
   @override
   String toString() {
     return '''
