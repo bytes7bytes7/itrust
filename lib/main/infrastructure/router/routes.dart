@@ -21,6 +21,13 @@ class AuthRoute extends CosyRoute {
   GoRoute get route => _AppRoutes.auth;
 }
 
+class RulesRoute extends CosyRoute {
+  const RulesRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.rules;
+}
+
 class FeedRoute extends CosyRoute {
   const FeedRoute();
 

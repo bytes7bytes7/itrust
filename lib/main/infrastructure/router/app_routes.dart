@@ -37,6 +37,23 @@ class _AppRoutes {
         child: const AuthScreen(),
       );
     },
+    routes: [
+      rules,
+    ],
+  );
+
+  static final rules = GoRoute(
+    path: 'rules',
+    name: 'rules',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const RulesScreen(),
+      );
+    },
   );
 
   static final feed = GoRoute(

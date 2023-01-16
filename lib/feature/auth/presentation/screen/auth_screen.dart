@@ -189,7 +189,8 @@ class _RulesButton extends StatelessWidget {
     return Observer(
       builder: (context) {
         return TextButton(
-          onPressed: authStore.isLoading ? null : () {},
+          onPressed:
+              authStore.isLoading ? null : authStore.onRulesButtonPressed,
           child: Text(l10n.rules_btn),
         );
       },

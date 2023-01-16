@@ -82,12 +82,18 @@ mixin _$AuthStore on _AuthStore, Store {
     });
   }
 
-  late final _$authenticateAsyncAction =
-      AsyncAction('_AuthStore.authenticate', context: context);
+  late final _$_AuthStoreActionController =
+      ActionController(name: '_AuthStore', context: context);
 
   @override
-  Future<void> authenticate() {
-    return _$authenticateAsyncAction.run(() => super.authenticate());
+  void authenticate() {
+    final _$actionInfo = _$_AuthStoreActionController.startAction(
+        name: '_AuthStore.authenticate');
+    try {
+      return super.authenticate();
+    } finally {
+      _$_AuthStoreActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

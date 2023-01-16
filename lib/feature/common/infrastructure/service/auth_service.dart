@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../feature/common/domain/exception/wrong_password_exception.dart';
-import '../../../feature/common/domain/service/auth_service.dart';
+import '../../domain/exception/wrong_password_exception.dart';
+import '../../domain/service/auth_service.dart';
 
 @Singleton(as: AuthService)
 class ProdAuthService implements AuthService {

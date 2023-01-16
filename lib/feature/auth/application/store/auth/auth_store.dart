@@ -1,15 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../../l10n/l10n.dart';
-import '../../../../../main/infrastructure/router/router.dart';
 import '../../../../common/domain/exception/wrong_password_exception.dart';
 import '../../../../common/domain/service/auth_service.dart';
+import '../../coordinator/auth_coordinator.dart';
 
 part 'auth_store.g.dart';
 
@@ -21,14 +18,14 @@ class AuthStore = _AuthStore with _$AuthStore;
 abstract class _AuthStore with Store {
   _AuthStore({
     required AuthService authService,
-    required NavigatorKey navigatorKey,
+    required AuthCoordinator authCoordinator,
   })  : _authService = authService,
-        _navigatorKey = navigatorKey {
+        _authCoordinator = authCoordinator {
     _userSub = _authService.onIsLoggedInChanged.listen(_onUserChanged);
   }
 
   final AuthService _authService;
-  final NavigatorKey _navigatorKey;
+  final AuthCoordinator _authCoordinator;
 
   StreamSubscription? _userSub;
   bool? _isLoggedIn;
@@ -54,19 +51,24 @@ abstract class _AuthStore with Store {
   bool get canLogIn => !_isLoading && login.isNotEmpty && password.isNotEmpty;
 
   @action
-  Future<void> authenticate() async {
-    await _wrap(() async {
+  void authenticate() {
+    _wrap(() async {
       try {
         await _authService.authenticate(
           login: login,
           password: password,
         );
       } on WrongPasswordException {
-        _error = _l10n.wrong_password;
+        // TODO: remake
+        _error = 'wrong passwd';
       } catch (e) {
-        _error = _l10n.unknown_error;
+        _error = 'unk error';
       }
     });
+  }
+
+  void onRulesButtonPressed() {
+    _authCoordinator.onRulesButtonPressed();
   }
 
   Future<void> _wrap(FutureOr<void> Function() callback) async {
@@ -91,16 +93,4 @@ abstract class _AuthStore with Store {
       _logger.severe(e);
     }
   }
-
-  BuildContext get _context {
-    final ctx = _navigatorKey.currentContext;
-
-    if (ctx == null) {
-      _logger.shout('Context is null');
-    }
-
-    return ctx!;
-  }
-
-  AppLocalizations get _l10n => _context.l10n;
 }

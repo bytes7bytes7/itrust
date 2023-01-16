@@ -44,20 +44,6 @@ abstract class RouterModule {
       refreshListenable: StreamToChangeNotifierAdapter(
         authService.onIsLoggedInChanged,
       ),
-      redirect: (BuildContext context, GoRouterState state) {
-        final isLoggedIn = authService.isLoggedIn;
-        final isLoggingIn = state.location == const AuthRoute().route.path;
-
-        if (!isLoggedIn && !isLoggingIn) {
-          return const AuthRoute().route.path;
-        }
-
-        if (isLoggedIn && isLoggingIn) {
-          return const FeedRoute().route.path;
-        }
-
-        return null;
-      },
     );
   }
 }
