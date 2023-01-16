@@ -18,12 +18,13 @@ class RulesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final rulesStore = _getIt.get<RulesStore>();
 
     return Scaffold(
       appBar: AppBar(
         leading: FilledIconButton(
           iconData: Icons.arrow_back,
-          onPressed: () {},
+          onPressed: rulesStore.onBackButtonPressed,
         ),
         centerTitle: true,
         title: Text(
@@ -32,20 +33,24 @@ class RulesScreen extends StatelessWidget {
       ),
       body: _Body(
         l10n: l10n,
+        rulesStore: rulesStore,
       ),
     );
   }
 }
 
 class _Body extends StatelessWidget {
-  const _Body({required this.l10n});
+  const _Body({
+    required this.l10n,
+    required this.rulesStore,
+  });
 
   final AppLocalizations l10n;
+  final RulesStore rulesStore;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final rulesStore = _getIt.get<RulesStore>();
 
     return Observer(
       builder: (context) {

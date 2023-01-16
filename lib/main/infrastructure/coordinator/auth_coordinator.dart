@@ -29,6 +29,8 @@ class ProdAuthCoordinator implements AuthCoordinator {
   void init() {
     _authSub = _authService.onIsLoggedInChanged.listen((isLoggedIn) {
       final context = _context;
+
+      // Context can be null on app start
       if (context == null) {
         return;
       }
