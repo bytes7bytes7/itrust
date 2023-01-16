@@ -26,23 +26,12 @@ class AuthScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
     final size = mediaQuery.size;
     final viewPadding = mediaQuery.viewPadding;
     final availableHeight = size.height - viewPadding.top - viewPadding.bottom;
-    final l10n = context.l10n;
 
-    final authStore = _getIt.get<AuthStore>();
     final commonFocusNode = useFocusNode();
-
-    useReaction<String>((_) => authStore.error, (error) {
-      if (error.isNotEmpty) {
-        CustomSnackBar(
-          message: error,
-        ).build(context);
-      }
-    });
 
     return GestureDetector(
       onTap: () {
@@ -53,59 +42,81 @@ class AuthScreen extends HookWidget {
           child: SingleChildScrollView(
             child: SizedBox(
               height: availableHeight,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: _paddingH,
-                  vertical: _paddingV,
-                ),
-                child: Column(
-                  children: [
-                    const Spacer(
-                      flex: _aboveIconFlex,
-                    ),
-                    FractionallySizedBox(
-                      widthFactor: _logoWidthFactor,
-                      child: Assets.image.png.logo.image(),
-                    ),
-                    Text(
-                      l10n.app_name,
-                      style: theme.textTheme.headline1,
-                      textAlign: TextAlign.center,
-                    ),
-                    const Spacer(
-                      flex: _underAppTitleFlex,
-                    ),
-                    _LoginField(
-                      authStore: authStore,
-                      l10n: l10n,
-                    ),
-                    const SizedBox(
-                      height: _textFieldsSeparator,
-                    ),
-                    _PasswordField(
-                      authStore: authStore,
-                      l10n: l10n,
-                    ),
-                    const Spacer(
-                      flex: _underTextFieldsFlex,
-                    ),
-                    _RulesButton(
-                      authStore: authStore,
-                      l10n: l10n,
-                    ),
-                    const SizedBox(
-                      height: _rulesBtnAndAuthBtnSeparator,
-                    ),
-                    _LogInButton(
-                      authStore: authStore,
-                      l10n: l10n,
-                    ),
-                  ],
-                ),
-              ),
+              child: const _Body(),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _Body extends HookWidget {
+  const _Body();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+
+    final authStore = _getIt.get<AuthStore>();
+
+    useReaction<String>((_) => authStore.error, (error) {
+      if (error.isNotEmpty) {
+        CustomSnackBar(
+          message: error,
+        ).build(context);
+      }
+    });
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: _paddingH,
+        vertical: _paddingV,
+      ),
+      child: Column(
+        children: [
+          const Spacer(
+            flex: _aboveIconFlex,
+          ),
+          FractionallySizedBox(
+            widthFactor: _logoWidthFactor,
+            child: Assets.image.png.logo.image(),
+          ),
+          Text(
+            l10n.app_name,
+            style: theme.textTheme.headline1,
+            textAlign: TextAlign.center,
+          ),
+          const Spacer(
+            flex: _underAppTitleFlex,
+          ),
+          _LoginField(
+            authStore: authStore,
+            l10n: l10n,
+          ),
+          const SizedBox(
+            height: _textFieldsSeparator,
+          ),
+          _PasswordField(
+            authStore: authStore,
+            l10n: l10n,
+          ),
+          const Spacer(
+            flex: _underTextFieldsFlex,
+          ),
+          _RulesButton(
+            authStore: authStore,
+            l10n: l10n,
+          ),
+          const SizedBox(
+            height: _rulesBtnAndAuthBtnSeparator,
+          ),
+          _LogInButton(
+            authStore: authStore,
+            l10n: l10n,
+          ),
+        ],
       ),
     );
   }

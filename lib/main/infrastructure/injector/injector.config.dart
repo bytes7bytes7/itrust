@@ -62,6 +62,8 @@ import 'package:itrust/feature/settings/application/store/settings/settings_stor
     as _i30;
 import 'package:itrust/feature/settings/domain/service/settings_service.dart'
     as _i28;
+import 'package:itrust/feature/settings/infrastructure/service/settings_service.dart'
+    as _i29;
 import 'package:itrust/main/application/store/home/home_store.dart' as _i13;
 import 'package:itrust/main/domain/service/home_service.dart' as _i11;
 import 'package:itrust/main/infrastructure/coordinator/auth_coordinator.dart'
@@ -73,8 +75,6 @@ import 'package:itrust/main/infrastructure/coordinator/rules_coordinator.dart'
 import 'package:itrust/main/infrastructure/coordinator/settings_coordinator.dart'
     as _i27;
 import 'package:itrust/main/infrastructure/service/home_service.dart' as _i12;
-import 'package:itrust/main/infrastructure/service/settings_service.dart'
-    as _i29;
 
 import '../router/router.dart' as _i44;
 import '../third_party/firebase_module.dart' as _i45;

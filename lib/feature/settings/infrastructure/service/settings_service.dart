@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../feature/settings/domain/service/settings_service.dart';
+import '../../domain/service/settings_service.dart';
 
 @Singleton(as: SettingsService)
 class ProdSettingsService implements SettingsService {
