@@ -7,7 +7,7 @@ import 'core.dart';
 @Singleton(as: RulesCoordinator)
 class ProdRulesCoordinator extends Coordinator implements RulesCoordinator {
   ProdRulesCoordinator({
-    required super.navigatorKey,
+    required super.goRouter,
   });
 
   @override
@@ -15,7 +15,7 @@ class ProdRulesCoordinator extends Coordinator implements RulesCoordinator {
     if (goRouter.canPop()) {
       goRouter.pop();
     } else {
-      const AuthRoute().go(context);
+      goRouter.go(const AuthRoute().route.path);
     }
   }
 }

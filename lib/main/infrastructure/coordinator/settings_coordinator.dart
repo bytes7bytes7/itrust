@@ -8,7 +8,7 @@ import 'core.dart';
 class ProdSettingsCoordinator extends Coordinator
     implements SettingsCoordinator {
   ProdSettingsCoordinator({
-    required super.navigatorKey,
+    required super.goRouter,
   });
 
   @override
@@ -16,7 +16,7 @@ class ProdSettingsCoordinator extends Coordinator
     if (goRouter.canPop()) {
       goRouter.pop();
     } else {
-      const MenuRoute().go(context);
+      goRouter.go(const MenuRoute().route.path);
     }
   }
 }

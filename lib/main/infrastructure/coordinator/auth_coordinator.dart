@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../feature/auth/application/coordinator/auth_coordinator.dart';
@@ -11,7 +10,7 @@ import 'core.dart';
 @Singleton(as: AuthCoordinator)
 class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
   ProdAuthCoordinator({
-    required super.navigatorKey,
+    required super.goRouter,
     required AuthService authService,
   }) : _authService = authService;
 
@@ -22,25 +21,19 @@ class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
   @postConstruct
   void init() {
     _authSub = _authService.onIsLoggedInChanged.listen((isLoggedIn) {
-      final context = contextOrNull;
-
-      // Context can be null on app start
-      if (context == null) {
-        return;
-      }
-
       final location = goRouter.location;
 
-      final isLoggingIn =
-          location == context.namedLocation(const AuthRoute().route.name!) ||
-              location == context.namedLocation(const RulesRoute().route.name!);
+      final isLoggingIn = location ==
+              goRouter.namedLocation(const AuthRoute().route.name!) ||
+          location == goRouter.namedLocation(const RulesRoute().route.name!) ||
+          location == '/';
 
       if (!isLoggedIn && !isLoggingIn) {
-        return const AuthRoute().go(context);
+        return goRouter.push(const AuthRoute().route.path);
       }
 
       if (isLoggedIn && isLoggingIn) {
-        return const FeedRoute().go(context);
+        return goRouter.go(const FeedRoute().route.path);
       }
     });
   }
@@ -53,6 +46,6 @@ class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
 
   @override
   void onRulesButtonPressed() {
-    const RulesRoute().push(context);
+    goRouter.push(const RulesRoute().route.path);
   }
 }

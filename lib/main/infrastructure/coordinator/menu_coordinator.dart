@@ -7,11 +7,11 @@ import 'core.dart';
 @Singleton(as: MenuCoordinator)
 class ProdMenuCoordinator extends Coordinator implements MenuCoordinator {
   ProdMenuCoordinator({
-    required super.navigatorKey,
+    required super.goRouter,
   });
 
   @override
   void onSettingsButtonPressed() {
-    const SettingsRoute().push(context);
+    goRouter.push(const SettingsRoute().route.path);
   }
 }

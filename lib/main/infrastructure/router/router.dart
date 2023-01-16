@@ -8,7 +8,6 @@ import '../../../feature/common/domain/service/auth_service.dart';
 import '../../../feature/feed/presentation/screen/screen.dart';
 import '../../../feature/menu/presentation/screen/screen.dart';
 import '../../../feature/settings/presentation/screen/screen.dart';
-import '../../../util/stream_to_change_notifier_adapter.dart';
 import '../../presentation/screen/screen.dart';
 
 part 'transition.dart';
@@ -41,9 +40,6 @@ abstract class RouterModule {
         const HomeRoute().route,
         const SettingsRoute().route,
       ],
-      refreshListenable: StreamToChangeNotifierAdapter(
-        authService.onIsLoggedInChanged,
-      ),
     );
   }
 }
