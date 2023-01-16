@@ -4,14 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-import 'feature/common/domain/service/auth_service.dart';
-import 'main/infrastructure/di/injector.dart';
-import 'main/presentation/app.dart';
+import 'main/main.dart';
 import 'secure/firebase_data.dart';
 
 Future<void> main() async {
@@ -26,8 +23,7 @@ Future<void> main() async {
   setPathUrlStrategy();
   _configMobX();
   await _configFirebase();
-  configInjector(env: env);
-  await _checkAuth();
+  await configInjector(env: env);
 
   FlutterNativeSplash.remove();
 
@@ -74,10 +70,4 @@ Future<void> _configFirebase() async {
   } else {
     await Firebase.initializeApp();
   }
-}
-
-Future<void> _checkAuth() async {
-  final authService = GetIt.instance.get<AuthService>();
-
-  await authService.init();
 }

@@ -34,7 +34,11 @@ class ProdAuthService implements AuthService {
       );
 
   @override
+  @PostConstruct(preResolve: true)
   Future<void> init() async {
+    // Call to start listening
+    await onIsLoggedInChanged.first;
+
     await _isInitialized.future;
   }
 

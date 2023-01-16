@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../application/store/home_store/home_store.dart';
+import '../../application/application.dart';
 
 final _getIt = GetIt.instance;
 

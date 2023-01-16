@@ -47,8 +47,7 @@ import 'package:itrust/feature/settings/application/store/settings/settings_stor
     as _i23;
 import 'package:itrust/feature/settings/domain/service/settings_service.dart'
     as _i21;
-import 'package:itrust/main/application/store/home_store/home_store.dart'
-    as _i13;
+import 'package:itrust/main/application/store/home/home_store.dart' as _i13;
 import 'package:itrust/main/domain/service/home_service.dart' as _i11;
 import 'package:itrust/main/infrastructure/service/auth_service.dart' as _i26;
 import 'package:itrust/main/infrastructure/service/home_service.dart' as _i12;
@@ -64,11 +63,11 @@ const String _test = 'test';
 /// ignore_for_file: unnecessary_lambdas
 /// ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of main-scope dependencies inside of [GetIt]
-_i1.GetIt init(
+Future<_i1.GetIt> init(
   _i1.GetIt getIt, {
   String? environment,
   _i2.EnvironmentFilter? environmentFilter,
-}) {
+}) async {
   final gh = _i2.GetItHelper(
     getIt,
     environment,
@@ -111,8 +110,13 @@ _i1.GetIt init(
       () => _i23.SettingsStore(settingsService: gh<_i21.SettingsService>()));
   gh.singleton<_i3.UserRepository>(
       _i24.ProdUserRepository(firebaseAuth: gh<_i9.FirebaseAuth>()));
-  gh.singleton<_i25.AuthService>(
-      _i26.ProdAuthService(firebaseAuth: gh<_i9.FirebaseAuth>()));
+  await gh.singletonAsync<_i25.AuthService>(
+    () {
+      final i = _i26.ProdAuthService(firebaseAuth: gh<_i9.FirebaseAuth>());
+      return i.init().then((_) => i);
+    },
+    preResolve: true,
+  );
   gh.factory<_i27.AuthStore>(() => _i27.AuthStore(
         authService: gh<_i25.AuthService>(),
         navigatorKey: gh<_i10.GlobalKey<_i10.NavigatorState>>(),

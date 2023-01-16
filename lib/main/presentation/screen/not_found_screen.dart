@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../l10n/l10n.dart';
-import '../../application/store/home_store/home_store.dart';
+import '../../application/application.dart';
 
 const _paddingH = 20.0;
 const _paddingV = 14.0;
