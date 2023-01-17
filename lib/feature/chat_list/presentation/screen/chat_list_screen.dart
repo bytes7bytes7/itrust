@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../util/hook/autorun.dart';
 import '../../../common/presentation/widget/widget.dart';
@@ -47,11 +48,11 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
       ),
       actions: [
         FilledIconButton(
-          iconData: Icons.add,
+          iconPath: Assets.image.svg.add.path,
           onPressed: () {},
         ),
         FilledIconButton(
-          iconData: Icons.search,
+          iconPath: Assets.image.svg.search.path,
           onPressed: () {},
         ),
       ],

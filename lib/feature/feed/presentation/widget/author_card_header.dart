@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../theme/theme.dart';
+import '../../../common/common.dart';
 
 const _avatarSize = 40.0;
 const _imageBorderRadius = 8.0;
 const _avatarAndTitleSeparator = 22.0;
+const _iconSize = 24.0;
 
 class AuthorCardHeader extends StatelessWidget {
   const AuthorCardHeader({
@@ -78,9 +81,11 @@ class _AvatarIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      Icons.person,
-      color: colorSchemeTX.avatarForeground,
+    return SizedIcon(
+      size: _iconSize,
+      icon: Assets.image.svg.person.svg(
+        color: colorSchemeTX.avatarForeground,
+      ),
     );
   }
 }

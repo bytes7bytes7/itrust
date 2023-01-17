@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../theme/theme.dart';
 import 'filled_icon.dart';
+import 'sized_icon.dart';
 
 const _iconSize = 24.0;
 const _paddingH = 20.0;
 const _paddingV = 18.0;
 const _titlePaddingH = 10.0;
 
+final _defaultTrailingIconPath = Assets.image.svg.keyboardArrowRight.path;
+
 class OptionButton extends StatelessWidget {
   const OptionButton({
     super.key,
-    required this.iconData,
+    required this.iconPath,
     required this.title,
+    this.trailingIconPath,
     this.showTrailing = true,
-    this.trailingIconData = Icons.keyboard_arrow_right_outlined,
     this.isWarning,
     this.onPressed,
   });
 
-  final IconData iconData;
+  final String iconPath;
   final String title;
   final bool showTrailing;
-  final IconData trailingIconData;
+  final String? trailingIconPath;
   final bool? isWarning;
   final VoidCallback? onPressed;
 
@@ -42,7 +47,7 @@ class OptionButton extends StatelessWidget {
         child: Row(
           children: [
             FilledIcon(
-              iconData: iconData,
+              iconPath: iconPath,
               iconSize: _iconSize,
               isWarning: isWarning,
             ),
@@ -62,12 +67,14 @@ class OptionButton extends StatelessWidget {
               ),
             ),
             if (showTrailing)
-              Icon(
-                trailingIconData,
+              SizedIcon(
                 size: _iconSize,
-                color: isWarning == true
-                    ? colorSchemeTX.warningIcon
-                    : colorSchemeTX.casualIcon,
+                icon: SvgPicture.asset(
+                  trailingIconPath ?? _defaultTrailingIconPath,
+                  color: isWarning == true
+                      ? colorSchemeTX.warningIcon
+                      : colorSchemeTX.casualIcon,
+                ),
               ),
           ],
         ),

@@ -175,9 +175,7 @@ class _PasswordField extends HookWidget {
               hintText: l10n.password_hint,
               obscureText: obscureText.value,
               enabled: !authStore.isLoading,
-              suffix: const Icon(
-                Icons.remove_red_eye,
-              ),
+              suffixIconPath: Assets.image.svg.removeRedEye.path,
               onSuffixPressed: () {
                 obscureText.value = !value;
               },

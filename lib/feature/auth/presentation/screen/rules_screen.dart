@@ -28,7 +28,7 @@ class RulesScreen extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         leading: FilledIconButton(
-          iconData: Icons.arrow_back,
+          iconPath: Assets.image.svg.arrowBack.path,
           onPressed: rulesStore.onBackButtonPressed,
         ),
         centerTitle: true,

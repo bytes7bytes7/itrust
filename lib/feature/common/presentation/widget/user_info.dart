@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../theme/theme.dart';
+import 'sized_icon.dart';
 
 const _paddingV = 24.0;
 const _userAvatarBorderRadius = 8.0;
@@ -38,28 +40,31 @@ class UserInfo extends StatelessWidget {
             Container(
               height: _userAvatarSize,
               width: _userAvatarSize,
+              clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(
                   _userAvatarBorderRadius,
                 ),
                 color: colorSchemeTX.avatarBackground,
               ),
-              clipBehavior: Clip.hardEdge,
               child: hasAvatar
                   ? Image.network(
                       avatarUrl!,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return Icon(
-                          Icons.person,
-                          color: colorSchemeTX.avatarForeground,
+                        return SizedIcon(
+                          size: _userIconSize,
+                          icon: Assets.image.svg.person.svg(
+                            color: colorSchemeTX.avatarForeground,
+                          ),
                         );
                       },
                     )
-                  : Icon(
-                      Icons.add_a_photo,
+                  : SizedIcon(
                       size: _userIconSize,
-                      color: colorSchemeTX.avatarForeground,
+                      icon: Assets.image.svg.addAPhoto.svg(
+                        color: colorSchemeTX.avatarForeground,
+                      ),
                     ),
             ),
             if (hasNameOrEmail)

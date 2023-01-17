@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../theme/theme.dart';
 import 'fade_in_circle_avatar.dart';
 
@@ -26,7 +27,7 @@ class UserCircleAvatar extends StatelessWidget {
       children: [
         FadeInCircleAvatar(
           url: url,
-          iconData: Icons.person,
+          iconPath: Assets.image.svg.person.path,
         ),
         if (online)
           Positioned(

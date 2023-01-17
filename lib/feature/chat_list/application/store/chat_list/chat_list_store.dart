@@ -79,7 +79,12 @@ abstract class _ChatListStore extends SyncStore with Store {
       _logger.fine('try to load data');
 
       perform(
-        () {},
+        () async {
+          _chats = await _chatListService.load(
+            limit: _limit,
+            offset: _page++ * _limit,
+          );
+        },
         setIsLoading: (v) => _isLoading = v,
         setError: (v) => _error = v,
       );

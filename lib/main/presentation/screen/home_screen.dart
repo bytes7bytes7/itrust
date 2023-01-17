@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../feature/common/common.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../theme/theme.dart';
 import '../../application/application.dart';
@@ -55,12 +56,13 @@ class _BottomNavBar extends HookWidget {
               final selected = homeStore.currentTabIndex == index;
 
               return BottomNavigationBarItem(
-                icon: icon.svg(
-                  height: _iconSize,
-                  width: _iconSize,
-                  color: selected
-                      ? colorSchemeTX.casualIcon
-                      : colorSchemeTX.unselectedCasualIcon,
+                icon: SizedIcon(
+                  size: _iconSize,
+                  icon: icon.svg(
+                    color: selected
+                        ? colorSchemeTX.casualIcon
+                        : colorSchemeTX.unselectedCasualIcon,
+                  ),
                 ),
                 label: '',
               );

@@ -4,6 +4,8 @@ export 'filled_icon.dart';
 export 'filled_icon_button.dart';
 export 'loading_bottom_bar.dart';
 export 'option_button.dart';
+export 'outlined_icon_button.dart';
 export 'outlined_text_field.dart';
+export 'sized_icon.dart';
 export 'user_circle_avatar.dart';
 export 'user_info.dart';

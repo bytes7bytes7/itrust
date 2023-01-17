@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../common/presentation/widget/widget.dart';
 import '../../application/store/menu/menu_store.dart';
@@ -26,7 +27,7 @@ class MenuScreen extends HookWidget {
         ),
         actions: [
           FilledIconButton(
-            iconData: Icons.settings,
+            iconPath: Assets.image.svg.settings.path,
             onPressed: menuStore.onSettingsButtonPressed,
           ),
         ],

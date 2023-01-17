@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../theme/theme.dart';
+import '../../../common/common.dart';
 
 const _paddingH = 20.0;
 const _paddingV = 6.0;
@@ -41,16 +43,18 @@ class MyMessageCard extends StatelessWidget {
         children: [
           // TODO: adapt for readBy
           if (isRead)
-            Icon(
-              Icons.done_all,
+            SizedIcon(
               size: _readIconSize,
-              color: colorSchemeTX.simpleIcon,
+              icon: Assets.image.svg.doneAll.svg(
+                color: colorSchemeTX.simpleIcon,
+              ),
             )
           else
-            Icon(
-              Icons.done,
+            SizedIcon(
               size: _readIconSize,
-              color: colorSchemeTX.simpleIcon,
+              icon: Assets.image.svg.done.svg(
+                color: colorSchemeTX.simpleIcon,
+              ),
             ),
           const SizedBox(
             width: _readIconAndTimeSeparator,

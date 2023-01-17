@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../common/presentation/widget/widget.dart';
 
@@ -24,12 +25,8 @@ class MessageField extends StatelessWidget {
           Expanded(
             child: OutlinedTextField(
               hintText: l10n.message_field_hint,
-              prefix: const Icon(
-                Icons.emoji_emotions_outlined,
-              ),
-              suffix: const Icon(
-                Icons.attach_file,
-              ),
+              prefixIconPath: Assets.image.svg.emoji.path,
+              suffixIconPath: Assets.image.svg.attachFile.path,
               onPrefixPressed: () {},
               onSuffixPressed: () {},
             ),
@@ -38,7 +35,7 @@ class MessageField extends StatelessWidget {
             width: _textFieldAndButtonSeparator,
           ),
           FilledIconButton(
-            iconData: Icons.send,
+            iconPath: Assets.image.svg.send.path,
             onPressed: () {},
           ),
         ],

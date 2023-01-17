@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../common/domain/domain.dart';
 import '../../../common/presentation/widget/widget.dart';
 import '../../application/store/chat_store/chat_store.dart';
@@ -60,14 +61,14 @@ class _AppBar extends HookWidget with PreferredSizeWidget {
       preferredSize: preferredSize,
       child: AppBar(
         leading: FilledIconButton(
-          iconData: Icons.arrow_back,
+          iconPath: Assets.image.svg.arrowBack.path,
           onPressed: chatStore.onBackPressed,
         ),
         centerTitle: true,
         title: const _AppBarTitle(),
         actions: [
           FilledIconButton(
-            iconData: Icons.more_vert,
+            iconPath: Assets.image.svg.moreVert.path,
             onPressed: () {},
           ),
         ],
@@ -81,8 +82,9 @@ class _AppBarTitle extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final chatStore = useMemoized(() => _getIt.get<ChatStore>());
     final theme = Theme.of(context);
+
+    final chatStore = useMemoized(() => _getIt.get<ChatStore>());
 
     return Observer(
       builder: (context) {

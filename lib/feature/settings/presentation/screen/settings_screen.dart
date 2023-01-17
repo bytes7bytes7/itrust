@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../common/domain/domain.dart';
 import '../../../common/presentation/widget/widget.dart';
@@ -13,7 +14,7 @@ import '../../application/store/settings/settings_store.dart';
 final _getIt = GetIt.instance;
 
 // TODO: remove
-final _rand = Random();
+final _rand = Random(DateTime.now().millisecondsSinceEpoch);
 
 const _alpha = 'qwertyuiopasdfghjklzxcvbnm ';
 
@@ -53,7 +54,7 @@ class SettingsScreen extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         leading: FilledIconButton(
-          iconData: Icons.arrow_back,
+          iconPath: Assets.image.svg.arrowBack.path,
           onPressed: settingsStore.onBackButtonPressed,
         ),
         centerTitle: true,
@@ -71,22 +72,22 @@ class SettingsScreen extends HookWidget {
               avatarUrl: _user.avatarUrls.firstOrNull,
             ),
             OptionButton(
-              iconData: Icons.person,
+              iconPath: Assets.image.svg.person.path,
               title: l10n.account_btn_title,
               onPressed: () {},
             ),
             OptionButton(
-              iconData: Icons.notifications_off,
+              iconPath: Assets.image.svg.notificationsOff.path,
               title: l10n.mute_notifications_btn_title,
               onPressed: () {},
             ),
             OptionButton(
-              iconData: Icons.local_fire_department,
+              iconPath: Assets.image.svg.localFireDepartment.path,
               title: l10n.burn_messages_btn_title,
               onPressed: () {},
             ),
             OptionButton(
-              iconData: Icons.logout,
+              iconPath: Assets.image.svg.logout.path,
               title: l10n.log_out_btn_title,
               onPressed: settingsStore.logOut,
               showTrailing: false,

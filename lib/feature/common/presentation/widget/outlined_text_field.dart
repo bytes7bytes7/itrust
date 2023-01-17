@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../theme/theme.dart';
+import 'sized_icon.dart';
 
 const _borderRadius = 10.0;
 const _iconPadding = 8.0;
+const _iconSize = 24.0;
 
 class OutlinedTextField extends StatelessWidget {
   const OutlinedTextField({
@@ -13,8 +16,8 @@ class OutlinedTextField extends StatelessWidget {
     this.obscureText = false,
     this.hintText,
     this.enabled,
-    this.prefix,
-    this.suffix,
+    this.prefixIconPath,
+    this.suffixIconPath,
     this.onPrefixPressed,
     this.onSuffixPressed,
   });
@@ -24,8 +27,8 @@ class OutlinedTextField extends StatelessWidget {
   final String? hintText;
   final bool? enabled;
   final bool obscureText;
-  final Icon? prefix;
-  final Icon? suffix;
+  final String? prefixIconPath;
+  final String? suffixIconPath;
   final VoidCallback? onPrefixPressed;
   final VoidCallback? onSuffixPressed;
 
@@ -41,9 +44,9 @@ class OutlinedTextField extends StatelessWidget {
       ),
       child: Row(
         children: [
-          if (prefix != null && onPrefixPressed != null)
+          if (prefixIconPath != null && onPrefixPressed != null)
             _Icon(
-              icon: prefix!,
+              iconPath: prefixIconPath!,
               onPressed: onPrefixPressed!,
             ),
           Expanded(
@@ -57,9 +60,9 @@ class OutlinedTextField extends StatelessWidget {
               ),
             ),
           ),
-          if (suffix != null && onSuffixPressed != null)
+          if (suffixIconPath != null && onSuffixPressed != null)
             _Icon(
-              icon: suffix!,
+              iconPath: suffixIconPath!,
               onPressed: onSuffixPressed!,
             ),
         ],
@@ -70,11 +73,11 @@ class OutlinedTextField extends StatelessWidget {
 
 class _Icon extends StatelessWidget {
   const _Icon({
-    required this.icon,
+    required this.iconPath,
     required this.onPressed,
   });
 
-  final Icon icon;
+  final String iconPath;
   final VoidCallback onPressed;
 
   @override
@@ -87,11 +90,16 @@ class _Icon extends StatelessWidget {
         color: colorSchemeTX.textFieldBackground,
         child: IconButton(
           padding: const EdgeInsets.all(_iconPadding),
-          iconSize: theme.iconTheme.size,
+          iconSize: _iconSize,
           splashColor: colorSchemeTX.textFieldIconSplash,
           onPressed: onPressed,
-          icon: icon,
-          color: colorSchemeTX.textFieldIcon,
+          icon: SizedIcon(
+            size: _iconSize,
+            icon: SvgPicture.asset(
+              iconPath,
+              color: colorSchemeTX.textFieldIcon,
+            ),
+          ),
         ),
       ),
     );

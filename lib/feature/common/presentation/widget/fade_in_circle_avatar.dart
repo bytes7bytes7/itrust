@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../../../../theme/theme.dart';
+import 'sized_icon.dart';
 
 const _radius = 28.0;
 const _loadingPadding = 4.0;
 const _loadingStrokeWidth = 2.0;
+const _iconSize = 24.0;
 
 class FadeInCircleAvatar extends StatelessWidget {
   const FadeInCircleAvatar({
     super.key,
     required this.url,
-    this.iconData = Icons.person,
+    required this.iconPath,
   });
 
   final String? url;
-  final IconData iconData;
+  final String iconPath;
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +50,12 @@ class FadeInCircleAvatar extends StatelessWidget {
                   ),
                 ],
               )
-            : Icon(
-                iconData,
-                color: colorSchemeTX.avatarForeground,
+            : SizedIcon(
+                size: _iconSize,
+                icon: SvgPicture.asset(
+                  iconPath,
+                  color: colorSchemeTX.avatarForeground,
+                ),
               ),
       ),
     );

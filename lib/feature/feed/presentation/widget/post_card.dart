@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../theme/theme.dart';
+import '../../../common/common.dart';
 import 'author_card_header.dart';
 import 'image_grid.dart';
 
@@ -12,6 +13,7 @@ const _imageGridHeight = 300.0;
 const _underImageGridPadding = 16.0;
 const _underTextPadding = 16.0;
 const _likeAndCommentPadding = 24.0;
+const _actionIconSize = 24.0;
 
 class PostCard extends StatelessWidget {
   const PostCard({
@@ -75,32 +77,35 @@ class PostCard extends StatelessWidget {
           ],
           Row(
             children: [
-              IconButton(
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
+              OutlinedIconButton(
                 onPressed: () {},
-                icon: Assets.image.svg.like.svg(
-                  color: colorSchemeTX.casualIcon,
+                icon: SizedIcon(
+                  size: _actionIconSize,
+                  icon: Assets.image.svg.like.svg(
+                    color: colorSchemeTX.casualIcon,
+                  ),
                 ),
               ),
               const SizedBox(
                 width: _likeAndCommentPadding,
               ),
-              IconButton(
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
+              OutlinedIconButton(
                 onPressed: () {},
-                icon: Assets.image.svg.chats.svg(
-                  color: colorSchemeTX.casualIcon,
+                icon: SizedIcon(
+                  size: _actionIconSize,
+                  icon: Assets.image.svg.chats.svg(
+                    color: colorSchemeTX.casualIcon,
+                  ),
                 ),
               ),
               const Spacer(),
-              IconButton(
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
+              OutlinedIconButton(
                 onPressed: () {},
-                icon: Assets.image.svg.share.svg(
-                  color: colorSchemeTX.casualIcon,
+                icon: SizedIcon(
+                  size: _actionIconSize,
+                  icon: Assets.image.svg.share.svg(
+                    color: colorSchemeTX.casualIcon,
+                  ),
                 ),
               ),
             ],
