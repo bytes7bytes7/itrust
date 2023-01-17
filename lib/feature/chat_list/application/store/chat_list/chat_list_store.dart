@@ -51,9 +51,9 @@ abstract class _ChatListStore extends SyncStore with Store {
   bool get showItems => _isLoading || _chats.isNotEmpty;
 
   @action
-  Future<void> refresh() async {
+  void refresh() {
     // TODO: implement
-    await perform(
+    perform(
       () {
         _page = 0;
         _chats = [];
