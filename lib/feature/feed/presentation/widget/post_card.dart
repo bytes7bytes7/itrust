@@ -13,7 +13,6 @@ const _imageGridHeight = 300.0;
 const _underImageGridPadding = 16.0;
 const _underTextPadding = 16.0;
 const _likeAndCommentPadding = 24.0;
-const _actionIconSize = 24.0;
 
 class PostCard extends StatelessWidget {
   const PostCard({
@@ -36,81 +35,72 @@ class PostCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        vertical: _marginV,
-      ),
-      padding: const EdgeInsets.all(_paddingA),
+    return Material(
       color: colorSchemeTX.postBackground,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AuthorCardHeader(
-            name: name,
-            dateTime: dateTime,
-            avatarUrl: avatarUrl,
+      child: InkWell(
+        onTap: () {},
+        child: Container(
+          margin: const EdgeInsets.symmetric(
+            vertical: _marginV,
           ),
-          const SizedBox(
-            height: _underAuthorHeaderPadding,
-          ),
-          if (mediaUrls.isNotEmpty) ...[
-            SizedBox(
-              height: _imageGridHeight,
-              child: ImageGrid(
-                imageUrls: mediaUrls,
-              ),
-            ),
-            const SizedBox(
-              height: _underImageGridPadding,
-            ),
-          ],
-          if (text.isNotEmpty) ...[
-            Text(
-              text,
-              style: theme.textTheme.bodyText1,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 5,
-            ),
-            const SizedBox(
-              height: _underTextPadding,
-            ),
-          ],
-          Row(
+          color: Colors.transparent,
+          padding: const EdgeInsets.all(_paddingA),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              OutlinedIconButton(
-                onPressed: () {},
-                icon: SizedIcon(
-                  size: _actionIconSize,
-                  icon: Assets.image.svg.like.svg(
-                    color: colorSchemeTX.casualIcon,
-                  ),
-                ),
+              AuthorCardHeader(
+                name: name,
+                dateTime: dateTime,
+                avatarUrl: avatarUrl,
               ),
               const SizedBox(
-                width: _likeAndCommentPadding,
+                height: _underAuthorHeaderPadding,
               ),
-              OutlinedIconButton(
-                onPressed: () {},
-                icon: SizedIcon(
-                  size: _actionIconSize,
-                  icon: Assets.image.svg.chats.svg(
-                    color: colorSchemeTX.casualIcon,
+              if (mediaUrls.isNotEmpty) ...[
+                SizedBox(
+                  height: _imageGridHeight,
+                  child: ImageGrid(
+                    imageUrls: mediaUrls,
                   ),
                 ),
-              ),
-              const Spacer(),
-              OutlinedIconButton(
-                onPressed: () {},
-                icon: SizedIcon(
-                  size: _actionIconSize,
-                  icon: Assets.image.svg.share.svg(
-                    color: colorSchemeTX.casualIcon,
-                  ),
+                const SizedBox(
+                  height: _underImageGridPadding,
                 ),
+              ],
+              if (text.isNotEmpty) ...[
+                Text(
+                  text,
+                  style: theme.textTheme.bodyText1,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 5,
+                ),
+                const SizedBox(
+                  height: _underTextPadding,
+                ),
+              ],
+              Row(
+                children: [
+                  OutlinedIconButton(
+                    onPressed: () {},
+                    iconPath: Assets.image.svg.like.path,
+                  ),
+                  const SizedBox(
+                    width: _likeAndCommentPadding,
+                  ),
+                  OutlinedIconButton(
+                    onPressed: () {},
+                    iconPath: Assets.image.svg.chats.path,
+                  ),
+                  const Spacer(),
+                  OutlinedIconButton(
+                    onPressed: () {},
+                    iconPath: Assets.image.svg.share.path,
+                  ),
+                ],
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
