@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../common/application/application.dart';
 import '../../../domain/service/rules_service.dart';
 import '../../coordinator/rules_coordinator.dart';
 
@@ -11,7 +10,7 @@ part 'rules_store.g.dart';
 @injectable
 class RulesStore = _RulesStore with _$RulesStore;
 
-abstract class _RulesStore with Store {
+abstract class _RulesStore extends SyncStore with Store {
   _RulesStore({
     required RulesService rulesService,
     required RulesCoordinator rulesCoordinator,
@@ -32,21 +31,16 @@ abstract class _RulesStore with Store {
 
   @action
   void getRules() {
-    _wrap(() async {
-      _rules = await _rulesService.loadRules();
-    });
+    perform(
+      () async {
+        _rules = await _rulesService.loadRules();
+      },
+      setIsLoading: (v) => _isLoading = v,
+      setError: (v) => _error = v,
+    );
   }
 
   void onBackButtonPressed() {
     _rulesCoordinator.onBackButtonPressed();
-  }
-
-  Future<void> _wrap(FutureOr<void> Function() callback) async {
-    _isLoading = true;
-    _error = '';
-
-    await callback();
-
-    _isLoading = false;
   }
 }

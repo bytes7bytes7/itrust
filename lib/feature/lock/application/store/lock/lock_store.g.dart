@@ -60,12 +60,18 @@ mixin _$LockStore on _LockStore, Store {
     });
   }
 
-  late final _$unlockAsyncAction =
-      AsyncAction('_LockStore.unlock', context: context);
+  late final _$_LockStoreActionController =
+      ActionController(name: '_LockStore', context: context);
 
   @override
-  Future<void> unlock({required String passphrase}) {
-    return _$unlockAsyncAction.run(() => super.unlock(passphrase: passphrase));
+  void unlock({required String passphrase}) {
+    final _$actionInfo =
+        _$_LockStoreActionController.startAction(name: '_LockStore.unlock');
+    try {
+      return super.unlock(passphrase: passphrase);
+    } finally {
+      _$_LockStoreActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

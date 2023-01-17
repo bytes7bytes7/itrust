@@ -4,7 +4,11 @@ abstract class SyncStore {
   final _loadingQueue = <int>[];
   var _currentQueueId = 0;
 
-  Future<void> perform(FutureOr<void> Function() callback) async {
+  Future<void> perform(
+    FutureOr<void> Function() callback, {
+    required void Function(bool) setIsLoading,
+    required void Function(String) setError,
+  }) async {
     final id = _currentQueueId++;
     _loadingQueue.add(id);
 
@@ -15,11 +19,9 @@ abstract class SyncStore {
 
     _loadingQueue.remove(id);
     if (_loadingQueue.isEmpty) {
+      _currentQueueId = 0;
+
       setIsLoading(false);
     }
   }
-
-  void setIsLoading(bool value);
-
-  void setError(String value);
 }

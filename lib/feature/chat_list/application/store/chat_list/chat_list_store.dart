@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../common/application/application.dart';
 import '../../../../common/domain/domain.dart';
 
 part 'chat_list_store.g.dart';
@@ -14,7 +15,7 @@ final _logger = Logger('$ChatListStore');
 @injectable
 class ChatListStore = _ChatListStore with _$ChatListStore;
 
-abstract class _ChatListStore with Store {
+abstract class _ChatListStore extends SyncStore with Store {
   _ChatListStore({
     required ChatListService chatListService,
   }) : _chatListService = chatListService;
@@ -52,35 +53,41 @@ abstract class _ChatListStore with Store {
   @action
   Future<void> refresh() async {
     // TODO: implement
-    await _wrap(() {
-      _page = 0;
-      _chats = [];
-      _hasMoreChats = true;
-      _chatListService.load(limit: _limit, offset: 0);
-    });
+    await perform(
+      () {
+        _page = 0;
+        _chats = [];
+        _hasMoreChats = true;
+        _chatListService.load(limit: _limit, offset: 0);
+      },
+      setIsLoading: (v) => _isLoading = v,
+      setError: (v) => _error = v,
+    );
   }
 
   @action
-  Future<void> load() async {
+  void load() {
     if (_isLoading || _isLoadingMore) {
       return;
     }
-
-    _error = '';
 
     if (_hasMoreChats) {
       _isLoadingMore = true;
 
       if (_page == 0) {
-        _wrapBefore();
+        // TODO: implement
       }
 
       _logger.fine('try to load data');
 
+      perform(
+        () {},
+        setIsLoading: (v) => _isLoading = v,
+        setError: (v) => _error = v,
+      );
       // TODO: implement
 
       _isLoadingMore = false;
-      _wrapAfter();
     }
   }
 
@@ -88,20 +95,5 @@ abstract class _ChatListStore with Store {
   void onChatCardPressed(Chat chat) {
     // TODO: implement
     // _chatListService.onChatSelected(chat.id);
-  }
-
-  Future<void> _wrap(FutureOr<void> Function() callback) async {
-    _wrapBefore();
-    await callback();
-    _wrapAfter();
-  }
-
-  void _wrapBefore() {
-    _isLoading = true;
-    _error = '';
-  }
-
-  void _wrapAfter() {
-    _isLoading = false;
   }
 }

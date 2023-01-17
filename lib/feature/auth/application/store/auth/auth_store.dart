@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../common/application/application.dart';
 import '../../../../common/domain/exception/exception.dart';
 import '../../../../common/domain/service/auth_service.dart';
 import '../../coordinator/auth_coordinator.dart';
@@ -13,7 +12,7 @@ part 'auth_store.g.dart';
 @injectable
 class AuthStore = _AuthStore with _$AuthStore;
 
-abstract class _AuthStore with Store {
+abstract class _AuthStore extends SyncStore with Store {
   _AuthStore({
     required AuthService authService,
     required AuthCoordinator authCoordinator,
@@ -43,34 +42,29 @@ abstract class _AuthStore with Store {
 
   @action
   void authenticate() {
-    _wrap(() async {
-      try {
-        await _authService.authenticate(
-          login: login,
-          password: password,
-        );
-      } on WrongPasswordException {
-        _error = _authStringProvider.wrongPassword;
-      } on UserNotFoundException {
-        _error = _authStringProvider.userNotFound;
-      } on TooManyRequestsException {
-        _error = _authStringProvider.tooManyRequests;
-      } catch (e) {
-        _error = _authStringProvider.unknownError;
-      }
-    });
+    perform(
+      () async {
+        try {
+          await _authService.authenticate(
+            login: login,
+            password: password,
+          );
+        } on WrongPasswordException {
+          _error = _authStringProvider.wrongPassword;
+        } on UserNotFoundException {
+          _error = _authStringProvider.userNotFound;
+        } on TooManyRequestsException {
+          _error = _authStringProvider.tooManyRequests;
+        } catch (e) {
+          _error = _authStringProvider.unknownError;
+        }
+      },
+      setIsLoading: (v) => _isLoading = v,
+      setError: (v) => _error = v,
+    );
   }
 
   void onRulesButtonPressed() {
     _authCoordinator.onRulesButtonPressed();
-  }
-
-  Future<void> _wrap(FutureOr<void> Function() callback) async {
-    _isLoading = true;
-    _error = '';
-
-    await callback();
-
-    _isLoading = false;
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
@@ -11,7 +9,7 @@ part 'settings_store.g.dart';
 @injectable
 class SettingsStore = _SettingsStore with _$SettingsStore;
 
-abstract class _SettingsStore with Store {
+abstract class _SettingsStore extends SyncStore with Store {
   _SettingsStore({
     required AuthService authService,
     required SettingsCoordinator settingsCoordinator,
@@ -28,22 +26,17 @@ abstract class _SettingsStore with Store {
   String _error = '';
 
   @action
-  Future<void> logOut() async {
-    await _wrap(() async {
-      await _authService.logOut();
-    });
+  void logOut() {
+    perform(
+      () async {
+        await _authService.logOut();
+      },
+      setIsLoading: (v) => _isLoading = v,
+      setError: (v) => _error = v,
+    );
   }
 
   void onBackButtonPressed() {
     _settingsCoordinator.onBackButtonPressed();
-  }
-
-  Future<void> _wrap(FutureOr<void> Function() callback) async {
-    _isLoading = true;
-    _error = '';
-
-    await callback();
-
-    _isLoading = false;
   }
 }

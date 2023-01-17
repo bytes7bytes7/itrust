@@ -146,16 +146,19 @@ mixin _$ChatListStore on _ChatListStore, Store {
     return _$refreshAsyncAction.run(() => super.refresh());
   }
 
-  late final _$loadAsyncAction =
-      AsyncAction('_ChatListStore.load', context: context);
-
-  @override
-  Future<void> load() {
-    return _$loadAsyncAction.run(() => super.load());
-  }
-
   late final _$_ChatListStoreActionController =
       ActionController(name: '_ChatListStore', context: context);
+
+  @override
+  void load() {
+    final _$actionInfo = _$_ChatListStoreActionController.startAction(
+        name: '_ChatListStore.load');
+    try {
+      return super.load();
+    } finally {
+      _$_ChatListStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void onChatCardPressed(Chat chat) {

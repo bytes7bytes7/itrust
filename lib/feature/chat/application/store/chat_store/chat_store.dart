@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../common/application/application.dart';
 import '../../../../common/domain/domain.dart';
 import '../../../domain/service/chat_service.dart';
 
@@ -16,7 +17,7 @@ final _logger = Logger('$ChatStore');
 @injectable
 class ChatStore = _ChatStore with _$ChatStore;
 
-abstract class _ChatStore with Store {
+abstract class _ChatStore extends SyncStore with Store {
   _ChatStore({
     required ChatService chatService,
   }) : _chatService = chatService;
@@ -58,29 +59,33 @@ abstract class _ChatStore with Store {
   bool get showItems => _isLoading || _messages.isNotEmpty;
 
   @action
-  Future<void> loadChat(ChatID chatID) async {
+  void loadChat(ChatID chatID) {
     _reset();
 
-    await _wrap(() async {
-      try {
-        // TODO: implement
-        final chat = Chat.monologue(
-          id: chatID,
-          unreadAmount: 0,
-          title: 'title $chatID',
-        );
+    perform(
+      () async {
+        try {
+          // TODO: implement
+          final chat = Chat.monologue(
+            id: chatID,
+            unreadAmount: 0,
+            title: 'title $chatID',
+          );
 
-        _chat = chat;
-      } catch (e) {
-        _error = 'Some error';
-      }
-    });
+          _chat = chat;
+        } catch (e) {
+          _error = 'Some error';
+        }
+      },
+      setIsLoading: (v) => _isLoading = v,
+      setError: (v) => _error = v,
+    );
 
-    await load();
+    load();
   }
 
   @action
-  Future<void> load() async {
+  void load() {
     if (_isLoading || _isLoadingMore) {
       return;
     }
@@ -91,15 +96,19 @@ abstract class _ChatStore with Store {
       _isLoadingMore = true;
 
       if (_page == 0) {
-        _wrapBefore();
+        // TODO: implement
       }
 
       _logger.fine('try to load data');
 
-      await _loadData(page: _page);
-
-      _isLoadingMore = false;
-      _wrapAfter();
+      perform(
+        () async {
+          await _loadData(page: _page);
+          _isLoadingMore = false;
+        },
+        setIsLoading: (v) => _isLoading = v,
+        setError: (v) => _error = v,
+      );
     }
   }
 
@@ -159,20 +168,5 @@ abstract class _ChatStore with Store {
     } catch (e) {
       _error = 'Some error';
     }
-  }
-
-  Future<void> _wrap(FutureOr<void> Function() callback) async {
-    _wrapBefore();
-    await callback();
-    _wrapAfter();
-  }
-
-  void _wrapBefore() {
-    _isLoading = true;
-    _error = '';
-  }
-
-  void _wrapAfter() {
-    _isLoading = false;
   }
 }

@@ -171,24 +171,30 @@ mixin _$ChatStore on _ChatStore, Store {
     });
   }
 
-  late final _$loadChatAsyncAction =
-      AsyncAction('_ChatStore.loadChat', context: context);
-
-  @override
-  Future<void> loadChat(ChatID chatID) {
-    return _$loadChatAsyncAction.run(() => super.loadChat(chatID));
-  }
-
-  late final _$loadAsyncAction =
-      AsyncAction('_ChatStore.load', context: context);
-
-  @override
-  Future<void> load() {
-    return _$loadAsyncAction.run(() => super.load());
-  }
-
   late final _$_ChatStoreActionController =
       ActionController(name: '_ChatStore', context: context);
+
+  @override
+  void loadChat(ChatID chatID) {
+    final _$actionInfo =
+        _$_ChatStoreActionController.startAction(name: '_ChatStore.loadChat');
+    try {
+      return super.loadChat(chatID);
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void load() {
+    final _$actionInfo =
+        _$_ChatStoreActionController.startAction(name: '_ChatStore.load');
+    try {
+      return super.load();
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void onBackPressed() {
