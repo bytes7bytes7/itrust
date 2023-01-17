@@ -1,1 +1,2 @@
-export 'feed_store/feed_store.dart';
+export 'category/category_store.dart';
+export 'feed/feed_store.dart';

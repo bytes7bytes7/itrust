@@ -57,10 +57,13 @@ class _Body extends HookWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    useEffect(() {
-      rulesStore.getRules();
-      return;
-    });
+    useEffect(
+      () {
+        rulesStore.getRules();
+        return;
+      },
+      const [],
+    );
 
     return Observer(
       builder: (context) {

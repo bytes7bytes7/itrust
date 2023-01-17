@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'user_id.dart';
+part of 'post_id.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,31 +14,31 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-UserID _$UserIDFromJson(Map<String, dynamic> json) {
-  return _UserID.fromJson(json);
+PostID _$PostIDFromJson(Map<String, dynamic> json) {
+  return _PostID.fromJson(json);
 }
 
 /// @nodoc
-mixin _$UserID {
+mixin _$PostID {
   String get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $UserIDCopyWith<UserID> get copyWith => throw _privateConstructorUsedError;
+  $PostIDCopyWith<PostID> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserIDCopyWith<$Res> {
-  factory $UserIDCopyWith(UserID value, $Res Function(UserID) then) =
-      _$UserIDCopyWithImpl<$Res, UserID>;
+abstract class $PostIDCopyWith<$Res> {
+  factory $PostIDCopyWith(PostID value, $Res Function(PostID) then) =
+      _$PostIDCopyWithImpl<$Res, PostID>;
   @useResult
   $Res call({String value});
 }
 
 /// @nodoc
-class _$UserIDCopyWithImpl<$Res, $Val extends UserID>
-    implements $UserIDCopyWith<$Res> {
-  _$UserIDCopyWithImpl(this._value, this._then);
+class _$PostIDCopyWithImpl<$Res, $Val extends PostID>
+    implements $PostIDCopyWith<$Res> {
+  _$PostIDCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -60,19 +60,19 @@ class _$UserIDCopyWithImpl<$Res, $Val extends UserID>
 }
 
 /// @nodoc
-abstract class _$$_UserIDCopyWith<$Res> implements $UserIDCopyWith<$Res> {
-  factory _$$_UserIDCopyWith(_$_UserID value, $Res Function(_$_UserID) then) =
-      __$$_UserIDCopyWithImpl<$Res>;
+abstract class _$$_PostIDCopyWith<$Res> implements $PostIDCopyWith<$Res> {
+  factory _$$_PostIDCopyWith(_$_PostID value, $Res Function(_$_PostID) then) =
+      __$$_PostIDCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String value});
 }
 
 /// @nodoc
-class __$$_UserIDCopyWithImpl<$Res>
-    extends _$UserIDCopyWithImpl<$Res, _$_UserID>
-    implements _$$_UserIDCopyWith<$Res> {
-  __$$_UserIDCopyWithImpl(_$_UserID _value, $Res Function(_$_UserID) _then)
+class __$$_PostIDCopyWithImpl<$Res>
+    extends _$PostIDCopyWithImpl<$Res, _$_PostID>
+    implements _$$_PostIDCopyWith<$Res> {
+  __$$_PostIDCopyWithImpl(_$_PostID _value, $Res Function(_$_PostID) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -80,7 +80,7 @@ class __$$_UserIDCopyWithImpl<$Res>
   $Res call({
     Object? value = null,
   }) {
-    return _then(_$_UserID(
+    return _then(_$_PostID(
       null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -91,25 +91,25 @@ class __$$_UserIDCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserID extends _UserID {
-  const _$_UserID(this.value) : super._();
+class _$_PostID extends _PostID {
+  const _$_PostID(this.value) : super._();
 
-  factory _$_UserID.fromJson(Map<String, dynamic> json) =>
-      _$$_UserIDFromJson(json);
+  factory _$_PostID.fromJson(Map<String, dynamic> json) =>
+      _$$_PostIDFromJson(json);
 
   @override
   final String value;
 
   @override
   String toString() {
-    return 'UserID(value: $value)';
+    return 'PostID(value: $value)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserID &&
+            other is _$_PostID &&
             (identical(other.value, value) || other.value == value));
   }
 
@@ -120,27 +120,27 @@ class _$_UserID extends _UserID {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserIDCopyWith<_$_UserID> get copyWith =>
-      __$$_UserIDCopyWithImpl<_$_UserID>(this, _$identity);
+  _$$_PostIDCopyWith<_$_PostID> get copyWith =>
+      __$$_PostIDCopyWithImpl<_$_PostID>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserIDToJson(
+    return _$$_PostIDToJson(
       this,
     );
   }
 }
 
-abstract class _UserID extends UserID {
-  const factory _UserID(final String value) = _$_UserID;
-  const _UserID._() : super._();
+abstract class _PostID extends PostID {
+  const factory _PostID(final String value) = _$_PostID;
+  const _PostID._() : super._();
 
-  factory _UserID.fromJson(Map<String, dynamic> json) = _$_UserID.fromJson;
+  factory _PostID.fromJson(Map<String, dynamic> json) = _$_PostID.fromJson;
 
   @override
   String get value;
   @override
   @JsonKey(ignore: true)
-  _$$_UserIDCopyWith<_$_UserID> get copyWith =>
+  _$$_PostIDCopyWith<_$_PostID> get copyWith =>
       throw _privateConstructorUsedError;
 }

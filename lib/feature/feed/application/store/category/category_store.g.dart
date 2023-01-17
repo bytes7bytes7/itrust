@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'feed_store.dart';
+part of 'category_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'feed_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$FeedStore on _FeedStore, Store {
+mixin _$CategoryStore on _CategoryStore, Store {
   late final _$_isLoadingAtom =
-      Atom(name: '_FeedStore._isLoading', context: context);
+      Atom(name: '_CategoryStore._isLoading', context: context);
 
   bool get isLoading {
     _$_isLoadingAtom.reportRead();
@@ -27,7 +27,8 @@ mixin _$FeedStore on _FeedStore, Store {
     });
   }
 
-  late final _$_errorAtom = Atom(name: '_FeedStore._error', context: context);
+  late final _$_errorAtom =
+      Atom(name: '_CategoryStore._error', context: context);
 
   String get error {
     _$_errorAtom.reportRead();
@@ -45,7 +46,7 @@ mixin _$FeedStore on _FeedStore, Store {
   }
 
   late final _$_categoriesAtom =
-      Atom(name: '_FeedStore._categories', context: context);
+      Atom(name: '_CategoryStore._categories', context: context);
 
   List<String> get categories {
     _$_categoriesAtom.reportRead();
@@ -63,45 +64,45 @@ mixin _$FeedStore on _FeedStore, Store {
   }
 
   late final _$_selectedCategoryAtom =
-      Atom(name: '_FeedStore._selectedCategory', context: context);
+      Atom(name: '_CategoryStore._selectedCategory', context: context);
 
-  String get selectedCategory {
+  Observable<String> get selectedCategory {
     _$_selectedCategoryAtom.reportRead();
     return super._selectedCategory;
   }
 
   @override
-  String get _selectedCategory => selectedCategory;
+  Observable<String> get _selectedCategory => selectedCategory;
 
   @override
-  set _selectedCategory(String value) {
+  set _selectedCategory(Observable<String> value) {
     _$_selectedCategoryAtom.reportWrite(value, super._selectedCategory, () {
       super._selectedCategory = value;
     });
   }
 
-  late final _$_FeedStoreActionController =
-      ActionController(name: '_FeedStore', context: context);
+  late final _$_CategoryStoreActionController =
+      ActionController(name: '_CategoryStore', context: context);
 
   @override
   void loadCategories() {
-    final _$actionInfo = _$_FeedStoreActionController.startAction(
-        name: '_FeedStore.loadCategories');
+    final _$actionInfo = _$_CategoryStoreActionController.startAction(
+        name: '_CategoryStore.loadCategories');
     try {
       return super.loadCategories();
     } finally {
-      _$_FeedStoreActionController.endAction(_$actionInfo);
+      _$_CategoryStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void selectCategory(String category) {
-    final _$actionInfo = _$_FeedStoreActionController.startAction(
-        name: '_FeedStore.selectCategory');
+    final _$actionInfo = _$_CategoryStoreActionController.startAction(
+        name: '_CategoryStore.selectCategory');
     try {
       return super.selectCategory(category);
     } finally {
-      _$_FeedStoreActionController.endAction(_$actionInfo);
+      _$_CategoryStoreActionController.endAction(_$actionInfo);
     }
   }
 

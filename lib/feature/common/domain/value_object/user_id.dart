@@ -4,9 +4,7 @@ part 'user_id.freezed.dart';
 
 part 'user_id.g.dart';
 
-@Freezed(
-  toStringOverride: false,
-)
+@freezed
 class UserID with _$UserID {
   const factory UserID(
     String value,
