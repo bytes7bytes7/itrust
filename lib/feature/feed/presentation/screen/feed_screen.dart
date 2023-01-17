@@ -121,8 +121,12 @@ class _PostList extends StatelessWidget {
             itemBuilder: (context, index) {
               final post = feedStore.posts[index];
 
-              return Text(
-                post.id.str,
+              return PostCard(
+                name: 'name ${post.authorID.str}',
+                dateTime: '9:41',
+                avatarUrl: null,
+                mediaUrls: post.mediaUrls,
+                text: post.text,
               );
             },
           ),

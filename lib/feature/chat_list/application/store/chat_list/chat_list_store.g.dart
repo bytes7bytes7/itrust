@@ -138,16 +138,19 @@ mixin _$ChatListStore on _ChatListStore, Store {
     });
   }
 
-  late final _$refreshAsyncAction =
-      AsyncAction('_ChatListStore.refresh', context: context);
-
-  @override
-  Future<void> refresh() {
-    return _$refreshAsyncAction.run(() => super.refresh());
-  }
-
   late final _$_ChatListStoreActionController =
       ActionController(name: '_ChatListStore', context: context);
+
+  @override
+  void refresh() {
+    final _$actionInfo = _$_ChatListStoreActionController.startAction(
+        name: '_ChatListStore.refresh');
+    try {
+      return super.refresh();
+    } finally {
+      _$_ChatListStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void load() {

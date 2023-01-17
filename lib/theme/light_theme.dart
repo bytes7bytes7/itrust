@@ -242,6 +242,7 @@ final lightTheme = ThemeData.light().copyWith(
       warningIcon: _LightColors.cFFEC2885,
       casualTitle: _LightColors.cFF000000,
       warningTitle: _LightColors.cFFEC2885,
+      postBackground: _LightColors.cFFFFFFFF,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(

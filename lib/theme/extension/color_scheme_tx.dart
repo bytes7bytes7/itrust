@@ -29,6 +29,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.warningIcon,
     required this.casualTitle,
     required this.warningTitle,
+    required this.postBackground,
   });
 
   final Color avatarBackground;
@@ -60,6 +61,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color warningIcon;
   final Color casualTitle;
   final Color warningTitle;
+  final Color postBackground;
 
   @override
   ThemeExtension<ColorSchemeTX> copyWith({
@@ -90,6 +92,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? warningIcon,
     Color? casualTitle,
     Color? warningTitle,
+    Color? postBackground,
   }) {
     return ColorSchemeTX(
       avatarBackground: avatarBackground ?? this.avatarBackground,
@@ -124,6 +127,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       warningIcon: warningIcon ?? this.warningIcon,
       casualTitle: casualTitle ?? this.casualTitle,
       warningTitle: warningTitle ?? this.warningTitle,
+      postBackground: postBackground ?? this.postBackground,
     );
   }
 
@@ -270,6 +274,11 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       warningTitle: Color.lerp(
         warningTitle,
         other.warningTitle,
+        t,
+      )!,
+      postBackground: Color.lerp(
+        postBackground,
+        other.postBackground,
         t,
       )!,
     );

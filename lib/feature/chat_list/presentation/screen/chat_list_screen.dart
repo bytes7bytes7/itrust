@@ -110,7 +110,7 @@ class _Body extends HookWidget {
                   return true;
                 },
                 child: RefreshIndicator(
-                  onRefresh: chatListStore.refresh,
+                  onRefresh: () async => chatListStore.refresh(),
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: chatListStore.chats.length +
