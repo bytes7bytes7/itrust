@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../theme/theme.dart';
 import 'author_card_header.dart';
 import 'image_grid.dart';
 
 const _marginV = 4.0;
 const _paddingA = 14.0;
-const _authorHeaderAndImageSeparator = 16.0;
-const _imageAndTextSeparator = 16.0;
+const _underAuthorHeaderPadding = 16.0;
+const _imageGridHeight = 300.0;
+const _underImageGridPadding = 16.0;
+const _underTextPadding = 16.0;
+const _likeAndCommentPadding = 24.0;
 
 class PostCard extends StatelessWidget {
   const PostCard({
@@ -45,19 +49,62 @@ class PostCard extends StatelessWidget {
             avatarUrl: avatarUrl,
           ),
           const SizedBox(
-            height: _authorHeaderAndImageSeparator,
+            height: _underAuthorHeaderPadding,
           ),
           if (mediaUrls.isNotEmpty) ...[
             SizedBox(
-              height: 300,
+              height: _imageGridHeight,
               child: ImageGrid(
                 imageUrls: mediaUrls,
               ),
             ),
             const SizedBox(
-              height: _imageAndTextSeparator,
+              height: _underImageGridPadding,
             ),
           ],
+          if (text.isNotEmpty) ...[
+            Text(
+              text,
+              style: theme.textTheme.bodyText1,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 5,
+            ),
+            const SizedBox(
+              height: _underTextPadding,
+            ),
+          ],
+          Row(
+            children: [
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () {},
+                icon: Assets.image.svg.like.svg(
+                  color: colorSchemeTX.casualIcon,
+                ),
+              ),
+              const SizedBox(
+                width: _likeAndCommentPadding,
+              ),
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () {},
+                icon: Assets.image.svg.chats.svg(
+                  color: colorSchemeTX.casualIcon,
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () {},
+                icon: Assets.image.svg.share.svg(
+                  color: colorSchemeTX.casualIcon,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

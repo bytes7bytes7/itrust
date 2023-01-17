@@ -41,6 +41,11 @@ class TestFeedService implements FeedService {
     'https://images.unsplash.com/photo-1554080353-a576cf803bda?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGhvdG98ZW58MHx8MHx8&w=1000&q=80',
     'https://mymodernmet.com/wp/wp-content/uploads/2019/12/photos-of-indonesia-rarindra-prakarsa-17.jpg',
     'https://images.csmonitor.com/csm/2021/01/301.jpg?alias=standard_600x400',
+    'https://media.istockphoto.com/id/636379014/photo/hands-forming-a-heart-shape-with-sunset-silhouette.jpg?s=612x612&w=0&k=20&c=CgjWWGEasjgwia2VT7ufXa10azba2HXmUDe96wZG8F0=',
+    'https://live.staticflickr.com/65535/52530446584_cb1dce6453_z.jpg',
+    'https://media.wired.com/photos/5fb70f2ce7b75db783b7012c/master/pass/Gear-Photos-597589287.jpg',
+    'https://www.befunky.com/images/prismic/5ddfea42-7377-4bef-9ac4-f3bd407d52ab_landing-photo-to-cartoon-img5.jpeg?auto=avif,webp&format=jpg&width=863',
+    'https://www.befunky.com/images/prismic/318d2218-716f-4dd6-a95d-9fa409ec447e_landing-photo-to-cartoon-img4.jpeg?auto=avif,webp&format=jpg&width=863',
   ];
 
   @override
@@ -55,7 +60,7 @@ class TestFeedService implements FeedService {
             id: PostID('$category ${_randString(8)}'),
             authorID: UserID(_randString(8)),
             createdAt: _randDateTime(),
-            text: _rand.nextBool() ? _randString(_rand.nextInt(100) + 30) : '',
+            text: _rand.nextBool() ? _randString(_rand.nextInt(500) + 30) : '',
             seenBy: [],
             mediaUrls:
                 _mediaUrls.take(_rand.nextInt(_mediaUrls.length)).toList(),

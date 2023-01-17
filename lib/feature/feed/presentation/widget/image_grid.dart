@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+const _borderRadius = 4.0;
 const _itemSeparator = 2.0;
 
 class ImageGrid extends StatelessWidget {
@@ -16,34 +17,37 @@ class ImageGrid extends StatelessWidget {
     final secondRowAmount = _getItemAmountForRow(1);
     final thirdRowAmount = _getItemAmountForRow(2);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (firstRowAmount > 0)
-          _Row(
-            amount: firstRowAmount,
-            urls: imageUrls.sublist(0, firstRowAmount),
-            addSeparatorAbove: false,
-          ),
-        if (secondRowAmount > 0)
-          _Row(
-            amount: secondRowAmount,
-            urls: imageUrls.sublist(
-              firstRowAmount,
-              firstRowAmount + secondRowAmount,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(_borderRadius),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (firstRowAmount > 0)
+            _Row(
+              amount: firstRowAmount,
+              urls: imageUrls.sublist(0, firstRowAmount),
+              addSeparatorAbove: false,
             ),
-            addSeparatorAbove: true,
-          ),
-        if (thirdRowAmount > 0)
-          _Row(
-            amount: thirdRowAmount,
-            urls: imageUrls.sublist(
-              firstRowAmount + secondRowAmount,
-              firstRowAmount + secondRowAmount + thirdRowAmount,
+          if (secondRowAmount > 0)
+            _Row(
+              amount: secondRowAmount,
+              urls: imageUrls.sublist(
+                firstRowAmount,
+                firstRowAmount + secondRowAmount,
+              ),
+              addSeparatorAbove: true,
             ),
-            addSeparatorAbove: true,
-          ),
-      ],
+          if (thirdRowAmount > 0)
+            _Row(
+              amount: thirdRowAmount,
+              urls: imageUrls.sublist(
+                firstRowAmount + secondRowAmount,
+                firstRowAmount + secondRowAmount + thirdRowAmount,
+              ),
+              addSeparatorAbove: true,
+            ),
+        ],
+      ),
     );
   }
 
@@ -139,15 +143,13 @@ class _Image extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Image.network(
-        url,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          // TODO: implement
-          return const ColoredBox(color: Colors.grey);
-        },
-      ),
+    return Image.network(
+      url,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) {
+        // TODO: implement
+        return const ColoredBox(color: Colors.grey);
+      },
     );
   }
 }
