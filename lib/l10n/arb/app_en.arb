@@ -31,5 +31,6 @@
   "log_out_btn_title": "Log out",
   "mute_notifications_btn_title": "Mute notifications",
   "burn_messages_btn_title": "Burn messages",
-  "rules_screen_title": "Rules"
+  "rules_screen_title": "Rules",
+  "post_screen_title": "Post"
 }

@@ -35,6 +35,13 @@ class FeedRoute extends CosyRoute {
   GoRoute get route => _AppRoutes.feed;
 }
 
+class PostRoute extends CosyRoute {
+  const PostRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.post;
+}
+
 class ChatListRoute extends CosyRoute {
   const ChatListRoute();
 

@@ -145,6 +145,7 @@ class _PostList extends StatelessWidget {
                     : null,
                 mediaUrls: post.mediaUrls,
                 text: post.text,
+                onPressed: feedStore.onPostPressed,
               );
             },
           ),

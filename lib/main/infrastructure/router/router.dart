@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../feature/auth/presentation/screen/screen.dart';
-import '../../../feature/chat_list/presentation/screen/screen.dart';
-import '../../../feature/common/domain/service/auth_service.dart';
-import '../../../feature/feed/presentation/screen/screen.dart';
-import '../../../feature/menu/presentation/screen/screen.dart';
-import '../../../feature/settings/presentation/screen/screen.dart';
+import '../../../feature/feature.dart';
 import '../../../util/typedef.dart';
 import '../../presentation/screen/screen.dart';
 

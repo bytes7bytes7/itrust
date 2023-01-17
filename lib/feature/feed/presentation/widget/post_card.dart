@@ -21,6 +21,7 @@ class PostCard extends StatelessWidget {
     required this.dateTime,
     required this.mediaUrls,
     required this.text,
+    required this.onPressed,
     this.avatarUrl,
   });
 
@@ -29,6 +30,7 @@ class PostCard extends StatelessWidget {
   final String? avatarUrl;
   final List<String> mediaUrls;
   final String text;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class PostCard extends StatelessWidget {
     return Material(
       color: colorSchemeTX.postBackground,
       child: InkWell(
-        onTap: () {},
+        onTap: onPressed,
         child: Container(
           margin: const EdgeInsets.symmetric(
             vertical: _marginV,

@@ -10,4 +10,5 @@ export 'menu/menu.dart';
 export 'message_burn/message_burn.dart';
 export 'new_chat/new_chat.dart';
 export 'notifications/notifications.dart';
+export 'post/post.dart';
 export 'settings/settings.dart';

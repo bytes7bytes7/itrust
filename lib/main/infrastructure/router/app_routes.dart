@@ -67,6 +67,23 @@ class _AppRoutes {
         child: const FeedScreen(),
       );
     },
+    routes: [
+      post,
+    ],
+  );
+
+  static final post = GoRoute(
+    path: 'post',
+    name: 'post',
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const PostScreen(),
+      );
+    },
   );
 
   static final chatList = GoRoute(

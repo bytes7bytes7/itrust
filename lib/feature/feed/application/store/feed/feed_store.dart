@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
 import '../../../domain/service/feed_service.dart';
+import '../../coordinator/feed_coordinator.dart';
 import '../category/category_store.dart';
 
 part 'feed_store.g.dart';
@@ -12,14 +13,17 @@ class FeedStore = _FeedStore with _$FeedStore;
 
 abstract class _FeedStore extends SyncStore with Store {
   _FeedStore({
-    required FeedService feedService,
     required this.categoryStore,
-  }) : _feedService = feedService;
-
-  final FeedService _feedService;
-  var _processingCategory = '';
+    required FeedService feedService,
+    required FeedCoordinator feedCoordinator,
+  })  : _feedService = feedService,
+        _feedCoordinator = feedCoordinator;
 
   final CategoryStore categoryStore;
+
+  final FeedService _feedService;
+  final FeedCoordinator _feedCoordinator;
+  var _processingCategory = '';
 
   @readonly
   bool _isLoading = false;
@@ -50,5 +54,9 @@ abstract class _FeedStore extends SyncStore with Store {
         );
       }
     });
+  }
+
+  void onPostPressed() {
+    _feedCoordinator.onPostPressed();
   }
 }
