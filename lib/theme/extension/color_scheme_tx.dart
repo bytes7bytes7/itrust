@@ -26,6 +26,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.casualFilledIconBackground,
     required this.warningFilledIconBackground,
     required this.casualIcon,
+    required this.unselectedCasualIcon,
     required this.warningIcon,
     required this.casualTitle,
     required this.warningTitle,
@@ -58,6 +59,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color casualFilledIconBackground;
   final Color warningFilledIconBackground;
   final Color casualIcon;
+  final Color unselectedCasualIcon;
   final Color warningIcon;
   final Color casualTitle;
   final Color warningTitle;
@@ -89,6 +91,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? casualFilledIconBackground,
     Color? warningFilledIconBackground,
     Color? casualIcon,
+    Color? unselectedCasualIcon,
     Color? warningIcon,
     Color? casualTitle,
     Color? warningTitle,
@@ -124,6 +127,7 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       warningFilledIconBackground:
           warningFilledIconBackground ?? this.warningFilledIconBackground,
       casualIcon: casualIcon ?? this.casualIcon,
+      unselectedCasualIcon: unselectedCasualIcon ?? this.unselectedCasualIcon,
       warningIcon: warningIcon ?? this.warningIcon,
       casualTitle: casualTitle ?? this.casualTitle,
       warningTitle: warningTitle ?? this.warningTitle,
@@ -259,6 +263,11 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       casualIcon: Color.lerp(
         casualIcon,
         other.casualIcon,
+        t,
+      )!,
+      unselectedCasualIcon: Color.lerp(
+        unselectedCasualIcon,
+        other.unselectedCasualIcon,
         t,
       )!,
       warningIcon: Color.lerp(

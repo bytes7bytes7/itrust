@@ -1,16 +1,21 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../gen/assets.gen.dart';
+import '../../../theme/theme.dart';
 import '../../application/application.dart';
+
+const _iconSize = 24.0;
 
 final _getIt = GetIt.instance;
 
-const _tabIcons = [
-  Icons.home_outlined,
-  Icons.mode_comment_outlined,
-  Icons.menu,
+final _tabIcons = [
+  Assets.image.svg.home,
+  Assets.image.svg.chats,
+  Assets.image.svg.menu,
 ];
 
 class HomeScreen extends StatelessWidget {
@@ -35,6 +40,9 @@ class _BottomNavBar extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
+
     final homeStore = useMemoized(() => _getIt.get<HomeStore>());
 
     return Observer(
@@ -42,10 +50,18 @@ class _BottomNavBar extends HookWidget {
         return BottomNavigationBar(
           currentIndex: homeStore.currentTabIndex,
           onTap: homeStore.onTabSelect,
-          items: _tabIcons.map(
-            (icon) {
+          items: _tabIcons.mapIndexed(
+            (index, icon) {
+              final selected = homeStore.currentTabIndex == index;
+
               return BottomNavigationBarItem(
-                icon: Icon(icon),
+                icon: icon.svg(
+                  height: _iconSize,
+                  width: _iconSize,
+                  color: selected
+                      ? colorSchemeTX.casualIcon
+                      : colorSchemeTX.unselectedCasualIcon,
+                ),
                 label: '',
               );
             },

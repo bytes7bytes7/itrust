@@ -239,6 +239,7 @@ final lightTheme = ThemeData.light().copyWith(
       casualFilledIconBackground: _LightColors.cFF000000,
       warningFilledIconBackground: _LightColors.cFFEC2885,
       casualIcon: _LightColors.cFF000000,
+      unselectedCasualIcon: _LightColors.cFFC7C7C7,
       warningIcon: _LightColors.cFFEC2885,
       casualTitle: _LightColors.cFF000000,
       warningTitle: _LightColors.cFFEC2885,

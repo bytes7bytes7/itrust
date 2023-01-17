@@ -137,7 +137,9 @@ class _PostList extends StatelessWidget {
               // TODO: implement
               return PostCard(
                 name: 'name ${post.authorID.str}',
-                dateTime: '${_rand.nextInt(24)}:${_rand.nextInt(60)}',
+                dateTime: '${_rand.nextInt(24)}'
+                    ':'
+                    '${_rand.nextInt(60).toString().padLeft(2, '0')}',
                 avatarUrl: _rand.nextBool()
                     ? _avatars[_rand.nextInt(_avatars.length)]
                     : null,
