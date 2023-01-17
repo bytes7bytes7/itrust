@@ -59,16 +59,26 @@ class _Body extends HookWidget {
 
     useEffect(() {
       rulesStore.getRules();
-      return null;
+      return;
     });
 
     return Observer(
       builder: (context) {
         final rules = rulesStore.rules;
 
-        if (rules == null) {
+        if (rulesStore.isLoading) {
           return const Center(
             child: CircularProgressIndicator(),
+          );
+        }
+
+        if (rules == null) {
+          return Center(
+            child: Text(
+              l10n.unable_to_load_data,
+              style: theme.textTheme.bodyText1,
+              textAlign: TextAlign.center,
+            ),
           );
         }
 

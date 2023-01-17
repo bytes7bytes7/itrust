@@ -8,6 +8,7 @@
   "user_not_found_error": "User not found",
   "too_many_requests": "Too many requests. Try again later",
   "unknown_error": "Unknown error",
+  "unable_to_load_data": "Unable to load data. Try again later",
   "chat_tab_title": "Chats",
   "empty_chat_list_message": "No chats",
   "chat_card_author_and_msg_separator": ":",

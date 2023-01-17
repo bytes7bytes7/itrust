@@ -69,7 +69,7 @@ class _AppRoutes {
     },
   );
 
-  static final chats = GoRoute(
+  static final chatList = GoRoute(
     path: '/chats',
     name: 'chats',
     pageBuilder: (context, state) {
@@ -104,7 +104,7 @@ class _AppRoutes {
     },
     routes: [
       feed,
-      chats,
+      chatList,
       menu,
     ],
   );

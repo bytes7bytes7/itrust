@@ -15,7 +15,7 @@ class ProdHomeCoordinator extends Coordinator implements HomeCoordinator {
 
   final _routes = const [
     FeedRoute(),
-    ChatsRoute(),
+    ChatListRoute(),
     MenuRoute(),
   ];
 

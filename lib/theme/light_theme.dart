@@ -99,6 +99,46 @@ final lightTheme = ThemeData.light().copyWith(
       ),
     ),
   ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: ButtonStyle(
+      shape: MaterialStateProperty.resolveWith(
+        (states) {
+          if (states.contains(MaterialState.disabled)) {
+            return RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+              side: const BorderSide(
+                color: _LightColors.c14000000,
+              ),
+            );
+          }
+
+          return RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: const BorderSide(
+              color: _LightColors.cFF000000,
+            ),
+          );
+        },
+      ),
+      textStyle: MaterialStateProperty.resolveWith(
+        (states) {
+          if (states.contains(MaterialState.disabled)) {
+            return const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.normal,
+              color: _LightColors.c14000000,
+            );
+          }
+
+          return const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.normal,
+            color: _LightColors.cFF000000,
+          );
+        },
+      ),
+    ),
+  ),
   snackBarTheme: SnackBarThemeData(
     backgroundColor: _LightColors.cFFEC2885,
     shape: RoundedRectangleBorder(
@@ -257,6 +297,85 @@ final lightTheme = ThemeData.light().copyWith(
           (states) {
             return _LightColors.cFFFFFFFF;
           },
+        ),
+      ),
+      selectedCategoryItem: ButtonStyle(
+        padding: const MaterialStatePropertyAll(
+          EdgeInsets.symmetric(
+            horizontal: 12,
+          ),
+        ),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide.none,
+          ),
+        ),
+        textStyle: const MaterialStatePropertyAll(
+          TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
+        foregroundColor: const MaterialStatePropertyAll(
+          _LightColors.cFFFFFFFF,
+        ),
+        backgroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.disabled)) {
+              return _LightColors.c14000000;
+            }
+
+            return _LightColors.cFF000000;
+          },
+        ),
+      ),
+      unselectedCategoryItem: ButtonStyle(
+        padding: const MaterialStatePropertyAll(
+          EdgeInsets.symmetric(
+            horizontal: 12,
+          ),
+        ),
+        shape: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.disabled)) {
+              return RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              );
+            }
+
+            return RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            );
+          },
+        ),
+        side: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.disabled)) {
+              return const BorderSide(
+                color: _LightColors.c14000000,
+              );
+            }
+
+            return const BorderSide(
+              color: _LightColors.cFF000000,
+            );
+          },
+        ),
+        foregroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.disabled)) {
+              return _LightColors.c14000000;
+            }
+
+            return _LightColors.cFF000000;
+          },
+        ),
+        textStyle: const MaterialStatePropertyAll(
+          TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.normal,
+          ),
         ),
       ),
     ),
