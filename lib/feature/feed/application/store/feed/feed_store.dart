@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
@@ -15,7 +13,7 @@ final _logger = Logger('$FeedStore');
 @injectable
 class FeedStore = _FeedStore with _$FeedStore;
 
-abstract class _FeedStore with Store {
+abstract class _FeedStore extends SyncStore with Store {
   _FeedStore({
     required FeedService feedService,
     required this.categoryStore,
@@ -23,8 +21,6 @@ abstract class _FeedStore with Store {
 
   final FeedService _feedService;
   var _processingCategory = '';
-  final _loadingQueue = <int>[];
-  var _currentLoadingId = 0;
 
   final CategoryStore categoryStore;
 
@@ -33,6 +29,16 @@ abstract class _FeedStore with Store {
 
   @readonly
   String _error = '';
+
+  @override
+  void setIsLoading(bool value) {
+    _isLoading = value;
+  }
+
+  @override
+  void setError(String value) {
+    _error = value;
+  }
 
   @readonly
   List<Post> _posts = const [];
@@ -44,7 +50,7 @@ abstract class _FeedStore with Store {
       if (category != null) {
         _processingCategory = category;
 
-        _wrap(_currentLoadingId++, () async {
+        perform(() async {
           final data = await _feedService.loadPosts(category);
 
           _logger.finer(
@@ -58,19 +64,5 @@ abstract class _FeedStore with Store {
         });
       }
     });
-  }
-
-  Future<void> _wrap(int id, FutureOr<void> Function() callback) async {
-    _loadingQueue.add(id);
-
-    _isLoading = true;
-    _error = '';
-
-    await callback();
-
-    _loadingQueue.remove(id);
-    if (_loadingQueue.isEmpty) {
-      _isLoading = false;
-    }
   }
 }
