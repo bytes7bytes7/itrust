@@ -12,18 +12,18 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:go_router/go_router.dart' as _i36;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:itrust/features/auth/application/coordinators/auth_coordinator.dart'
-    as _i57;
+    as _i55;
 import 'package:itrust/features/auth/application/coordinators/rules_coordinator.dart'
-    as _i50;
+    as _i48;
 import 'package:itrust/features/auth/application/providers/auth_string_provider.dart'
     as _i31;
 import 'package:itrust/features/auth/application/stores/auth/auth_store.dart'
-    as _i56;
+    as _i54;
 import 'package:itrust/features/auth/application/stores/rules/rules_store.dart'
-    as _i48;
+    as _i46;
 import 'package:itrust/features/auth/auth.dart' as _i27;
 import 'package:itrust/features/auth/domain/services/rules_service.dart'
-    as _i49;
+    as _i47;
 import 'package:itrust/features/auth/infrastructure/providers/auth_string_provider.dart'
     as _i32;
 import 'package:itrust/features/auth/infrastructure/services/rules_service.dart'
@@ -39,7 +39,7 @@ import 'package:itrust/features/common/application/providers/date_format_provide
     as _i34;
 import 'package:itrust/features/common/application/providers/date_time_provider.dart'
     as _i16;
-import 'package:itrust/features/common/common.dart' as _i53;
+import 'package:itrust/features/common/common.dart' as _i51;
 import 'package:itrust/features/common/domain/domain.dart' as _i6;
 import 'package:itrust/features/common/infrastructure/persistence/chat_repository.dart'
     as _i9;
@@ -57,11 +57,11 @@ import 'package:itrust/features/connection/application/stores/connection/connect
     as _i15;
 import 'package:itrust/features/features.dart' as _i37;
 import 'package:itrust/features/feed/application/coordinators/feed_coordinator.dart'
-    as _i62;
+    as _i60;
 import 'package:itrust/features/feed/application/stores/category/category_store.dart'
     as _i5;
 import 'package:itrust/features/feed/application/stores/feed/feed_store.dart'
-    as _i61;
+    as _i59;
 import 'package:itrust/features/feed/domain/services/category_service.dart'
     as _i3;
 import 'package:itrust/features/feed/domain/services/feed_service.dart' as _i18;
@@ -79,13 +79,13 @@ import 'package:itrust/features/menu/application/coordinators/menu_coordinator.d
 import 'package:itrust/features/menu/application/stores/menu/menu_store.dart'
     as _i42;
 import 'package:itrust/features/post/application/coordinators/post_coordinator.dart'
-    as _i46;
+    as _i62;
 import 'package:itrust/features/post/application/mappers/comment_mapper.dart'
-    as _i58;
+    as _i56;
 import 'package:itrust/features/post/application/stores/comment/comment_store.dart'
-    as _i59;
+    as _i57;
 import 'package:itrust/features/post/application/stores/post/post_store.dart'
-    as _i45;
+    as _i61;
 import 'package:itrust/features/post/domain/domain.dart' as _i13;
 import 'package:itrust/features/post/domain/services/post_service.dart' as _i25;
 import 'package:itrust/features/post/infrastructure/services/comment_service.dart'
@@ -93,16 +93,16 @@ import 'package:itrust/features/post/infrastructure/services/comment_service.dar
 import 'package:itrust/features/post/infrastructure/services/post_service.dart'
     as _i26;
 import 'package:itrust/features/settings/application/coordinators/settings_coordinator.dart'
-    as _i54;
-import 'package:itrust/features/settings/application/stores/settings/settings_store.dart'
     as _i52;
+import 'package:itrust/features/settings/application/stores/settings/settings_store.dart'
+    as _i50;
 import 'package:itrust/main/application/coordinators/home_coordinator.dart'
     as _i38;
 import 'package:itrust/main/application/stores/home/home_store.dart' as _i40;
 import 'package:itrust/main/infrastructure/coordinators/auth_coordinator.dart'
-    as _i55;
+    as _i53;
 import 'package:itrust/main/infrastructure/coordinators/feed_coordinator.dart'
-    as _i60;
+    as _i58;
 import 'package:itrust/main/infrastructure/coordinators/home_coordinator.dart'
     as _i39;
 import 'package:itrust/main/infrastructure/coordinators/menu_coordinator.dart'
@@ -110,9 +110,9 @@ import 'package:itrust/main/infrastructure/coordinators/menu_coordinator.dart'
 import 'package:itrust/main/infrastructure/coordinators/post_coordinator.dart'
     as _i44;
 import 'package:itrust/main/infrastructure/coordinators/rules_coordinator.dart'
-    as _i47;
+    as _i45;
 import 'package:itrust/main/infrastructure/coordinators/settings_coordinator.dart'
-    as _i51;
+    as _i49;
 
 import '../router/router.dart' as _i63;
 import '../third_party/firebase_module.dart' as _i64;
@@ -212,46 +212,47 @@ Future<_i1.GetIt> init(
       () => _i42.MenuStore(menuCoordinator: gh<_i43.MenuCoordinator>()));
   gh.singleton<_i37.PostCoordinator>(
       _i44.ProdPostCoordinator(goRouter: gh<_i36.GoRouter>()));
-  gh.factory<_i45.PostStore>(() => _i45.PostStore(
-        postService: gh<_i25.PostService>(),
-        postCoordinator: gh<_i46.PostCoordinator>(),
-      ));
   gh.singleton<_i37.RulesCoordinator>(
-      _i47.ProdRulesCoordinator(goRouter: gh<_i36.GoRouter>()));
-  gh.factory<_i48.RulesStore>(() => _i48.RulesStore(
-        rulesService: gh<_i49.RulesService>(),
-        rulesCoordinator: gh<_i50.RulesCoordinator>(),
+      _i45.ProdRulesCoordinator(goRouter: gh<_i36.GoRouter>()));
+  gh.factory<_i46.RulesStore>(() => _i46.RulesStore(
+        rulesService: gh<_i47.RulesService>(),
+        rulesCoordinator: gh<_i48.RulesCoordinator>(),
       ));
   gh.singleton<_i37.SettingsCoordinator>(
-      _i51.ProdSettingsCoordinator(goRouter: gh<_i36.GoRouter>()));
-  gh.factory<_i52.SettingsStore>(() => _i52.SettingsStore(
-        authService: gh<_i53.AuthService>(),
-        settingsCoordinator: gh<_i54.SettingsCoordinator>(),
+      _i49.ProdSettingsCoordinator(goRouter: gh<_i36.GoRouter>()));
+  gh.factory<_i50.SettingsStore>(() => _i50.SettingsStore(
+        authService: gh<_i51.AuthService>(),
+        settingsCoordinator: gh<_i52.SettingsCoordinator>(),
       ));
   gh.singleton<_i37.AuthCoordinator>(
-    _i55.ProdAuthCoordinator(
+    _i53.ProdAuthCoordinator(
       goRouter: gh<_i36.GoRouter>(),
       authService: gh<_i37.AuthService>(),
     )..init(),
     dispose: (i) => i.dispose(),
   );
-  gh.factory<_i56.AuthStore>(() => _i56.AuthStore(
+  gh.factory<_i54.AuthStore>(() => _i54.AuthStore(
         authService: gh<_i6.AuthService>(),
-        authCoordinator: gh<_i57.AuthCoordinator>(),
+        authCoordinator: gh<_i55.AuthCoordinator>(),
         authStringProvider: gh<_i31.AuthStringProvider>(),
       ));
-  gh.singleton<_i58.CommentMapper>(
-      _i58.CommentMapper(dateFormatProvider: gh<_i53.DateFormatProvider>()));
-  gh.factory<_i59.CommentStore>(() => _i59.CommentStore(
+  gh.singleton<_i56.CommentMapper>(
+      _i56.CommentMapper(dateFormatProvider: gh<_i51.DateFormatProvider>()));
+  gh.factory<_i57.CommentStore>(() => _i57.CommentStore(
         commentService: gh<_i13.CommentService>(),
-        commentMapper: gh<_i58.CommentMapper>(),
+        commentMapper: gh<_i56.CommentMapper>(),
       ));
   gh.singleton<_i37.FeedCoordinator>(
-      _i60.ProdFeedCoordinator(goRouter: gh<_i36.GoRouter>()));
-  gh.factory<_i61.FeedStore>(() => _i61.FeedStore(
+      _i58.ProdFeedCoordinator(goRouter: gh<_i36.GoRouter>()));
+  gh.factory<_i59.FeedStore>(() => _i59.FeedStore(
         categoryStore: gh<_i5.CategoryStore>(),
         feedService: gh<_i18.FeedService>(),
-        feedCoordinator: gh<_i62.FeedCoordinator>(),
+        feedCoordinator: gh<_i60.FeedCoordinator>(),
+      ));
+  gh.factory<_i61.PostStore>(() => _i61.PostStore(
+        commentStore: gh<_i57.CommentStore>(),
+        postService: gh<_i25.PostService>(),
+        postCoordinator: gh<_i62.PostCoordinator>(),
       ));
   return getIt;
 }

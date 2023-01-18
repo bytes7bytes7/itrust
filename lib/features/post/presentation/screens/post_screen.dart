@@ -8,6 +8,7 @@ import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../common/common.dart';
 import '../../application/stores/post/post_store.dart';
+import '../widgets/widgets.dart';
 
 const _appBarHeight = 66.0;
 
@@ -35,6 +36,14 @@ class PostScreen extends HookWidget {
       const [],
     );
 
+    useEffect(
+      () {
+        postStore.commentStore.loadComments(postID);
+        return null;
+      },
+      const [],
+    );
+
     return Scaffold(
       appBar: _AppBar(
         postStore: postStore,
@@ -42,6 +51,7 @@ class PostScreen extends HookWidget {
       ),
       body: _Body(
         postStore: postStore,
+        l10n: l10n,
       ),
     );
   }
@@ -64,15 +74,20 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: preferredSize,
-      child: AppBar(
-        leading: FilledIconButton(
-          iconPath: Assets.image.svg.arrowBack.path,
-          onPressed: postStore.onBackButtonPressed,
-        ),
-        centerTitle: true,
-        title: Text(
-          l10n.post_screen_title,
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AppBar(
+            leading: FilledIconButton(
+              iconPath: Assets.image.svg.arrowBack.path,
+              onPressed: postStore.onBackButtonPressed,
+            ),
+            centerTitle: true,
+            title: Text(
+              l10n.post_screen_title,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -81,9 +96,11 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 class _Body extends StatelessWidget {
   const _Body({
     required this.postStore,
+    required this.l10n,
   });
 
   final PostStore postStore;
+  final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
@@ -95,17 +112,52 @@ class _Body extends StatelessWidget {
           );
         }
 
-        return ListView(
-          children: [
-            PostCard(
-              compressedText: false,
-              name: postStore.authorName,
-              avatarUrl: postStore.avatarUrl,
-              dateTime: postStore.createdAt,
-              text: postStore.text,
-              mediaUrls: postStore.mediaUrls,
-            ),
-          ],
+        if (postStore.commentStore.isLoading) {
+          return ListView(
+            children: [
+              PostCard(
+                isPreview: false,
+                name: postStore.authorName,
+                avatarUrl: postStore.avatarUrl,
+                dateTime: postStore.createdAt,
+                text: postStore.text,
+                mediaUrls: postStore.mediaUrls,
+              ),
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ],
+          );
+        }
+
+        return ListView.builder(
+          itemCount: postStore.commentStore.comments.length + 2,
+          itemBuilder: (context, index) {
+            if (index == 0) {
+              return PostCard(
+                isPreview: false,
+                name: postStore.authorName,
+                avatarUrl: postStore.avatarUrl,
+                dateTime: postStore.createdAt,
+                text: postStore.text,
+                mediaUrls: postStore.mediaUrls,
+              );
+            }
+
+            if (index == 1) {
+              return SectionTitle(
+                title: l10n.amount_of_comments(
+                  postStore.commentStore.comments.length,
+                ),
+              );
+            }
+
+            return CommentCard(
+              comment: postStore.commentStore.comments[index - 2],
+              isPreview: true,
+              onPressed: () {},
+            );
+          },
         );
       },
     );

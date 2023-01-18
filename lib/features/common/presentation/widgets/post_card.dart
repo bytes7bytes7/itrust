@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
-import '../../../feed/presentation/widgets/author_card_header.dart';
-import '../../../feed/presentation/widgets/image_grid.dart';
+import 'author_card_header.dart';
+import 'image_grid.dart';
 import 'outlined_icon_button.dart';
 
 const _marginV = 4.0;
@@ -22,7 +22,7 @@ class PostCard extends StatelessWidget {
     required this.dateTime,
     required this.mediaUrls,
     required this.text,
-    required this.compressedText,
+    required this.isPreview,
     this.onPressed,
     this.avatarUrl,
   });
@@ -33,77 +33,80 @@ class PostCard extends StatelessWidget {
   final List<String> mediaUrls;
   final String text;
   final VoidCallback? onPressed;
-  final bool compressedText;
+  final bool isPreview;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
-    return Material(
-      color: colorSchemeTX.postBackground,
-      child: InkWell(
-        onTap: onPressed,
-        child: Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: _marginV,
-          ),
-          color: Colors.transparent,
-          padding: const EdgeInsets.all(_paddingA),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AuthorCardHeader(
-                name: name,
-                dateTime: dateTime,
-                avatarUrl: avatarUrl,
-              ),
-              const SizedBox(
-                height: _underAuthorHeaderPadding,
-              ),
-              if (mediaUrls.isNotEmpty) ...[
-                SizedBox(
-                  height: _imageGridHeight,
-                  child: ImageGrid(
-                    imageUrls: mediaUrls,
-                  ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: _marginV,
+      ),
+      child: Material(
+        color: colorSchemeTX.postBackground,
+        child: InkWell(
+          onTap: onPressed,
+          child: Container(
+            padding: const EdgeInsets.all(_paddingA),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AuthorCardHeader(
+                  name: name,
+                  dateTime: dateTime,
+                  avatarUrl: avatarUrl,
                 ),
                 const SizedBox(
-                  height: _underImageGridPadding,
+                  height: _underAuthorHeaderPadding,
                 ),
-              ],
-              if (text.isNotEmpty) ...[
-                Text(
-                  text,
-                  style: theme.textTheme.bodyText1,
-                  overflow: compressedText ? TextOverflow.ellipsis : null,
-                  maxLines: compressedText ? _compressedTextMaxLines : null,
-                ),
-                const SizedBox(
-                  height: _underTextPadding,
-                ),
-              ],
-              Row(
-                children: [
-                  OutlinedIconButton(
-                    onPressed: () {},
-                    iconPath: Assets.image.svg.like.path,
+                if (mediaUrls.isNotEmpty) ...[
+                  SizedBox(
+                    height: _imageGridHeight,
+                    child: ImageGrid(
+                      imageUrls: mediaUrls,
+                    ),
                   ),
                   const SizedBox(
-                    width: _likeAndCommentPadding,
-                  ),
-                  OutlinedIconButton(
-                    onPressed: () {},
-                    iconPath: Assets.image.svg.chats.path,
-                  ),
-                  const Spacer(),
-                  OutlinedIconButton(
-                    onPressed: () {},
-                    iconPath: Assets.image.svg.share.path,
+                    height: _underImageGridPadding,
                   ),
                 ],
-              ),
-            ],
+                if (text.isNotEmpty) ...[
+                  Text(
+                    text,
+                    style: theme.textTheme.bodyText1,
+                    overflow: isPreview ? TextOverflow.ellipsis : null,
+                    maxLines: isPreview ? _compressedTextMaxLines : null,
+                  ),
+                  const SizedBox(
+                    height: _underTextPadding,
+                  ),
+                ],
+                Row(
+                  children: [
+                    OutlinedIconButton(
+                      onPressed: () {},
+                      iconPath: Assets.image.svg.like.path,
+                    ),
+                    if (isPreview) ...[
+                      const SizedBox(
+                        width: _likeAndCommentPadding,
+                      ),
+                      OutlinedIconButton(
+                        onPressed: () {},
+                        iconPath: Assets.image.svg.chats.path,
+                      ),
+                    ],
+                    const Spacer(),
+                    OutlinedIconButton(
+                      onPressed: () {},
+                      iconPath: Assets.image.svg.share.path,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

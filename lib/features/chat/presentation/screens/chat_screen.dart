@@ -59,17 +59,22 @@ class _AppBar extends HookWidget with PreferredSizeWidget {
 
     return PreferredSize(
       preferredSize: preferredSize,
-      child: AppBar(
-        leading: FilledIconButton(
-          iconPath: Assets.image.svg.arrowBack.path,
-          onPressed: chatStore.onBackPressed,
-        ),
-        centerTitle: true,
-        title: const _AppBarTitle(),
-        actions: [
-          FilledIconButton(
-            iconPath: Assets.image.svg.moreVert.path,
-            onPressed: () {},
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AppBar(
+            leading: FilledIconButton(
+              iconPath: Assets.image.svg.arrowBack.path,
+              onPressed: chatStore.onBackPressed,
+            ),
+            centerTitle: true,
+            title: const _AppBarTitle(),
+            actions: [
+              FilledIconButton(
+                iconPath: Assets.image.svg.moreVert.path,
+                onPressed: () {},
+              ),
+            ],
           ),
         ],
       ),

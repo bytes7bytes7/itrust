@@ -32,5 +32,13 @@
   "mute_notifications_btn_title": "Mute notifications",
   "burn_messages_btn_title": "Burn messages",
   "rules_screen_title": "Rules",
-  "post_screen_title": "Post"
+  "post_screen_title": "Post",
+  "amount_of_comments": "{amount} comment(s)",
+  "@amount_of_comments": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  }
 }

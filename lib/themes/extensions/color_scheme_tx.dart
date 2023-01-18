@@ -31,6 +31,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.casualTitle,
     required this.warningTitle,
     required this.postBackground,
+    required this.commentBackground,
+    required this.sectionTitleBackground,
   });
 
   final Color avatarBackground;
@@ -64,6 +66,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color casualTitle;
   final Color warningTitle;
   final Color postBackground;
+  final Color commentBackground;
+  final Color sectionTitleBackground;
 
   @override
   ThemeExtension<ColorSchemeTX> copyWith({
@@ -96,6 +100,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? casualTitle,
     Color? warningTitle,
     Color? postBackground,
+    Color? commentBackground,
+    Color? sectionTitleBackground,
   }) {
     return ColorSchemeTX(
       avatarBackground: avatarBackground ?? this.avatarBackground,
@@ -132,6 +138,9 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       casualTitle: casualTitle ?? this.casualTitle,
       warningTitle: warningTitle ?? this.warningTitle,
       postBackground: postBackground ?? this.postBackground,
+      commentBackground: commentBackground ?? this.commentBackground,
+      sectionTitleBackground:
+          sectionTitleBackground ?? this.sectionTitleBackground,
     );
   }
 
@@ -288,6 +297,16 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       postBackground: Color.lerp(
         postBackground,
         other.postBackground,
+        t,
+      )!,
+      commentBackground: Color.lerp(
+        commentBackground,
+        other.commentBackground,
+        t,
+      )!,
+      sectionTitleBackground: Color.lerp(
+        sectionTitleBackground,
+        other.sectionTitleBackground,
         t,
       )!,
     );

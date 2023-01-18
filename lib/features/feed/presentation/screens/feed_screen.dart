@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -11,6 +12,7 @@ import '../../application/application.dart';
 import '../widgets/widgets.dart';
 
 const _paddingV = 10.0;
+const _appBarHeight = 66.0;
 
 final _getIt = GetIt.instance;
 
@@ -45,13 +47,40 @@ class FeedScreen extends HookWidget {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          l10n.feed_tab_title,
-        ),
+      appBar: _AppBar(
+        l10n: l10n,
       ),
       body: _Body(
         feedStore: feedStore,
+      ),
+    );
+  }
+}
+
+// ignore: prefer_mixin
+class _AppBar extends StatelessWidget with PreferredSizeWidget {
+  const _AppBar({
+    required this.l10n,
+  });
+
+  final AppLocalizations l10n;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(_appBarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    return PreferredSize(
+      preferredSize: preferredSize,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AppBar(
+            title: Text(
+              l10n.feed_tab_title,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -137,7 +166,7 @@ class _PostList extends StatelessWidget {
 
               // TODO: implement
               return PostCard(
-                compressedText: true,
+                isPreview: true,
                 name: 'name ${post.authorID.str}',
                 dateTime: '${_rand.nextInt(24)}'
                     ':'

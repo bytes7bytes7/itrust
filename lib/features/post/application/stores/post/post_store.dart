@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/common.dart';
 import '../../../domain/services/post_service.dart';
 import '../../coordinators/post_coordinator.dart';
+import '../comment/comment_store.dart';
 
 part 'post_store.g.dart';
 
@@ -12,10 +13,13 @@ class PostStore = _PostStore with _$PostStore;
 
 abstract class _PostStore extends SyncStore with Store {
   _PostStore({
+    required this.commentStore,
     required PostService postService,
     required PostCoordinator postCoordinator,
   })  : _postService = postService,
         _postCoordinator = postCoordinator;
+
+  final CommentStore commentStore;
 
   final PostService _postService;
   final PostCoordinator _postCoordinator;

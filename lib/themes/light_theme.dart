@@ -197,6 +197,11 @@ final lightTheme = ThemeData.light().copyWith(
       fontWeight: FontWeight.bold,
       color: _LightColors.cFF000000,
     ),
+    subtitle2: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+      color: _LightColors.cFF000000,
+    ),
     bodyText1: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w400,
@@ -244,6 +249,8 @@ final lightTheme = ThemeData.light().copyWith(
       casualTitle: _LightColors.cFF000000,
       warningTitle: _LightColors.cFFEC2885,
       postBackground: _LightColors.cFFFFFFFF,
+      commentBackground: _LightColors.cFFFFFFFF,
+      sectionTitleBackground: _LightColors.cFFFFFFFF,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(

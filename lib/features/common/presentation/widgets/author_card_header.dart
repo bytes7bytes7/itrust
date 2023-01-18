@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
-import '../../../common/common.dart';
+import '../../common.dart';
 
 const _avatarSize = 40.0;
 const _imageBorderRadius = 8.0;
@@ -26,6 +26,7 @@ class AuthorCardHeader extends StatelessWidget {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
+    // TODO: add "edited at" text
     return Row(
       children: [
         Container(

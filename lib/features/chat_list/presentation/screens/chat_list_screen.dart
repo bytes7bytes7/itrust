@@ -41,22 +41,30 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return AppBar(
-      automaticallyImplyLeading: false,
-      title: Text(
-        l10n.chat_tab_title,
+    return PreferredSize(
+      preferredSize: preferredSize,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AppBar(
+            automaticallyImplyLeading: false,
+            title: Text(
+              l10n.chat_tab_title,
+            ),
+            actions: [
+              FilledIconButton(
+                iconPath: Assets.image.svg.add.path,
+                onPressed: () {},
+              ),
+              FilledIconButton(
+                iconPath: Assets.image.svg.search.path,
+                onPressed: () {},
+              ),
+            ],
+            bottom: const _AppBarBottom(),
+          ),
+        ],
       ),
-      actions: [
-        FilledIconButton(
-          iconPath: Assets.image.svg.add.path,
-          onPressed: () {},
-        ),
-        FilledIconButton(
-          iconPath: Assets.image.svg.search.path,
-          onPressed: () {},
-        ),
-      ],
-      bottom: const _AppBarBottom(),
     );
   }
 }
