@@ -1,6 +1,6 @@
 part of 'router.dart';
 
-final _homeNavigatorKey = GlobalKey<NavigatorState>();
+final _homeNavigatorKey = NavigatorKey();
 
 String _getName(GoRouterState state) => state.name ?? state.subloc;
 
@@ -16,6 +16,7 @@ class _AppRoutes {
   static final notFound = GoRoute(
     path: '/not_found',
     name: 'not_found',
+    parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       return NoTransitionPage(
         key: state.pageKey,
@@ -29,6 +30,7 @@ class _AppRoutes {
   static final auth = GoRoute(
     path: '/auth',
     name: 'auth',
+    parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       return NoTransitionPage(
         key: state.pageKey,
@@ -45,6 +47,7 @@ class _AppRoutes {
   static final rules = GoRoute(
     path: 'rules',
     name: 'rules',
+    parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       return CustomTransitionPage(
         key: state.pageKey,
@@ -75,6 +78,7 @@ class _AppRoutes {
   static final post = GoRoute(
     path: 'post',
     name: 'post',
+    parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       return CustomTransitionPage(
         key: state.pageKey,
@@ -129,6 +133,7 @@ class _AppRoutes {
   static final settings = GoRoute(
     path: '/settings',
     name: 'settings',
+    parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       return CustomTransitionPage(
         key: state.pageKey,

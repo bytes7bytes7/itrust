@@ -14,10 +14,12 @@ part 'cosy_route.dart';
 
 part 'app_routes.dart';
 
+final _rootKey = NavigatorKey();
+
 @module
 abstract class RouterModule {
   @singleton
-  NavigatorKey get rootKey => NavigatorKey();
+  NavigatorKey get rootKey => _rootKey;
 
   @singleton
   GoRouter router(
