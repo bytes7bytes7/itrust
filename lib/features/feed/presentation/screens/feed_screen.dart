@@ -6,6 +6,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../l10n/l10n.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/application.dart';
 import '../widgets/widgets.dart';
 
@@ -136,6 +137,7 @@ class _PostList extends StatelessWidget {
 
               // TODO: implement
               return PostCard(
+                compressedText: true,
                 name: 'name ${post.authorID.str}',
                 dateTime: '${_rand.nextInt(24)}'
                     ':'
@@ -145,7 +147,7 @@ class _PostList extends StatelessWidget {
                     : null,
                 mediaUrls: post.mediaUrls,
                 text: post.text,
-                onPressed: feedStore.onPostPressed,
+                onPressed: () => feedStore.onPostPressed(id: post.id.value),
               );
             },
           ),

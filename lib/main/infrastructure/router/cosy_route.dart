@@ -11,31 +11,29 @@ abstract class CosyRoute {
 
   Map<String, String> get queryParams => const {};
 
-  String namedLocation(BuildContext context) =>
-      GoRouter.of(context).namedLocation(
+  String namedLocation(GoRouter goRouter) => goRouter.namedLocation(
         route.name ?? '',
         params: params,
         queryParams: queryParams,
       );
 
-  void go(BuildContext context) => GoRouter.of(context).goNamed(
+  void go(GoRouter goRouter) => goRouter.goNamed(
         route.name ?? '',
         params: params,
         queryParams: queryParams,
       );
 
-  void push(BuildContext context) => GoRouter.of(context).pushNamed(
+  void push(GoRouter goRouter) => goRouter.pushNamed(
         route.name ?? '',
         params: params,
         queryParams: queryParams,
       );
 
-  bool canPop(BuildContext context) => GoRouter.of(context).canPop();
+  bool canPop(GoRouter goRouter) => goRouter.canPop();
 
-  void pop(BuildContext context) => GoRouter.of(context).pop();
+  void pop(GoRouter goRouter) => goRouter.pop();
 
-  void replaceReplacement(BuildContext context) =>
-      GoRouter.of(context).pushReplacementNamed(
+  void pushReplacement(GoRouter goRouter) => goRouter.pushReplacementNamed(
         route.name ?? '',
         params: params,
         queryParams: queryParams,

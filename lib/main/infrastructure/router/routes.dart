@@ -36,7 +36,16 @@ class FeedRoute extends CosyRoute {
 }
 
 class PostRoute extends CosyRoute {
-  const PostRoute();
+  const PostRoute({
+    required this.id,
+  });
+
+  final String id;
+
+  @override
+  Map<String, String> get params => {
+        'id': id,
+      };
 
   @override
   GoRoute get route => _AppRoutes.post;

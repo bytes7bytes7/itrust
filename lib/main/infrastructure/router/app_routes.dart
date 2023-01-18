@@ -76,16 +76,20 @@ class _AppRoutes {
   );
 
   static final post = GoRoute(
-    path: 'post',
+    path: 'post:id',
     name: 'post',
     parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
+      final id = state.params['id']!;
+
       return CustomTransitionPage(
         key: state.pageKey,
         name: _getName(state),
         arguments: _getArgs(state),
         transitionsBuilder: _leftward,
-        child: const PostScreen(),
+        child: PostScreen(
+          postID: id,
+        ),
       );
     },
   );

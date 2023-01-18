@@ -5,95 +5,102 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:firebase_auth/firebase_auth.dart' as _i17;
-import 'package:flutter/material.dart' as _i18;
+import 'package:firebase_auth/firebase_auth.dart' as _i16;
+import 'package:flutter/material.dart' as _i17;
 import 'package:flutter/widgets.dart' as _i29;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:go_router/go_router.dart' as _i30;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:itrust/feature/auth/application/coordinator/auth_coordinator.dart'
-    as _i46;
-import 'package:itrust/feature/auth/application/coordinator/rules_coordinator.dart'
-    as _i38;
-import 'package:itrust/feature/auth/application/provider/auth_string_provider.dart'
-    as _i27;
-import 'package:itrust/feature/auth/application/store/auth/auth_store.dart'
-    as _i48;
-import 'package:itrust/feature/auth/application/store/rules/rules_store.dart'
-    as _i40;
-import 'package:itrust/feature/auth/auth.dart' as _i22;
-import 'package:itrust/feature/auth/domain/service/rules_service.dart' as _i41;
-import 'package:itrust/feature/auth/infrastructure/provider/auth_string_provider.dart'
-    as _i28;
-import 'package:itrust/feature/auth/infrastructure/service/rules_service.dart'
-    as _i23;
-import 'package:itrust/feature/chat/application/store/chat_store/chat_store.dart'
-    as _i13;
-import 'package:itrust/feature/chat/domain/service/chat_service.dart' as _i11;
-import 'package:itrust/feature/chat/infrastructure/service/chat_service.dart'
-    as _i12;
-import 'package:itrust/feature/chat_list/application/store/chat_list/chat_list_store.dart'
-    as _i8;
-import 'package:itrust/feature/common/common.dart' as _i45;
-import 'package:itrust/feature/common/domain/domain.dart' as _i9;
-import 'package:itrust/feature/common/domain/service/auth_service.dart' as _i25;
-import 'package:itrust/feature/common/domain/service/chat_list_service.dart'
-    as _i6;
-import 'package:itrust/feature/common/infrastructure/persistence/chat_repository.dart'
-    as _i10;
-import 'package:itrust/feature/common/infrastructure/persistence/user_repository.dart'
-    as _i24;
-import 'package:itrust/feature/common/infrastructure/service/auth_service.dart'
-    as _i26;
-import 'package:itrust/feature/common/infrastructure/service/chat_list_service.dart'
-    as _i7;
-import 'package:itrust/feature/connection/application/store/connection/connection_store.dart'
-    as _i14;
-import 'package:itrust/feature/feature.dart' as _i31;
-import 'package:itrust/feature/feed/application/coordinator/feed_coordinator.dart'
+import 'package:itrust/features/auth/application/coordinators/auth_coordinator.dart'
     as _i51;
-import 'package:itrust/feature/feed/application/store/category/category_store.dart'
-    as _i5;
-import 'package:itrust/feature/feed/application/store/feed/feed_store.dart'
-    as _i50;
-import 'package:itrust/feature/feed/domain/service/category_service.dart'
-    as _i3;
-import 'package:itrust/feature/feed/domain/service/feed_service.dart' as _i15;
-import 'package:itrust/feature/feed/infrastructure/service/category_service.dart'
-    as _i4;
-import 'package:itrust/feature/feed/infrastructure/service/feed_service.dart'
-    as _i16;
-import 'package:itrust/feature/lock/application/store/lock/lock_store.dart'
-    as _i21;
-import 'package:itrust/feature/lock/domain/service/lock_service.dart' as _i19;
-import 'package:itrust/feature/lock/infrastructure/service/lock_service.dart'
-    as _i20;
-import 'package:itrust/feature/menu/application/coordinator/menu_coordinator.dart'
-    as _i35;
-import 'package:itrust/feature/menu/application/store/menu/menu_store.dart'
-    as _i37;
-import 'package:itrust/feature/settings/application/coordinator/settings_coordinator.dart'
-    as _i42;
-import 'package:itrust/feature/settings/application/store/settings/settings_store.dart'
+import 'package:itrust/features/auth/application/coordinators/rules_coordinator.dart'
     as _i44;
-import 'package:itrust/main/application/coordinator/home_coordinator.dart'
+import 'package:itrust/features/auth/application/providers/auth_string_provider.dart'
+    as _i27;
+import 'package:itrust/features/auth/application/stores/auth/auth_store.dart'
+    as _i50;
+import 'package:itrust/features/auth/application/stores/rules/rules_store.dart'
+    as _i42;
+import 'package:itrust/features/auth/auth.dart' as _i23;
+import 'package:itrust/features/auth/domain/services/rules_service.dart'
+    as _i43;
+import 'package:itrust/features/auth/infrastructure/providers/auth_string_provider.dart'
+    as _i28;
+import 'package:itrust/features/auth/infrastructure/services/rules_service.dart'
+    as _i24;
+import 'package:itrust/features/chat/application/stores/chat_store/chat_store.dart'
+    as _i12;
+import 'package:itrust/features/chat/domain/services/chat_service.dart' as _i10;
+import 'package:itrust/features/chat/infrastructure/services/chat_service.dart'
+    as _i11;
+import 'package:itrust/features/chat_list/application/stores/chat_list/chat_list_store.dart'
+    as _i8;
+import 'package:itrust/features/common/common.dart' as _i47;
+import 'package:itrust/features/common/domain/domain.dart' as _i6;
+import 'package:itrust/features/common/infrastructure/persistence/chat_repository.dart'
+    as _i9;
+import 'package:itrust/features/common/infrastructure/persistence/user_repository.dart'
+    as _i25;
+import 'package:itrust/features/common/infrastructure/services/auth_service.dart'
+    as _i26;
+import 'package:itrust/features/common/infrastructure/services/chat_list_service.dart'
+    as _i7;
+import 'package:itrust/features/connection/application/stores/connection/connection_store.dart'
+    as _i13;
+import 'package:itrust/features/features.dart' as _i31;
+import 'package:itrust/features/feed/application/coordinators/feed_coordinator.dart'
+    as _i54;
+import 'package:itrust/features/feed/application/stores/category/category_store.dart'
+    as _i5;
+import 'package:itrust/features/feed/application/stores/feed/feed_store.dart'
+    as _i53;
+import 'package:itrust/features/feed/domain/services/category_service.dart'
+    as _i3;
+import 'package:itrust/features/feed/domain/services/feed_service.dart' as _i14;
+import 'package:itrust/features/feed/infrastructure/services/category_service.dart'
+    as _i4;
+import 'package:itrust/features/feed/infrastructure/services/feed_service.dart'
+    as _i15;
+import 'package:itrust/features/lock/application/stores/lock/lock_store.dart'
+    as _i20;
+import 'package:itrust/features/lock/domain/services/lock_service.dart' as _i18;
+import 'package:itrust/features/lock/infrastructure/services/lock_service.dart'
+    as _i19;
+import 'package:itrust/features/menu/application/coordinators/menu_coordinator.dart'
+    as _i37;
+import 'package:itrust/features/menu/application/stores/menu/menu_store.dart'
+    as _i36;
+import 'package:itrust/features/post/application/coordinators/post_coordinator.dart'
+    as _i40;
+import 'package:itrust/features/post/application/stores/post_store.dart'
+    as _i39;
+import 'package:itrust/features/post/domain/services/post_service.dart' as _i21;
+import 'package:itrust/features/post/infrastructure/services/post_service.dart'
+    as _i22;
+import 'package:itrust/features/settings/application/coordinators/settings_coordinator.dart'
+    as _i48;
+import 'package:itrust/features/settings/application/stores/settings/settings_store.dart'
+    as _i46;
+import 'package:itrust/main/application/coordinators/home_coordinator.dart'
     as _i32;
-import 'package:itrust/main/application/store/home/home_store.dart' as _i34;
+import 'package:itrust/main/application/stores/home/home_store.dart' as _i34;
 import 'package:itrust/main/infrastructure/coordinators/auth_coordinator.dart'
-    as _i47;
-import 'package:itrust/main/infrastructure/coordinators/feed_coordinator.dart'
     as _i49;
+import 'package:itrust/main/infrastructure/coordinators/feed_coordinator.dart'
+    as _i52;
 import 'package:itrust/main/infrastructure/coordinators/home_coordinator.dart'
     as _i33;
 import 'package:itrust/main/infrastructure/coordinators/menu_coordinator.dart'
-    as _i36;
+    as _i35;
+import 'package:itrust/main/infrastructure/coordinators/post_coordinator.dart'
+    as _i38;
 import 'package:itrust/main/infrastructure/coordinators/rules_coordinator.dart'
-    as _i39;
+    as _i41;
 import 'package:itrust/main/infrastructure/coordinators/settings_coordinator.dart'
-    as _i43;
+    as _i45;
 
-import '../router/router.dart' as _i52;
-import '../third_party/firebase_module.dart' as _i53;
+import '../router/router.dart' as _i55;
+import '../third_party/firebase_module.dart' as _i56;
 
 const String _test = 'test';
 
@@ -124,39 +131,43 @@ Future<_i1.GetIt> init(
     dispose: (i) => i.dispose(),
   );
   gh.factory<_i8.ChatListStore>(
-      () => _i8.ChatListStore(chatListService: gh<_i9.ChatListService>()));
-  gh.lazySingleton<_i9.ChatRepository>(
-    () => _i10.TestChatRepository(),
+      () => _i8.ChatListStore(chatListService: gh<_i6.ChatListService>()));
+  gh.lazySingleton<_i6.ChatRepository>(
+    () => _i9.TestChatRepository(),
     registerFor: {_test},
   );
-  gh.singleton<_i11.ChatService>(
-    _i12.TestChatService(),
+  gh.singleton<_i10.ChatService>(
+    _i11.TestChatService(),
     registerFor: {_test},
   );
-  gh.factory<_i13.ChatStore>(
-      () => _i13.ChatStore(chatService: gh<_i11.ChatService>()));
-  gh.factory<_i14.ConnectionStore>(() => _i14.ConnectionStore());
-  gh.singleton<_i15.FeedService>(
-    _i16.TestFeedService(),
+  gh.factory<_i12.ChatStore>(
+      () => _i12.ChatStore(chatService: gh<_i10.ChatService>()));
+  gh.factory<_i13.ConnectionStore>(() => _i13.ConnectionStore());
+  gh.singleton<_i14.FeedService>(
+    _i15.TestFeedService(),
     registerFor: {_test},
   );
-  gh.singleton<_i17.FirebaseAuth>(firebaseModule.firebaseAuth);
-  gh.singleton<_i18.GlobalKey<_i18.NavigatorState>>(routerModule.rootKey);
-  gh.singleton<_i19.LockService>(
-    _i20.TestLockService(),
+  gh.singleton<_i16.FirebaseAuth>(firebaseModule.firebaseAuth);
+  gh.singleton<_i17.GlobalKey<_i17.NavigatorState>>(routerModule.rootKey);
+  gh.singleton<_i18.LockService>(
+    _i19.TestLockService(),
     registerFor: {_test},
   );
-  gh.factory<_i21.LockStore>(
-      () => _i21.LockStore(lockService: gh<_i19.LockService>()));
-  gh.singleton<_i22.RulesService>(
-    _i23.TestRulesService(),
+  gh.factory<_i20.LockStore>(
+      () => _i20.LockStore(lockService: gh<_i18.LockService>()));
+  gh.singleton<_i21.PostService>(
+    _i22.TestPostService(),
     registerFor: {_test},
   );
-  gh.singleton<_i9.UserRepository>(
-      _i24.ProdUserRepository(firebaseAuth: gh<_i17.FirebaseAuth>()));
-  await gh.singletonAsync<_i25.AuthService>(
+  gh.singleton<_i23.RulesService>(
+    _i24.TestRulesService(),
+    registerFor: {_test},
+  );
+  gh.singleton<_i6.UserRepository>(
+      _i25.ProdUserRepository(firebaseAuth: gh<_i16.FirebaseAuth>()));
+  await gh.singletonAsync<_i6.AuthService>(
     () {
-      final i = _i26.ProdAuthService(firebaseAuth: gh<_i17.FirebaseAuth>());
+      final i = _i26.ProdAuthService(firebaseAuth: gh<_i16.FirebaseAuth>());
       return i.init().then((_) => i);
     },
     preResolve: true,
@@ -164,7 +175,7 @@ Future<_i1.GetIt> init(
   gh.singleton<_i27.AuthStringProvider>(_i28.ProdAuthStringProvider(
       navigatorKey: gh<_i29.GlobalKey<_i29.NavigatorState>>()));
   gh.singleton<_i30.GoRouter>(routerModule.router(
-    gh<_i18.GlobalKey<_i18.NavigatorState>>(),
+    gh<_i17.GlobalKey<_i17.NavigatorState>>(),
     gh<_i31.AuthService>(),
   ));
   gh.singleton<_i32.HomeCoordinator>(
@@ -173,44 +184,50 @@ Future<_i1.GetIt> init(
   );
   gh.factory<_i34.HomeStore>(
       () => _i34.HomeStore(homeCoordinator: gh<_i32.HomeCoordinator>()));
-  gh.singleton<_i35.MenuCoordinator>(
-      _i36.ProdMenuCoordinator(goRouter: gh<_i30.GoRouter>()));
-  gh.factory<_i37.MenuStore>(
-      () => _i37.MenuStore(menuCoordinator: gh<_i35.MenuCoordinator>()));
-  gh.singleton<_i38.RulesCoordinator>(
-      _i39.ProdRulesCoordinator(goRouter: gh<_i30.GoRouter>()));
-  gh.factory<_i40.RulesStore>(() => _i40.RulesStore(
-        rulesService: gh<_i41.RulesService>(),
-        rulesCoordinator: gh<_i38.RulesCoordinator>(),
+  gh.singleton<_i31.MenuCoordinator>(
+      _i35.ProdMenuCoordinator(goRouter: gh<_i30.GoRouter>()));
+  gh.factory<_i36.MenuStore>(
+      () => _i36.MenuStore(menuCoordinator: gh<_i37.MenuCoordinator>()));
+  gh.singleton<_i31.PostCoordinator>(
+      _i38.ProdPostCoordinator(goRouter: gh<_i30.GoRouter>()));
+  gh.factory<_i39.PostStore>(() => _i39.PostStore(
+        postService: gh<_i21.PostService>(),
+        postCoordinator: gh<_i40.PostCoordinator>(),
       ));
-  gh.singleton<_i42.SettingsCoordinator>(
-      _i43.ProdSettingsCoordinator(goRouter: gh<_i30.GoRouter>()));
-  gh.factory<_i44.SettingsStore>(() => _i44.SettingsStore(
-        authService: gh<_i45.AuthService>(),
-        settingsCoordinator: gh<_i42.SettingsCoordinator>(),
+  gh.singleton<_i31.RulesCoordinator>(
+      _i41.ProdRulesCoordinator(goRouter: gh<_i30.GoRouter>()));
+  gh.factory<_i42.RulesStore>(() => _i42.RulesStore(
+        rulesService: gh<_i43.RulesService>(),
+        rulesCoordinator: gh<_i44.RulesCoordinator>(),
       ));
-  gh.singleton<_i46.AuthCoordinator>(
-    _i47.ProdAuthCoordinator(
+  gh.singleton<_i31.SettingsCoordinator>(
+      _i45.ProdSettingsCoordinator(goRouter: gh<_i30.GoRouter>()));
+  gh.factory<_i46.SettingsStore>(() => _i46.SettingsStore(
+        authService: gh<_i47.AuthService>(),
+        settingsCoordinator: gh<_i48.SettingsCoordinator>(),
+      ));
+  gh.singleton<_i31.AuthCoordinator>(
+    _i49.ProdAuthCoordinator(
       goRouter: gh<_i30.GoRouter>(),
-      authService: gh<_i45.AuthService>(),
+      authService: gh<_i31.AuthService>(),
     )..init(),
     dispose: (i) => i.dispose(),
   );
-  gh.factory<_i48.AuthStore>(() => _i48.AuthStore(
-        authService: gh<_i25.AuthService>(),
-        authCoordinator: gh<_i46.AuthCoordinator>(),
+  gh.factory<_i50.AuthStore>(() => _i50.AuthStore(
+        authService: gh<_i6.AuthService>(),
+        authCoordinator: gh<_i51.AuthCoordinator>(),
         authStringProvider: gh<_i27.AuthStringProvider>(),
       ));
   gh.singleton<_i31.FeedCoordinator>(
-      _i49.ProdFeedCoordinator(goRouter: gh<_i30.GoRouter>()));
-  gh.factory<_i50.FeedStore>(() => _i50.FeedStore(
+      _i52.ProdFeedCoordinator(goRouter: gh<_i30.GoRouter>()));
+  gh.factory<_i53.FeedStore>(() => _i53.FeedStore(
         categoryStore: gh<_i5.CategoryStore>(),
-        feedService: gh<_i15.FeedService>(),
-        feedCoordinator: gh<_i51.FeedCoordinator>(),
+        feedService: gh<_i14.FeedService>(),
+        feedCoordinator: gh<_i54.FeedCoordinator>(),
       ));
   return getIt;
 }
 
-class _$RouterModule extends _i52.RouterModule {}
+class _$RouterModule extends _i55.RouterModule {}
 
-class _$FirebaseModule extends _i53.FirebaseModule {}
+class _$FirebaseModule extends _i56.FirebaseModule {}

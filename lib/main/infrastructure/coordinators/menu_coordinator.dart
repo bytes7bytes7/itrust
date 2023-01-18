@@ -12,6 +12,6 @@ class ProdMenuCoordinator extends Coordinator implements MenuCoordinator {
 
   @override
   void onSettingsButtonPressed() {
-    goRouter.pushNamed(const SettingsRoute().route.name!);
+    const SettingsRoute().push(goRouter);
   }
 }

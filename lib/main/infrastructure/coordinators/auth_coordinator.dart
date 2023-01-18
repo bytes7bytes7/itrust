@@ -22,17 +22,17 @@ class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
     _authSub = _authService.onIsLoggedInChanged.listen((isLoggedIn) {
       final location = goRouter.location;
 
-      final isLoggingIn = location ==
-              goRouter.namedLocation(const AuthRoute().route.name!) ||
-          location == goRouter.namedLocation(const RulesRoute().route.name!) ||
-          location == '/';
+      final isLoggingIn =
+          location == const AuthRoute().namedLocation(goRouter) ||
+              location == const RulesRoute().namedLocation(goRouter) ||
+              location == '/';
 
       if (!isLoggedIn && !isLoggingIn) {
-        return goRouter.goNamed(const AuthRoute().route.name!);
+        return const AuthRoute().go(goRouter);
       }
 
       if (isLoggedIn && isLoggingIn) {
-        return goRouter.goNamed(const FeedRoute().route.name!);
+        return const FeedRoute().go(goRouter);
       }
     });
   }
@@ -45,6 +45,6 @@ class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
 
   @override
   void onRulesButtonPressed() {
-    goRouter.pushNamed(const RulesRoute().route.name!);
+    const RulesRoute().push(goRouter);
   }
 }

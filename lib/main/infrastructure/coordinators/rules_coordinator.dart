@@ -15,7 +15,7 @@ class ProdRulesCoordinator extends Coordinator implements RulesCoordinator {
     if (goRouter.canPop()) {
       goRouter.pop();
     } else {
-      goRouter.goNamed(const AuthRoute().route.name!);
+      const AuthRoute().go(goRouter);
     }
   }
 }

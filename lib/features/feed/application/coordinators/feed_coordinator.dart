@@ -1,3 +1,3 @@
 abstract class FeedCoordinator {
-  void onPostPressed();
+  void onPostPressed(String id);
 }

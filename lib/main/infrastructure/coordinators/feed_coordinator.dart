@@ -9,7 +9,9 @@ class ProdFeedCoordinator extends Coordinator implements FeedCoordinator {
   ProdFeedCoordinator({required super.goRouter});
 
   @override
-  void onPostPressed() {
-    goRouter.pushNamed(const PostRoute().route.name!);
+  void onPostPressed(String id) {
+    PostRoute(
+      id: id,
+    ).go(goRouter);
   }
 }

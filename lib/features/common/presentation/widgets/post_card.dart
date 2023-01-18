@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
-import '../../../common/common.dart';
-import 'author_card_header.dart';
-import 'image_grid.dart';
+import '../../../feed/presentation/widgets/author_card_header.dart';
+import '../../../feed/presentation/widgets/image_grid.dart';
+import 'outlined_icon_button.dart';
 
 const _marginV = 4.0;
 const _paddingA = 14.0;
@@ -13,6 +13,7 @@ const _imageGridHeight = 300.0;
 const _underImageGridPadding = 16.0;
 const _underTextPadding = 16.0;
 const _likeAndCommentPadding = 24.0;
+const _compressedTextMaxLines = 5;
 
 class PostCard extends StatelessWidget {
   const PostCard({
@@ -21,7 +22,8 @@ class PostCard extends StatelessWidget {
     required this.dateTime,
     required this.mediaUrls,
     required this.text,
-    required this.onPressed,
+    required this.compressedText,
+    this.onPressed,
     this.avatarUrl,
   });
 
@@ -30,7 +32,8 @@ class PostCard extends StatelessWidget {
   final String? avatarUrl;
   final List<String> mediaUrls;
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
+  final bool compressedText;
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +76,8 @@ class PostCard extends StatelessWidget {
                 Text(
                   text,
                   style: theme.textTheme.bodyText1,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 5,
+                  overflow: compressedText ? TextOverflow.ellipsis : null,
+                  maxLines: compressedText ? _compressedTextMaxLines : null,
                 ),
                 const SizedBox(
                   height: _underTextPadding,

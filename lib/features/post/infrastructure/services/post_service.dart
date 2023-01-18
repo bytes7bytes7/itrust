@@ -3,31 +3,31 @@ import 'dart:math';
 import 'package:injectable/injectable.dart';
 
 import '../../../common/common.dart';
-import '../../domain/services/feed_service.dart';
+import '../../domain/services/post_service.dart';
 
 @test
-@Singleton(as: FeedService)
-class TestFeedService implements FeedService {
+@Singleton(as: PostService)
+class TestPostService implements PostService {
   @override
-  Future<List<Post>> loadPosts(String category) {
-    return Future.delayed(Duration(seconds: _rand.nextInt(3) + 1), () {
-      return List.generate(
-        _rand.nextInt(30) + 10,
-        (index) {
-          _mediaUrls.shuffle();
-
-          return Post(
-            id: PostID('$category ${_randString(8)}'),
-            authorID: UserID(_randString(8)),
-            createdAt: _randDateTime(),
-            text: _rand.nextBool() ? _randString(_rand.nextInt(500) + 30) : '',
-            seenBy: [],
-            mediaUrls:
-                _mediaUrls.take(_rand.nextInt(_mediaUrls.length)).toList(),
-          );
-        },
-      );
-    });
+  Future<Post> loadPost(PostID postID) {
+    return Future.delayed(
+      Duration(seconds: _rand.nextInt(3) + 1),
+      () {
+        return Post(
+          id: postID,
+          authorID: UserID('user ${_rand.nextInt(1000)}'),
+          createdAt: _randDateTime(),
+          mediaUrls: _rand.nextBool()
+              ? _mediaUrls.sublist(
+                  0,
+                  _rand.nextInt(_mediaUrls.length),
+                )
+              : [],
+          text: _rand.nextBool() ? _randString(_rand.nextInt(5000) + 30) : '',
+          seenBy: [],
+        );
+      },
+    );
   }
 
   final _rand = Random();
@@ -44,17 +44,6 @@ class TestFeedService implements FeedService {
     return buffer.toString();
   }
 
-  DateTime _randDateTime() {
-    return DateTime(
-      2023,
-      1,
-      _rand.nextInt(31) + 1,
-      _rand.nextInt(24),
-      _rand.nextInt(60),
-      _rand.nextInt(60),
-    );
-  }
-
   final _mediaUrls = [
     'https://media.vogue.co.uk/photos/5fd8cfe1fd34bd57d1413164/2:3/w_1331,h_1997,c_limit/042-Adesuwa%20Aighewi%20by%20STYLEDUMONDE%20Street%20Style%20Fashion%20Photography_95A0861FullRes.jpg',
     'https://www.iwmbuzz.com/wp-content/uploads/2022/02/boys-out-there-style-your-hair-dye-your-hair-just-like-riyaz-aly-to-impress-your-girl-2.jpg',
@@ -69,4 +58,15 @@ class TestFeedService implements FeedService {
     'https://www.befunky.com/images/prismic/5ddfea42-7377-4bef-9ac4-f3bd407d52ab_landing-photo-to-cartoon-img5.jpeg?auto=avif,webp&format=jpg&width=863',
     'https://www.befunky.com/images/prismic/318d2218-716f-4dd6-a95d-9fa409ec447e_landing-photo-to-cartoon-img4.jpeg?auto=avif,webp&format=jpg&width=863',
   ];
+
+  DateTime _randDateTime() {
+    return DateTime(
+      2023,
+      1,
+      _rand.nextInt(31) + 1,
+      _rand.nextInt(24),
+      _rand.nextInt(60),
+      _rand.nextInt(60),
+    );
+  }
 }
