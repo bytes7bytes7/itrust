@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../themes/themes.dart';
 
-const _marginV = 10.0;
+const _marginV = 4.0;
 const _paddingH = 20.0;
 const _paddingV = 10.0;
 

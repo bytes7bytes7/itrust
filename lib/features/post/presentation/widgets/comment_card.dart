@@ -5,7 +5,7 @@ import '../../../../themes/themes.dart';
 import '../../../common/common.dart';
 import '../../application/view_models/view_models.dart';
 
-const _marginV = 10.0;
+const _marginV = 4.0;
 const _paddingH = 20.0;
 const _paddingV = 10.0;
 const _underAuthorHeaderPadding = 20.0;
@@ -75,7 +75,7 @@ class CommentCard extends StatelessWidget {
                       ),
                       OutlinedIconButton(
                         onPressed: () {},
-                        iconPath: Assets.image.svg.chats.path,
+                        iconPath: Assets.image.svg.flipForward.path,
                       ),
                     ],
                     const Spacer(),
