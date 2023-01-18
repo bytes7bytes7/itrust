@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../theme/theme.dart';
+import '../../themes/themes.dart';
 
 const _appTitle = 'ITrust';
 final _getIt = GetIt.instance;

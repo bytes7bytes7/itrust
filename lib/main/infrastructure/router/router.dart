@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../feature/feature.dart';
-import '../../../util/typedef.dart';
-import '../../presentation/screen/screen.dart';
+import '../../../features/features.dart';
+import '../../../utils/typedef.dart';
+import '../../presentation/screens/screens.dart';
 
 part 'transition.dart';
 

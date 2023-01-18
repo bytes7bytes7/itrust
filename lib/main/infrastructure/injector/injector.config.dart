@@ -79,17 +79,17 @@ import 'package:itrust/feature/settings/application/store/settings/settings_stor
 import 'package:itrust/main/application/coordinator/home_coordinator.dart'
     as _i32;
 import 'package:itrust/main/application/store/home/home_store.dart' as _i34;
-import 'package:itrust/main/infrastructure/coordinator/auth_coordinator.dart'
+import 'package:itrust/main/infrastructure/coordinators/auth_coordinator.dart'
     as _i47;
-import 'package:itrust/main/infrastructure/coordinator/feed_coordinator.dart'
+import 'package:itrust/main/infrastructure/coordinators/feed_coordinator.dart'
     as _i49;
-import 'package:itrust/main/infrastructure/coordinator/home_coordinator.dart'
+import 'package:itrust/main/infrastructure/coordinators/home_coordinator.dart'
     as _i33;
-import 'package:itrust/main/infrastructure/coordinator/menu_coordinator.dart'
+import 'package:itrust/main/infrastructure/coordinators/menu_coordinator.dart'
     as _i36;
-import 'package:itrust/main/infrastructure/coordinator/rules_coordinator.dart'
+import 'package:itrust/main/infrastructure/coordinators/rules_coordinator.dart'
     as _i39;
-import 'package:itrust/main/infrastructure/coordinator/settings_coordinator.dart'
+import 'package:itrust/main/infrastructure/coordinators/settings_coordinator.dart'
     as _i43;
 
 import '../router/router.dart' as _i52;
