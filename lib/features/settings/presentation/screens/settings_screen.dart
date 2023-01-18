@@ -35,8 +35,7 @@ final _user = EndUser(
           'https://img.freepik.com/free-photo/portrait-dark-skinned-cheerful-woman-with-curly-hair-touches-chin-gently-laughs-happily-enjoys-day-off-feels-happy-enthusiastic-hears-something-positive-wears-casual-blue-turtleneck_273609-43443.jpg?w=2000'
         ]
       : [],
-  online: _rand.nextBool(),
-  email: _rand.nextBool() ? _randString(_rand.nextInt(8) + 10) : null,
+  email: _randString(_rand.nextInt(8) + 10),
   name: _rand.nextBool() ? _randString(_rand.nextInt(8) + 10) : null,
 );
 

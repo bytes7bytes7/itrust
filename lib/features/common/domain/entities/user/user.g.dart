@@ -28,21 +28,15 @@ _$EndUser _$$EndUserFromJson(Map<String, dynamic> json) => _$EndUser(
       avatarUrls: (json['avatarUrls'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      online: json['online'] as bool,
-      email: json['email'] as String?,
+      email: json['email'] as String,
       name: json['name'] as String?,
-      lastSeen: json['lastSeen'] == null
-          ? null
-          : DateTime.parse(json['lastSeen'] as String),
       $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
       'id': instance.id.toJson(),
       'avatarUrls': instance.avatarUrls,
-      'online': instance.online,
       'email': instance.email,
       'name': instance.name,
-      'lastSeen': instance.lastSeen?.toIso8601String(),
       'type': instance.$type,
     };

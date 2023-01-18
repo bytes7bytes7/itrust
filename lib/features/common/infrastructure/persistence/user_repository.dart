@@ -27,11 +27,10 @@ class ProdUserRepository implements UserRepository {
     return EndUser(
       id: UserID(user.uid),
       name: user.displayName,
-      email: user.email,
+      // TODO: think about email. Will it always be non-nullable?
+      email: user.email!,
       // TODO: remake
       avatarUrls: user.photoURL != null ? [user.photoURL!] : [],
-      // TODO: remake
-      online: true,
     );
   }
 }

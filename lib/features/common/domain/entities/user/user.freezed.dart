@@ -36,24 +36,24 @@ mixin _$User {
   TResult when<TResult extends Object?>({
     required TResult Function(UserID id, String name, List<String> avatarUrls)
         staff,
-    required TResult Function(UserID id, List<String> avatarUrls, bool online,
-            String? email, String? name, DateTime? lastSeen)
+    required TResult Function(
+            UserID id, List<String> avatarUrls, String email, String? name)
         end,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult? Function(UserID id, List<String> avatarUrls, bool online,
-            String? email, String? name, DateTime? lastSeen)?
+    TResult? Function(
+            UserID id, List<String> avatarUrls, String email, String? name)?
         end,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult Function(UserID id, List<String> avatarUrls, bool online,
-            String? email, String? name, DateTime? lastSeen)?
+    TResult Function(
+            UserID id, List<String> avatarUrls, String email, String? name)?
         end,
     required TResult orElse(),
   }) =>
@@ -240,8 +240,8 @@ class _$StaffUser implements StaffUser {
   TResult when<TResult extends Object?>({
     required TResult Function(UserID id, String name, List<String> avatarUrls)
         staff,
-    required TResult Function(UserID id, List<String> avatarUrls, bool online,
-            String? email, String? name, DateTime? lastSeen)
+    required TResult Function(
+            UserID id, List<String> avatarUrls, String email, String? name)
         end,
   }) {
     return staff(id, name, avatarUrls);
@@ -251,8 +251,8 @@ class _$StaffUser implements StaffUser {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult? Function(UserID id, List<String> avatarUrls, bool online,
-            String? email, String? name, DateTime? lastSeen)?
+    TResult? Function(
+            UserID id, List<String> avatarUrls, String email, String? name)?
         end,
   }) {
     return staff?.call(id, name, avatarUrls);
@@ -262,8 +262,8 @@ class _$StaffUser implements StaffUser {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult Function(UserID id, List<String> avatarUrls, bool online,
-            String? email, String? name, DateTime? lastSeen)?
+    TResult Function(
+            UserID id, List<String> avatarUrls, String email, String? name)?
         end,
     required TResult orElse(),
   }) {
@@ -338,13 +338,7 @@ abstract class _$$EndUserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$EndUserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {UserID id,
-      List<String> avatarUrls,
-      bool online,
-      String? email,
-      String? name,
-      DateTime? lastSeen});
+  $Res call({UserID id, List<String> avatarUrls, String email, String? name});
 
   @override
   $UserIDCopyWith<$Res> get id;
@@ -361,10 +355,8 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
   $Res call({
     Object? id = null,
     Object? avatarUrls = null,
-    Object? online = null,
-    Object? email = freezed,
+    Object? email = null,
     Object? name = freezed,
-    Object? lastSeen = freezed,
   }) {
     return _then(_$EndUser(
       id: null == id
@@ -375,22 +367,14 @@ class __$$EndUserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$EndUser>
           ? _value._avatarUrls
           : avatarUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      online: null == online
-          ? _value.online
-          : online // ignore: cast_nullable_to_non_nullable
-              as bool,
-      email: freezed == email
+      email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastSeen: freezed == lastSeen
-          ? _value.lastSeen
-          : lastSeen // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
     ));
   }
 }
@@ -401,10 +385,8 @@ class _$EndUser implements EndUser {
   const _$EndUser(
       {required this.id,
       required final List<String> avatarUrls,
-      required this.online,
-      this.email,
+      required this.email,
       this.name,
-      this.lastSeen,
       final String? $type})
       : _avatarUrls = avatarUrls,
         $type = $type ?? 'end';
@@ -423,20 +405,16 @@ class _$EndUser implements EndUser {
   }
 
   @override
-  final bool online;
-  @override
-  final String? email;
+  final String email;
   @override
   final String? name;
-  @override
-  final DateTime? lastSeen;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'User.end(id: $id, avatarUrls: $avatarUrls, online: $online, email: $email, name: $name, lastSeen: $lastSeen)';
+    return 'User.end(id: $id, avatarUrls: $avatarUrls, email: $email, name: $name)';
   }
 
   @override
@@ -447,23 +425,14 @@ class _$EndUser implements EndUser {
             (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality()
                 .equals(other._avatarUrls, _avatarUrls) &&
-            (identical(other.online, online) || other.online == online) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.lastSeen, lastSeen) ||
-                other.lastSeen == lastSeen));
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      const DeepCollectionEquality().hash(_avatarUrls),
-      online,
-      email,
-      name,
-      lastSeen);
+  int get hashCode => Object.hash(runtimeType, id,
+      const DeepCollectionEquality().hash(_avatarUrls), email, name);
 
   @JsonKey(ignore: true)
   @override
@@ -476,35 +445,35 @@ class _$EndUser implements EndUser {
   TResult when<TResult extends Object?>({
     required TResult Function(UserID id, String name, List<String> avatarUrls)
         staff,
-    required TResult Function(UserID id, List<String> avatarUrls, bool online,
-            String? email, String? name, DateTime? lastSeen)
+    required TResult Function(
+            UserID id, List<String> avatarUrls, String email, String? name)
         end,
   }) {
-    return end(id, avatarUrls, online, email, name, lastSeen);
+    return end(id, avatarUrls, email, name);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult? Function(UserID id, List<String> avatarUrls, bool online,
-            String? email, String? name, DateTime? lastSeen)?
+    TResult? Function(
+            UserID id, List<String> avatarUrls, String email, String? name)?
         end,
   }) {
-    return end?.call(id, avatarUrls, online, email, name, lastSeen);
+    return end?.call(id, avatarUrls, email, name);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(UserID id, String name, List<String> avatarUrls)? staff,
-    TResult Function(UserID id, List<String> avatarUrls, bool online,
-            String? email, String? name, DateTime? lastSeen)?
+    TResult Function(
+            UserID id, List<String> avatarUrls, String email, String? name)?
         end,
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id, avatarUrls, online, email, name, lastSeen);
+      return end(id, avatarUrls, email, name);
     }
     return orElse();
   }
@@ -552,10 +521,8 @@ abstract class EndUser implements User {
   const factory EndUser(
       {required final UserID id,
       required final List<String> avatarUrls,
-      required final bool online,
-      final String? email,
-      final String? name,
-      final DateTime? lastSeen}) = _$EndUser;
+      required final String email,
+      final String? name}) = _$EndUser;
 
   factory EndUser.fromJson(Map<String, dynamic> json) = _$EndUser.fromJson;
 
@@ -563,11 +530,9 @@ abstract class EndUser implements User {
   UserID get id;
   @override
   List<String> get avatarUrls;
-  bool get online;
-  String? get email;
+  String get email;
   @override
   String? get name;
-  DateTime? get lastSeen;
   @override
   @JsonKey(ignore: true)
   _$$EndUserCopyWith<_$EndUser> get copyWith =>

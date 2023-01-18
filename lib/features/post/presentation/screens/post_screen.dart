@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../common/common.dart';
-import '../../application/stores/post_store.dart';
+import '../../application/stores/post/post_store.dart';
 
 const _appBarHeight = 66.0;
 

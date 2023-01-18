@@ -16,13 +16,14 @@ class User with _$User {
     required List<String> avatarUrls,
   }) = StaffUser;
 
+  // Can be added later:
+  //  bool online
+  //  DateTime lastSeenAt
   const factory User.end({
     required UserID id,
     required List<String> avatarUrls,
-    required bool online,
-    String? email,
+    required String email,
     String? name,
-    DateTime? lastSeen,
   }) = EndUser;
 
   factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);

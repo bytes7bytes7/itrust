@@ -1,9 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../common/common.dart';
-import '../../domain/services/post_service.dart';
-import '../coordinators/post_coordinator.dart';
+import '../../../../common/common.dart';
+import '../../../domain/services/post_service.dart';
+import '../../coordinators/post_coordinator.dart';
 
 part 'post_store.g.dart';
 
