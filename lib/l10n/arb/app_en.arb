@@ -40,5 +40,13 @@
         "type": "int"
       }
     }
+  },
+  "comment_edited_at": "edited {dateTime}",
+  "@comment_edited_at": {
+    "placeholders": {
+      "dateTime": {
+        "type": "String"
+      }
+    }
   }
 }

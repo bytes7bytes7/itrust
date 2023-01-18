@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../../themes/themes.dart';
 import '../../../common/common.dart';
 import '../../application/view_models/view_models.dart';
@@ -31,6 +32,13 @@ class CommentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
+    final l10n = context.l10n;
+
+    final modifiedAt = comment.modifiedAt;
+
+    final dateTime = modifiedAt != null
+        ? l10n.comment_edited_at(modifiedAt)
+        : comment.createdAt;
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -50,7 +58,7 @@ class CommentCard extends StatelessWidget {
               children: [
                 AuthorCardHeader(
                   name: comment.authorName,
-                  dateTime: comment.modifiedAt ?? comment.createdAt,
+                  dateTime: dateTime,
                   avatarUrl: comment.avatarUrl,
                 ),
                 const SizedBox(
