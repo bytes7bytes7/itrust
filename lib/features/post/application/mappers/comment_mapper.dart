@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
-import 'package:intl/intl.dart';
 
 import '../../../common/common.dart';
 import '../../domain/domain.dart';
@@ -19,19 +18,15 @@ class CommentMapper
   CommentVM map(Comment comment, User user) {
     final modifiedAt = comment.modifiedAt;
 
-    DateFormat? modifiedAtFormat;
+    String? formattedModifiedAt;
     if (modifiedAt != null) {
-      modifiedAtFormat = DateFormat(
-        _dateFormatProvider.inRelationToNow(
-          modifiedAt,
-        ),
+      formattedModifiedAt = _dateFormatProvider.inRelationToNow(
+        modifiedAt,
       );
     }
 
-    final createdAtFormat = DateFormat(
-      _dateFormatProvider.inRelationToNow(
-        comment.createdAt,
-      ),
+    final formattedCreatedAt = _dateFormatProvider.inRelationToNow(
+      comment.createdAt,
     );
 
     return CommentVM(
@@ -39,9 +34,8 @@ class CommentMapper
       authorID: comment.authorID.str,
       postID: comment.postID.str,
       text: comment.text,
-      createdAt: createdAtFormat.format(comment.createdAt),
-      modifiedAt:
-          modifiedAt != null ? modifiedAtFormat?.format(modifiedAt) : null,
+      createdAt: formattedCreatedAt,
+      modifiedAt: formattedModifiedAt,
       authorName: user.map(
         staff: (user) => user.name,
         end: (user) => user.name ?? user.email,

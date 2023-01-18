@@ -26,7 +26,6 @@ class AuthorCardHeader extends StatelessWidget {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
-    // TODO: add "edited at" text
     return Row(
       children: [
         Container(
