@@ -122,6 +122,8 @@ class _Body extends StatelessWidget {
                 dateTime: postStore.createdAt,
                 text: postStore.text,
                 mediaUrls: postStore.mediaUrls,
+                isLickedByMe: postStore.isLickedByMe,
+                onIsLickedChanged: postStore.onIsLickedPostChanged,
               ),
               const Center(
                 child: CircularProgressIndicator(),
@@ -141,6 +143,8 @@ class _Body extends StatelessWidget {
                 dateTime: postStore.createdAt,
                 text: postStore.text,
                 mediaUrls: postStore.mediaUrls,
+                isLickedByMe: postStore.isLickedByMe,
+                onIsLickedChanged: postStore.onIsLickedPostChanged,
               );
             }
 

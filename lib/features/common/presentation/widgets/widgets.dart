@@ -11,5 +11,6 @@ export 'outlined_text_field.dart';
 export 'post_card.dart';
 export 'section_title.dart';
 export 'sized_icon.dart';
+export 'switching_icon_button.dart';
 export 'user_circle_avatar.dart';
 export 'user_info.dart';

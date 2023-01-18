@@ -66,22 +66,25 @@ class CommentCard extends StatelessWidget {
                 Row(
                   children: [
                     OutlinedIconButton(
-                      onPressed: () {},
                       iconPath: Assets.image.svg.like.path,
+                      color: colorSchemeTX.casualIcon,
+                      onPressed: () {},
                     ),
                     if (isPreview) ...[
                       const SizedBox(
                         width: _likeAndReplyPadding,
                       ),
                       OutlinedIconButton(
-                        onPressed: () {},
                         iconPath: Assets.image.svg.flipForward.path,
+                        color: colorSchemeTX.casualIcon,
+                        onPressed: () {},
                       ),
                     ],
                     const Spacer(),
                     OutlinedIconButton(
-                      onPressed: () {},
                       iconPath: Assets.image.svg.share.path,
+                      color: colorSchemeTX.casualIcon,
+                      onPressed: () {},
                     ),
                   ],
                 ),

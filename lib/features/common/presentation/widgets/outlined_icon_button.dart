@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../themes/themes.dart';
 import 'sized_icon.dart';
 
 const _splashRadius = 24.0;
@@ -11,17 +10,16 @@ class OutlinedIconButton extends StatelessWidget {
   const OutlinedIconButton({
     super.key,
     required this.iconPath,
+    required this.color,
     this.onPressed,
   });
 
   final String iconPath;
+  final Color color;
   final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
-
     return IconButton(
       padding: EdgeInsets.zero,
       splashRadius: _splashRadius,
@@ -31,7 +29,7 @@ class OutlinedIconButton extends StatelessWidget {
         size: _iconSize,
         icon: SvgPicture.asset(
           iconPath,
-          color: colorSchemeTX.casualIcon,
+          color: color,
         ),
       ),
     );

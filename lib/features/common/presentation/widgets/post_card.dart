@@ -5,6 +5,7 @@ import '../../../../themes/themes.dart';
 import 'author_card_header.dart';
 import 'image_grid.dart';
 import 'outlined_icon_button.dart';
+import 'switching_icon_button.dart';
 
 const _marginV = 4.0;
 const _paddingA = 14.0;
@@ -23,6 +24,8 @@ class PostCard extends StatelessWidget {
     required this.mediaUrls,
     required this.text,
     required this.isPreview,
+    required this.isLickedByMe,
+    required this.onIsLickedChanged,
     this.onPressed,
     this.avatarUrl,
   });
@@ -34,6 +37,8 @@ class PostCard extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool isPreview;
+  final bool isLickedByMe;
+  final VoidCallback onIsLickedChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -85,23 +90,29 @@ class PostCard extends StatelessWidget {
                 ],
                 Row(
                   children: [
-                    OutlinedIconButton(
-                      onPressed: () {},
-                      iconPath: Assets.image.svg.like.path,
+                    SwitchingIconButton(
+                      isSwitched: isLickedByMe,
+                      switchedIconPath: Assets.image.svg.likeFilled.path,
+                      switchedColor: colorSchemeTX.warningIcon,
+                      notSwitchedIconPath: Assets.image.svg.like.path,
+                      notSwitchedColor: colorSchemeTX.casualIcon,
+                      onPressed: onIsLickedChanged,
                     ),
                     if (isPreview) ...[
                       const SizedBox(
                         width: _likeAndCommentPadding,
                       ),
                       OutlinedIconButton(
-                        onPressed: () {},
                         iconPath: Assets.image.svg.chats.path,
+                        color: colorSchemeTX.casualIcon,
+                        onPressed: () {},
                       ),
                     ],
                     const Spacer(),
                     OutlinedIconButton(
-                      onPressed: () {},
                       iconPath: Assets.image.svg.share.path,
+                      color: colorSchemeTX.casualIcon,
+                      onPressed: () {},
                     ),
                   ],
                 ),

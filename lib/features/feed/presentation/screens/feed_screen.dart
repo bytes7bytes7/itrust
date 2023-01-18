@@ -177,6 +177,8 @@ class _PostList extends StatelessWidget {
                 mediaUrls: post.mediaUrls,
                 text: post.text,
                 onPressed: () => feedStore.onPostPressed(id: post.id.value),
+                isLickedByMe: false,
+                onIsLickedChanged: () {},
               );
             },
           ),

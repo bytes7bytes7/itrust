@@ -96,6 +96,10 @@ class $AssetsImageSvgGen {
   /// File path: assets/image/svg/like.svg
   SvgGenImage get like => const SvgGenImage('assets/image/svg/like.svg');
 
+  /// File path: assets/image/svg/like_filled.svg
+  SvgGenImage get likeFilled =>
+      const SvgGenImage('assets/image/svg/like_filled.svg');
+
   /// File path: assets/image/svg/local_fire_department.svg
   SvgGenImage get localFireDepartment =>
       const SvgGenImage('assets/image/svg/local_fire_department.svg');
@@ -170,6 +174,7 @@ class $AssetsImageSvgGen {
         home,
         keyboardArrowRight,
         like,
+        likeFilled,
         localFireDepartment,
         logout,
         menu,

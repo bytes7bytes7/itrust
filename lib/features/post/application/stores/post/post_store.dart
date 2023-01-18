@@ -48,7 +48,8 @@ abstract class _PostStore extends SyncStore with Store {
   @readonly
   String _text = '';
 
-  // TODO: add comments
+  @readonly
+  bool _isLickedByMe = false;
 
   @action
   void loadPost(String postID) {
@@ -63,10 +64,16 @@ abstract class _PostStore extends SyncStore with Store {
         _avatarUrl = null;
         _mediaUrls = post.mediaUrls;
         _text = post.text;
+        _isLickedByMe = false;
       },
       setIsLoading: (v) => _isLoading = v,
       setError: (v) => _error = v,
     );
+  }
+
+  @action
+  void onIsLickedPostChanged() {
+    _isLickedByMe = !_isLickedByMe;
   }
 
   void onBackButtonPressed() {
