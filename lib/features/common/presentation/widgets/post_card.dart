@@ -24,8 +24,9 @@ class PostCard extends StatelessWidget {
     required this.mediaUrls,
     required this.text,
     required this.isPreview,
-    required this.isLickedByMe,
-    required this.onIsLickedChanged,
+    required this.likedByMe,
+    required this.onLikePressed,
+    this.onCommentPressed,
     this.onPressed,
     this.avatarUrl,
   });
@@ -37,8 +38,9 @@ class PostCard extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool isPreview;
-  final bool isLickedByMe;
-  final VoidCallback onIsLickedChanged;
+  final bool likedByMe;
+  final VoidCallback onLikePressed;
+  final VoidCallback? onCommentPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -91,12 +93,12 @@ class PostCard extends StatelessWidget {
                 Row(
                   children: [
                     SwitchingIconButton(
-                      isSwitched: isLickedByMe,
+                      isSwitched: likedByMe,
                       switchedIconPath: Assets.image.svg.likeFilled.path,
                       switchedColor: colorSchemeTX.warningIcon,
                       notSwitchedIconPath: Assets.image.svg.like.path,
                       notSwitchedColor: colorSchemeTX.casualIcon,
-                      onPressed: onIsLickedChanged,
+                      onPressed: onLikePressed,
                     ),
                     if (isPreview) ...[
                       const SizedBox(
@@ -105,7 +107,7 @@ class PostCard extends StatelessWidget {
                       OutlinedIconButton(
                         iconPath: Assets.image.svg.chats.path,
                         color: colorSchemeTX.casualIcon,
-                        onPressed: () {},
+                        onPressed: onCommentPressed,
                       ),
                     ],
                     const Spacer(),

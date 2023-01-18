@@ -59,4 +59,8 @@ abstract class _FeedStore extends SyncStore with Store {
   void onPostPressed({required String id}) {
     _feedCoordinator.onPostPressed(id);
   }
+
+  void onCommentButtonPressed({required String id}) {
+    _feedCoordinator.onPostButtonPressed(id);
+  }
 }

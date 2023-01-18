@@ -150,21 +150,21 @@ mixin _$PostStore on _PostStore, Store {
     });
   }
 
-  late final _$_isLickedByMeAtom =
-      Atom(name: '_PostStore._isLickedByMe', context: context);
+  late final _$_lickedByMeAtom =
+      Atom(name: '_PostStore._lickedByMe', context: context);
 
-  bool get isLickedByMe {
-    _$_isLickedByMeAtom.reportRead();
-    return super._isLickedByMe;
+  bool get lickedByMe {
+    _$_lickedByMeAtom.reportRead();
+    return super._lickedByMe;
   }
 
   @override
-  bool get _isLickedByMe => isLickedByMe;
+  bool get _lickedByMe => lickedByMe;
 
   @override
-  set _isLickedByMe(bool value) {
-    _$_isLickedByMeAtom.reportWrite(value, super._isLickedByMe, () {
-      super._isLickedByMe = value;
+  set _lickedByMe(bool value) {
+    _$_lickedByMeAtom.reportWrite(value, super._lickedByMe, () {
+      super._lickedByMe = value;
     });
   }
 
@@ -183,11 +183,11 @@ mixin _$PostStore on _PostStore, Store {
   }
 
   @override
-  void onIsLickedPostChanged() {
+  void onLikePostPressed() {
     final _$actionInfo = _$_PostStoreActionController.startAction(
-        name: '_PostStore.onIsLickedPostChanged');
+        name: '_PostStore.onLikePostPressed');
     try {
-      return super.onIsLickedPostChanged();
+      return super.onLikePostPressed();
     } finally {
       _$_PostStoreActionController.endAction(_$actionInfo);
     }

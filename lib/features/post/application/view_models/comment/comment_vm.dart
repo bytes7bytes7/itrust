@@ -14,6 +14,7 @@ class CommentVM with _$CommentVM {
     required String authorName,
     required String createdAt,
     required String text,
+    required bool likedByMe,
     String? avatarUrl,
     String? modifiedAt,
   }) = _CommentVM;

@@ -18,12 +18,14 @@ class CommentCard extends StatelessWidget {
     super.key,
     required this.comment,
     required this.isPreview,
+    required this.onLikePressed,
     this.onPressed,
   });
 
   final CommentVM comment;
   final bool isPreview;
   final VoidCallback? onPressed;
+  final VoidCallback onLikePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +67,13 @@ class CommentCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    OutlinedIconButton(
-                      iconPath: Assets.image.svg.like.path,
-                      color: colorSchemeTX.casualIcon,
-                      onPressed: () {},
+                    SwitchingIconButton(
+                      isSwitched: comment.likedByMe,
+                      switchedIconPath: Assets.image.svg.likeFilled.path,
+                      switchedColor: colorSchemeTX.warningIcon,
+                      notSwitchedIconPath: Assets.image.svg.like.path,
+                      notSwitchedColor: colorSchemeTX.casualIcon,
+                      onPressed: onLikePressed,
                     ),
                     if (isPreview) ...[
                       const SizedBox(

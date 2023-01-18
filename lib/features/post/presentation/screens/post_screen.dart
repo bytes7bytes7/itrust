@@ -122,8 +122,8 @@ class _Body extends StatelessWidget {
                 dateTime: postStore.createdAt,
                 text: postStore.text,
                 mediaUrls: postStore.mediaUrls,
-                isLickedByMe: postStore.isLickedByMe,
-                onIsLickedChanged: postStore.onIsLickedPostChanged,
+                likedByMe: postStore.lickedByMe,
+                onLikePressed: postStore.onLikePostPressed,
               ),
               const Center(
                 child: CircularProgressIndicator(),
@@ -143,8 +143,8 @@ class _Body extends StatelessWidget {
                 dateTime: postStore.createdAt,
                 text: postStore.text,
                 mediaUrls: postStore.mediaUrls,
-                isLickedByMe: postStore.isLickedByMe,
-                onIsLickedChanged: postStore.onIsLickedPostChanged,
+                likedByMe: postStore.lickedByMe,
+                onLikePressed: postStore.onLikePostPressed,
               );
             }
 
@@ -156,10 +156,14 @@ class _Body extends StatelessWidget {
               );
             }
 
+            final comment = postStore.commentStore.comments[index - 2];
+
             return CommentCard(
-              comment: postStore.commentStore.comments[index - 2],
+              comment: comment,
               isPreview: true,
               onPressed: () {},
+              onLikePressed: () =>
+                  postStore.commentStore.onLikeCommentPressed(comment.id),
             );
           },
         );

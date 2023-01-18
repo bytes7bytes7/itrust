@@ -23,6 +23,7 @@ class TestCommentService implements CommentService {
               text: _randString(_rand.nextInt(50) + 10),
               createdAt: _randDateTime(),
               modifiedAt: _rand.nextBool() ? _randDateTime() : null,
+              likedByMe: _rand.nextBool(),
             );
           },
         );

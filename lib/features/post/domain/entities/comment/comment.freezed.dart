@@ -25,6 +25,7 @@ mixin _$Comment {
   PostID get postID => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
+  bool get likedByMe => throw _privateConstructorUsedError;
   DateTime? get modifiedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,6 +44,7 @@ abstract class $CommentCopyWith<$Res> {
       PostID postID,
       DateTime createdAt,
       String text,
+      bool likedByMe,
       DateTime? modifiedAt});
 
   $CommentIDCopyWith<$Res> get id;
@@ -68,6 +70,7 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? postID = null,
     Object? createdAt = null,
     Object? text = null,
+    Object? likedByMe = null,
     Object? modifiedAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -91,6 +94,10 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      likedByMe: null == likedByMe
+          ? _value.likedByMe
+          : likedByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
       modifiedAt: freezed == modifiedAt
           ? _value.modifiedAt
           : modifiedAt // ignore: cast_nullable_to_non_nullable
@@ -136,6 +143,7 @@ abstract class _$$_CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
       PostID postID,
       DateTime createdAt,
       String text,
+      bool likedByMe,
       DateTime? modifiedAt});
 
   @override
@@ -161,6 +169,7 @@ class __$$_CommentCopyWithImpl<$Res>
     Object? postID = null,
     Object? createdAt = null,
     Object? text = null,
+    Object? likedByMe = null,
     Object? modifiedAt = freezed,
   }) {
     return _then(_$_Comment(
@@ -184,6 +193,10 @@ class __$$_CommentCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      likedByMe: null == likedByMe
+          ? _value.likedByMe
+          : likedByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
       modifiedAt: freezed == modifiedAt
           ? _value.modifiedAt
           : modifiedAt // ignore: cast_nullable_to_non_nullable
@@ -201,6 +214,7 @@ class _$_Comment implements _Comment {
       required this.postID,
       required this.createdAt,
       required this.text,
+      required this.likedByMe,
       this.modifiedAt});
 
   factory _$_Comment.fromJson(Map<String, dynamic> json) =>
@@ -217,11 +231,13 @@ class _$_Comment implements _Comment {
   @override
   final String text;
   @override
+  final bool likedByMe;
+  @override
   final DateTime? modifiedAt;
 
   @override
   String toString() {
-    return 'Comment(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, modifiedAt: $modifiedAt)';
+    return 'Comment(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, likedByMe: $likedByMe, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -236,14 +252,16 @@ class _$_Comment implements _Comment {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.text, text) || other.text == text) &&
+            (identical(other.likedByMe, likedByMe) ||
+                other.likedByMe == likedByMe) &&
             (identical(other.modifiedAt, modifiedAt) ||
                 other.modifiedAt == modifiedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, authorID, postID, createdAt, text, modifiedAt);
+  int get hashCode => Object.hash(runtimeType, id, authorID, postID, createdAt,
+      text, likedByMe, modifiedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -266,6 +284,7 @@ abstract class _Comment implements Comment {
       required final PostID postID,
       required final DateTime createdAt,
       required final String text,
+      required final bool likedByMe,
       final DateTime? modifiedAt}) = _$_Comment;
 
   factory _Comment.fromJson(Map<String, dynamic> json) = _$_Comment.fromJson;
@@ -280,6 +299,8 @@ abstract class _Comment implements Comment {
   DateTime get createdAt;
   @override
   String get text;
+  @override
+  bool get likedByMe;
   @override
   DateTime? get modifiedAt;
   @override

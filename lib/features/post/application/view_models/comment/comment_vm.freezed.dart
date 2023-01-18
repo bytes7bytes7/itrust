@@ -22,6 +22,7 @@ mixin _$CommentVM {
   String get authorName => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
+  bool get likedByMe => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
   String? get modifiedAt => throw _privateConstructorUsedError;
 
@@ -42,6 +43,7 @@ abstract class $CommentVMCopyWith<$Res> {
       String authorName,
       String createdAt,
       String text,
+      bool likedByMe,
       String? avatarUrl,
       String? modifiedAt});
 }
@@ -65,6 +67,7 @@ class _$CommentVMCopyWithImpl<$Res, $Val extends CommentVM>
     Object? authorName = null,
     Object? createdAt = null,
     Object? text = null,
+    Object? likedByMe = null,
     Object? avatarUrl = freezed,
     Object? modifiedAt = freezed,
   }) {
@@ -93,6 +96,10 @@ class _$CommentVMCopyWithImpl<$Res, $Val extends CommentVM>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      likedByMe: null == likedByMe
+          ? _value.likedByMe
+          : likedByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
       avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -119,6 +126,7 @@ abstract class _$$_CommentVMCopyWith<$Res> implements $CommentVMCopyWith<$Res> {
       String authorName,
       String createdAt,
       String text,
+      bool likedByMe,
       String? avatarUrl,
       String? modifiedAt});
 }
@@ -140,6 +148,7 @@ class __$$_CommentVMCopyWithImpl<$Res>
     Object? authorName = null,
     Object? createdAt = null,
     Object? text = null,
+    Object? likedByMe = null,
     Object? avatarUrl = freezed,
     Object? modifiedAt = freezed,
   }) {
@@ -168,6 +177,10 @@ class __$$_CommentVMCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      likedByMe: null == likedByMe
+          ? _value.likedByMe
+          : likedByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
       avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -190,6 +203,7 @@ class _$_CommentVM implements _CommentVM {
       required this.authorName,
       required this.createdAt,
       required this.text,
+      required this.likedByMe,
       this.avatarUrl,
       this.modifiedAt});
 
@@ -206,13 +220,15 @@ class _$_CommentVM implements _CommentVM {
   @override
   final String text;
   @override
+  final bool likedByMe;
+  @override
   final String? avatarUrl;
   @override
   final String? modifiedAt;
 
   @override
   String toString() {
-    return 'CommentVM(id: $id, postID: $postID, authorID: $authorID, authorName: $authorName, createdAt: $createdAt, text: $text, avatarUrl: $avatarUrl, modifiedAt: $modifiedAt)';
+    return 'CommentVM(id: $id, postID: $postID, authorID: $authorID, authorName: $authorName, createdAt: $createdAt, text: $text, likedByMe: $likedByMe, avatarUrl: $avatarUrl, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -229,6 +245,8 @@ class _$_CommentVM implements _CommentVM {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.text, text) || other.text == text) &&
+            (identical(other.likedByMe, likedByMe) ||
+                other.likedByMe == likedByMe) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl) &&
             (identical(other.modifiedAt, modifiedAt) ||
@@ -237,7 +255,7 @@ class _$_CommentVM implements _CommentVM {
 
   @override
   int get hashCode => Object.hash(runtimeType, id, postID, authorID, authorName,
-      createdAt, text, avatarUrl, modifiedAt);
+      createdAt, text, likedByMe, avatarUrl, modifiedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -254,6 +272,7 @@ abstract class _CommentVM implements CommentVM {
       required final String authorName,
       required final String createdAt,
       required final String text,
+      required final bool likedByMe,
       final String? avatarUrl,
       final String? modifiedAt}) = _$_CommentVM;
 
@@ -269,6 +288,8 @@ abstract class _CommentVM implements CommentVM {
   String get createdAt;
   @override
   String get text;
+  @override
+  bool get likedByMe;
   @override
   String? get avatarUrl;
   @override

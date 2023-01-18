@@ -62,4 +62,19 @@ abstract class _CommentStore extends SyncStore with Store {
       setError: (v) => _error = v,
     );
   }
+
+  @action
+  void onLikeCommentPressed(String commentID) {
+    // TODO: implement
+    final index = _comments.indexWhere((e) => e.id == commentID);
+
+    if (index != -1) {
+      final comment = _comments[index];
+
+      _comments = List.from(_comments)
+        ..[index] = comment.copyWith(
+          likedByMe: !comment.likedByMe,
+        );
+    }
+  }
 }

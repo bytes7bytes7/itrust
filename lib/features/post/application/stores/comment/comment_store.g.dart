@@ -96,6 +96,17 @@ mixin _$CommentStore on _CommentStore, Store {
   }
 
   @override
+  void onLikeCommentPressed(String commentID) {
+    final _$actionInfo = _$_CommentStoreActionController.startAction(
+        name: '_CommentStore.onLikeCommentPressed');
+    try {
+      return super.onLikeCommentPressed(commentID);
+    } finally {
+      _$_CommentStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 

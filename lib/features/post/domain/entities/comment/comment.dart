@@ -15,6 +15,7 @@ class Comment with _$Comment {
     required PostID postID,
     required DateTime createdAt,
     required String text,
+    required bool likedByMe,
     DateTime? modifiedAt,
   }) = _Comment;
 

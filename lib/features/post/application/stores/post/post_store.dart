@@ -49,7 +49,7 @@ abstract class _PostStore extends SyncStore with Store {
   String _text = '';
 
   @readonly
-  bool _isLickedByMe = false;
+  bool _lickedByMe = false;
 
   @action
   void loadPost(String postID) {
@@ -64,7 +64,7 @@ abstract class _PostStore extends SyncStore with Store {
         _avatarUrl = null;
         _mediaUrls = post.mediaUrls;
         _text = post.text;
-        _isLickedByMe = false;
+        _lickedByMe = false;
       },
       setIsLoading: (v) => _isLoading = v,
       setError: (v) => _error = v,
@@ -72,8 +72,9 @@ abstract class _PostStore extends SyncStore with Store {
   }
 
   @action
-  void onIsLickedPostChanged() {
-    _isLickedByMe = !_isLickedByMe;
+  void onLikePostPressed() {
+    // TODO: implement
+    _lickedByMe = !_lickedByMe;
   }
 
   void onBackButtonPressed() {

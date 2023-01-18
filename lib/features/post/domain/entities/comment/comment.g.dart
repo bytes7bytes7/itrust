@@ -12,6 +12,7 @@ _$_Comment _$$_CommentFromJson(Map<String, dynamic> json) => _$_Comment(
       postID: PostID.fromJson(json['postID'] as Map<String, dynamic>),
       createdAt: DateTime.parse(json['createdAt'] as String),
       text: json['text'] as String,
+      likedByMe: json['likedByMe'] as bool,
       modifiedAt: json['modifiedAt'] == null
           ? null
           : DateTime.parse(json['modifiedAt'] as String),
@@ -24,5 +25,6 @@ Map<String, dynamic> _$$_CommentToJson(_$_Comment instance) =>
       'postID': instance.postID.toJson(),
       'createdAt': instance.createdAt.toIso8601String(),
       'text': instance.text,
+      'likedByMe': instance.likedByMe,
       'modifiedAt': instance.modifiedAt?.toIso8601String(),
     };

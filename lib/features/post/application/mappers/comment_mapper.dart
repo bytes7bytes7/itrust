@@ -47,6 +47,7 @@ class CommentMapper
         end: (user) => user.name ?? user.email,
       ),
       avatarUrl: user.avatarUrls.firstOrNull,
+      likedByMe: comment.likedByMe,
     );
   }
 }
