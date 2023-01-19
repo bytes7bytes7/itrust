@@ -15,6 +15,7 @@ class Post with _$Post {
     required List<UserID> seenBy,
     required String text,
     required List<String> mediaUrls,
+    required int commentsAmount,
   }) = _Post;
 
   factory Post.fromJson(Map<String, Object?> json) => _$PostFromJson(json);

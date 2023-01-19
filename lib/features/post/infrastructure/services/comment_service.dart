@@ -9,7 +9,7 @@ import '../../domain/domain.dart';
 @Singleton(as: CommentService)
 class TestCommentService implements CommentService {
   @override
-  Future<List<Comment>> loadComments(PostID postID) {
+  Future<List<Comment>> loadPostComments({required PostID postID}) {
     return Future.delayed(
       Duration(seconds: _rand.nextInt(3) + 1),
       () {
@@ -24,6 +24,55 @@ class TestCommentService implements CommentService {
               createdAt: _randDateTime(),
               modifiedAt: _rand.nextBool() ? _randDateTime() : null,
               likedByMe: _rand.nextBool(),
+              repliesAmount: _rand.nextBool() ? _rand.nextInt(100) : 0,
+              replyTo: null,
+            );
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Future<Comment> loadComment({required CommentID commentID}) {
+    return Future.delayed(
+      Duration(seconds: _rand.nextInt(3) + 1),
+      () {
+        return Comment(
+          id: CommentID('comment ${_rand.nextInt(1000)}'),
+          authorID: UserID('user ${_rand.nextInt(1000)}'),
+          postID: PostID('post ${_rand.nextInt(1000)}'),
+          text: _randString(_rand.nextInt(50) + 10),
+          createdAt: _randDateTime(),
+          modifiedAt: _rand.nextBool() ? _randDateTime() : null,
+          likedByMe: _rand.nextBool(),
+          repliesAmount: _rand.nextBool() ? _rand.nextInt(100) : 0,
+          replyTo: _rand.nextBool()
+              ? CommentID('comment ${_rand.nextInt(1000)}')
+              : null,
+        );
+      },
+    );
+  }
+
+  @override
+  Future<List<Comment>> loadCommentReplies({required CommentID commentID}) {
+    return Future.delayed(
+      Duration(seconds: _rand.nextInt(3) + 1),
+      () {
+        return List.generate(
+          _rand.nextBool() ? _rand.nextInt(30) + 1 : 0,
+          (index) {
+            return Comment(
+              id: CommentID('comment ${_rand.nextInt(1000)}'),
+              authorID: UserID('user ${_rand.nextInt(1000)}'),
+              postID: PostID('post ${_rand.nextInt(1000)}'),
+              text: _randString(_rand.nextInt(50) + 10),
+              createdAt: _randDateTime(),
+              modifiedAt: _rand.nextBool() ? _randDateTime() : null,
+              likedByMe: _rand.nextBool(),
+              repliesAmount: _rand.nextBool() ? _rand.nextInt(100) : 0,
+              replyTo: commentID,
             );
           },
         );

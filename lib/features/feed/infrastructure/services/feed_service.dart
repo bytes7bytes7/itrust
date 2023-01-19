@@ -24,6 +24,7 @@ class TestFeedService implements FeedService {
             seenBy: [],
             mediaUrls:
                 _mediaUrls.take(_rand.nextInt(_mediaUrls.length)).toList(),
+            commentsAmount: _rand.nextBool() ? _rand.nextInt(100) : 0,
           );
         },
       );

@@ -2,9 +2,12 @@ import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
-import '../../../domain/domain.dart';
+import '../../../domain/services/comment_service.dart';
+import '../../../domain/value_objects/comment_id/comment_id.dart';
+import '../../coordinators/comment_coordinator.dart';
 import '../../mappers/comment_mapper.dart';
 import '../../view_models/comment/comment_vm.dart';
+import '../comment_reply/comment_reply_store.dart';
 
 part 'comment_store.g.dart';
 
@@ -13,12 +16,18 @@ class CommentStore = _CommentStore with _$CommentStore;
 
 abstract class _CommentStore extends SyncStore with Store {
   _CommentStore({
+    required this.commentReplyStore,
     required CommentService commentService,
+    required CommentCoordinator commentCoordinator,
     required CommentMapper commentMapper,
   })  : _commentService = commentService,
+        _commentCoordinator = commentCoordinator,
         _commentMapper = commentMapper;
 
+  final CommentReplyStore commentReplyStore;
+
   final CommentService _commentService;
+  final CommentCoordinator _commentCoordinator;
   final CommentMapper _commentMapper;
 
   @readonly
@@ -28,19 +37,19 @@ abstract class _CommentStore extends SyncStore with Store {
   String _error = '';
 
   @readonly
-  String? _postID;
+  String? _commentID;
 
   @readonly
-  List<CommentVM> _comments = const [];
+  CommentVM? _comment;
 
-  // TODO: add pagination
   @action
-  void loadComments(String postID) {
+  void loadComment({required String commentID}) {
     perform(
       () async {
-        _postID = _postID;
+        _commentID = commentID;
 
-        final comments = await _commentService.loadComments(PostID(postID));
+        final comment =
+            await _commentService.loadComment(commentID: CommentID(commentID));
 
         // TODO: implement
         const user = User.end(
@@ -49,14 +58,7 @@ abstract class _CommentStore extends SyncStore with Store {
           email: 'email@email.com',
         );
 
-        _comments = comments
-            .map(
-              (comment) => _commentMapper.map(
-                comment,
-                user,
-              ),
-            )
-            .toList();
+        _comment = _commentMapper.map(comment, user);
       },
       setIsLoading: (v) => _isLoading = v,
       setError: (v) => _error = v,
@@ -64,17 +66,18 @@ abstract class _CommentStore extends SyncStore with Store {
   }
 
   @action
-  void onLikeCommentPressed(String commentID) {
+  void onLikeCommentPressed() {
     // TODO: implement
-    final index = _comments.indexWhere((e) => e.id == commentID);
+    final comment = _comment;
 
-    if (index != -1) {
-      final comment = _comments[index];
-
-      _comments = List.from(_comments)
-        ..[index] = comment.copyWith(
-          likedByMe: !comment.likedByMe,
-        );
+    if (comment != null) {
+      _comment = comment.copyWith(
+        likedByMe: !comment.likedByMe,
+      );
     }
+  }
+
+  void onBackButtonPressed() {
+      _commentCoordinator.onBackButtonPressed();
   }
 }

@@ -45,39 +45,39 @@ mixin _$CommentStore on _CommentStore, Store {
     });
   }
 
-  late final _$_postIDAtom =
-      Atom(name: '_CommentStore._postID', context: context);
+  late final _$_commentIDAtom =
+      Atom(name: '_CommentStore._commentID', context: context);
 
-  String? get postID {
-    _$_postIDAtom.reportRead();
-    return super._postID;
+  String? get commentID {
+    _$_commentIDAtom.reportRead();
+    return super._commentID;
   }
 
   @override
-  String? get _postID => postID;
+  String? get _commentID => commentID;
 
   @override
-  set _postID(String? value) {
-    _$_postIDAtom.reportWrite(value, super._postID, () {
-      super._postID = value;
+  set _commentID(String? value) {
+    _$_commentIDAtom.reportWrite(value, super._commentID, () {
+      super._commentID = value;
     });
   }
 
-  late final _$_commentsAtom =
-      Atom(name: '_CommentStore._comments', context: context);
+  late final _$_commentAtom =
+      Atom(name: '_CommentStore._comment', context: context);
 
-  List<CommentVM> get comments {
-    _$_commentsAtom.reportRead();
-    return super._comments;
+  CommentVM? get comment {
+    _$_commentAtom.reportRead();
+    return super._comment;
   }
 
   @override
-  List<CommentVM> get _comments => comments;
+  CommentVM? get _comment => comment;
 
   @override
-  set _comments(List<CommentVM> value) {
-    _$_commentsAtom.reportWrite(value, super._comments, () {
-      super._comments = value;
+  set _comment(CommentVM? value) {
+    _$_commentAtom.reportWrite(value, super._comment, () {
+      super._comment = value;
     });
   }
 
@@ -85,22 +85,22 @@ mixin _$CommentStore on _CommentStore, Store {
       ActionController(name: '_CommentStore', context: context);
 
   @override
-  void loadComments(String postID) {
+  void loadComment({required String commentID}) {
     final _$actionInfo = _$_CommentStoreActionController.startAction(
-        name: '_CommentStore.loadComments');
+        name: '_CommentStore.loadComment');
     try {
-      return super.loadComments(postID);
+      return super.loadComment(commentID: commentID);
     } finally {
       _$_CommentStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void onLikeCommentPressed(String commentID) {
+  void onLikeCommentPressed() {
     final _$actionInfo = _$_CommentStoreActionController.startAction(
         name: '_CommentStore.onLikeCommentPressed');
     try {
-      return super.onLikeCommentPressed(commentID);
+      return super.onLikeCommentPressed();
     } finally {
       _$_CommentStoreActionController.endAction(_$actionInfo);
     }

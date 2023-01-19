@@ -6,7 +6,7 @@ import 'coordinator.dart';
 
 @Singleton(as: PostCoordinator)
 class ProdPostCoordinator extends Coordinator implements PostCoordinator {
-  ProdPostCoordinator({required super.goRouter});
+  const ProdPostCoordinator({required super.goRouter});
 
   @override
   void onBackButtonPressed() {

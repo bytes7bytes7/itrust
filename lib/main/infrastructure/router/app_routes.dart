@@ -76,11 +76,11 @@ class _AppRoutes {
   );
 
   static final post = GoRoute(
-    path: 'post:id',
+    path: 'post:postID',
     name: 'post',
     parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
-      final id = state.params['id']!;
+      final id = state.params['postID']!;
 
       return CustomTransitionPage(
         key: state.pageKey,
@@ -89,6 +89,30 @@ class _AppRoutes {
         transitionsBuilder: _leftward,
         child: PostScreen(
           postID: id,
+        ),
+      );
+    },
+    routes: [
+      comment,
+    ],
+  );
+
+  static final comment = GoRoute(
+    path: 'comment:commentID',
+    name: 'comment',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      final commentID = state.params['commentID']!;
+      final postID = state.params['postID']!;
+
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: CommentScreen(
+          commentID: commentID,
+          postID: postID,
         ),
       );
     },

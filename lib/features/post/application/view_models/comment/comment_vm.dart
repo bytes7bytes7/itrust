@@ -9,12 +9,14 @@ part 'comment_vm.freezed.dart';
 class CommentVM with _$CommentVM {
   const factory CommentVM({
     required String id,
-    required String postID,
     required String authorID,
+    required String postID,
     required String authorName,
     required String createdAt,
     required String text,
     required bool likedByMe,
+    required int repliesAmount,
+    String? replyTo,
     String? avatarUrl,
     String? modifiedAt,
   }) = _CommentVM;

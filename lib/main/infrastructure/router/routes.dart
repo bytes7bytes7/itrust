@@ -44,11 +44,30 @@ class PostRoute extends CosyRoute {
 
   @override
   Map<String, String> get params => {
-        'id': id,
+        'postID': id,
       };
 
   @override
   GoRoute get route => _AppRoutes.post;
+}
+
+class CommentRoute extends CosyRoute {
+  const CommentRoute({
+    required this.id,
+    required this.postID,
+  });
+
+  final String id;
+  final String postID;
+
+  @override
+  Map<String, String> get params => {
+        'postID': postID,
+        'commentID': id,
+      };
+
+  @override
+  GoRoute get route => _AppRoutes.comment;
 }
 
 class ChatListRoute extends CosyRoute {

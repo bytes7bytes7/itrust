@@ -9,6 +9,10 @@ part 'comment.g.dart';
 
 @freezed
 class Comment with _$Comment {
+  /// If this [Comment] comments some Post,
+  /// then [replyTo] == null
+  /// If this [Comment] replies to other [Comment],
+  /// then [replyTo] != null
   const factory Comment({
     required CommentID id,
     required UserID authorID,
@@ -16,6 +20,8 @@ class Comment with _$Comment {
     required DateTime createdAt,
     required String text,
     required bool likedByMe,
+    required int repliesAmount,
+    CommentID? replyTo,
     DateTime? modifiedAt,
   }) = _Comment;
 

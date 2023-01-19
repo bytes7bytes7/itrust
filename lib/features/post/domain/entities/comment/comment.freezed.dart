@@ -26,6 +26,8 @@ mixin _$Comment {
   DateTime get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   bool get likedByMe => throw _privateConstructorUsedError;
+  int get repliesAmount => throw _privateConstructorUsedError;
+  CommentID? get replyTo => throw _privateConstructorUsedError;
   DateTime? get modifiedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,11 +47,14 @@ abstract class $CommentCopyWith<$Res> {
       DateTime createdAt,
       String text,
       bool likedByMe,
+      int repliesAmount,
+      CommentID? replyTo,
       DateTime? modifiedAt});
 
   $CommentIDCopyWith<$Res> get id;
   $UserIDCopyWith<$Res> get authorID;
   $PostIDCopyWith<$Res> get postID;
+  $CommentIDCopyWith<$Res>? get replyTo;
 }
 
 /// @nodoc
@@ -71,6 +76,8 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? createdAt = null,
     Object? text = null,
     Object? likedByMe = null,
+    Object? repliesAmount = null,
+    Object? replyTo = freezed,
     Object? modifiedAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -98,6 +105,14 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
               as bool,
+      repliesAmount: null == repliesAmount
+          ? _value.repliesAmount
+          : repliesAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      replyTo: freezed == replyTo
+          ? _value.replyTo
+          : replyTo // ignore: cast_nullable_to_non_nullable
+              as CommentID?,
       modifiedAt: freezed == modifiedAt
           ? _value.modifiedAt
           : modifiedAt // ignore: cast_nullable_to_non_nullable
@@ -128,6 +143,18 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
       return _then(_value.copyWith(postID: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CommentIDCopyWith<$Res>? get replyTo {
+    if (_value.replyTo == null) {
+      return null;
+    }
+
+    return $CommentIDCopyWith<$Res>(_value.replyTo!, (value) {
+      return _then(_value.copyWith(replyTo: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -144,6 +171,8 @@ abstract class _$$_CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
       DateTime createdAt,
       String text,
       bool likedByMe,
+      int repliesAmount,
+      CommentID? replyTo,
       DateTime? modifiedAt});
 
   @override
@@ -152,6 +181,8 @@ abstract class _$$_CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
   $UserIDCopyWith<$Res> get authorID;
   @override
   $PostIDCopyWith<$Res> get postID;
+  @override
+  $CommentIDCopyWith<$Res>? get replyTo;
 }
 
 /// @nodoc
@@ -170,6 +201,8 @@ class __$$_CommentCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? text = null,
     Object? likedByMe = null,
+    Object? repliesAmount = null,
+    Object? replyTo = freezed,
     Object? modifiedAt = freezed,
   }) {
     return _then(_$_Comment(
@@ -197,6 +230,14 @@ class __$$_CommentCopyWithImpl<$Res>
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
               as bool,
+      repliesAmount: null == repliesAmount
+          ? _value.repliesAmount
+          : repliesAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      replyTo: freezed == replyTo
+          ? _value.replyTo
+          : replyTo // ignore: cast_nullable_to_non_nullable
+              as CommentID?,
       modifiedAt: freezed == modifiedAt
           ? _value.modifiedAt
           : modifiedAt // ignore: cast_nullable_to_non_nullable
@@ -215,6 +256,8 @@ class _$_Comment implements _Comment {
       required this.createdAt,
       required this.text,
       required this.likedByMe,
+      required this.repliesAmount,
+      this.replyTo,
       this.modifiedAt});
 
   factory _$_Comment.fromJson(Map<String, dynamic> json) =>
@@ -233,11 +276,15 @@ class _$_Comment implements _Comment {
   @override
   final bool likedByMe;
   @override
+  final int repliesAmount;
+  @override
+  final CommentID? replyTo;
+  @override
   final DateTime? modifiedAt;
 
   @override
   String toString() {
-    return 'Comment(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, likedByMe: $likedByMe, modifiedAt: $modifiedAt)';
+    return 'Comment(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, likedByMe: $likedByMe, repliesAmount: $repliesAmount, replyTo: $replyTo, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -254,6 +301,9 @@ class _$_Comment implements _Comment {
             (identical(other.text, text) || other.text == text) &&
             (identical(other.likedByMe, likedByMe) ||
                 other.likedByMe == likedByMe) &&
+            (identical(other.repliesAmount, repliesAmount) ||
+                other.repliesAmount == repliesAmount) &&
+            (identical(other.replyTo, replyTo) || other.replyTo == replyTo) &&
             (identical(other.modifiedAt, modifiedAt) ||
                 other.modifiedAt == modifiedAt));
   }
@@ -261,7 +311,7 @@ class _$_Comment implements _Comment {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, authorID, postID, createdAt,
-      text, likedByMe, modifiedAt);
+      text, likedByMe, repliesAmount, replyTo, modifiedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -285,6 +335,8 @@ abstract class _Comment implements Comment {
       required final DateTime createdAt,
       required final String text,
       required final bool likedByMe,
+      required final int repliesAmount,
+      final CommentID? replyTo,
       final DateTime? modifiedAt}) = _$_Comment;
 
   factory _Comment.fromJson(Map<String, dynamic> json) = _$_Comment.fromJson;
@@ -301,6 +353,10 @@ abstract class _Comment implements Comment {
   String get text;
   @override
   bool get likedByMe;
+  @override
+  int get repliesAmount;
+  @override
+  CommentID? get replyTo;
   @override
   DateTime? get modifiedAt;
   @override

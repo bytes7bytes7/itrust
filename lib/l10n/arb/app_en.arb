@@ -48,5 +48,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "comment_screen_title": "Comment"
 }

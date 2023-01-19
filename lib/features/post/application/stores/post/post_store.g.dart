@@ -172,11 +172,11 @@ mixin _$PostStore on _PostStore, Store {
       ActionController(name: '_PostStore', context: context);
 
   @override
-  void loadPost(String postID) {
+  void loadPost({required String postID}) {
     final _$actionInfo =
         _$_PostStoreActionController.startAction(name: '_PostStore.loadPost');
     try {
-      return super.loadPost(postID);
+      return super.loadPost(postID: postID);
     } finally {
       _$_PostStoreActionController.endAction(_$actionInfo);
     }

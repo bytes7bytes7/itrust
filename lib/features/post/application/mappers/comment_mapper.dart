@@ -42,6 +42,8 @@ class CommentMapper
       ),
       avatarUrl: user.avatarUrls.firstOrNull,
       likedByMe: comment.likedByMe,
+      repliesAmount: comment.repliesAmount,
+      replyTo: comment.replyTo?.str,
     );
   }
 }

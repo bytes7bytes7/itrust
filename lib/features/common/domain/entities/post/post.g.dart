@@ -16,6 +16,7 @@ _$_Post _$$_PostFromJson(Map<String, dynamic> json) => _$_Post(
       text: json['text'] as String,
       mediaUrls:
           (json['mediaUrls'] as List<dynamic>).map((e) => e as String).toList(),
+      commentsAmount: json['commentsAmount'] as int,
     );
 
 Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
@@ -25,4 +26,5 @@ Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
       'seenBy': instance.seenBy.map((e) => e.toJson()).toList(),
       'text': instance.text,
       'mediaUrls': instance.mediaUrls,
+      'commentsAmount': instance.commentsAmount,
     };

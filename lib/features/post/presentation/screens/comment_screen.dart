@@ -7,30 +7,32 @@ import 'package:get_it/get_it.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../common/common.dart';
-import '../../application/stores/post/post_store.dart';
+import '../../application/stores/comment/comment_store.dart';
 import '../widgets/widgets.dart';
 
 const _appBarHeight = kToolbarHeight;
 
 final _getIt = GetIt.instance;
 
-class PostScreen extends HookWidget {
-  const PostScreen({
+class CommentScreen extends HookWidget {
+  const CommentScreen({
     super.key,
     required this.postID,
+    required this.commentID,
   });
 
   final String postID;
+  final String commentID;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final postStore = useMemoized(() => _getIt.get<PostStore>());
+    final commentStore = useMemoized(() => _getIt.get<CommentStore>());
 
     useEffect(
       () {
-        postStore.loadPost(postID: postID);
+        commentStore.loadComment(commentID: commentID);
         return null;
       },
       const [],
@@ -38,7 +40,10 @@ class PostScreen extends HookWidget {
 
     useEffect(
       () {
-        postStore.postCommentStore.loadPostComments(postID: postID);
+        commentStore.commentReplyStore.loadCommentReplies(
+          commentID: commentID,
+          postID: postID,
+        );
         return null;
       },
       const [],
@@ -46,11 +51,11 @@ class PostScreen extends HookWidget {
 
     return Scaffold(
       appBar: _AppBar(
-        postStore: postStore,
+        commentStore: commentStore,
         l10n: l10n,
       ),
       body: _Body(
-        postStore: postStore,
+        commentStore: commentStore,
         l10n: l10n,
       ),
     );
@@ -60,11 +65,11 @@ class PostScreen extends HookWidget {
 // ignore: prefer_mixin
 class _AppBar extends StatelessWidget with PreferredSizeWidget {
   const _AppBar({
-    required this.postStore,
+    required this.commentStore,
     required this.l10n,
   });
 
-  final PostStore postStore;
+  final CommentStore commentStore;
   final AppLocalizations l10n;
 
   @override
@@ -77,11 +82,11 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
       child: AppBar(
         leading: FilledIconButton(
           iconPath: Assets.image.svg.arrowBack.path,
-          onPressed: postStore.onBackButtonPressed,
+          onPressed: commentStore.onBackButtonPressed,
         ),
         centerTitle: true,
         title: Text(
-          l10n.post_screen_title,
+          l10n.comment_screen_title,
         ),
       ),
     );
@@ -90,35 +95,32 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 
 class _Body extends StatelessWidget {
   const _Body({
-    required this.postStore,
+    required this.commentStore,
     required this.l10n,
   });
 
-  final PostStore postStore;
+  final CommentStore commentStore;
   final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        if (postStore.isLoading) {
+        final comment = commentStore.comment;
+
+        if (commentStore.isLoading || comment == null) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
 
-        if (postStore.postCommentStore.isLoading) {
+        if (commentStore.isLoading) {
           return ListView(
             children: [
-              PostCard(
+              CommentCard(
                 isPreview: false,
-                name: postStore.authorName,
-                avatarUrl: postStore.avatarUrl,
-                dateTime: postStore.createdAt,
-                text: postStore.text,
-                mediaUrls: postStore.mediaUrls,
-                likedByMe: postStore.lickedByMe,
-                onLikePressed: postStore.onLikePostPressed,
+                comment: comment,
+                onLikePressed: commentStore.onLikeCommentPressed,
               ),
               const Center(
                 child: CircularProgressIndicator(),
@@ -128,40 +130,36 @@ class _Body extends StatelessWidget {
         }
 
         return ListView.builder(
-          itemCount: postStore.postCommentStore.comments.length + 2,
+          itemCount: commentStore.commentReplyStore.replies.length + 2,
           itemBuilder: (context, index) {
             if (index == 0) {
-              return PostCard(
+              return CommentCard(
                 isPreview: false,
-                name: postStore.authorName,
-                avatarUrl: postStore.avatarUrl,
-                dateTime: postStore.createdAt,
-                text: postStore.text,
-                mediaUrls: postStore.mediaUrls,
-                likedByMe: postStore.lickedByMe,
-                onLikePressed: postStore.onLikePostPressed,
+                comment: comment,
+                onLikePressed: commentStore.onLikeCommentPressed,
               );
             }
 
             if (index == 1) {
               return SectionTitle(
                 title: l10n.amount_of_comments(
-                  postStore.postCommentStore.comments.length,
+                  commentStore.commentReplyStore.replies.length,
                 ),
               );
             }
 
-            final comment = postStore.postCommentStore.comments[index - 2];
+            final reply = commentStore.commentReplyStore.replies[index - 2];
 
             return CommentCard(
-              comment: comment,
+              comment: reply,
               isPreview: true,
-              onPressed: () => postStore.postCommentStore
-                  .onCommentPressed(commentID: comment.id),
-              onLikePressed: () => postStore.postCommentStore
-                  .onLikeCommentPressed(commentID: comment.id),
-              onCommentPressed: () => postStore.postCommentStore
-                  .onCommentReplyButtonPressed(commentID: comment.id),
+              onPressed: () => commentStore.commentReplyStore.onCommentPressed(
+                commentID: reply.id,
+              ),
+              onLikePressed: () => commentStore.commentReplyStore
+                  .onLikeReplyPressed(commentID: reply.id),
+              onCommentPressed: () => commentStore.commentReplyStore
+                  .onCommentReplyButtonPressed(commentID: reply.id),
             );
           },
         );

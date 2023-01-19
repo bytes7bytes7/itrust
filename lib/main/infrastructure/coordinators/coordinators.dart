@@ -1,4 +1,5 @@
 export 'auth_coordinator.dart';
+export 'comment_coordinator.dart';
 export 'coordinator.dart';
 export 'feed_coordinator.dart';
 export 'home_coordinator.dart';

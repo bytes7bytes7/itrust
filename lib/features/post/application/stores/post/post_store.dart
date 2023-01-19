@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/common.dart';
 import '../../../domain/services/post_service.dart';
 import '../../coordinators/post_coordinator.dart';
-import '../comment/comment_store.dart';
+import '../post_comment/post_comment_store.dart';
 
 part 'post_store.g.dart';
 
@@ -13,13 +13,13 @@ class PostStore = _PostStore with _$PostStore;
 
 abstract class _PostStore extends SyncStore with Store {
   _PostStore({
-    required this.commentStore,
+    required this.postCommentStore,
     required PostService postService,
     required PostCoordinator postCoordinator,
   })  : _postService = postService,
         _postCoordinator = postCoordinator;
 
-  final CommentStore commentStore;
+  final PostCommentStore postCommentStore;
 
   final PostService _postService;
   final PostCoordinator _postCoordinator;
@@ -52,7 +52,7 @@ abstract class _PostStore extends SyncStore with Store {
   bool _lickedByMe = false;
 
   @action
-  void loadPost(String postID) {
+  void loadPost({required String postID}) {
     perform(
       () async {
         _postID = _postID;

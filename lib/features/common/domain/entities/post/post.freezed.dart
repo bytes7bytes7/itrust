@@ -26,6 +26,7 @@ mixin _$Post {
   List<UserID> get seenBy => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   List<String> get mediaUrls => throw _privateConstructorUsedError;
+  int get commentsAmount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +44,8 @@ abstract class $PostCopyWith<$Res> {
       DateTime createdAt,
       List<UserID> seenBy,
       String text,
-      List<String> mediaUrls});
+      List<String> mediaUrls,
+      int commentsAmount});
 
   $PostIDCopyWith<$Res> get id;
   $UserIDCopyWith<$Res> get authorID;
@@ -68,6 +70,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? seenBy = null,
     Object? text = null,
     Object? mediaUrls = null,
+    Object? commentsAmount = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -94,6 +97,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.mediaUrls
           : mediaUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      commentsAmount: null == commentsAmount
+          ? _value.commentsAmount
+          : commentsAmount // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -126,7 +133,8 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       DateTime createdAt,
       List<UserID> seenBy,
       String text,
-      List<String> mediaUrls});
+      List<String> mediaUrls,
+      int commentsAmount});
 
   @override
   $PostIDCopyWith<$Res> get id;
@@ -149,6 +157,7 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
     Object? seenBy = null,
     Object? text = null,
     Object? mediaUrls = null,
+    Object? commentsAmount = null,
   }) {
     return _then(_$_Post(
       id: null == id
@@ -175,6 +184,10 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
           ? _value._mediaUrls
           : mediaUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      commentsAmount: null == commentsAmount
+          ? _value.commentsAmount
+          : commentsAmount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -188,7 +201,8 @@ class _$_Post implements _Post {
       required this.createdAt,
       required final List<UserID> seenBy,
       required this.text,
-      required final List<String> mediaUrls})
+      required final List<String> mediaUrls,
+      required this.commentsAmount})
       : _seenBy = seenBy,
         _mediaUrls = mediaUrls;
 
@@ -219,8 +233,11 @@ class _$_Post implements _Post {
   }
 
   @override
+  final int commentsAmount;
+
+  @override
   String toString() {
-    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, seenBy: $seenBy, text: $text, mediaUrls: $mediaUrls)';
+    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, seenBy: $seenBy, text: $text, mediaUrls: $mediaUrls, commentsAmount: $commentsAmount)';
   }
 
   @override
@@ -236,7 +253,9 @@ class _$_Post implements _Post {
             const DeepCollectionEquality().equals(other._seenBy, _seenBy) &&
             (identical(other.text, text) || other.text == text) &&
             const DeepCollectionEquality()
-                .equals(other._mediaUrls, _mediaUrls));
+                .equals(other._mediaUrls, _mediaUrls) &&
+            (identical(other.commentsAmount, commentsAmount) ||
+                other.commentsAmount == commentsAmount));
   }
 
   @JsonKey(ignore: true)
@@ -248,7 +267,8 @@ class _$_Post implements _Post {
       createdAt,
       const DeepCollectionEquality().hash(_seenBy),
       text,
-      const DeepCollectionEquality().hash(_mediaUrls));
+      const DeepCollectionEquality().hash(_mediaUrls),
+      commentsAmount);
 
   @JsonKey(ignore: true)
   @override
@@ -271,7 +291,8 @@ abstract class _Post implements Post {
       required final DateTime createdAt,
       required final List<UserID> seenBy,
       required final String text,
-      required final List<String> mediaUrls}) = _$_Post;
+      required final List<String> mediaUrls,
+      required final int commentsAmount}) = _$_Post;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
@@ -287,6 +308,8 @@ abstract class _Post implements Post {
   String get text;
   @override
   List<String> get mediaUrls;
+  @override
+  int get commentsAmount;
   @override
   @JsonKey(ignore: true)
   _$$_PostCopyWith<_$_Post> get copyWith => throw _privateConstructorUsedError;

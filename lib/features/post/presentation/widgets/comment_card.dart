@@ -21,12 +21,14 @@ class CommentCard extends StatelessWidget {
     required this.isPreview,
     required this.onLikePressed,
     this.onPressed,
+    this.onCommentPressed,
   });
 
   final CommentVM comment;
   final bool isPreview;
   final VoidCallback? onPressed;
   final VoidCallback onLikePressed;
+  final VoidCallback? onCommentPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +92,7 @@ class CommentCard extends StatelessWidget {
                       OutlinedIconButton(
                         iconPath: Assets.image.svg.flipForward.path,
                         color: colorSchemeTX.casualIcon,
-                        onPressed: () {},
+                        onPressed: onCommentPressed,
                       ),
                     ],
                     const Spacer(),
