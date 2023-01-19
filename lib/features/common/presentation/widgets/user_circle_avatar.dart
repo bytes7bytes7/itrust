@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
-import 'fade_in_circle_avatar.dart';
+import 'custom_circle_avatar.dart';
 
 const _outerRadius = 8.0;
 const _innerRadius = 6.0;
@@ -25,7 +25,7 @@ class UserCircleAvatar extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        FadeInCircleAvatar(
+        CustomInCircleAvatar(
           url: url,
           iconPath: Assets.image.svg.person.path,
         ),

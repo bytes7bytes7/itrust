@@ -1,12 +1,12 @@
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
-import '../../application/providers/date_format_provider.dart';
 import '../../application/providers/date_time_provider.dart';
+import '../../application/providers/formatted_date_provider.dart';
 
-@Singleton(as: DateFormatProvider)
-class ProdDateFormatProvider implements DateFormatProvider {
-  const ProdDateFormatProvider({
+@Singleton(as: FormattedDateProvider)
+class ProdFormattedDateProvider implements FormattedDateProvider {
+  const ProdFormattedDateProvider({
     required DateTimeProvider dateTimeProvider,
   }) : _dateTimeProvider = dateTimeProvider;
 

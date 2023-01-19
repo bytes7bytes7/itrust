@@ -9,10 +9,10 @@ import '../view_models/comment/comment_vm.dart';
 class CommentMapper
     implements TwoEntitiesToViewModelMapper<Comment, User, CommentVM> {
   CommentMapper({
-    required DateFormatProvider dateFormatProvider,
+    required FormattedDateProvider dateFormatProvider,
   }) : _dateFormatProvider = dateFormatProvider;
 
-  final DateFormatProvider _dateFormatProvider;
+  final FormattedDateProvider _dateFormatProvider;
 
   @override
   CommentVM map(Comment comment, User user) {

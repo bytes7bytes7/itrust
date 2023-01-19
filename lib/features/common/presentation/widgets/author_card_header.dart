@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
@@ -39,9 +40,21 @@ class AuthorCardHeader extends StatelessWidget {
             color: colorSchemeTX.avatarBackground,
           ),
           child: avatarUrl != null
-              ? Image.network(
-                  avatarUrl!,
-                  errorBuilder: (context, error, stackTrace) {
+              ? CachedNetworkImage(
+                  imageUrl: avatarUrl!,
+                  imageBuilder: (context, imageProvider) {
+                    return Container(
+                      height: _avatarSize,
+                      width: _avatarSize,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: imageProvider,
+                        ),
+                      ),
+                    );
+                  },
+                  errorWidget: (context, url, error) {
                     return _AvatarIcon(
                       colorSchemeTX: colorSchemeTX,
                     );

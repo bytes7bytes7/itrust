@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
@@ -48,10 +49,21 @@ class UserInfo extends StatelessWidget {
                 color: colorSchemeTX.avatarBackground,
               ),
               child: hasAvatar
-                  ? Image.network(
-                      avatarUrl!,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
+                  ? CachedNetworkImage(
+                      imageUrl: avatarUrl!,
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          height: _userAvatarSize,
+                          width: _userAvatarSize,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: imageProvider,
+                            ),
+                          ),
+                        );
+                      },
+                      errorWidget: (context, url, error) {
                         return SizedIcon(
                           size: _userIconSize,
                           icon: Assets.image.svg.person.svg(

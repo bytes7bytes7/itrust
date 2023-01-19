@@ -1,6 +1,6 @@
 export 'author_card_header.dart';
+export 'custom_circle_avatar.dart';
 export 'custom_snack_bar.dart';
-export 'fade_in_circle_avatar.dart';
 export 'filled_icon.dart';
 export 'filled_icon_button.dart';
 export 'image_grid.dart';

@@ -11,7 +11,7 @@ import '../../application/stores/chat_list/chat_list_store.dart';
 import '../widgets/widgets.dart';
 
 const _loadingMorePadding = 8.0;
-const _appBarHeight = 66.0;
+const _appBarHeight = kToolbarHeight;
 const _appBarBottomHeight = 2.0;
 const _loadMoreOffset = 10;
 final _getIt = GetIt.instance;
@@ -43,27 +43,22 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 
     return PreferredSize(
       preferredSize: preferredSize,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AppBar(
-            automaticallyImplyLeading: false,
-            title: Text(
-              l10n.chat_tab_title,
-            ),
-            actions: [
-              FilledIconButton(
-                iconPath: Assets.image.svg.add.path,
-                onPressed: () {},
-              ),
-              FilledIconButton(
-                iconPath: Assets.image.svg.search.path,
-                onPressed: () {},
-              ),
-            ],
-            bottom: const _AppBarBottom(),
+      child: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          l10n.chat_tab_title,
+        ),
+        actions: [
+          FilledIconButton(
+            iconPath: Assets.image.svg.add.path,
+            onPressed: () {},
+          ),
+          FilledIconButton(
+            iconPath: Assets.image.svg.search.path,
+            onPressed: () {},
           ),
         ],
+        bottom: const _AppBarBottom(),
       ),
     );
   }

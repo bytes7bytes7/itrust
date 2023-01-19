@@ -10,7 +10,7 @@ import '../../../common/common.dart';
 import '../../application/stores/post/post_store.dart';
 import '../widgets/widgets.dart';
 
-const _appBarHeight = 66.0;
+const _appBarHeight = kToolbarHeight;
 
 final _getIt = GetIt.instance;
 
@@ -74,20 +74,15 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: preferredSize,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AppBar(
-            leading: FilledIconButton(
-              iconPath: Assets.image.svg.arrowBack.path,
-              onPressed: postStore.onBackButtonPressed,
-            ),
-            centerTitle: true,
-            title: Text(
-              l10n.post_screen_title,
-            ),
-          ),
-        ],
+      child: AppBar(
+        leading: FilledIconButton(
+          iconPath: Assets.image.svg.arrowBack.path,
+          onPressed: postStore.onBackButtonPressed,
+        ),
+        centerTitle: true,
+        title: Text(
+          l10n.post_screen_title,
+        ),
       ),
     );
   }

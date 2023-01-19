@@ -12,7 +12,7 @@ import '../../application/application.dart';
 import '../widgets/widgets.dart';
 
 const _paddingV = 10.0;
-const _appBarHeight = 66.0;
+const _appBarHeight = kToolbarHeight;
 
 final _getIt = GetIt.instance;
 
@@ -72,15 +72,10 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return PreferredSize(
       preferredSize: preferredSize,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AppBar(
-            title: Text(
-              l10n.feed_tab_title,
-            ),
-          ),
-        ],
+      child: AppBar(
+        title: Text(
+          l10n.feed_tab_title,
+        ),
       ),
     );
   }

@@ -35,18 +35,24 @@ class ChatCard extends StatelessWidget {
 
     // TODO: implement
     final lastMessageID = chat.lastMessageID;
-    final lastMessage = lastMessageID != null ? Message.user(
-      id: lastMessageID,
-      chatID: chat.id,
-      sentAt: DateTime.now(),
-      readBy: [],
-      text: 'some text $lastMessageID',
-      mediaUrls: [],
-      senderID: UserID('some id $lastMessageID'),
-    ) : null;
+    final lastMessage = lastMessageID != null
+        ? Message.user(
+            id: lastMessageID,
+            chatID: chat.id,
+            sentAt: DateTime.now(),
+            readBy: [],
+            text: 'some text $lastMessageID',
+            mediaUrls: [],
+            senderID: UserID('some id $lastMessageID'),
+          )
+        : null;
 
     // TODO: implement
-    const avatarUrl = null;
+    final avatarUrl = chat.map(
+      monologue: (chat) => chat.picUrl,
+      dialogue: (chat) => null,
+      group: (chat) => chat.picUrl,
+    );
     const online = true;
 
     // TODO: implement
@@ -67,7 +73,7 @@ class ChatCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              const UserCircleAvatar(
+              UserCircleAvatar(
                 url: avatarUrl,
                 online: online,
               ),

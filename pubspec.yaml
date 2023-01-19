@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
 
   another_flushbar: ^1.12.29
+  cached_network_image: ^3.2.3
   cloud_firestore: ^4.3.1
   collection: ^1.16.0
   connectivity_plus: ^3.0.2
@@ -34,7 +35,6 @@ dependencies:
   logging: ^1.1.0
   mobx: ^2.1.3
   rxdart: ^0.27.7
-  transparent_image: ^2.0.0
   url_strategy: ^0.2.0
 
 dev_dependencies:
