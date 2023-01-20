@@ -26,6 +26,7 @@ mixin _$Comment {
   DateTime get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   bool get likedByMe => throw _privateConstructorUsedError;
+  int get likesAmount => throw _privateConstructorUsedError;
   int get repliesAmount => throw _privateConstructorUsedError;
   CommentID? get replyTo => throw _privateConstructorUsedError;
   DateTime? get modifiedAt => throw _privateConstructorUsedError;
@@ -47,6 +48,7 @@ abstract class $CommentCopyWith<$Res> {
       DateTime createdAt,
       String text,
       bool likedByMe,
+      int likesAmount,
       int repliesAmount,
       CommentID? replyTo,
       DateTime? modifiedAt});
@@ -76,6 +78,7 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? createdAt = null,
     Object? text = null,
     Object? likedByMe = null,
+    Object? likesAmount = null,
     Object? repliesAmount = null,
     Object? replyTo = freezed,
     Object? modifiedAt = freezed,
@@ -105,6 +108,10 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
               as bool,
+      likesAmount: null == likesAmount
+          ? _value.likesAmount
+          : likesAmount // ignore: cast_nullable_to_non_nullable
+              as int,
       repliesAmount: null == repliesAmount
           ? _value.repliesAmount
           : repliesAmount // ignore: cast_nullable_to_non_nullable
@@ -171,6 +178,7 @@ abstract class _$$_CommentCopyWith<$Res> implements $CommentCopyWith<$Res> {
       DateTime createdAt,
       String text,
       bool likedByMe,
+      int likesAmount,
       int repliesAmount,
       CommentID? replyTo,
       DateTime? modifiedAt});
@@ -201,6 +209,7 @@ class __$$_CommentCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? text = null,
     Object? likedByMe = null,
+    Object? likesAmount = null,
     Object? repliesAmount = null,
     Object? replyTo = freezed,
     Object? modifiedAt = freezed,
@@ -230,6 +239,10 @@ class __$$_CommentCopyWithImpl<$Res>
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
               as bool,
+      likesAmount: null == likesAmount
+          ? _value.likesAmount
+          : likesAmount // ignore: cast_nullable_to_non_nullable
+              as int,
       repliesAmount: null == repliesAmount
           ? _value.repliesAmount
           : repliesAmount // ignore: cast_nullable_to_non_nullable
@@ -256,6 +269,7 @@ class _$_Comment implements _Comment {
       required this.createdAt,
       required this.text,
       required this.likedByMe,
+      required this.likesAmount,
       required this.repliesAmount,
       this.replyTo,
       this.modifiedAt});
@@ -276,6 +290,8 @@ class _$_Comment implements _Comment {
   @override
   final bool likedByMe;
   @override
+  final int likesAmount;
+  @override
   final int repliesAmount;
   @override
   final CommentID? replyTo;
@@ -284,7 +300,7 @@ class _$_Comment implements _Comment {
 
   @override
   String toString() {
-    return 'Comment(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, likedByMe: $likedByMe, repliesAmount: $repliesAmount, replyTo: $replyTo, modifiedAt: $modifiedAt)';
+    return 'Comment(id: $id, authorID: $authorID, postID: $postID, createdAt: $createdAt, text: $text, likedByMe: $likedByMe, likesAmount: $likesAmount, repliesAmount: $repliesAmount, replyTo: $replyTo, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -301,6 +317,8 @@ class _$_Comment implements _Comment {
             (identical(other.text, text) || other.text == text) &&
             (identical(other.likedByMe, likedByMe) ||
                 other.likedByMe == likedByMe) &&
+            (identical(other.likesAmount, likesAmount) ||
+                other.likesAmount == likesAmount) &&
             (identical(other.repliesAmount, repliesAmount) ||
                 other.repliesAmount == repliesAmount) &&
             (identical(other.replyTo, replyTo) || other.replyTo == replyTo) &&
@@ -311,7 +329,7 @@ class _$_Comment implements _Comment {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, authorID, postID, createdAt,
-      text, likedByMe, repliesAmount, replyTo, modifiedAt);
+      text, likedByMe, likesAmount, repliesAmount, replyTo, modifiedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -335,6 +353,7 @@ abstract class _Comment implements Comment {
       required final DateTime createdAt,
       required final String text,
       required final bool likedByMe,
+      required final int likesAmount,
       required final int repliesAmount,
       final CommentID? replyTo,
       final DateTime? modifiedAt}) = _$_Comment;
@@ -353,6 +372,8 @@ abstract class _Comment implements Comment {
   String get text;
   @override
   bool get likedByMe;
+  @override
+  int get likesAmount;
   @override
   int get repliesAmount;
   @override

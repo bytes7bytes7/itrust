@@ -12,8 +12,9 @@ const _paddingV = 10.0;
 const _underAuthorHeaderPadding = 20.0;
 const _underTextPadding = 20.0;
 const _compressedTextMaxLines = 2;
-const _likeAndReplyPadding = 24.0;
+const _likeAndReplyPadding = 14.0;
 const _commentAndRepliesAmountPadding = 6.0;
+const _likeAndLikesAmountPadding = 6.0;
 
 class CommentCard extends StatelessWidget {
   const CommentCard({
@@ -85,6 +86,24 @@ class CommentCard extends StatelessWidget {
                       notSwitchedIconPath: Assets.image.svg.like.path,
                       notSwitchedColor: colorSchemeTX.casualIcon,
                       onPressed: onLikePressed,
+                      childBuilder: (switched) {
+                        return Row(
+                          children: [
+                            const SizedBox(
+                              width: _likeAndLikesAmountPadding,
+                            ),
+                            Text(
+                              switched
+                                  ? comment.likesAmountWithMyLike
+                                  : comment.likesAmountWithoutMyLike,
+                              style: theme.textTheme.caption?.copyWith(
+                                color:
+                                    switched ? colorSchemeTX.warningIcon : null,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     if (isPreview) ...[
                       const SizedBox(

@@ -15,6 +15,8 @@ class CommentVM with _$CommentVM {
     required String createdAt,
     required String text,
     required bool likedByMe,
+    required String likesAmountWithoutMyLike,
+    required String likesAmountWithMyLike,
     required String repliesAmount,
     String? replyTo,
     String? avatarUrl,

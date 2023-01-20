@@ -23,6 +23,8 @@ mixin _$CommentVM {
   String get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   bool get likedByMe => throw _privateConstructorUsedError;
+  String get likesAmountWithoutMyLike => throw _privateConstructorUsedError;
+  String get likesAmountWithMyLike => throw _privateConstructorUsedError;
   String get repliesAmount => throw _privateConstructorUsedError;
   String? get replyTo => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
@@ -46,6 +48,8 @@ abstract class $CommentVMCopyWith<$Res> {
       String createdAt,
       String text,
       bool likedByMe,
+      String likesAmountWithoutMyLike,
+      String likesAmountWithMyLike,
       String repliesAmount,
       String? replyTo,
       String? avatarUrl,
@@ -72,6 +76,8 @@ class _$CommentVMCopyWithImpl<$Res, $Val extends CommentVM>
     Object? createdAt = null,
     Object? text = null,
     Object? likedByMe = null,
+    Object? likesAmountWithoutMyLike = null,
+    Object? likesAmountWithMyLike = null,
     Object? repliesAmount = null,
     Object? replyTo = freezed,
     Object? avatarUrl = freezed,
@@ -106,6 +112,14 @@ class _$CommentVMCopyWithImpl<$Res, $Val extends CommentVM>
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
               as bool,
+      likesAmountWithoutMyLike: null == likesAmountWithoutMyLike
+          ? _value.likesAmountWithoutMyLike
+          : likesAmountWithoutMyLike // ignore: cast_nullable_to_non_nullable
+              as String,
+      likesAmountWithMyLike: null == likesAmountWithMyLike
+          ? _value.likesAmountWithMyLike
+          : likesAmountWithMyLike // ignore: cast_nullable_to_non_nullable
+              as String,
       repliesAmount: null == repliesAmount
           ? _value.repliesAmount
           : repliesAmount // ignore: cast_nullable_to_non_nullable
@@ -141,6 +155,8 @@ abstract class _$$_CommentVMCopyWith<$Res> implements $CommentVMCopyWith<$Res> {
       String createdAt,
       String text,
       bool likedByMe,
+      String likesAmountWithoutMyLike,
+      String likesAmountWithMyLike,
       String repliesAmount,
       String? replyTo,
       String? avatarUrl,
@@ -165,6 +181,8 @@ class __$$_CommentVMCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? text = null,
     Object? likedByMe = null,
+    Object? likesAmountWithoutMyLike = null,
+    Object? likesAmountWithMyLike = null,
     Object? repliesAmount = null,
     Object? replyTo = freezed,
     Object? avatarUrl = freezed,
@@ -199,6 +217,14 @@ class __$$_CommentVMCopyWithImpl<$Res>
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
               as bool,
+      likesAmountWithoutMyLike: null == likesAmountWithoutMyLike
+          ? _value.likesAmountWithoutMyLike
+          : likesAmountWithoutMyLike // ignore: cast_nullable_to_non_nullable
+              as String,
+      likesAmountWithMyLike: null == likesAmountWithMyLike
+          ? _value.likesAmountWithMyLike
+          : likesAmountWithMyLike // ignore: cast_nullable_to_non_nullable
+              as String,
       repliesAmount: null == repliesAmount
           ? _value.repliesAmount
           : repliesAmount // ignore: cast_nullable_to_non_nullable
@@ -230,6 +256,8 @@ class _$_CommentVM implements _CommentVM {
       required this.createdAt,
       required this.text,
       required this.likedByMe,
+      required this.likesAmountWithoutMyLike,
+      required this.likesAmountWithMyLike,
       required this.repliesAmount,
       this.replyTo,
       this.avatarUrl,
@@ -250,6 +278,10 @@ class _$_CommentVM implements _CommentVM {
   @override
   final bool likedByMe;
   @override
+  final String likesAmountWithoutMyLike;
+  @override
+  final String likesAmountWithMyLike;
+  @override
   final String repliesAmount;
   @override
   final String? replyTo;
@@ -260,7 +292,7 @@ class _$_CommentVM implements _CommentVM {
 
   @override
   String toString() {
-    return 'CommentVM(id: $id, authorID: $authorID, postID: $postID, authorName: $authorName, createdAt: $createdAt, text: $text, likedByMe: $likedByMe, repliesAmount: $repliesAmount, replyTo: $replyTo, avatarUrl: $avatarUrl, modifiedAt: $modifiedAt)';
+    return 'CommentVM(id: $id, authorID: $authorID, postID: $postID, authorName: $authorName, createdAt: $createdAt, text: $text, likedByMe: $likedByMe, likesAmountWithoutMyLike: $likesAmountWithoutMyLike, likesAmountWithMyLike: $likesAmountWithMyLike, repliesAmount: $repliesAmount, replyTo: $replyTo, avatarUrl: $avatarUrl, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -279,6 +311,11 @@ class _$_CommentVM implements _CommentVM {
             (identical(other.text, text) || other.text == text) &&
             (identical(other.likedByMe, likedByMe) ||
                 other.likedByMe == likedByMe) &&
+            (identical(
+                    other.likesAmountWithoutMyLike, likesAmountWithoutMyLike) ||
+                other.likesAmountWithoutMyLike == likesAmountWithoutMyLike) &&
+            (identical(other.likesAmountWithMyLike, likesAmountWithMyLike) ||
+                other.likesAmountWithMyLike == likesAmountWithMyLike) &&
             (identical(other.repliesAmount, repliesAmount) ||
                 other.repliesAmount == repliesAmount) &&
             (identical(other.replyTo, replyTo) || other.replyTo == replyTo) &&
@@ -298,6 +335,8 @@ class _$_CommentVM implements _CommentVM {
       createdAt,
       text,
       likedByMe,
+      likesAmountWithoutMyLike,
+      likesAmountWithMyLike,
       repliesAmount,
       replyTo,
       avatarUrl,
@@ -319,6 +358,8 @@ abstract class _CommentVM implements CommentVM {
       required final String createdAt,
       required final String text,
       required final bool likedByMe,
+      required final String likesAmountWithoutMyLike,
+      required final String likesAmountWithMyLike,
       required final String repliesAmount,
       final String? replyTo,
       final String? avatarUrl,
@@ -338,6 +379,10 @@ abstract class _CommentVM implements CommentVM {
   String get text;
   @override
   bool get likedByMe;
+  @override
+  String get likesAmountWithoutMyLike;
+  @override
+  String get likesAmountWithMyLike;
   @override
   String get repliesAmount;
   @override

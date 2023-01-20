@@ -16,6 +16,8 @@ class TestCommentService implements CommentService {
         return List.generate(
           _rand.nextBool() ? _rand.nextInt(30) + 1 : 0,
           (index) {
+            final likedByMe = _rand.nextBool();
+
             return Comment(
               id: CommentID('comment ${_rand.nextInt(1000)}'),
               authorID: UserID('user ${_rand.nextInt(1000)}'),
@@ -23,7 +25,12 @@ class TestCommentService implements CommentService {
               text: _randString(_rand.nextInt(50) + 10),
               createdAt: _randDateTime(),
               modifiedAt: _rand.nextBool() ? _randDateTime() : null,
-              likedByMe: _rand.nextBool(),
+              likedByMe: likedByMe,
+              likesAmount: _rand.nextBool()
+                  ? _rand.nextInt(2000)
+                  : likedByMe
+                      ? 1
+                      : 0,
               repliesAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
               replyTo: null,
             );
@@ -38,6 +45,8 @@ class TestCommentService implements CommentService {
     return Future.delayed(
       Duration(seconds: _rand.nextInt(3) + 1),
       () {
+        final likedByMe = _rand.nextBool();
+
         return Comment(
           id: CommentID('comment ${_rand.nextInt(1000)}'),
           authorID: UserID('user ${_rand.nextInt(1000)}'),
@@ -45,7 +54,12 @@ class TestCommentService implements CommentService {
           text: _randString(_rand.nextInt(50) + 10),
           createdAt: _randDateTime(),
           modifiedAt: _rand.nextBool() ? _randDateTime() : null,
-          likedByMe: _rand.nextBool(),
+          likedByMe: likedByMe,
+          likesAmount: _rand.nextBool()
+              ? _rand.nextInt(2000)
+              : likedByMe
+              ? 1
+              : 0,
           repliesAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
           replyTo: _rand.nextBool()
               ? CommentID('comment ${_rand.nextInt(1000)}')
@@ -63,6 +77,8 @@ class TestCommentService implements CommentService {
         return List.generate(
           _rand.nextBool() ? _rand.nextInt(30) + 1 : 0,
           (index) {
+            final likedByMe = _rand.nextBool();
+
             return Comment(
               id: CommentID('comment ${_rand.nextInt(1000)}'),
               authorID: UserID('user ${_rand.nextInt(1000)}'),
@@ -70,7 +86,12 @@ class TestCommentService implements CommentService {
               text: _randString(_rand.nextInt(50) + 10),
               createdAt: _randDateTime(),
               modifiedAt: _rand.nextBool() ? _randDateTime() : null,
-              likedByMe: _rand.nextBool(),
+              likedByMe: likedByMe,
+              likesAmount: _rand.nextBool()
+                  ? _rand.nextInt(2000)
+                  : likedByMe
+                  ? 1
+                  : 0,
               repliesAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
               replyTo: commentID,
             );

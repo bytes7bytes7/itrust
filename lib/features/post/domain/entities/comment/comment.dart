@@ -20,6 +20,7 @@ class Comment with _$Comment {
     required DateTime createdAt,
     required String text,
     required bool likedByMe,
+    required int likesAmount,
     required int repliesAmount,
     CommentID? replyTo,
     DateTime? modifiedAt,

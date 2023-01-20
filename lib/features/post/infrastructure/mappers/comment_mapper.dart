@@ -32,6 +32,11 @@ class CommentMapper
       comment.createdAt,
     );
 
+    final likesAmountWithoutMyLike =
+        comment.likesAmount - (comment.likedByMe ? 1 : 0);
+    final likesAmountWithMyLike =
+        comment.likesAmount + (comment.likedByMe ? 0 : 1);
+
     return CommentVM(
       id: comment.id.str,
       authorID: comment.authorID.str,
@@ -45,6 +50,10 @@ class CommentMapper
       ),
       avatarUrl: user.avatarUrls.firstOrNull,
       likedByMe: comment.likedByMe,
+      likesAmountWithoutMyLike:
+          _beautifiedNumberProvider.beautify(likesAmountWithoutMyLike),
+      likesAmountWithMyLike:
+          _beautifiedNumberProvider.beautify(likesAmountWithMyLike),
       repliesAmount: _beautifiedNumberProvider.beautify(comment.repliesAmount),
       replyTo: comment.replyTo?.str,
     );
