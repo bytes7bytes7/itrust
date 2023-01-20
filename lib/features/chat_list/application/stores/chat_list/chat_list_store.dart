@@ -59,7 +59,7 @@ abstract class _ChatListStore extends SyncStore with Store {
         _chatListService.load(limit: _limit, offset: 0);
       },
       setIsLoading: (v) => _isLoading = v,
-      setError: (v) => _error = v,
+      removeError: () => _error = '',
     );
   }
 
@@ -86,7 +86,7 @@ abstract class _ChatListStore extends SyncStore with Store {
           );
         },
         setIsLoading: (v) => _isLoading = v,
-        setError: (v) => _error = v,
+        removeError: () => _error = '',
       );
       // TODO: implement
 

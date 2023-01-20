@@ -7,13 +7,13 @@ abstract class SyncStore {
   Future<void> perform(
     FutureOr<void> Function() callback, {
     required void Function(bool) setIsLoading,
-    required void Function(String) setError,
+    required void Function() removeError,
   }) async {
     final id = _currentQueueId++;
     _loadingQueue.add(id);
 
     setIsLoading(true);
-    setError('');
+    removeError();
 
     await callback();
 

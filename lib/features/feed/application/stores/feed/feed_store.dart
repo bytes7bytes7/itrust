@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/common.dart';
 import '../../../domain/services/feed_service.dart';
 import '../../coordinators/feed_coordinator.dart';
+import '../../providers/feed_string_repository.dart';
 import '../category/category_store.dart';
 
 part 'feed_store.g.dart';
@@ -16,15 +17,18 @@ abstract class _FeedStore extends SyncStore with Store {
     required this.categoryStore,
     required FeedService feedService,
     required FeedCoordinator feedCoordinator,
+    required FeedStringProvider feedStringProvider,
     required TwoEntitiesToViewModelMapper<Post, User, PostVM> postMapper,
   })  : _feedService = feedService,
         _feedCoordinator = feedCoordinator,
+        _feedStringProvider = feedStringProvider,
         _postMapper = postMapper;
 
   final CategoryStore categoryStore;
 
   final FeedService _feedService;
   final FeedCoordinator _feedCoordinator;
+  final FeedStringProvider _feedStringProvider;
   final TwoEntitiesToViewModelMapper<Post, User, PostVM> _postMapper;
   var _processingCategory = '';
 
@@ -37,40 +41,59 @@ abstract class _FeedStore extends SyncStore with Store {
   @readonly
   List<PostVM> _posts = const [];
 
+  @computed
+  bool get hasError => _error.isNotEmpty;
+
+  @computed
+  bool get isAllLoaded =>
+      !_isLoading &&
+      _error.isEmpty &&
+      !categoryStore.isLoading &&
+      categoryStore.error.isEmpty;
+
   void init() {
     categoryStore.selectedCategory.observe((listener) {
       final category = listener.newValue;
 
       if (category != null) {
-        _processingCategory = category;
-
-        perform(
-          () async {
-            final data = await _feedService.loadPosts(category);
-
-            if (_processingCategory == category) {
-              // TODO: implement
-              const user = User.end(
-                id: UserID('user'),
-                avatarUrls: [],
-                email: 'email@email.com',
-              );
-
-              _posts = data
-                  .map(
-                    (post) => _postMapper.map(
-                      post,
-                      user,
-                    ),
-                  )
-                  .toList();
-            }
-          },
-          setIsLoading: (v) => _isLoading = v,
-          setError: (v) => _error = v,
-        );
+        loadPosts(category);
       }
     });
+  }
+
+  @action
+  void loadPosts(String category) {
+    _processingCategory = category;
+
+    perform(
+      () async {
+        try {
+          final data = await _feedService.loadPosts(category);
+
+          if (_processingCategory == category) {
+            // TODO: implement
+            const user = User.end(
+              id: UserID('user'),
+              avatarUrls: [],
+              email: 'email@email.com',
+            );
+
+            _posts = data
+                .map(
+                  (post) => _postMapper.map(
+                    post,
+                    user,
+                  ),
+                )
+                .toList();
+          }
+        } catch (e) {
+          _error = _feedStringProvider.canNotLoadPosts;
+        }
+      },
+      setIsLoading: (v) => _isLoading = v,
+      removeError: () => _error = '',
+    );
   }
 
   void onPostPressed({required String postID}) {

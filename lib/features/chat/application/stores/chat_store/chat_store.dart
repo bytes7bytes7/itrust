@@ -78,7 +78,7 @@ abstract class _ChatStore extends SyncStore with Store {
         }
       },
       setIsLoading: (v) => _isLoading = v,
-      setError: (v) => _error = v,
+      removeError: () => _error = '',
     );
 
     load();
@@ -107,7 +107,7 @@ abstract class _ChatStore extends SyncStore with Store {
           _isLoadingMore = false;
         },
         setIsLoading: (v) => _isLoading = v,
-        setError: (v) => _error = v,
+        removeError: () => _error = '',
       );
     }
   }

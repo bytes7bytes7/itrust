@@ -36,7 +36,7 @@ abstract class _RulesStore extends SyncStore with Store {
         _rules = await _rulesService.loadRules();
       },
       setIsLoading: (v) => _isLoading = v,
-      setError: (v) => _error = v,
+      removeError: () => _error = '',
     );
   }
 

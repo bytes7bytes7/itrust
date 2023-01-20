@@ -69,7 +69,7 @@ abstract class _CommentReplyStore extends SyncStore with Store {
             .toList();
       },
       setIsLoading: (v) => _isLoading = v,
-      setError: (v) => _error = v,
+      removeError: () => _error = '',
     );
   }
 

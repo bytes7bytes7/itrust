@@ -11,6 +11,10 @@ class TestFeedService implements FeedService {
   @override
   Future<List<Post>> loadPosts(String category) {
     return Future.delayed(Duration(seconds: _rand.nextInt(3) + 1), () {
+      if (_rand.nextInt(3) == 0) {
+        throw Exception();
+      }
+
       return List.generate(
         _rand.nextInt(30) + 10,
         (index) {

@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../l10n/l10n.dart';
+import '../../../../utils/hooks/reaction.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/application.dart';
 import '../widgets/widgets.dart';
@@ -33,6 +34,28 @@ class FeedScreen extends HookWidget {
         return;
       },
       const [],
+    );
+
+    useReaction<String>(
+      (_) => feedStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
+    );
+
+    useReaction<String>(
+      (_) => feedStore.categoryStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
     );
 
     return Scaffold(
@@ -71,7 +94,9 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({required this.feedStore});
+  const _Body({
+    required this.feedStore,
+  });
 
   final FeedStore feedStore;
 
@@ -79,7 +104,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        if (feedStore.isLoading || feedStore.categoryStore.isLoading) {
+        if (!feedStore.isAllLoaded) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,11 +113,22 @@ class _Body extends StatelessWidget {
                   key: _categoryListKey,
                   categoryStore: feedStore.categoryStore,
                 ),
-              const Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(),
+              if (feedStore.isLoading || feedStore.categoryStore.isLoading)
+                const Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else
+                Expanded(
+                  child: LoadingErrorContainer(
+                    onRetry: feedStore.categoryStore.hasError
+                        ? feedStore.categoryStore.loadCategories
+                        : () => feedStore.loadPosts(
+                              feedStore.categoryStore.selectedCategory.value,
+                            ),
+                  ),
                 ),
-              ),
             ],
           );
         }

@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/application.dart';
 import '../../../domain/services/category_service.dart';
+import '../../providers/category_string_provider.dart';
 
 part 'category_store.g.dart';
 
@@ -13,9 +14,12 @@ class CategoryStore = _CategoryStore with _$CategoryStore;
 abstract class _CategoryStore extends SyncStore with Store {
   _CategoryStore({
     required CategoryService categoryService,
-  }) : _categoryService = categoryService;
+    required CategoryStringProvider categoryStringProvider,
+  })  : _categoryService = categoryService,
+        _categoryStringProvider = categoryStringProvider;
 
   final CategoryService _categoryService;
+  final CategoryStringProvider _categoryStringProvider;
 
   @readonly
   bool _isLoading = false;
@@ -29,19 +33,26 @@ abstract class _CategoryStore extends SyncStore with Store {
   @readonly
   Observable<String> _selectedCategory = ''.obs();
 
+  @computed
+  bool get hasError => _error.isNotEmpty;
+
   @action
   void loadCategories() {
     perform(
       () async {
-        _categories = await _categoryService.loadCategories();
+        try {
+          _categories = await _categoryService.loadCategories();
 
-        final firstCategory = _categories.firstOrNull;
-        if (firstCategory != null) {
-          selectCategory(firstCategory);
+          final firstCategory = _categories.firstOrNull;
+          if (firstCategory != null) {
+            selectCategory(firstCategory);
+          }
+        } catch (e) {
+          _error = _categoryStringProvider.canNotLoadCategories;
         }
       },
       setIsLoading: (v) => _isLoading = v,
-      setError: (v) => _error = v,
+      removeError: () => _error = '',
     );
   }
 

@@ -56,7 +56,7 @@ abstract class _PostStore extends SyncStore with Store {
         _post = _postMapper.map(post, user);
       },
       setIsLoading: (v) => _isLoading = v,
-      setError: (v) => _error = v,
+      removeError: () => _error = '',
     );
   }
 

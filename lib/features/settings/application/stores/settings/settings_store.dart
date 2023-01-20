@@ -32,7 +32,7 @@ abstract class _SettingsStore extends SyncStore with Store {
         await _authService.logOut();
       },
       setIsLoading: (v) => _isLoading = v,
-      setError: (v) => _error = v,
+      removeError: () => _error = '',
     );
   }
 

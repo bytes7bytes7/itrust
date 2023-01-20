@@ -60,7 +60,7 @@ abstract class _CommentStore extends SyncStore with Store {
         _comment = _commentMapper.map(comment, user);
       },
       setIsLoading: (v) => _isLoading = v,
-      setError: (v) => _error = v,
+      removeError: () => _error = '',
     );
   }
 
