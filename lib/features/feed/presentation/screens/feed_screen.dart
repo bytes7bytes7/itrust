@@ -9,8 +9,10 @@ import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/application.dart';
 import '../widgets/widgets.dart';
 
-const _paddingV = 10.0;
 const _appBarHeight = kToolbarHeight;
+const _categoryListHeight = 54.0;
+const _categoryListTitlePaddingH = 0.0;
+const _categoryListKey = PageStorageKey('feed category list');
 
 final _getIt = GetIt.instance;
 
@@ -75,25 +77,53 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: _paddingV,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _CategoryList(
-            categoryStore: feedStore.categoryStore,
-          ),
-          _PostList(feedStore: feedStore),
-        ],
-      ),
+    return Observer(
+      builder: (context) {
+        if (feedStore.isLoading || feedStore.categoryStore.isLoading) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (!feedStore.categoryStore.isLoading)
+                _CategoryList(
+                  key: _categoryListKey,
+                  categoryStore: feedStore.categoryStore,
+                ),
+              const Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            ],
+          );
+        }
+
+        return CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              pinned: false,
+              snap: true,
+              floating: true,
+              expandedHeight: _categoryListHeight,
+              automaticallyImplyLeading: false,
+              titleSpacing: _categoryListTitlePaddingH,
+              title: _CategoryList(
+                key: _categoryListKey,
+                categoryStore: feedStore.categoryStore,
+              ),
+            ),
+            _PostList(
+              feedStore: feedStore,
+            ),
+          ],
+        );
+      },
     );
   }
 }
 
 class _CategoryList extends StatelessWidget {
   const _CategoryList({
+    super.key,
     required this.categoryStore,
   });
 
@@ -113,6 +143,7 @@ class _CategoryList extends StatelessWidget {
           return const SizedBox.shrink();
         } else {
           return CategoryList(
+            height: _categoryListHeight,
             categories: categoryStore.categories,
             selectedCategory: categoryStore.selectedCategory.value,
             onCategoryPressed: categoryStore.selectCategory,
@@ -135,15 +166,17 @@ class _PostList extends StatelessWidget {
     return Observer(
       builder: (context) {
         if (feedStore.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return const SliverToBoxAdapter(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
         }
 
-        return Expanded(
-          child: ListView.builder(
-            itemCount: feedStore.posts.length,
-            itemBuilder: (context, index) {
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+            childCount: feedStore.posts.length,
+            (context, index) {
               final post = feedStore.posts[index];
 
               return PostCard(

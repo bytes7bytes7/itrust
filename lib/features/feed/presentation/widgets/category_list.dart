@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'selected_category_list_item.dart';
 import 'unselected_category_list_item.dart';
 
-const _height = 54.0;
 const _paddingV = 10.0;
 const _listPaddingH = 10.0;
 
 class CategoryList extends StatelessWidget {
   const CategoryList({
     super.key,
+    required this.height,
     required this.categories,
     this.selectedCategory,
     this.onCategoryPressed,
   });
 
+  final double height;
   final List<String> categories;
   final String? selectedCategory;
   final void Function(String category)? onCategoryPressed;
@@ -22,7 +23,7 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: _height,
+      height: height,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: _paddingV,
