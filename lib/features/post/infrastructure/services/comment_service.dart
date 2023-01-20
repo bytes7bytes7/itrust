@@ -24,7 +24,7 @@ class TestCommentService implements CommentService {
               createdAt: _randDateTime(),
               modifiedAt: _rand.nextBool() ? _randDateTime() : null,
               likedByMe: _rand.nextBool(),
-              repliesAmount: _rand.nextBool() ? _rand.nextInt(100) : 0,
+              repliesAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
               replyTo: null,
             );
           },
@@ -46,7 +46,7 @@ class TestCommentService implements CommentService {
           createdAt: _randDateTime(),
           modifiedAt: _rand.nextBool() ? _randDateTime() : null,
           likedByMe: _rand.nextBool(),
-          repliesAmount: _rand.nextBool() ? _rand.nextInt(100) : 0,
+          repliesAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
           replyTo: _rand.nextBool()
               ? CommentID('comment ${_rand.nextInt(1000)}')
               : null,
@@ -71,7 +71,7 @@ class TestCommentService implements CommentService {
               createdAt: _randDateTime(),
               modifiedAt: _rand.nextBool() ? _randDateTime() : null,
               likedByMe: _rand.nextBool(),
-              repliesAmount: _rand.nextBool() ? _rand.nextInt(100) : 0,
+              repliesAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
               replyTo: commentID,
             );
           },

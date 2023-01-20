@@ -23,7 +23,7 @@ class TestFeedService implements FeedService {
             text: _rand.nextBool() ? _randString(_rand.nextInt(500) + 30) : '',
             mediaUrls:
                 _mediaUrls.take(_rand.nextInt(_mediaUrls.length)).toList(),
-            commentsAmount: _rand.nextBool() ? _rand.nextInt(100) : 0,
+            commentsAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
             likedByMe: _rand.nextBool(),
           );
         },

@@ -8,9 +8,12 @@ import '../../domain/domain.dart';
 class PostMapper implements TwoEntitiesToViewModelMapper<Post, User, PostVM> {
   const PostMapper({
     required FormattedDateProvider formattedDateProvider,
-  }) : _formattedDateProvider = formattedDateProvider;
+    required BeautifiedNumberProvider beautifiedNumberProvider,
+  })  : _formattedDateProvider = formattedDateProvider,
+        _beautifiedNumberProvider = beautifiedNumberProvider;
 
   final FormattedDateProvider _formattedDateProvider;
+  final BeautifiedNumberProvider _beautifiedNumberProvider;
 
   @override
   PostVM map(Post post, User user) {
@@ -23,7 +26,7 @@ class PostMapper implements TwoEntitiesToViewModelMapper<Post, User, PostVM> {
       ),
       avatarUrl: user.avatarUrls.firstOrNull,
       text: post.text,
-      commentsAmount: post.commentsAmount != 0 ? '${post.commentsAmount}' : '',
+      commentsAmount: _beautifiedNumberProvider.beautify(post.commentsAmount),
       createdAt: _formattedDateProvider.inRelationToNow(post.createdAt),
       mediaUrls: post.mediaUrls,
       likedByMe: post.likedByMe,

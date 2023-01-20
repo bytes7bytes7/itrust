@@ -6,7 +6,7 @@ import '../../application/providers/auth_string_provider.dart';
 @Singleton(as: AuthStringProvider)
 class ProdAuthStringProvider extends StringProvider
     implements AuthStringProvider {
-  ProdAuthStringProvider({required super.navigatorKey});
+  const ProdAuthStringProvider({required super.navigatorKey});
 
   @override
   String get tooManyRequests => l10n.too_many_requests;

@@ -62,6 +62,9 @@ class ChatCard extends StatelessWidget {
       group: (chat) => chat.title,
     );
 
+    // TODO: implement
+    final unreadAmount = '${chat.unreadAmount}';
+
     return Material(
       color: colorSchemeTX.chatCard,
       child: InkWell(
@@ -142,7 +145,7 @@ class ChatCard extends StatelessWidget {
               ),
               if (lastMessage != null && chat.unreadAmount > 0)
                 UnreadIndicator(
-                  unread: chat.unreadAmount,
+                  unread: unreadAmount,
                 ),
               const SizedBox(
                 width: _titleAndTimeSeparator,

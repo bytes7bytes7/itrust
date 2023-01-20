@@ -10,9 +10,12 @@ class CommentMapper
     implements TwoEntitiesToViewModelMapper<Comment, User, CommentVM> {
   CommentMapper({
     required FormattedDateProvider dateFormatProvider,
-  }) : _formattedDateProvider = dateFormatProvider;
+    required BeautifiedNumberProvider beautifiedNumberProvider,
+  })  : _formattedDateProvider = dateFormatProvider,
+        _beautifiedNumberProvider = beautifiedNumberProvider;
 
   final FormattedDateProvider _formattedDateProvider;
+  final BeautifiedNumberProvider _beautifiedNumberProvider;
 
   @override
   CommentVM map(Comment comment, User user) {
@@ -42,8 +45,7 @@ class CommentMapper
       ),
       avatarUrl: user.avatarUrls.firstOrNull,
       likedByMe: comment.likedByMe,
-      repliesAmount:
-          comment.repliesAmount != 0 ? '${comment.repliesAmount}' : '',
+      repliesAmount: _beautifiedNumberProvider.beautify(comment.repliesAmount),
       replyTo: comment.replyTo?.str,
     );
   }
