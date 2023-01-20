@@ -13,6 +13,7 @@ const _underAuthorHeaderPadding = 20.0;
 const _underTextPadding = 20.0;
 const _compressedTextMaxLines = 2;
 const _likeAndReplyPadding = 24.0;
+const _commentAndRepliesAmountPadding = 6.0;
 
 class CommentCard extends StatelessWidget {
   const CommentCard({
@@ -93,6 +94,13 @@ class CommentCard extends StatelessWidget {
                         iconPath: Assets.image.svg.flipForward.path,
                         color: colorSchemeTX.casualIcon,
                         onPressed: onCommentPressed,
+                      ),
+                      const SizedBox(
+                        width: _commentAndRepliesAmountPadding,
+                      ),
+                      Text(
+                        comment.repliesAmount,
+                        style: theme.textTheme.caption,
                       ),
                     ],
                     const Spacer(),

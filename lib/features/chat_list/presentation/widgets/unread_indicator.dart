@@ -27,13 +27,15 @@ class UnreadIndicator extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(_borderRadius),
-        color: colorSchemeTX.unreadBackground,
+        color: colorSchemeTX.unreadIndicatorBackground,
       ),
       child: Padding(
         padding: const EdgeInsets.all(_textPadding),
         child: Text(
           _formattedAmount(l10n),
-          style: theme.textTheme.caption,
+          style: theme.textTheme.caption?.copyWith(
+            color: colorSchemeTX.unreadIndicatorForeground,
+          ),
         ),
       ),
     );

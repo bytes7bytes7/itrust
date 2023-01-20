@@ -61,9 +61,7 @@ class OthersMessageCard extends StatelessWidget {
                   if (showSender) ...[
                     Text(
                       senderName,
-                      style: theme.textTheme.caption?.copyWith(
-                        color: colorSchemeTX.msgSender,
-                      ),
+                      style: theme.textTheme.caption,
                     ),
                     const SizedBox(
                       height: _messageAndAuthorSeparator,

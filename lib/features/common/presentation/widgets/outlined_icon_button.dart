@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'sized_icon.dart';
 
-const _splashRadius = 24.0;
+const _splashRadius = 18.0;
 const _iconSize = 24.0;
 
 class OutlinedIconButton extends StatelessWidget {

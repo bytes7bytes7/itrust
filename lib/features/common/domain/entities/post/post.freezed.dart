@@ -23,10 +23,10 @@ mixin _$Post {
   PostID get id => throw _privateConstructorUsedError;
   UserID get authorID => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
-  List<UserID> get seenBy => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   List<String> get mediaUrls => throw _privateConstructorUsedError;
   int get commentsAmount => throw _privateConstructorUsedError;
+  bool get likedByMe => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,10 +42,10 @@ abstract class $PostCopyWith<$Res> {
       {PostID id,
       UserID authorID,
       DateTime createdAt,
-      List<UserID> seenBy,
       String text,
       List<String> mediaUrls,
-      int commentsAmount});
+      int commentsAmount,
+      bool likedByMe});
 
   $PostIDCopyWith<$Res> get id;
   $UserIDCopyWith<$Res> get authorID;
@@ -67,10 +67,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? id = null,
     Object? authorID = null,
     Object? createdAt = null,
-    Object? seenBy = null,
     Object? text = null,
     Object? mediaUrls = null,
     Object? commentsAmount = null,
+    Object? likedByMe = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -85,10 +85,6 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      seenBy: null == seenBy
-          ? _value.seenBy
-          : seenBy // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -101,6 +97,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.commentsAmount
           : commentsAmount // ignore: cast_nullable_to_non_nullable
               as int,
+      likedByMe: null == likedByMe
+          ? _value.likedByMe
+          : likedByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -131,10 +131,10 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       {PostID id,
       UserID authorID,
       DateTime createdAt,
-      List<UserID> seenBy,
       String text,
       List<String> mediaUrls,
-      int commentsAmount});
+      int commentsAmount,
+      bool likedByMe});
 
   @override
   $PostIDCopyWith<$Res> get id;
@@ -154,10 +154,10 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
     Object? id = null,
     Object? authorID = null,
     Object? createdAt = null,
-    Object? seenBy = null,
     Object? text = null,
     Object? mediaUrls = null,
     Object? commentsAmount = null,
+    Object? likedByMe = null,
   }) {
     return _then(_$_Post(
       id: null == id
@@ -172,10 +172,6 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      seenBy: null == seenBy
-          ? _value._seenBy
-          : seenBy // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -188,6 +184,10 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
           ? _value.commentsAmount
           : commentsAmount // ignore: cast_nullable_to_non_nullable
               as int,
+      likedByMe: null == likedByMe
+          ? _value.likedByMe
+          : likedByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -199,12 +199,11 @@ class _$_Post implements _Post {
       {required this.id,
       required this.authorID,
       required this.createdAt,
-      required final List<UserID> seenBy,
       required this.text,
       required final List<String> mediaUrls,
-      required this.commentsAmount})
-      : _seenBy = seenBy,
-        _mediaUrls = mediaUrls;
+      required this.commentsAmount,
+      required this.likedByMe})
+      : _mediaUrls = mediaUrls;
 
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
@@ -214,14 +213,6 @@ class _$_Post implements _Post {
   final UserID authorID;
   @override
   final DateTime createdAt;
-  final List<UserID> _seenBy;
-  @override
-  List<UserID> get seenBy {
-    if (_seenBy is EqualUnmodifiableListView) return _seenBy;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_seenBy);
-  }
-
   @override
   final String text;
   final List<String> _mediaUrls;
@@ -234,10 +225,12 @@ class _$_Post implements _Post {
 
   @override
   final int commentsAmount;
+  @override
+  final bool likedByMe;
 
   @override
   String toString() {
-    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, seenBy: $seenBy, text: $text, mediaUrls: $mediaUrls, commentsAmount: $commentsAmount)';
+    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, commentsAmount: $commentsAmount, likedByMe: $likedByMe)';
   }
 
   @override
@@ -250,12 +243,13 @@ class _$_Post implements _Post {
                 other.authorID == authorID) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            const DeepCollectionEquality().equals(other._seenBy, _seenBy) &&
             (identical(other.text, text) || other.text == text) &&
             const DeepCollectionEquality()
                 .equals(other._mediaUrls, _mediaUrls) &&
             (identical(other.commentsAmount, commentsAmount) ||
-                other.commentsAmount == commentsAmount));
+                other.commentsAmount == commentsAmount) &&
+            (identical(other.likedByMe, likedByMe) ||
+                other.likedByMe == likedByMe));
   }
 
   @JsonKey(ignore: true)
@@ -265,10 +259,10 @@ class _$_Post implements _Post {
       id,
       authorID,
       createdAt,
-      const DeepCollectionEquality().hash(_seenBy),
       text,
       const DeepCollectionEquality().hash(_mediaUrls),
-      commentsAmount);
+      commentsAmount,
+      likedByMe);
 
   @JsonKey(ignore: true)
   @override
@@ -289,10 +283,10 @@ abstract class _Post implements Post {
       {required final PostID id,
       required final UserID authorID,
       required final DateTime createdAt,
-      required final List<UserID> seenBy,
       required final String text,
       required final List<String> mediaUrls,
-      required final int commentsAmount}) = _$_Post;
+      required final int commentsAmount,
+      required final bool likedByMe}) = _$_Post;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
@@ -303,13 +297,13 @@ abstract class _Post implements Post {
   @override
   DateTime get createdAt;
   @override
-  List<UserID> get seenBy;
-  @override
   String get text;
   @override
   List<String> get mediaUrls;
   @override
   int get commentsAmount;
+  @override
+  bool get likedByMe;
   @override
   @JsonKey(ignore: true)
   _$$_PostCopyWith<_$_Post> get copyWith => throw _privateConstructorUsedError;

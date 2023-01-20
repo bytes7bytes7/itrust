@@ -2,10 +2,8 @@ import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
-import '../../../domain/services/comment_service.dart';
-import '../../../domain/value_objects/comment_id/comment_id.dart';
+import '../../../domain/domain.dart';
 import '../../coordinators/comment_coordinator.dart';
-import '../../mappers/comment_mapper.dart';
 import '../../view_models/comment/comment_vm.dart';
 import '../comment_reply/comment_reply_store.dart';
 
@@ -19,7 +17,8 @@ abstract class _CommentStore extends SyncStore with Store {
     required this.commentReplyStore,
     required CommentService commentService,
     required CommentCoordinator commentCoordinator,
-    required CommentMapper commentMapper,
+    required TwoEntitiesToViewModelMapper<Comment, User, CommentVM>
+        commentMapper,
   })  : _commentService = commentService,
         _commentCoordinator = commentCoordinator,
         _commentMapper = commentMapper;
@@ -28,7 +27,7 @@ abstract class _CommentStore extends SyncStore with Store {
 
   final CommentService _commentService;
   final CommentCoordinator _commentCoordinator;
-  final CommentMapper _commentMapper;
+  final TwoEntitiesToViewModelMapper<Comment, User, CommentVM> _commentMapper;
 
   @readonly
   bool _isLoading = false;
@@ -78,6 +77,6 @@ abstract class _CommentStore extends SyncStore with Store {
   }
 
   void onBackButtonPressed() {
-      _commentCoordinator.onBackButtonPressed();
+    _commentCoordinator.onBackButtonPressed();
   }
 }

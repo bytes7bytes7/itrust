@@ -21,10 +21,10 @@ class TestFeedService implements FeedService {
             authorID: UserID(_randString(8)),
             createdAt: _randDateTime(),
             text: _rand.nextBool() ? _randString(_rand.nextInt(500) + 30) : '',
-            seenBy: [],
             mediaUrls:
                 _mediaUrls.take(_rand.nextInt(_mediaUrls.length)).toList(),
             commentsAmount: _rand.nextBool() ? _rand.nextInt(100) : 0,
+            likedByMe: _rand.nextBool(),
           );
         },
       );

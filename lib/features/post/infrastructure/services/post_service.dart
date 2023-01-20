@@ -24,8 +24,8 @@ class TestPostService implements PostService {
                 )
               : [],
           text: _rand.nextBool() ? _randString(_rand.nextInt(5000) + 30) : '',
-          seenBy: [],
           commentsAmount: _rand.nextBool() ? _rand.nextInt(100) : 0,
+          likedByMe: _rand.nextBool(),
         );
       },
     );

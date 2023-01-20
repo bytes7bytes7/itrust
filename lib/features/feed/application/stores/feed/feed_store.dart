@@ -16,13 +16,16 @@ abstract class _FeedStore extends SyncStore with Store {
     required this.categoryStore,
     required FeedService feedService,
     required FeedCoordinator feedCoordinator,
+    required TwoEntitiesToViewModelMapper<Post, User, PostVM> postMapper,
   })  : _feedService = feedService,
-        _feedCoordinator = feedCoordinator;
+        _feedCoordinator = feedCoordinator,
+        _postMapper = postMapper;
 
   final CategoryStore categoryStore;
 
   final FeedService _feedService;
   final FeedCoordinator _feedCoordinator;
+  final TwoEntitiesToViewModelMapper<Post, User, PostVM> _postMapper;
   var _processingCategory = '';
 
   @readonly
@@ -32,7 +35,7 @@ abstract class _FeedStore extends SyncStore with Store {
   String _error = '';
 
   @readonly
-  List<Post> _posts = const [];
+  List<PostVM> _posts = const [];
 
   void init() {
     categoryStore.selectedCategory.observe((listener) {
@@ -46,7 +49,21 @@ abstract class _FeedStore extends SyncStore with Store {
             final data = await _feedService.loadPosts(category);
 
             if (_processingCategory == category) {
-              _posts = data;
+              // TODO: implement
+              const user = User.end(
+                id: UserID('user'),
+                avatarUrls: [],
+                email: 'email@email.com',
+              );
+
+              _posts = data
+                  .map(
+                    (post) => _postMapper.map(
+                      post,
+                      user,
+                    ),
+                  )
+                  .toList();
             }
           },
           setIsLoading: (v) => _isLoading = v,
@@ -56,11 +73,22 @@ abstract class _FeedStore extends SyncStore with Store {
     });
   }
 
-  void onPostPressed({required String id}) {
-    _feedCoordinator.onPostPressed(id);
+  void onPostPressed({required String postID}) {
+    _feedCoordinator.onPostPressed(postID);
   }
 
-  void onCommentButtonPressed({required String id}) {
-    _feedCoordinator.onPostButtonPressed(id);
+  void onCommentButtonPressed({required String postID}) {
+    _feedCoordinator.onPostButtonPressed(postID);
+  }
+
+  void onLikeButtonPressed({required String postID}) {
+    // TODO: implement
+    final index = _posts.indexWhere((e) => e.id == postID);
+
+    if (index != -1) {
+      final post = _posts[index];
+
+      _posts = List.from(_posts)..[index] = post;
+    }
   }
 }

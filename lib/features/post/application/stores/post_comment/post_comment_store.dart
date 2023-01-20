@@ -2,9 +2,8 @@ import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
-import '../../../domain/services/comment_service.dart';
+import '../../../domain/domain.dart';
 import '../../coordinators/comment_coordinator.dart';
-import '../../mappers/comment_mapper.dart';
 import '../../view_models/comment/comment_vm.dart';
 
 part 'post_comment_store.g.dart';
@@ -16,14 +15,15 @@ abstract class _PostCommentStore extends SyncStore with Store {
   _PostCommentStore({
     required CommentService commentService,
     required CommentCoordinator commentCoordinator,
-    required CommentMapper commentMapper,
+    required TwoEntitiesToViewModelMapper<Comment, User, CommentVM>
+        commentMapper,
   })  : _commentService = commentService,
         _commentCoordinator = commentCoordinator,
         _commentMapper = commentMapper;
 
   final CommentService _commentService;
   final CommentCoordinator _commentCoordinator;
-  final CommentMapper _commentMapper;
+  final TwoEntitiesToViewModelMapper<Comment, User, CommentVM> _commentMapper;
 
   @readonly
   bool _isLoading = false;

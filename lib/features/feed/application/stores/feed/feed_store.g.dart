@@ -46,16 +46,16 @@ mixin _$FeedStore on _FeedStore, Store {
 
   late final _$_postsAtom = Atom(name: '_FeedStore._posts', context: context);
 
-  List<Post> get posts {
+  List<PostVM> get posts {
     _$_postsAtom.reportRead();
     return super._posts;
   }
 
   @override
-  List<Post> get _posts => posts;
+  List<PostVM> get _posts => posts;
 
   @override
-  set _posts(List<Post> value) {
+  set _posts(List<PostVM> value) {
     _$_postsAtom.reportWrite(value, super._posts, () {
       super._posts = value;
     });

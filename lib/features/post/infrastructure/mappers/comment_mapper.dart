@@ -2,17 +2,17 @@ import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../common/common.dart';
+import '../../application/view_models/comment/comment_vm.dart';
 import '../../domain/domain.dart';
-import '../view_models/comment/comment_vm.dart';
 
-@singleton
+@Singleton(as: TwoEntitiesToViewModelMapper<Comment, User, CommentVM>)
 class CommentMapper
     implements TwoEntitiesToViewModelMapper<Comment, User, CommentVM> {
   CommentMapper({
     required FormattedDateProvider dateFormatProvider,
-  }) : _dateFormatProvider = dateFormatProvider;
+  }) : _formattedDateProvider = dateFormatProvider;
 
-  final FormattedDateProvider _dateFormatProvider;
+  final FormattedDateProvider _formattedDateProvider;
 
   @override
   CommentVM map(Comment comment, User user) {
@@ -20,12 +20,12 @@ class CommentMapper
 
     String? formattedModifiedAt;
     if (modifiedAt != null) {
-      formattedModifiedAt = _dateFormatProvider.inRelationToNow(
+      formattedModifiedAt = _formattedDateProvider.inRelationToNow(
         modifiedAt,
       );
     }
 
-    final formattedCreatedAt = _dateFormatProvider.inRelationToNow(
+    final formattedCreatedAt = _formattedDateProvider.inRelationToNow(
       comment.createdAt,
     );
 
@@ -42,7 +42,8 @@ class CommentMapper
       ),
       avatarUrl: user.avatarUrls.firstOrNull,
       likedByMe: comment.likedByMe,
-      repliesAmount: comment.repliesAmount,
+      repliesAmount:
+          comment.repliesAmount != 0 ? '${comment.repliesAmount}' : '',
       replyTo: comment.replyTo?.str,
     );
   }

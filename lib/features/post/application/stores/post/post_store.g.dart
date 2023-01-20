@@ -61,110 +61,20 @@ mixin _$PostStore on _PostStore, Store {
     });
   }
 
-  late final _$_authorNameAtom =
-      Atom(name: '_PostStore._authorName', context: context);
+  late final _$_postAtom = Atom(name: '_PostStore._post', context: context);
 
-  String get authorName {
-    _$_authorNameAtom.reportRead();
-    return super._authorName;
+  PostVM? get post {
+    _$_postAtom.reportRead();
+    return super._post;
   }
 
   @override
-  String get _authorName => authorName;
+  PostVM? get _post => post;
 
   @override
-  set _authorName(String value) {
-    _$_authorNameAtom.reportWrite(value, super._authorName, () {
-      super._authorName = value;
-    });
-  }
-
-  late final _$_createdAtAtom =
-      Atom(name: '_PostStore._createdAt', context: context);
-
-  String get createdAt {
-    _$_createdAtAtom.reportRead();
-    return super._createdAt;
-  }
-
-  @override
-  String get _createdAt => createdAt;
-
-  @override
-  set _createdAt(String value) {
-    _$_createdAtAtom.reportWrite(value, super._createdAt, () {
-      super._createdAt = value;
-    });
-  }
-
-  late final _$_avatarUrlAtom =
-      Atom(name: '_PostStore._avatarUrl', context: context);
-
-  String? get avatarUrl {
-    _$_avatarUrlAtom.reportRead();
-    return super._avatarUrl;
-  }
-
-  @override
-  String? get _avatarUrl => avatarUrl;
-
-  @override
-  set _avatarUrl(String? value) {
-    _$_avatarUrlAtom.reportWrite(value, super._avatarUrl, () {
-      super._avatarUrl = value;
-    });
-  }
-
-  late final _$_mediaUrlsAtom =
-      Atom(name: '_PostStore._mediaUrls', context: context);
-
-  List<String> get mediaUrls {
-    _$_mediaUrlsAtom.reportRead();
-    return super._mediaUrls;
-  }
-
-  @override
-  List<String> get _mediaUrls => mediaUrls;
-
-  @override
-  set _mediaUrls(List<String> value) {
-    _$_mediaUrlsAtom.reportWrite(value, super._mediaUrls, () {
-      super._mediaUrls = value;
-    });
-  }
-
-  late final _$_textAtom = Atom(name: '_PostStore._text', context: context);
-
-  String get text {
-    _$_textAtom.reportRead();
-    return super._text;
-  }
-
-  @override
-  String get _text => text;
-
-  @override
-  set _text(String value) {
-    _$_textAtom.reportWrite(value, super._text, () {
-      super._text = value;
-    });
-  }
-
-  late final _$_lickedByMeAtom =
-      Atom(name: '_PostStore._lickedByMe', context: context);
-
-  bool get lickedByMe {
-    _$_lickedByMeAtom.reportRead();
-    return super._lickedByMe;
-  }
-
-  @override
-  bool get _lickedByMe => lickedByMe;
-
-  @override
-  set _lickedByMe(bool value) {
-    _$_lickedByMeAtom.reportWrite(value, super._lickedByMe, () {
-      super._lickedByMe = value;
+  set _post(PostVM? value) {
+    _$_postAtom.reportWrite(value, super._post, () {
+      super._post = value;
     });
   }
 

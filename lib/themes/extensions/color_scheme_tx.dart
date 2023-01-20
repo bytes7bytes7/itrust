@@ -4,7 +4,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   const ColorSchemeTX({
     required this.avatarBackground,
     required this.avatarForeground,
-    required this.unreadBackground,
+    required this.unreadIndicatorForeground,
+    required this.unreadIndicatorBackground,
     required this.onlineMarkStroke,
     required this.onlineMarkCenter,
     required this.chatCard,
@@ -19,7 +20,6 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.textFieldBackground,
     required this.simpleIcon,
     required this.infoMsgPreviewColor,
-    required this.msgSender,
     required this.snackBarBackgroundDefault,
     required this.casualFilledIconForeground,
     required this.warningFilledIconForeground,
@@ -37,7 +37,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
 
   final Color avatarBackground;
   final Color avatarForeground;
-  final Color unreadBackground;
+  final Color unreadIndicatorForeground;
+  final Color unreadIndicatorBackground;
   final Color onlineMarkStroke;
   final Color onlineMarkCenter;
   final Color chatCard;
@@ -52,7 +53,6 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color textFieldBackground;
   final Color simpleIcon;
   final Color infoMsgPreviewColor;
-  final Color msgSender;
 
   /// Use this color if backgroundColor of [SnackBarTheme] is NOT specified.
   final Color snackBarBackgroundDefault;
@@ -73,7 +73,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   ThemeExtension<ColorSchemeTX> copyWith({
     Color? avatarBackground,
     Color? avatarForeground,
-    Color? unreadBackground,
+    Color? unreadIndicatorForeground,
+    Color? unreadIndicatorBackground,
     Color? onlineMarkStroke,
     Color? onlineMarkCenter,
     Color? chatCard,
@@ -88,7 +89,6 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? textFieldBackground,
     Color? simpleIcon,
     Color? infoMsgPreviewColor,
-    Color? msgSender,
     Color? snackBarBackgroundDefault,
     Color? casualFilledIconForeground,
     Color? warningFilledIconForeground,
@@ -106,7 +106,9 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     return ColorSchemeTX(
       avatarBackground: avatarBackground ?? this.avatarBackground,
       avatarForeground: avatarForeground ?? this.avatarForeground,
-      unreadBackground: unreadBackground ?? this.unreadBackground,
+      unreadIndicatorForeground:
+          unreadIndicatorForeground ?? this.unreadIndicatorForeground,
+      unreadIndicatorBackground: unreadIndicatorBackground ?? this.unreadIndicatorBackground,
       onlineMarkStroke: onlineMarkStroke ?? this.onlineMarkStroke,
       onlineMarkCenter: onlineMarkCenter ?? this.onlineMarkCenter,
       chatCard: chatCard ?? this.chatCard,
@@ -121,7 +123,6 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       textFieldBackground: textFieldBackground ?? this.textFieldBackground,
       simpleIcon: simpleIcon ?? this.simpleIcon,
       infoMsgPreviewColor: infoMsgPreviewColor ?? this.infoMsgPreviewColor,
-      msgSender: msgSender ?? this.msgSender,
       snackBarBackgroundDefault:
           snackBarBackgroundDefault ?? this.snackBarBackgroundDefault,
       casualFilledIconForeground:
@@ -164,9 +165,14 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
         other.avatarForeground,
         t,
       )!,
-      unreadBackground: Color.lerp(
-        unreadBackground,
-        other.unreadBackground,
+      unreadIndicatorForeground: Color.lerp(
+        unreadIndicatorForeground,
+        other.unreadIndicatorForeground,
+        t,
+      )!,
+      unreadIndicatorBackground: Color.lerp(
+        unreadIndicatorBackground,
+        other.unreadIndicatorBackground,
         t,
       )!,
       onlineMarkStroke: Color.lerp(
@@ -237,11 +243,6 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       infoMsgPreviewColor: Color.lerp(
         infoMsgPreviewColor,
         other.infoMsgPreviewColor,
-        t,
-      )!,
-      msgSender: Color.lerp(
-        msgSender,
-        other.msgSender,
         t,
       )!,
       snackBarBackgroundDefault: Color.lerp(

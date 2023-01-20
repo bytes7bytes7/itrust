@@ -101,7 +101,9 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        if (postStore.isLoading) {
+        final post = postStore.post;
+
+        if (postStore.isLoading || post == null) {
           return const Center(
             child: CircularProgressIndicator(),
           );
@@ -111,13 +113,8 @@ class _Body extends StatelessWidget {
           return ListView(
             children: [
               PostCard(
+                post: post,
                 isPreview: false,
-                name: postStore.authorName,
-                avatarUrl: postStore.avatarUrl,
-                dateTime: postStore.createdAt,
-                text: postStore.text,
-                mediaUrls: postStore.mediaUrls,
-                likedByMe: postStore.lickedByMe,
                 onLikePressed: postStore.onLikePostPressed,
               ),
               const Center(
@@ -132,13 +129,8 @@ class _Body extends StatelessWidget {
           itemBuilder: (context, index) {
             if (index == 0) {
               return PostCard(
+                post: post,
                 isPreview: false,
-                name: postStore.authorName,
-                avatarUrl: postStore.avatarUrl,
-                dateTime: postStore.createdAt,
-                text: postStore.text,
-                mediaUrls: postStore.mediaUrls,
-                likedByMe: postStore.lickedByMe,
                 onLikePressed: postStore.onLikePostPressed,
               );
             }

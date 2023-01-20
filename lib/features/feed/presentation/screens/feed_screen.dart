@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -15,17 +13,6 @@ const _paddingV = 10.0;
 const _appBarHeight = kToolbarHeight;
 
 final _getIt = GetIt.instance;
-
-// TODO: remove
-final _rand = Random();
-final _avatars = [
-  'https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg',
-  'https://wallpaperaccess.com/full/2213424.jpg',
-  'https://shayarimaza.com/files/girls-dp-images/alone-girl-dp-images/Alone-Girl-Dp-For-Whatsapp-Profile.jpg',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScuzBdCj-6DYYKRuXR6wroURM_D0C-fb6u-w&usqp=CAU',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWLzChnCGFpXvns68wQbSyo9ovwW1S7VlHwQoqk2TUy0wzNUNXHwYdV9Qrt3UUHf1IqoY&usqp=CAU',
-  'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp',
-];
 
 class FeedScreen extends HookWidget {
   const FeedScreen({super.key});
@@ -159,23 +146,14 @@ class _PostList extends StatelessWidget {
             itemBuilder: (context, index) {
               final post = feedStore.posts[index];
 
-              // TODO: implement
               return PostCard(
+                post: post,
                 isPreview: true,
-                name: 'name ${post.authorID.str}',
-                dateTime: '${_rand.nextInt(24)}'
-                    ':'
-                    '${_rand.nextInt(60).toString().padLeft(2, '0')}',
-                avatarUrl: _rand.nextBool()
-                    ? _avatars[_rand.nextInt(_avatars.length)]
-                    : null,
-                mediaUrls: post.mediaUrls,
-                text: post.text,
-                onPressed: () => feedStore.onPostPressed(id: post.id.value),
-                likedByMe: false,
-                onLikePressed: () {},
+                onPressed: () => feedStore.onPostPressed(postID: post.id),
+                onLikePressed: () =>
+                    feedStore.onLikeButtonPressed(postID: post.id),
                 onCommentPressed: () =>
-                    feedStore.onPostPressed(id: post.id.value),
+                    feedStore.onPostPressed(postID: post.id),
               );
             },
           ),

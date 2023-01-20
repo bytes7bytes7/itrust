@@ -16,13 +16,16 @@ abstract class _PostStore extends SyncStore with Store {
     required this.postCommentStore,
     required PostService postService,
     required PostCoordinator postCoordinator,
+    required TwoEntitiesToViewModelMapper<Post, User, PostVM> postMapper,
   })  : _postService = postService,
-        _postCoordinator = postCoordinator;
+        _postCoordinator = postCoordinator,
+        _postMapper = postMapper;
 
   final PostCommentStore postCommentStore;
 
   final PostService _postService;
   final PostCoordinator _postCoordinator;
+  final TwoEntitiesToViewModelMapper<Post, User, PostVM> _postMapper;
 
   @readonly
   bool _isLoading = false;
@@ -34,22 +37,7 @@ abstract class _PostStore extends SyncStore with Store {
   String? _postID;
 
   @readonly
-  String _authorName = '';
-
-  @readonly
-  String _createdAt = '';
-
-  @readonly
-  String? _avatarUrl;
-
-  @readonly
-  List<String> _mediaUrls = const [];
-
-  @readonly
-  String _text = '';
-
-  @readonly
-  bool _lickedByMe = false;
+  PostVM? _post;
 
   @action
   void loadPost({required String postID}) {
@@ -59,12 +47,13 @@ abstract class _PostStore extends SyncStore with Store {
         final post = await _postService.loadPost(PostID(postID));
 
         // TODO: implement
-        _authorName = 'name ${post.authorID}';
-        _createdAt = '9:41';
-        _avatarUrl = null;
-        _mediaUrls = post.mediaUrls;
-        _text = post.text;
-        _lickedByMe = false;
+        const user = User.end(
+          id: UserID('user'),
+          avatarUrls: [],
+          email: 'email@email.com',
+        );
+
+        _post = _postMapper.map(post, user);
       },
       setIsLoading: (v) => _isLoading = v,
       setError: (v) => _error = v,
@@ -74,7 +63,13 @@ abstract class _PostStore extends SyncStore with Store {
   @action
   void onLikePostPressed() {
     // TODO: implement
-    _lickedByMe = !_lickedByMe;
+    final post = _post;
+
+    if (post != null) {
+      _post = post.copyWith(
+        likedByMe: !post.likedByMe,
+      );
+    }
   }
 
   void onBackButtonPressed() {

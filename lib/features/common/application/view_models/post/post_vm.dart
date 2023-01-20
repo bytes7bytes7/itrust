@@ -1,23 +1,21 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'comment_vm.freezed.dart';
+part 'post_vm.freezed.dart';
 
 @Freezed(
   fromJson: false,
   toJson: false,
 )
-class CommentVM with _$CommentVM {
-  const factory CommentVM({
+class PostVM with _$PostVM {
+  const factory PostVM({
     required String id,
     required String authorID,
-    required String postID,
     required String authorName,
     required String createdAt,
     required String text,
+    required List<String> mediaUrls,
+    required String commentsAmount,
     required bool likedByMe,
-    required String repliesAmount,
-    String? replyTo,
     String? avatarUrl,
-    String? modifiedAt,
-  }) = _CommentVM;
+  }) = _PostVM;
 }

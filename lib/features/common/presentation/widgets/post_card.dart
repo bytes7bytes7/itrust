@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
+import '../../application/view_models/post/post_vm.dart';
 import 'author_card_header.dart';
 import 'image_grid.dart';
 import 'outlined_icon_button.dart';
@@ -15,30 +16,21 @@ const _underImageGridPadding = 16.0;
 const _underTextPadding = 16.0;
 const _likeAndCommentPadding = 24.0;
 const _compressedTextMaxLines = 5;
+const _commentAndCommentAmountPadding = 6.0;
 
 class PostCard extends StatelessWidget {
   const PostCard({
     super.key,
-    required this.name,
-    required this.dateTime,
-    required this.mediaUrls,
-    required this.text,
+    required this.post,
     required this.isPreview,
-    required this.likedByMe,
     required this.onLikePressed,
     this.onCommentPressed,
     this.onPressed,
-    this.avatarUrl,
   });
 
-  final String name;
-  final String dateTime;
-  final String? avatarUrl;
-  final List<String> mediaUrls;
-  final String text;
+  final PostVM post;
   final VoidCallback? onPressed;
   final bool isPreview;
-  final bool likedByMe;
   final VoidCallback onLikePressed;
   final VoidCallback? onCommentPressed;
 
@@ -61,27 +53,27 @@ class PostCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AuthorCardHeader(
-                  name: name,
-                  dateTime: dateTime,
-                  avatarUrl: avatarUrl,
+                  name: post.authorName,
+                  dateTime: post.createdAt,
+                  avatarUrl: post.avatarUrl,
                 ),
                 const SizedBox(
                   height: _underAuthorHeaderPadding,
                 ),
-                if (mediaUrls.isNotEmpty) ...[
+                if (post.mediaUrls.isNotEmpty) ...[
                   SizedBox(
                     height: _imageGridHeight,
                     child: ImageGrid(
-                      imageUrls: mediaUrls,
+                      imageUrls: post.mediaUrls,
                     ),
                   ),
                   const SizedBox(
                     height: _underImageGridPadding,
                   ),
                 ],
-                if (text.isNotEmpty) ...[
+                if (post.text.isNotEmpty) ...[
                   Text(
-                    text,
+                    post.text,
                     style: theme.textTheme.bodyText1,
                     overflow: isPreview ? TextOverflow.ellipsis : null,
                     maxLines: isPreview ? _compressedTextMaxLines : null,
@@ -93,7 +85,7 @@ class PostCard extends StatelessWidget {
                 Row(
                   children: [
                     SwitchingIconButton(
-                      isSwitched: likedByMe,
+                      isSwitched: post.likedByMe,
                       switchedIconPath: Assets.image.svg.likeFilled.path,
                       switchedColor: colorSchemeTX.warningIcon,
                       notSwitchedIconPath: Assets.image.svg.like.path,
@@ -108,6 +100,13 @@ class PostCard extends StatelessWidget {
                         iconPath: Assets.image.svg.chats.path,
                         color: colorSchemeTX.casualIcon,
                         onPressed: onCommentPressed,
+                      ),
+                      const SizedBox(
+                        width: _commentAndCommentAmountPadding,
+                      ),
+                      Text(
+                        post.commentsAmount,
+                        style: theme.textTheme.caption,
                       ),
                     ],
                     const Spacer(),

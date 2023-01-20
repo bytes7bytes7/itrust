@@ -12,10 +12,10 @@ class Post with _$Post {
     required PostID id,
     required UserID authorID,
     required DateTime createdAt,
-    required List<UserID> seenBy,
     required String text,
     required List<String> mediaUrls,
     required int commentsAmount,
+    required bool likedByMe,
   }) = _Post;
 
   factory Post.fromJson(Map<String, Object?> json) => _$PostFromJson(json);

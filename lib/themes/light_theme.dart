@@ -215,14 +215,15 @@ final lightTheme = ThemeData.light().copyWith(
     caption: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.bold,
-      color: _LightColors.cFFFFFFFF,
+      color: _LightColors.cFF000000,
     ),
   ),
   extensions: [
     const ColorSchemeTX(
       avatarBackground: _LightColors.cFF000000,
       avatarForeground: _LightColors.cFFFFFFFF,
-      unreadBackground: _LightColors.cFF000000,
+      unreadIndicatorForeground: _LightColors.cFFFFFFFF,
+      unreadIndicatorBackground: _LightColors.cFF000000,
       onlineMarkStroke: _LightColors.cFF000000,
       onlineMarkCenter: _LightColors.cFFFFFFFF,
       chatCard: _LightColors.cFFFFFFFF,
@@ -237,7 +238,6 @@ final lightTheme = ThemeData.light().copyWith(
       textFieldBackground: _LightColors.cFFF0EFEF,
       simpleIcon: _LightColors.cFF000000,
       infoMsgPreviewColor: _LightColors.cFFEC2885,
-      msgSender: _LightColors.cFFEC2885,
       snackBarBackgroundDefault: _LightColors.cFFEC2885,
       casualFilledIconForeground: _LightColors.cFFFFFFFF,
       warningFilledIconForeground: _LightColors.cFFFFFFFF,
