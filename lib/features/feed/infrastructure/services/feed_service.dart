@@ -16,6 +16,8 @@ class TestFeedService implements FeedService {
         (index) {
           _mediaUrls.shuffle();
 
+          final likedByMe = _rand.nextBool();
+
           return Post(
             id: PostID('$category ${_randString(8)}'),
             authorID: UserID(_randString(8)),
@@ -23,8 +25,13 @@ class TestFeedService implements FeedService {
             text: _rand.nextBool() ? _randString(_rand.nextInt(500) + 30) : '',
             mediaUrls:
                 _mediaUrls.take(_rand.nextInt(_mediaUrls.length)).toList(),
+            likedByMe: likedByMe,
+            likesAmount: _rand.nextBool()
+                ? _rand.nextInt(100)
+                : likedByMe
+                    ? 1
+                    : 0,
             commentsAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
-            likedByMe: _rand.nextBool(),
           );
         },
       );

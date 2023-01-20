@@ -13,6 +13,8 @@ class TestPostService implements PostService {
     return Future.delayed(
       Duration(seconds: _rand.nextInt(3) + 1),
       () {
+        final likedByMe = _rand.nextBool();
+
         return Post(
           id: postID,
           authorID: UserID('user ${_rand.nextInt(1000)}'),
@@ -24,8 +26,13 @@ class TestPostService implements PostService {
                 )
               : [],
           text: _rand.nextBool() ? _randString(_rand.nextInt(5000) + 30) : '',
+          likedByMe: likedByMe,
+          likesAmount: _rand.nextBool()
+              ? _rand.nextInt(100)
+              : likedByMe
+                  ? 1
+                  : 0,
           commentsAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
-          likedByMe: _rand.nextBool(),
         );
       },
     );

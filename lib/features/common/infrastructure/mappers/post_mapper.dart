@@ -17,6 +17,10 @@ class PostMapper implements TwoEntitiesToViewModelMapper<Post, User, PostVM> {
 
   @override
   PostVM map(Post post, User user) {
+    final likesAmountWithoutMyLike =
+        post.likesAmount - (post.likedByMe ? 1 : 0);
+    final likesAmountWithMyLike = post.likesAmount + (post.likedByMe ? 0 : 1);
+
     return PostVM(
       id: post.id.str,
       authorID: post.authorID.str,
@@ -26,10 +30,14 @@ class PostMapper implements TwoEntitiesToViewModelMapper<Post, User, PostVM> {
       ),
       avatarUrl: user.avatarUrls.firstOrNull,
       text: post.text,
-      commentsAmount: _beautifiedNumberProvider.beautify(post.commentsAmount),
       createdAt: _formattedDateProvider.inRelationToNow(post.createdAt),
       mediaUrls: post.mediaUrls,
       likedByMe: post.likedByMe,
+      likesAmountWithoutMyLike:
+          _beautifiedNumberProvider.beautify(likesAmountWithoutMyLike),
+      likesAmountWithMyLike:
+          _beautifiedNumberProvider.beautify(likesAmountWithMyLike),
+      commentsAmount: _beautifiedNumberProvider.beautify(post.commentsAmount),
     );
   }
 }

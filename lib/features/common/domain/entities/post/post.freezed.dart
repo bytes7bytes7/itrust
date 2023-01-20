@@ -25,8 +25,9 @@ mixin _$Post {
   DateTime get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   List<String> get mediaUrls => throw _privateConstructorUsedError;
-  int get commentsAmount => throw _privateConstructorUsedError;
   bool get likedByMe => throw _privateConstructorUsedError;
+  int get likesAmount => throw _privateConstructorUsedError;
+  int get commentsAmount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,8 +45,9 @@ abstract class $PostCopyWith<$Res> {
       DateTime createdAt,
       String text,
       List<String> mediaUrls,
-      int commentsAmount,
-      bool likedByMe});
+      bool likedByMe,
+      int likesAmount,
+      int commentsAmount});
 
   $PostIDCopyWith<$Res> get id;
   $UserIDCopyWith<$Res> get authorID;
@@ -69,8 +71,9 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? createdAt = null,
     Object? text = null,
     Object? mediaUrls = null,
-    Object? commentsAmount = null,
     Object? likedByMe = null,
+    Object? likesAmount = null,
+    Object? commentsAmount = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -93,14 +96,18 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.mediaUrls
           : mediaUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      commentsAmount: null == commentsAmount
-          ? _value.commentsAmount
-          : commentsAmount // ignore: cast_nullable_to_non_nullable
-              as int,
       likedByMe: null == likedByMe
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
               as bool,
+      likesAmount: null == likesAmount
+          ? _value.likesAmount
+          : likesAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      commentsAmount: null == commentsAmount
+          ? _value.commentsAmount
+          : commentsAmount // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 
@@ -133,8 +140,9 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       DateTime createdAt,
       String text,
       List<String> mediaUrls,
-      int commentsAmount,
-      bool likedByMe});
+      bool likedByMe,
+      int likesAmount,
+      int commentsAmount});
 
   @override
   $PostIDCopyWith<$Res> get id;
@@ -156,8 +164,9 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
     Object? createdAt = null,
     Object? text = null,
     Object? mediaUrls = null,
-    Object? commentsAmount = null,
     Object? likedByMe = null,
+    Object? likesAmount = null,
+    Object? commentsAmount = null,
   }) {
     return _then(_$_Post(
       id: null == id
@@ -180,14 +189,18 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
           ? _value._mediaUrls
           : mediaUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      commentsAmount: null == commentsAmount
-          ? _value.commentsAmount
-          : commentsAmount // ignore: cast_nullable_to_non_nullable
-              as int,
       likedByMe: null == likedByMe
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
               as bool,
+      likesAmount: null == likesAmount
+          ? _value.likesAmount
+          : likesAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      commentsAmount: null == commentsAmount
+          ? _value.commentsAmount
+          : commentsAmount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -201,8 +214,9 @@ class _$_Post implements _Post {
       required this.createdAt,
       required this.text,
       required final List<String> mediaUrls,
-      required this.commentsAmount,
-      required this.likedByMe})
+      required this.likedByMe,
+      required this.likesAmount,
+      required this.commentsAmount})
       : _mediaUrls = mediaUrls;
 
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
@@ -224,13 +238,15 @@ class _$_Post implements _Post {
   }
 
   @override
-  final int commentsAmount;
-  @override
   final bool likedByMe;
+  @override
+  final int likesAmount;
+  @override
+  final int commentsAmount;
 
   @override
   String toString() {
-    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, commentsAmount: $commentsAmount, likedByMe: $likedByMe)';
+    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, likedByMe: $likedByMe, likesAmount: $likesAmount, commentsAmount: $commentsAmount)';
   }
 
   @override
@@ -246,10 +262,12 @@ class _$_Post implements _Post {
             (identical(other.text, text) || other.text == text) &&
             const DeepCollectionEquality()
                 .equals(other._mediaUrls, _mediaUrls) &&
-            (identical(other.commentsAmount, commentsAmount) ||
-                other.commentsAmount == commentsAmount) &&
             (identical(other.likedByMe, likedByMe) ||
-                other.likedByMe == likedByMe));
+                other.likedByMe == likedByMe) &&
+            (identical(other.likesAmount, likesAmount) ||
+                other.likesAmount == likesAmount) &&
+            (identical(other.commentsAmount, commentsAmount) ||
+                other.commentsAmount == commentsAmount));
   }
 
   @JsonKey(ignore: true)
@@ -261,8 +279,9 @@ class _$_Post implements _Post {
       createdAt,
       text,
       const DeepCollectionEquality().hash(_mediaUrls),
-      commentsAmount,
-      likedByMe);
+      likedByMe,
+      likesAmount,
+      commentsAmount);
 
   @JsonKey(ignore: true)
   @override
@@ -285,8 +304,9 @@ abstract class _Post implements Post {
       required final DateTime createdAt,
       required final String text,
       required final List<String> mediaUrls,
-      required final int commentsAmount,
-      required final bool likedByMe}) = _$_Post;
+      required final bool likedByMe,
+      required final int likesAmount,
+      required final int commentsAmount}) = _$_Post;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
@@ -301,9 +321,11 @@ abstract class _Post implements Post {
   @override
   List<String> get mediaUrls;
   @override
-  int get commentsAmount;
-  @override
   bool get likedByMe;
+  @override
+  int get likesAmount;
+  @override
+  int get commentsAmount;
   @override
   @JsonKey(ignore: true)
   _$$_PostCopyWith<_$_Post> get copyWith => throw _privateConstructorUsedError;

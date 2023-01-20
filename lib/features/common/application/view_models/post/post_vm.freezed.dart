@@ -22,8 +22,10 @@ mixin _$PostVM {
   String get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   List<String> get mediaUrls => throw _privateConstructorUsedError;
-  String get commentsAmount => throw _privateConstructorUsedError;
   bool get likedByMe => throw _privateConstructorUsedError;
+  String get likesAmountWithoutMyLike => throw _privateConstructorUsedError;
+  String get likesAmountWithMyLike => throw _privateConstructorUsedError;
+  String get commentsAmount => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -42,8 +44,10 @@ abstract class $PostVMCopyWith<$Res> {
       String createdAt,
       String text,
       List<String> mediaUrls,
-      String commentsAmount,
       bool likedByMe,
+      String likesAmountWithoutMyLike,
+      String likesAmountWithMyLike,
+      String commentsAmount,
       String? avatarUrl});
 }
 
@@ -66,8 +70,10 @@ class _$PostVMCopyWithImpl<$Res, $Val extends PostVM>
     Object? createdAt = null,
     Object? text = null,
     Object? mediaUrls = null,
-    Object? commentsAmount = null,
     Object? likedByMe = null,
+    Object? likesAmountWithoutMyLike = null,
+    Object? likesAmountWithMyLike = null,
+    Object? commentsAmount = null,
     Object? avatarUrl = freezed,
   }) {
     return _then(_value.copyWith(
@@ -95,14 +101,22 @@ class _$PostVMCopyWithImpl<$Res, $Val extends PostVM>
           ? _value.mediaUrls
           : mediaUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      commentsAmount: null == commentsAmount
-          ? _value.commentsAmount
-          : commentsAmount // ignore: cast_nullable_to_non_nullable
-              as String,
       likedByMe: null == likedByMe
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
               as bool,
+      likesAmountWithoutMyLike: null == likesAmountWithoutMyLike
+          ? _value.likesAmountWithoutMyLike
+          : likesAmountWithoutMyLike // ignore: cast_nullable_to_non_nullable
+              as String,
+      likesAmountWithMyLike: null == likesAmountWithMyLike
+          ? _value.likesAmountWithMyLike
+          : likesAmountWithMyLike // ignore: cast_nullable_to_non_nullable
+              as String,
+      commentsAmount: null == commentsAmount
+          ? _value.commentsAmount
+          : commentsAmount // ignore: cast_nullable_to_non_nullable
+              as String,
       avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -124,8 +138,10 @@ abstract class _$$_PostVMCopyWith<$Res> implements $PostVMCopyWith<$Res> {
       String createdAt,
       String text,
       List<String> mediaUrls,
-      String commentsAmount,
       bool likedByMe,
+      String likesAmountWithoutMyLike,
+      String likesAmountWithMyLike,
+      String commentsAmount,
       String? avatarUrl});
 }
 
@@ -145,8 +161,10 @@ class __$$_PostVMCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? text = null,
     Object? mediaUrls = null,
-    Object? commentsAmount = null,
     Object? likedByMe = null,
+    Object? likesAmountWithoutMyLike = null,
+    Object? likesAmountWithMyLike = null,
+    Object? commentsAmount = null,
     Object? avatarUrl = freezed,
   }) {
     return _then(_$_PostVM(
@@ -174,14 +192,22 @@ class __$$_PostVMCopyWithImpl<$Res>
           ? _value._mediaUrls
           : mediaUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      commentsAmount: null == commentsAmount
-          ? _value.commentsAmount
-          : commentsAmount // ignore: cast_nullable_to_non_nullable
-              as String,
       likedByMe: null == likedByMe
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
               as bool,
+      likesAmountWithoutMyLike: null == likesAmountWithoutMyLike
+          ? _value.likesAmountWithoutMyLike
+          : likesAmountWithoutMyLike // ignore: cast_nullable_to_non_nullable
+              as String,
+      likesAmountWithMyLike: null == likesAmountWithMyLike
+          ? _value.likesAmountWithMyLike
+          : likesAmountWithMyLike // ignore: cast_nullable_to_non_nullable
+              as String,
+      commentsAmount: null == commentsAmount
+          ? _value.commentsAmount
+          : commentsAmount // ignore: cast_nullable_to_non_nullable
+              as String,
       avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -200,8 +226,10 @@ class _$_PostVM implements _PostVM {
       required this.createdAt,
       required this.text,
       required final List<String> mediaUrls,
-      required this.commentsAmount,
       required this.likedByMe,
+      required this.likesAmountWithoutMyLike,
+      required this.likesAmountWithMyLike,
+      required this.commentsAmount,
       this.avatarUrl})
       : _mediaUrls = mediaUrls;
 
@@ -224,15 +252,19 @@ class _$_PostVM implements _PostVM {
   }
 
   @override
-  final String commentsAmount;
-  @override
   final bool likedByMe;
+  @override
+  final String likesAmountWithoutMyLike;
+  @override
+  final String likesAmountWithMyLike;
+  @override
+  final String commentsAmount;
   @override
   final String? avatarUrl;
 
   @override
   String toString() {
-    return 'PostVM(id: $id, authorID: $authorID, authorName: $authorName, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, commentsAmount: $commentsAmount, likedByMe: $likedByMe, avatarUrl: $avatarUrl)';
+    return 'PostVM(id: $id, authorID: $authorID, authorName: $authorName, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, likedByMe: $likedByMe, likesAmountWithoutMyLike: $likesAmountWithoutMyLike, likesAmountWithMyLike: $likesAmountWithMyLike, commentsAmount: $commentsAmount, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -250,10 +282,15 @@ class _$_PostVM implements _PostVM {
             (identical(other.text, text) || other.text == text) &&
             const DeepCollectionEquality()
                 .equals(other._mediaUrls, _mediaUrls) &&
-            (identical(other.commentsAmount, commentsAmount) ||
-                other.commentsAmount == commentsAmount) &&
             (identical(other.likedByMe, likedByMe) ||
                 other.likedByMe == likedByMe) &&
+            (identical(
+                    other.likesAmountWithoutMyLike, likesAmountWithoutMyLike) ||
+                other.likesAmountWithoutMyLike == likesAmountWithoutMyLike) &&
+            (identical(other.likesAmountWithMyLike, likesAmountWithMyLike) ||
+                other.likesAmountWithMyLike == likesAmountWithMyLike) &&
+            (identical(other.commentsAmount, commentsAmount) ||
+                other.commentsAmount == commentsAmount) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl));
   }
@@ -267,8 +304,10 @@ class _$_PostVM implements _PostVM {
       createdAt,
       text,
       const DeepCollectionEquality().hash(_mediaUrls),
-      commentsAmount,
       likedByMe,
+      likesAmountWithoutMyLike,
+      likesAmountWithMyLike,
+      commentsAmount,
       avatarUrl);
 
   @JsonKey(ignore: true)
@@ -286,8 +325,10 @@ abstract class _PostVM implements PostVM {
       required final String createdAt,
       required final String text,
       required final List<String> mediaUrls,
-      required final String commentsAmount,
       required final bool likedByMe,
+      required final String likesAmountWithoutMyLike,
+      required final String likesAmountWithMyLike,
+      required final String commentsAmount,
       final String? avatarUrl}) = _$_PostVM;
 
   @override
@@ -303,9 +344,13 @@ abstract class _PostVM implements PostVM {
   @override
   List<String> get mediaUrls;
   @override
-  String get commentsAmount;
-  @override
   bool get likedByMe;
+  @override
+  String get likesAmountWithoutMyLike;
+  @override
+  String get likesAmountWithMyLike;
+  @override
+  String get commentsAmount;
   @override
   String? get avatarUrl;
   @override

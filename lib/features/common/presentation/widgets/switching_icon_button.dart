@@ -12,6 +12,7 @@ class SwitchingIconButton extends HookWidget {
     required this.switchedColor,
     required this.notSwitchedColor,
     this.onPressed,
+    this.childBuilder,
   });
 
   final bool isSwitched;
@@ -20,6 +21,7 @@ class SwitchingIconButton extends HookWidget {
   final Color switchedColor;
   final Color notSwitchedColor;
   final VoidCallback? onPressed;
+  final Widget Function(bool)? childBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +30,20 @@ class SwitchingIconButton extends HookWidget {
     return ValueListenableBuilder<bool>(
       valueListenable: switched,
       builder: (context, value, child) {
-        return OutlinedIconButton(
-          iconPath: value ? switchedIconPath : notSwitchedIconPath,
-          color: value ? switchedColor : notSwitchedColor,
-          onPressed: () {
-            switched.value = !switched.value;
-            onPressed?.call();
-          },
+        final child = childBuilder?.call(value);
+
+        return Row(
+          children: [
+            OutlinedIconButton(
+              iconPath: value ? switchedIconPath : notSwitchedIconPath,
+              color: value ? switchedColor : notSwitchedColor,
+              onPressed: () {
+                switched.value = !switched.value;
+                onPressed?.call();
+              },
+            ),
+            if (child != null) child,
+          ],
         );
       },
     );

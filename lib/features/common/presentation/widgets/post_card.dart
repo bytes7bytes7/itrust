@@ -14,9 +14,10 @@ const _underAuthorHeaderPadding = 16.0;
 const _imageGridHeight = 300.0;
 const _underImageGridPadding = 16.0;
 const _underTextPadding = 16.0;
-const _likeAndCommentPadding = 24.0;
+const _likeAndCommentPadding = 14.0;
 const _compressedTextMaxLines = 5;
-const _commentAndCommentAmountPadding = 6.0;
+const _commentAndCommentsAmountPadding = 6.0;
+const _likeAndLikesAmountPadding = 6.0;
 
 class PostCard extends StatelessWidget {
   const PostCard({
@@ -91,6 +92,24 @@ class PostCard extends StatelessWidget {
                       notSwitchedIconPath: Assets.image.svg.like.path,
                       notSwitchedColor: colorSchemeTX.casualIcon,
                       onPressed: onLikePressed,
+                      childBuilder: (switched) {
+                        return Row(
+                          children: [
+                            const SizedBox(
+                              width: _likeAndLikesAmountPadding,
+                            ),
+                            Text(
+                              switched
+                                  ? post.likesAmountWithMyLike
+                                  : post.likesAmountWithoutMyLike,
+                              style: theme.textTheme.caption?.copyWith(
+                                color:
+                                    switched ? colorSchemeTX.warningIcon : null,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     if (isPreview) ...[
                       const SizedBox(
@@ -102,7 +121,7 @@ class PostCard extends StatelessWidget {
                         onPressed: onCommentPressed,
                       ),
                       const SizedBox(
-                        width: _commentAndCommentAmountPadding,
+                        width: _commentAndCommentsAmountPadding,
                       ),
                       Text(
                         post.commentsAmount,

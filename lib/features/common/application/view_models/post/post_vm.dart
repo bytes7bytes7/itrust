@@ -14,8 +14,10 @@ class PostVM with _$PostVM {
     required String createdAt,
     required String text,
     required List<String> mediaUrls,
-    required String commentsAmount,
     required bool likedByMe,
+    required String likesAmountWithoutMyLike,
+    required String likesAmountWithMyLike,
+    required String commentsAmount,
     String? avatarUrl,
   }) = _PostVM;
 }
