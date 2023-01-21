@@ -1,12 +1,48 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../common/common.dart';
 import '../../domain/services/feed_service.dart';
 
-@test
 @Singleton(as: FeedService)
+class ProdFeedService implements FeedService {
+  ProdFeedService({
+    required FirebaseFirestore firebaseFirestore,
+  }) : _posts = firebaseFirestore.collection('posts');
+
+  final CollectionReference _posts;
+
+  @override
+  Future<List<Post>> loadPosts({required String category}) async {
+    return (await _posts.orderBy('createdAt').limitToLast(10).get())
+        .docs
+        .map((e) {
+      return Post(
+        id: PostID(e.get('id')),
+        authorID: UserID(e.get('authorID')),
+        createdAt: (e.get('createdAt') as Timestamp).toDate(),
+        mediaUrls: (e.get('mediaUrls') as List<dynamic>)
+            .map<String>((e) => e)
+            .toList(),
+        commentsAmount: e.get('commentsAmount'),
+        likedByMe: e.get('likedByMe'),
+        text: e.get('text'),
+        likesAmount: e.get('likesAmount'),
+      );
+    }).toList();
+  }
+
+  @override
+  Future<void> likePost({required String postID}) {
+    // TODO: implement likePost
+    return Future.value();
+  }
+}
+
+// @test
+// @Singleton(as: FeedService)
 class TestFeedService implements FeedService {
   @override
   Future<List<Post>> loadPosts({required String category}) {
