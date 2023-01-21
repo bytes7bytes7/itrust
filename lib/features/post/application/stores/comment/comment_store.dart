@@ -65,6 +65,15 @@ abstract class _CommentStore extends SyncStore with Store {
   }
 
   @action
+  Future<void> refresh() async {
+    final commentID = _commentID;
+
+    if (commentID != null) {
+      loadComment(commentID: commentID);
+    }
+  }
+
+  @action
   void onLikeCommentPressed() {
     // TODO: implement
     final comment = _comment;

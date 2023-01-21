@@ -81,6 +81,14 @@ mixin _$CommentStore on _CommentStore, Store {
     });
   }
 
+  late final _$refreshAsyncAction =
+      AsyncAction('_CommentStore.refresh', context: context);
+
+  @override
+  Future<void> refresh() {
+    return _$refreshAsyncAction.run(() => super.refresh());
+  }
+
   late final _$_CommentStoreActionController =
       ActionController(name: '_CommentStore', context: context);
 

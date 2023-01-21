@@ -43,7 +43,7 @@ import 'package:itrust/features/common/application/providers/formatted_date_prov
 import 'package:itrust/features/common/common.dart' as _i57;
 import 'package:itrust/features/common/domain/domain.dart' as _i5;
 import 'package:itrust/features/common/infrastructure/mappers/post_mapper.dart'
-    as _i59;
+    as _i61;
 import 'package:itrust/features/common/infrastructure/persistence/chat_repository.dart'
     as _i8;
 import 'package:itrust/features/common/infrastructure/persistence/user_repository.dart'
@@ -106,11 +106,11 @@ import 'package:itrust/features/post/application/stores/post/post_store.dart'
 import 'package:itrust/features/post/application/stores/post_comment/post_comment_store.dart'
     as _i72;
 import 'package:itrust/features/post/application/view_models/comment/comment_vm.dart'
-    as _i60;
+    as _i59;
 import 'package:itrust/features/post/domain/domain.dart' as _i12;
 import 'package:itrust/features/post/domain/services/post_service.dart' as _i26;
 import 'package:itrust/features/post/infrastructure/mappers/comment_mapper.dart'
-    as _i61;
+    as _i60;
 import 'package:itrust/features/post/infrastructure/services/comment_service.dart'
     as _i13;
 import 'package:itrust/features/post/infrastructure/services/post_service.dart'
@@ -256,16 +256,16 @@ Future<_i1.GetIt> init(
         settingsCoordinator: gh<_i58.SettingsCoordinator>(),
       ));
   gh.singleton<
-          _i30.TwoEntitiesToViewModelMapper<_i5.Post, _i5.User, _i30.PostVM>>(
-      _i59.PostMapper(
-    formattedDateProvider: gh<_i30.FormattedDateProvider>(),
-    beautifiedNumberProvider: gh<_i30.BeautifiedNumberProvider>(),
-  ));
-  gh.singleton<
       _i57.TwoEntitiesToViewModelMapper<_i12.Comment, _i57.User,
-          _i60.CommentVM>>(_i61.CommentMapper(
+          _i59.CommentVM>>(_i60.CommentMapper(
     dateFormatProvider: gh<_i57.FormattedDateProvider>(),
     beautifiedNumberProvider: gh<_i57.BeautifiedNumberProvider>(),
+  ));
+  gh.singleton<
+          _i30.TwoEntitiesToViewModelMapper<_i5.Post, _i5.User, _i30.PostVM>>(
+      _i61.PostMapper(
+    formattedDateProvider: gh<_i30.FormattedDateProvider>(),
+    beautifiedNumberProvider: gh<_i30.BeautifiedNumberProvider>(),
   ));
   gh.singleton<_i43.AuthCoordinator>(
     _i62.ProdAuthCoordinator(
@@ -286,7 +286,7 @@ Future<_i1.GetIt> init(
         commentCoordinator: gh<_i67.CommentCoordinator>(),
         commentMapper: gh<
             _i57.TwoEntitiesToViewModelMapper<_i12.Comment, _i57.User,
-                _i60.CommentVM>>(),
+                _i59.CommentVM>>(),
       ));
   gh.factory<_i68.CommentStore>(() => _i68.CommentStore(
         commentReplyStore: gh<_i66.CommentReplyStore>(),
@@ -294,7 +294,7 @@ Future<_i1.GetIt> init(
         commentCoordinator: gh<_i67.CommentCoordinator>(),
         commentMapper: gh<
             _i57.TwoEntitiesToViewModelMapper<_i12.Comment, _i57.User,
-                _i60.CommentVM>>(),
+                _i59.CommentVM>>(),
       ));
   gh.singleton<_i43.FeedCoordinator>(
       _i69.ProdFeedCoordinator(goRouter: gh<_i42.GoRouter>()));
@@ -311,7 +311,7 @@ Future<_i1.GetIt> init(
         commentCoordinator: gh<_i67.CommentCoordinator>(),
         commentMapper: gh<
             _i57.TwoEntitiesToViewModelMapper<_i12.Comment, _i57.User,
-                _i60.CommentVM>>(),
+                _i59.CommentVM>>(),
       ));
   gh.factory<_i73.PostStore>(() => _i73.PostStore(
         postCommentStore: gh<_i72.PostCommentStore>(),

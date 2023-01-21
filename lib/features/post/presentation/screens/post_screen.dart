@@ -11,6 +11,7 @@ import '../../application/stores/post/post_store.dart';
 import '../widgets/widgets.dart';
 
 const _appBarHeight = kToolbarHeight;
+const _pageScrollKey = PageStorageKey('post screen scroll key');
 
 final _getIt = GetIt.instance;
 
@@ -106,6 +107,7 @@ class _Body extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView(
+                  key: _pageScrollKey,
                   children: [
                     PostCard(
                       post: post,
@@ -133,6 +135,7 @@ class _Body extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView.builder(
+                  key: _pageScrollKey,
                   itemCount: postStore.postCommentStore.comments.length + 2,
                   itemBuilder: (context, index) {
                     if (index == 0) {

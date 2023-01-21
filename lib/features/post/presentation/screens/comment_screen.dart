@@ -11,6 +11,7 @@ import '../../application/stores/comment/comment_store.dart';
 import '../widgets/widgets.dart';
 
 const _appBarHeight = kToolbarHeight;
+const _listScrollKey = PageStorageKey('comment screen scroll key');
 
 final _getIt = GetIt.instance;
 
@@ -119,6 +120,7 @@ class _Body extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView(
+                  key: _listScrollKey,
                   children: [
                     CommentCard(
                       isPreview: false,
@@ -140,50 +142,54 @@ class _Body extends StatelessWidget {
           );
         }
 
-        return Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: commentStore.commentReplyStore.replies.length + 2,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
+        return RefreshIndicator(
+          onRefresh: commentStore.refresh,
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  key: _listScrollKey,
+                  itemCount: commentStore.commentReplyStore.replies.length + 2,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return CommentCard(
+                        isPreview: false,
+                        comment: comment,
+                        onLikePressed: commentStore.onLikeCommentPressed,
+                      );
+                    }
+
+                    if (index == 1) {
+                      return SectionTitle(
+                        title: l10n.amount_of_comments(
+                          commentStore.commentReplyStore.replies.length,
+                        ),
+                      );
+                    }
+
+                    final reply = commentStore.commentReplyStore.replies[index - 2];
+
                     return CommentCard(
-                      isPreview: false,
-                      comment: comment,
-                      onLikePressed: commentStore.onLikeCommentPressed,
-                    );
-                  }
-
-                  if (index == 1) {
-                    return SectionTitle(
-                      title: l10n.amount_of_comments(
-                        commentStore.commentReplyStore.replies.length,
+                      comment: reply,
+                      isPreview: true,
+                      onPressed: () => commentStore.commentReplyStore.onCommentPressed(
+                        commentID: reply.id,
                       ),
+                      onLikePressed: () => commentStore.commentReplyStore
+                          .onLikeReplyPressed(commentID: reply.id),
+                      onCommentPressed: () => commentStore.commentReplyStore
+                          .onCommentReplyButtonPressed(commentID: reply.id),
                     );
-                  }
-
-                  final reply = commentStore.commentReplyStore.replies[index - 2];
-
-                  return CommentCard(
-                    comment: reply,
-                    isPreview: true,
-                    onPressed: () => commentStore.commentReplyStore.onCommentPressed(
-                      commentID: reply.id,
-                    ),
-                    onLikePressed: () => commentStore.commentReplyStore
-                        .onLikeReplyPressed(commentID: reply.id),
-                    onCommentPressed: () => commentStore.commentReplyStore
-                        .onCommentReplyButtonPressed(commentID: reply.id),
-                  );
-                },
+                  },
+                ),
               ),
-            ),
-            MessageField(
-              hint: l10n.comment_field_hint,
-              onSendPressed: () {},
-              onEmojiPressed: () {},
-            ),
-          ],
+              MessageField(
+                hint: l10n.comment_field_hint,
+                onSendPressed: () {},
+                onEmojiPressed: () {},
+              ),
+            ],
+          ),
         );
       },
     );
