@@ -24,7 +24,7 @@ class ImageGrid extends StatelessWidget {
     final secondRowAmount = _getItemAmountForRow(1);
     final thirdRowAmount = _getItemAmountForRow(2);
     final exceeded = imageUrls.length > _maxImages;
-    final exceededAmount = imageUrls.length - _maxImages + 1;
+    final exceededAmount = imageUrls.length - _maxImages;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(_borderRadius),

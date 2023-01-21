@@ -3,9 +3,11 @@ import 'package:injectable/injectable.dart';
 import '../../application/application.dart';
 
 const _million = 1000000;
+const _millionDivider = _million / _toDoubleDivider;
 const _thousand = 1000;
+const _thousandDivider = _thousand / _toDoubleDivider;
+const _toDoubleDivider = 10;
 const _one = 1;
-const _precision = 1;
 
 @Singleton(as: BeautifiedNumberProvider)
 class ProdBeautifiedNumberProvider implements BeautifiedNumberProvider {
@@ -21,10 +23,10 @@ class ProdBeautifiedNumberProvider implements BeautifiedNumberProvider {
     var suffix = '';
 
     if (n >= _million) {
-      str = (n / _million).toStringAsFixed(_precision);
+      str = '${(n / _millionDivider).floor() / _toDoubleDivider}';
       suffix = _suffixNumberProvider.million;
     } else if (n >= _thousand) {
-      str = (n / _thousand).toStringAsFixed(_precision);
+      str = '${(n / _thousandDivider).floor() / _toDoubleDivider}';
       suffix = _suffixNumberProvider.thousand;
     } else if (n >= _one) {
       str = '$n';

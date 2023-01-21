@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../features/common/application/application.dart';
 import '../../coordinators/home_coordinator.dart';
 
 part 'home_store.g.dart';
@@ -12,7 +13,7 @@ const _defaultTabIndex = 0;
 @injectable
 class HomeStore = _HomeStore with _$HomeStore;
 
-abstract class _HomeStore with Store {
+abstract class _HomeStore extends SyncStore with Store {
   _HomeStore({
     required HomeCoordinator homeCoordinator,
   }) : _homeCoordinator = homeCoordinator {
