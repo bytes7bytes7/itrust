@@ -114,7 +114,7 @@ class _Body extends StatelessWidget {
           );
         }
 
-        if (commentStore.isLoading) {
+        if (commentStore.commentReplyStore.isLoading) {
           return Column(
             children: [
               Expanded(
