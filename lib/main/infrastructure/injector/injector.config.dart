@@ -184,8 +184,8 @@ Future<_i1.GetIt> init(
     registerFor: {_test},
     dispose: (i) => i.dispose(),
   );
-  gh.factory<_i7.ChatListStore>(
-      () => _i7.ChatListStore(chatListService: gh<_i5.ChatListService>()));
+  gh.singleton<_i7.ChatListStore>(
+      _i7.ChatListStore(chatListService: gh<_i5.ChatListService>()));
   gh.lazySingleton<_i5.ChatRepository>(
     () => _i8.TestChatRepository(),
     registerFor: {_test},
@@ -265,8 +265,8 @@ Future<_i1.GetIt> init(
       () => _i54.HomeStore(homeCoordinator: gh<_i52.HomeCoordinator>()));
   gh.singleton<_i51.MenuCoordinator>(
       _i55.ProdMenuCoordinator(goRouter: gh<_i50.GoRouter>()));
-  gh.factory<_i56.MenuStore>(
-      () => _i56.MenuStore(menuCoordinator: gh<_i57.MenuCoordinator>()));
+  gh.singleton<_i56.MenuStore>(
+      _i56.MenuStore(menuCoordinator: gh<_i57.MenuCoordinator>()));
   gh.singleton<_i51.PostCoordinator>(
       _i58.ProdPostCoordinator(goRouter: gh<_i50.GoRouter>()));
   gh.singleton<_i51.RulesCoordinator>(
@@ -351,11 +351,11 @@ Future<_i1.GetIt> init(
             _i65.TwoEntitiesToViewModelMapper<_i65.Post, _i65.User,
                 _i65.PostVM>>(),
       ));
-  gh.factory<_i83.CategoryStore>(() => _i83.CategoryStore(
-        feedStore: gh<_i78.FeedStore>(),
-        categoryService: gh<_i3.CategoryService>(),
-        categoryStringProvider: gh<_i42.CategoryStringProvider>(),
-      ));
+  gh.singleton<_i83.CategoryStore>(_i83.CategoryStore(
+    feedStore: gh<_i78.FeedStore>(),
+    categoryService: gh<_i3.CategoryService>(),
+    categoryStringProvider: gh<_i42.CategoryStringProvider>(),
+  ));
   return getIt;
 }
 

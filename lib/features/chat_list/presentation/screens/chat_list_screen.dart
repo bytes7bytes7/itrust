@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
-import '../../../../utils/hooks/hooks.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/chat_list/chat_list_store.dart';
 import '../widgets/widgets.dart';
@@ -16,15 +15,21 @@ const _appBarBottomHeight = 2.0;
 const _loadMoreOffset = 10;
 final _getIt = GetIt.instance;
 
-class ChatListScreen extends StatelessWidget {
+class ChatListScreen extends HookWidget {
   const ChatListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: _AppBar(),
+    final chatListStore = useMemoized(() => _getIt.get<ChatListStore>());
+
+    return Scaffold(
+      appBar: _AppBar(
+        chatListStore: chatListStore,
+      ),
       body: SafeArea(
-        child: _Body(),
+        child: _Body(
+          chatListStore: chatListStore,
+        ),
       ),
     );
   }
@@ -32,7 +37,11 @@ class ChatListScreen extends StatelessWidget {
 
 // ignore: prefer_mixin
 class _AppBar extends StatelessWidget with PreferredSizeWidget {
-  const _AppBar();
+  const _AppBar({
+    required this.chatListStore,
+  });
+
+  final ChatListStore chatListStore;
 
   @override
   Size get preferredSize => const Size.fromHeight(_appBarHeight);
@@ -58,23 +67,27 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
             onPressed: () {},
           ),
         ],
-        bottom: const _AppBarBottom(),
+        bottom: _AppBarBottom(
+          chatListStore: chatListStore,
+        ),
       ),
     );
   }
 }
 
 // ignore: prefer_mixin
-class _AppBarBottom extends HookWidget with PreferredSizeWidget {
-  const _AppBarBottom();
+class _AppBarBottom extends StatelessWidget with PreferredSizeWidget {
+  const _AppBarBottom({
+    required this.chatListStore,
+  });
+
+  final ChatListStore chatListStore;
 
   @override
   Size get preferredSize => const Size.fromHeight(_appBarBottomHeight);
 
   @override
   Widget build(BuildContext context) {
-    final chatListStore = useMemoized(() => _getIt.get<ChatListStore>());
-
     return Observer(
       builder: (context) {
         return PreferredSize(
@@ -88,18 +101,16 @@ class _AppBarBottom extends HookWidget with PreferredSizeWidget {
   }
 }
 
-class _Body extends HookWidget {
-  const _Body();
+class _Body extends StatelessWidget {
+  const _Body({
+    required this.chatListStore,
+  });
+
+  final ChatListStore chatListStore;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-
-    final chatListStore = useMemoized(() => _getIt.get<ChatListStore>());
-
-    useAutorun((_) {
-      chatListStore.load();
-    });
 
     return Observer(
       builder: (context) {

@@ -10,7 +10,7 @@ part 'chat_list_store.g.dart';
 const _defaultLimit = 10;
 final _logger = Logger('$ChatListStore');
 
-@injectable
+@singleton
 class ChatListStore = _ChatListStore with _$ChatListStore;
 
 abstract class _ChatListStore extends SyncStore with Store {
@@ -20,6 +20,7 @@ abstract class _ChatListStore extends SyncStore with Store {
 
   final ChatListService _chatListService;
   final int _limit = _defaultLimit;
+  var _isInitialized = false;
 
   @readonly
   bool _isLoading = false;
@@ -48,19 +49,11 @@ abstract class _ChatListStore extends SyncStore with Store {
   @computed
   bool get showItems => _isLoading || _chats.isNotEmpty;
 
-  @action
-  void refresh() {
-    // TODO: implement
-    perform(
-      () {
-        _page = 0;
-        _chats = [];
-        _hasMoreChats = true;
-        _chatListService.load(limit: _limit, offset: 0);
-      },
-      setIsLoading: (v) => _isLoading = v,
-      removeError: () => _error = '',
-    );
+  void init() {
+    if (!_isInitialized) {
+      load();
+      _isInitialized = true;
+    }
   }
 
   @action
@@ -92,6 +85,21 @@ abstract class _ChatListStore extends SyncStore with Store {
 
       _isLoadingMore = false;
     }
+  }
+
+  @action
+  void refresh() {
+    // TODO: implement
+    perform(
+      () {
+        _page = 0;
+        _chats = [];
+        _hasMoreChats = true;
+        _chatListService.load(limit: _limit, offset: 0);
+      },
+      setIsLoading: (v) => _isLoading = v,
+      removeError: () => _error = '',
+    );
   }
 
   @action

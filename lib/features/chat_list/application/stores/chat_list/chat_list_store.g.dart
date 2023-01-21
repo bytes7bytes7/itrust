@@ -142,22 +142,22 @@ mixin _$ChatListStore on _ChatListStore, Store {
       ActionController(name: '_ChatListStore', context: context);
 
   @override
-  void refresh() {
+  void load() {
     final _$actionInfo = _$_ChatListStoreActionController.startAction(
-        name: '_ChatListStore.refresh');
+        name: '_ChatListStore.load');
     try {
-      return super.refresh();
+      return super.load();
     } finally {
       _$_ChatListStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void load() {
+  void refresh() {
     final _$actionInfo = _$_ChatListStoreActionController.startAction(
-        name: '_ChatListStore.load');
+        name: '_ChatListStore.refresh');
     try {
-      return super.load();
+      return super.refresh();
     } finally {
       _$_ChatListStoreActionController.endAction(_$actionInfo);
     }

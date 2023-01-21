@@ -6,7 +6,7 @@ import '../../coordinators/menu_coordinator.dart';
 
 part 'menu_store.g.dart';
 
-@injectable
+@singleton
 class MenuStore = _MenuStore with _$MenuStore;
 
 abstract class _MenuStore extends SyncStore with Store {

@@ -9,7 +9,7 @@ import '../feed/feed_store.dart';
 
 part 'category_store.g.dart';
 
-@injectable
+@singleton
 class CategoryStore = _CategoryStore with _$CategoryStore;
 
 abstract class _CategoryStore extends SyncStore with Store {
@@ -24,6 +24,7 @@ abstract class _CategoryStore extends SyncStore with Store {
 
   final CategoryService _categoryService;
   final CategoryStringProvider _categoryStringProvider;
+  var _isInitialized = false;
 
   @readonly
   bool _isLoading = false;
@@ -43,6 +44,13 @@ abstract class _CategoryStore extends SyncStore with Store {
   @computed
   bool get isAllLoaded =>
       !_isLoading && !hasError && !feedStore.isLoading && !feedStore.hasError;
+
+  void init() {
+    if (!_isInitialized) {
+      loadCategories();
+      _isInitialized = true;
+    }
+  }
 
   @action
   void loadCategories() {

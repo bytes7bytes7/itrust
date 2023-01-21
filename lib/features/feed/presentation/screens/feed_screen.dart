@@ -24,15 +24,8 @@ class FeedScreen extends HookWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final categoryStore = useMemoized(() => _getIt.get<CategoryStore>());
-
-    useEffect(
-      () {
-        categoryStore.loadCategories();
-        return;
-      },
-      const [],
-    );
+    final categoryStore =
+        useMemoized(() => _getIt.get<CategoryStore>()..init());
 
     useReaction<String>(
       (_) => categoryStore.error,
