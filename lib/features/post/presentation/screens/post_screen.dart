@@ -36,14 +36,6 @@ class PostScreen extends HookWidget {
       const [],
     );
 
-    useEffect(
-      () {
-        postStore.postCommentStore.loadPostComments(postID: postID);
-        return null;
-      },
-      const [],
-    );
-
     return Scaffold(
       appBar: _AppBar(
         postStore: postStore,
@@ -135,50 +127,53 @@ class _Body extends StatelessWidget {
           );
         }
 
-        return Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: postStore.postCommentStore.comments.length + 2,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return PostCard(
-                      post: post,
-                      isPreview: false,
-                      onLikePressed: postStore.onLikePostPressed,
+        return RefreshIndicator(
+          onRefresh: postStore.refresh,
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: postStore.postCommentStore.comments.length + 2,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return PostCard(
+                        post: post,
+                        isPreview: false,
+                        onLikePressed: postStore.onLikePostPressed,
+                      );
+                    }
+
+                    if (index == 1) {
+                      return SectionTitle(
+                        title: l10n.amount_of_comments(
+                          postStore.postCommentStore.comments.length,
+                        ),
+                      );
+                    }
+
+                    final comment =
+                        postStore.postCommentStore.comments[index - 2];
+
+                    return CommentCard(
+                      comment: comment,
+                      isPreview: true,
+                      onPressed: () => postStore.postCommentStore
+                          .onCommentPressed(commentID: comment.id),
+                      onLikePressed: () => postStore.postCommentStore
+                          .onLikeCommentPressed(commentID: comment.id),
+                      onCommentPressed: () => postStore.postCommentStore
+                          .onCommentReplyButtonPressed(commentID: comment.id),
                     );
-                  }
-
-                  if (index == 1) {
-                    return SectionTitle(
-                      title: l10n.amount_of_comments(
-                        postStore.postCommentStore.comments.length,
-                      ),
-                    );
-                  }
-
-                  final comment =
-                      postStore.postCommentStore.comments[index - 2];
-
-                  return CommentCard(
-                    comment: comment,
-                    isPreview: true,
-                    onPressed: () => postStore.postCommentStore
-                        .onCommentPressed(commentID: comment.id),
-                    onLikePressed: () => postStore.postCommentStore
-                        .onLikeCommentPressed(commentID: comment.id),
-                    onCommentPressed: () => postStore.postCommentStore
-                        .onCommentReplyButtonPressed(commentID: comment.id),
-                  );
-                },
+                  },
+                ),
               ),
-            ),
-            MessageField(
-              hint: l10n.comment_field_hint,
-              onSendPressed: () {},
-              onEmojiPressed: () {},
-            ),
-          ],
+              MessageField(
+                hint: l10n.comment_field_hint,
+                onSendPressed: () {},
+                onEmojiPressed: () {},
+              ),
+            ],
+          ),
         );
       },
     );

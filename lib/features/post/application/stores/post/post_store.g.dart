@@ -78,6 +78,14 @@ mixin _$PostStore on _PostStore, Store {
     });
   }
 
+  late final _$refreshAsyncAction =
+      AsyncAction('_PostStore.refresh', context: context);
+
+  @override
+  Future<void> refresh() {
+    return _$refreshAsyncAction.run(() => super.refresh());
+  }
+
   late final _$_PostStoreActionController =
       ActionController(name: '_PostStore', context: context);
 

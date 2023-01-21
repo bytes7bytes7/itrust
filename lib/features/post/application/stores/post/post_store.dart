@@ -43,7 +43,7 @@ abstract class _PostStore extends SyncStore with Store {
   void loadPost({required String postID}) {
     perform(
       () async {
-        _postID = _postID;
+        _postID = postID;
         final post = await _postService.loadPost(PostID(postID));
 
         // TODO: implement
@@ -54,6 +54,8 @@ abstract class _PostStore extends SyncStore with Store {
         );
 
         _post = _postMapper.map(post, user);
+
+        postCommentStore.loadPostComments(postID: postID);
       },
       setIsLoading: (v) => _isLoading = v,
       removeError: () => _error = '',
@@ -69,6 +71,15 @@ abstract class _PostStore extends SyncStore with Store {
       _post = post.copyWith(
         likedByMe: !post.likedByMe,
       );
+    }
+  }
+
+  @action
+  Future<void> refresh() async {
+    final postID = _postID;
+
+    if (postID != null) {
+      loadPost(postID: postID);
     }
   }
 
