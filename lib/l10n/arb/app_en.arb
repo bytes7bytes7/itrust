@@ -53,5 +53,6 @@
   "load_posts_error": "Can not load posts",
   "load_categories_error": "Can not load categories",
   "error_during_loading": "An error occurs during loading data",
-  "retry_button_title": "Try again"
+  "retry_button_title": "Try again",
+  "comment_field_hint": "Type comment..."
 }

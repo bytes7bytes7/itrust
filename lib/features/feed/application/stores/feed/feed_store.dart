@@ -47,7 +47,7 @@ abstract class _FeedStore extends SyncStore with Store {
     perform(
       () async {
         try {
-          final data = await _feedService.loadPosts(category);
+          final data = await _feedService.loadPosts(category: category);
 
           if (_processingCategory == category) {
             // TODO: implement
@@ -75,14 +75,7 @@ abstract class _FeedStore extends SyncStore with Store {
     );
   }
 
-  void onPostPressed({required String postID}) {
-    _feedCoordinator.onPostPressed(postID);
-  }
-
-  void onCommentButtonPressed({required String postID}) {
-    _feedCoordinator.onPostButtonPressed(postID);
-  }
-
+  @action
   void onLikeButtonPressed({required String postID}) {
     // TODO: implement
     final index = _posts.indexWhere((e) => e.id == postID);
@@ -92,5 +85,13 @@ abstract class _FeedStore extends SyncStore with Store {
 
       _posts = List.from(_posts)..[index] = post;
     }
+  }
+
+  void onPostPressed({required String postID}) {
+    _feedCoordinator.onPostPressed(postID);
+  }
+
+  void onCommentButtonPressed({required String postID}) {
+    _feedCoordinator.onPostButtonPressed(postID);
   }
 }

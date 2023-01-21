@@ -9,7 +9,7 @@ import '../../domain/services/feed_service.dart';
 @Singleton(as: FeedService)
 class TestFeedService implements FeedService {
   @override
-  Future<List<Post>> loadPosts(String category) {
+  Future<List<Post>> loadPosts({required String category}) {
     return Future.delayed(Duration(seconds: _rand.nextInt(3) + 1), () {
       if (_rand.nextInt(3) == 0) {
         throw Exception();
@@ -40,6 +40,18 @@ class TestFeedService implements FeedService {
         },
       );
     });
+  }
+
+  @override
+  Future<void> likePost({required String postID}) {
+    return Future.delayed(
+      Duration(seconds: _rand.nextInt(3) + 1),
+      () {
+        if (_rand.nextInt(3) == 0) {
+          throw Exception();
+        }
+      },
+    );
   }
 
   final _rand = Random();

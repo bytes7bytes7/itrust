@@ -110,52 +110,75 @@ class _Body extends StatelessWidget {
         }
 
         if (postStore.postCommentStore.isLoading) {
-          return ListView(
+          return Column(
             children: [
-              PostCard(
-                post: post,
-                isPreview: false,
-                onLikePressed: postStore.onLikePostPressed,
+              Expanded(
+                child: ListView(
+                  children: [
+                    PostCard(
+                      post: post,
+                      isPreview: false,
+                      onLikePressed: postStore.onLikePostPressed,
+                    ),
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ],
+                ),
               ),
-              const Center(
-                child: CircularProgressIndicator(),
+              MessageField(
+                hint: l10n.comment_field_hint,
+                onSendPressed: () {},
+                onEmojiPressed: () {},
               ),
             ],
           );
         }
 
-        return ListView.builder(
-          itemCount: postStore.postCommentStore.comments.length + 2,
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return PostCard(
-                post: post,
-                isPreview: false,
-                onLikePressed: postStore.onLikePostPressed,
-              );
-            }
+        return Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: postStore.postCommentStore.comments.length + 2,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return PostCard(
+                      post: post,
+                      isPreview: false,
+                      onLikePressed: postStore.onLikePostPressed,
+                    );
+                  }
 
-            if (index == 1) {
-              return SectionTitle(
-                title: l10n.amount_of_comments(
-                  postStore.postCommentStore.comments.length,
-                ),
-              );
-            }
+                  if (index == 1) {
+                    return SectionTitle(
+                      title: l10n.amount_of_comments(
+                        postStore.postCommentStore.comments.length,
+                      ),
+                    );
+                  }
 
-            final comment = postStore.postCommentStore.comments[index - 2];
+                  final comment =
+                      postStore.postCommentStore.comments[index - 2];
 
-            return CommentCard(
-              comment: comment,
-              isPreview: true,
-              onPressed: () => postStore.postCommentStore
-                  .onCommentPressed(commentID: comment.id),
-              onLikePressed: () => postStore.postCommentStore
-                  .onLikeCommentPressed(commentID: comment.id),
-              onCommentPressed: () => postStore.postCommentStore
-                  .onCommentReplyButtonPressed(commentID: comment.id),
-            );
-          },
+                  return CommentCard(
+                    comment: comment,
+                    isPreview: true,
+                    onPressed: () => postStore.postCommentStore
+                        .onCommentPressed(commentID: comment.id),
+                    onLikePressed: () => postStore.postCommentStore
+                        .onLikeCommentPressed(commentID: comment.id),
+                    onCommentPressed: () => postStore.postCommentStore
+                        .onCommentReplyButtonPressed(commentID: comment.id),
+                  );
+                },
+              ),
+            ),
+            MessageField(
+              hint: l10n.comment_field_hint,
+              onSendPressed: () {},
+              onEmojiPressed: () {},
+            ),
+          ],
         );
       },
     );

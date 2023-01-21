@@ -83,6 +83,17 @@ mixin _$FeedStore on _FeedStore, Store {
   }
 
   @override
+  void onLikeButtonPressed({required String postID}) {
+    final _$actionInfo = _$_FeedStoreActionController.startAction(
+        name: '_FeedStore.onLikeButtonPressed');
+    try {
+      return super.onLikeButtonPressed(postID: postID);
+    } finally {
+      _$_FeedStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 hasError: ${hasError}

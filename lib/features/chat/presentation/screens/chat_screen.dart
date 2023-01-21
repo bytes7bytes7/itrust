@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
+import '../../../../l10n/l10n.dart';
 import '../../../common/domain/domain.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/chat_store/chat_store.dart';
@@ -30,15 +31,22 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       appBar: const _AppBar(),
       body: SafeArea(
         child: Column(
-          children: const [
-            Expanded(
+          children: [
+            const Expanded(
               child: _MessageList(),
             ),
-            MessageField(),
+            MessageField(
+              hint: l10n.message_field_hint,
+              onEmojiPressed: () {},
+              onAttachFilePressed: () {},
+              onSendPressed: () {},
+            ),
           ],
         ),
       ),
