@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/application/application.dart';
 import '../../../domain/services/category_service.dart';
 import '../../providers/category_string_provider.dart';
+import '../feed/feed_store.dart';
 
 part 'category_store.g.dart';
 
@@ -13,10 +14,13 @@ class CategoryStore = _CategoryStore with _$CategoryStore;
 
 abstract class _CategoryStore extends SyncStore with Store {
   _CategoryStore({
+    required this.feedStore,
     required CategoryService categoryService,
     required CategoryStringProvider categoryStringProvider,
   })  : _categoryService = categoryService,
         _categoryStringProvider = categoryStringProvider;
+
+  final FeedStore feedStore;
 
   final CategoryService _categoryService;
   final CategoryStringProvider _categoryStringProvider;
@@ -31,10 +35,14 @@ abstract class _CategoryStore extends SyncStore with Store {
   List<String> _categories = const [];
 
   @readonly
-  Observable<String> _selectedCategory = ''.obs();
+  String _selectedCategory = '';
 
   @computed
   bool get hasError => _error.isNotEmpty;
+
+  @computed
+  bool get isAllLoaded =>
+      !_isLoading && !hasError && !feedStore.isLoading && !feedStore.hasError;
 
   @action
   void loadCategories() {
@@ -58,8 +66,9 @@ abstract class _CategoryStore extends SyncStore with Store {
 
   @action
   void selectCategory(String category) {
-    if (_selectedCategory.value != category) {
-      _selectedCategory.value = category;
+    if (_selectedCategory != category) {
+      _selectedCategory = category;
+      feedStore.loadPosts(category);
     }
   }
 }

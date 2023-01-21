@@ -15,13 +15,6 @@ mixin _$FeedStore on _FeedStore, Store {
   bool get hasError => (_$hasErrorComputed ??=
           Computed<bool>(() => super.hasError, name: '_FeedStore.hasError'))
       .value;
-  Computed<bool>? _$isAllLoadedComputed;
-
-  @override
-  bool get isAllLoaded =>
-      (_$isAllLoadedComputed ??= Computed<bool>(() => super.isAllLoaded,
-              name: '_FeedStore.isAllLoaded'))
-          .value;
 
   late final _$_isLoadingAtom =
       Atom(name: '_FeedStore._isLoading', context: context);
@@ -92,8 +85,7 @@ mixin _$FeedStore on _FeedStore, Store {
   @override
   String toString() {
     return '''
-hasError: ${hasError},
-isAllLoaded: ${isAllLoaded}
+hasError: ${hasError}
     ''';
   }
 }

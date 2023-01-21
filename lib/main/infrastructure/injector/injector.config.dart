@@ -43,7 +43,7 @@ import 'package:itrust/features/common/application/providers/formatted_date_prov
 import 'package:itrust/features/common/common.dart' as _i57;
 import 'package:itrust/features/common/domain/domain.dart' as _i5;
 import 'package:itrust/features/common/infrastructure/mappers/post_mapper.dart'
-    as _i59;
+    as _i61;
 import 'package:itrust/features/common/infrastructure/persistence/chat_repository.dart'
     as _i8;
 import 'package:itrust/features/common/infrastructure/persistence/user_repository.dart'
@@ -64,15 +64,15 @@ import 'package:itrust/features/connection/application/stores/connection/connect
     as _i14;
 import 'package:itrust/features/features.dart' as _i43;
 import 'package:itrust/features/feed/application/coordinators/feed_coordinator.dart'
-    as _i72;
+    as _i71;
 import 'package:itrust/features/feed/application/providers/category_string_provider.dart'
     as _i38;
 import 'package:itrust/features/feed/application/providers/feed_string_repository.dart'
     as _i40;
 import 'package:itrust/features/feed/application/stores/category/category_store.dart'
-    as _i65;
+    as _i75;
 import 'package:itrust/features/feed/application/stores/feed/feed_store.dart'
-    as _i71;
+    as _i70;
 import 'package:itrust/features/feed/domain/services/category_service.dart'
     as _i3;
 import 'package:itrust/features/feed/domain/services/feed_service.dart' as _i17;
@@ -94,23 +94,23 @@ import 'package:itrust/features/menu/application/coordinators/menu_coordinator.d
 import 'package:itrust/features/menu/application/stores/menu/menu_store.dart'
     as _i48;
 import 'package:itrust/features/post/application/coordinators/comment_coordinator.dart'
-    as _i68;
-import 'package:itrust/features/post/application/coordinators/post_coordinator.dart'
-    as _i75;
-import 'package:itrust/features/post/application/stores/comment/comment_store.dart'
-    as _i69;
-import 'package:itrust/features/post/application/stores/comment_reply/comment_reply_store.dart'
     as _i67;
-import 'package:itrust/features/post/application/stores/post/post_store.dart'
+import 'package:itrust/features/post/application/coordinators/post_coordinator.dart'
     as _i74;
-import 'package:itrust/features/post/application/stores/post_comment/post_comment_store.dart'
+import 'package:itrust/features/post/application/stores/comment/comment_store.dart'
+    as _i68;
+import 'package:itrust/features/post/application/stores/comment_reply/comment_reply_store.dart'
+    as _i66;
+import 'package:itrust/features/post/application/stores/post/post_store.dart'
     as _i73;
+import 'package:itrust/features/post/application/stores/post_comment/post_comment_store.dart'
+    as _i72;
 import 'package:itrust/features/post/application/view_models/comment/comment_vm.dart'
-    as _i60;
+    as _i59;
 import 'package:itrust/features/post/domain/domain.dart' as _i12;
 import 'package:itrust/features/post/domain/services/post_service.dart' as _i26;
 import 'package:itrust/features/post/infrastructure/mappers/comment_mapper.dart'
-    as _i61;
+    as _i60;
 import 'package:itrust/features/post/infrastructure/services/comment_service.dart'
     as _i13;
 import 'package:itrust/features/post/infrastructure/services/post_service.dart'
@@ -125,9 +125,9 @@ import 'package:itrust/main/application/stores/home/home_store.dart' as _i46;
 import 'package:itrust/main/infrastructure/coordinators/auth_coordinator.dart'
     as _i62;
 import 'package:itrust/main/infrastructure/coordinators/comment_coordinator.dart'
-    as _i66;
+    as _i65;
 import 'package:itrust/main/infrastructure/coordinators/feed_coordinator.dart'
-    as _i70;
+    as _i69;
 import 'package:itrust/main/infrastructure/coordinators/home_coordinator.dart'
     as _i45;
 import 'package:itrust/main/infrastructure/coordinators/menu_coordinator.dart'
@@ -256,16 +256,16 @@ Future<_i1.GetIt> init(
         settingsCoordinator: gh<_i58.SettingsCoordinator>(),
       ));
   gh.singleton<
-          _i30.TwoEntitiesToViewModelMapper<_i5.Post, _i5.User, _i30.PostVM>>(
-      _i59.PostMapper(
-    formattedDateProvider: gh<_i30.FormattedDateProvider>(),
-    beautifiedNumberProvider: gh<_i30.BeautifiedNumberProvider>(),
-  ));
-  gh.singleton<
       _i57.TwoEntitiesToViewModelMapper<_i12.Comment, _i57.User,
-          _i60.CommentVM>>(_i61.CommentMapper(
+          _i59.CommentVM>>(_i60.CommentMapper(
     dateFormatProvider: gh<_i57.FormattedDateProvider>(),
     beautifiedNumberProvider: gh<_i57.BeautifiedNumberProvider>(),
+  ));
+  gh.singleton<
+          _i30.TwoEntitiesToViewModelMapper<_i5.Post, _i5.User, _i30.PostVM>>(
+      _i61.PostMapper(
+    formattedDateProvider: gh<_i30.FormattedDateProvider>(),
+    beautifiedNumberProvider: gh<_i30.BeautifiedNumberProvider>(),
   ));
   gh.singleton<_i43.AuthCoordinator>(
     _i62.ProdAuthCoordinator(
@@ -279,52 +279,52 @@ Future<_i1.GetIt> init(
         authCoordinator: gh<_i64.AuthCoordinator>(),
         authStringProvider: gh<_i35.AuthStringProvider>(),
       ));
-  gh.factory<_i65.CategoryStore>(() => _i65.CategoryStore(
-        categoryService: gh<_i3.CategoryService>(),
-        categoryStringProvider: gh<_i38.CategoryStringProvider>(),
-      ));
   gh.singleton<_i43.CommentCoordinator>(
-      _i66.ProdCommentCoordinator(goRouter: gh<_i42.GoRouter>()));
-  gh.factory<_i67.CommentReplyStore>(() => _i67.CommentReplyStore(
+      _i65.ProdCommentCoordinator(goRouter: gh<_i42.GoRouter>()));
+  gh.factory<_i66.CommentReplyStore>(() => _i66.CommentReplyStore(
         commentService: gh<_i12.CommentService>(),
-        commentCoordinator: gh<_i68.CommentCoordinator>(),
+        commentCoordinator: gh<_i67.CommentCoordinator>(),
         commentMapper: gh<
             _i57.TwoEntitiesToViewModelMapper<_i12.Comment, _i57.User,
-                _i60.CommentVM>>(),
+                _i59.CommentVM>>(),
       ));
-  gh.factory<_i69.CommentStore>(() => _i69.CommentStore(
-        commentReplyStore: gh<_i67.CommentReplyStore>(),
+  gh.factory<_i68.CommentStore>(() => _i68.CommentStore(
+        commentReplyStore: gh<_i66.CommentReplyStore>(),
         commentService: gh<_i12.CommentService>(),
-        commentCoordinator: gh<_i68.CommentCoordinator>(),
+        commentCoordinator: gh<_i67.CommentCoordinator>(),
         commentMapper: gh<
             _i57.TwoEntitiesToViewModelMapper<_i12.Comment, _i57.User,
-                _i60.CommentVM>>(),
+                _i59.CommentVM>>(),
       ));
   gh.singleton<_i43.FeedCoordinator>(
-      _i70.ProdFeedCoordinator(goRouter: gh<_i42.GoRouter>()));
-  gh.factory<_i71.FeedStore>(() => _i71.FeedStore(
-        categoryStore: gh<_i65.CategoryStore>(),
+      _i69.ProdFeedCoordinator(goRouter: gh<_i42.GoRouter>()));
+  gh.factory<_i70.FeedStore>(() => _i70.FeedStore(
         feedService: gh<_i17.FeedService>(),
-        feedCoordinator: gh<_i72.FeedCoordinator>(),
+        feedCoordinator: gh<_i71.FeedCoordinator>(),
         feedStringProvider: gh<_i40.FeedStringProvider>(),
         postMapper: gh<
             _i57.TwoEntitiesToViewModelMapper<_i57.Post, _i57.User,
                 _i57.PostVM>>(),
       ));
-  gh.factory<_i73.PostCommentStore>(() => _i73.PostCommentStore(
+  gh.factory<_i72.PostCommentStore>(() => _i72.PostCommentStore(
         commentService: gh<_i12.CommentService>(),
-        commentCoordinator: gh<_i68.CommentCoordinator>(),
+        commentCoordinator: gh<_i67.CommentCoordinator>(),
         commentMapper: gh<
             _i57.TwoEntitiesToViewModelMapper<_i12.Comment, _i57.User,
-                _i60.CommentVM>>(),
+                _i59.CommentVM>>(),
       ));
-  gh.factory<_i74.PostStore>(() => _i74.PostStore(
-        postCommentStore: gh<_i73.PostCommentStore>(),
+  gh.factory<_i73.PostStore>(() => _i73.PostStore(
+        postCommentStore: gh<_i72.PostCommentStore>(),
         postService: gh<_i26.PostService>(),
-        postCoordinator: gh<_i75.PostCoordinator>(),
+        postCoordinator: gh<_i74.PostCoordinator>(),
         postMapper: gh<
             _i57.TwoEntitiesToViewModelMapper<_i57.Post, _i57.User,
                 _i57.PostVM>>(),
+      ));
+  gh.factory<_i75.CategoryStore>(() => _i75.CategoryStore(
+        feedStore: gh<_i70.FeedStore>(),
+        categoryService: gh<_i3.CategoryService>(),
+        categoryStringProvider: gh<_i38.CategoryStringProvider>(),
       ));
   return getIt;
 }

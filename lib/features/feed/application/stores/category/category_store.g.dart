@@ -15,6 +15,13 @@ mixin _$CategoryStore on _CategoryStore, Store {
   bool get hasError => (_$hasErrorComputed ??=
           Computed<bool>(() => super.hasError, name: '_CategoryStore.hasError'))
       .value;
+  Computed<bool>? _$isAllLoadedComputed;
+
+  @override
+  bool get isAllLoaded =>
+      (_$isAllLoadedComputed ??= Computed<bool>(() => super.isAllLoaded,
+              name: '_CategoryStore.isAllLoaded'))
+          .value;
 
   late final _$_isLoadingAtom =
       Atom(name: '_CategoryStore._isLoading', context: context);
@@ -73,16 +80,16 @@ mixin _$CategoryStore on _CategoryStore, Store {
   late final _$_selectedCategoryAtom =
       Atom(name: '_CategoryStore._selectedCategory', context: context);
 
-  Observable<String> get selectedCategory {
+  String get selectedCategory {
     _$_selectedCategoryAtom.reportRead();
     return super._selectedCategory;
   }
 
   @override
-  Observable<String> get _selectedCategory => selectedCategory;
+  String get _selectedCategory => selectedCategory;
 
   @override
-  set _selectedCategory(Observable<String> value) {
+  set _selectedCategory(String value) {
     _$_selectedCategoryAtom.reportWrite(value, super._selectedCategory, () {
       super._selectedCategory = value;
     });
@@ -116,7 +123,8 @@ mixin _$CategoryStore on _CategoryStore, Store {
   @override
   String toString() {
     return '''
-hasError: ${hasError}
+hasError: ${hasError},
+isAllLoaded: ${isAllLoaded}
     ''';
   }
 }

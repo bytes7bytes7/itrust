@@ -24,20 +24,18 @@ class FeedScreen extends HookWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final feedStore = useMemoized(() {
-      return _getIt.get<FeedStore>()..init();
-    });
+    final categoryStore = useMemoized(() => _getIt.get<CategoryStore>());
 
     useEffect(
       () {
-        feedStore.categoryStore.loadCategories();
+        categoryStore.loadCategories();
         return;
       },
       const [],
     );
 
     useReaction<String>(
-      (_) => feedStore.error,
+      (_) => categoryStore.error,
       (error) {
         if (error.isNotEmpty) {
           CustomSnackBar(
@@ -48,7 +46,7 @@ class FeedScreen extends HookWidget {
     );
 
     useReaction<String>(
-      (_) => feedStore.categoryStore.error,
+      (_) => categoryStore.feedStore.error,
       (error) {
         if (error.isNotEmpty) {
           CustomSnackBar(
@@ -63,7 +61,7 @@ class FeedScreen extends HookWidget {
         l10n: l10n,
       ),
       body: _Body(
-        feedStore: feedStore,
+        categoryStore: categoryStore,
       ),
     );
   }
@@ -95,25 +93,25 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 
 class _Body extends StatelessWidget {
   const _Body({
-    required this.feedStore,
+    required this.categoryStore,
   });
 
-  final FeedStore feedStore;
+  final CategoryStore categoryStore;
 
   @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        if (!feedStore.isAllLoaded) {
+        if (!categoryStore.isAllLoaded) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!feedStore.categoryStore.isLoading)
+              if (!categoryStore.isLoading)
                 _CategoryList(
                   key: _categoryListKey,
-                  categoryStore: feedStore.categoryStore,
+                  categoryStore: categoryStore,
                 ),
-              if (feedStore.isLoading || feedStore.categoryStore.isLoading)
+              if (categoryStore.isLoading || categoryStore.feedStore.isLoading)
                 const Expanded(
                   child: Center(
                     child: CircularProgressIndicator(),
@@ -122,10 +120,10 @@ class _Body extends StatelessWidget {
               else
                 Expanded(
                   child: LoadingErrorContainer(
-                    onRetry: feedStore.categoryStore.hasError
-                        ? feedStore.categoryStore.loadCategories
-                        : () => feedStore.loadPosts(
-                              feedStore.categoryStore.selectedCategory.value,
+                    onRetry: categoryStore.hasError
+                        ? categoryStore.loadCategories
+                        : () => categoryStore.feedStore.loadPosts(
+                              categoryStore.selectedCategory,
                             ),
                   ),
                 ),
@@ -144,11 +142,11 @@ class _Body extends StatelessWidget {
               titleSpacing: _categoryListTitlePaddingH,
               title: _CategoryList(
                 key: _categoryListKey,
-                categoryStore: feedStore.categoryStore,
+                categoryStore: categoryStore,
               ),
             ),
             _PostList(
-              feedStore: feedStore,
+              feedStore: categoryStore.feedStore,
             ),
           ],
         );
@@ -181,7 +179,7 @@ class _CategoryList extends StatelessWidget {
           return CategoryList(
             height: _categoryListHeight,
             categories: categoryStore.categories,
-            selectedCategory: categoryStore.selectedCategory.value,
+            selectedCategory: categoryStore.selectedCategory,
             onCategoryPressed: categoryStore.selectCategory,
           );
         }

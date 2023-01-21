@@ -5,7 +5,6 @@ import '../../../../common/common.dart';
 import '../../../domain/services/feed_service.dart';
 import '../../coordinators/feed_coordinator.dart';
 import '../../providers/feed_string_repository.dart';
-import '../category/category_store.dart';
 
 part 'feed_store.g.dart';
 
@@ -14,7 +13,6 @@ class FeedStore = _FeedStore with _$FeedStore;
 
 abstract class _FeedStore extends SyncStore with Store {
   _FeedStore({
-    required this.categoryStore,
     required FeedService feedService,
     required FeedCoordinator feedCoordinator,
     required FeedStringProvider feedStringProvider,
@@ -23,8 +21,6 @@ abstract class _FeedStore extends SyncStore with Store {
         _feedCoordinator = feedCoordinator,
         _feedStringProvider = feedStringProvider,
         _postMapper = postMapper;
-
-  final CategoryStore categoryStore;
 
   final FeedService _feedService;
   final FeedCoordinator _feedCoordinator;
@@ -43,23 +39,6 @@ abstract class _FeedStore extends SyncStore with Store {
 
   @computed
   bool get hasError => _error.isNotEmpty;
-
-  @computed
-  bool get isAllLoaded =>
-      !_isLoading &&
-      _error.isEmpty &&
-      !categoryStore.isLoading &&
-      categoryStore.error.isEmpty;
-
-  void init() {
-    categoryStore.selectedCategory.observe((listener) {
-      final category = listener.newValue;
-
-      if (category != null) {
-        loadPosts(category);
-      }
-    });
-  }
 
   @action
   void loadPosts(String category) {
