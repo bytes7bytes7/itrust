@@ -28,6 +28,7 @@ mixin _$Post {
   bool get likedByMe => throw _privateConstructorUsedError;
   int get likesAmount => throw _privateConstructorUsedError;
   int get commentsAmount => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +48,8 @@ abstract class $PostCopyWith<$Res> {
       List<String> mediaUrls,
       bool likedByMe,
       int likesAmount,
-      int commentsAmount});
+      int commentsAmount,
+      List<String> tags});
 
   $PostIDCopyWith<$Res> get id;
   $UserIDCopyWith<$Res> get authorID;
@@ -74,6 +76,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? likedByMe = null,
     Object? likesAmount = null,
     Object? commentsAmount = null,
+    Object? tags = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -108,6 +111,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.commentsAmount
           : commentsAmount // ignore: cast_nullable_to_non_nullable
               as int,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 
@@ -142,7 +149,8 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       List<String> mediaUrls,
       bool likedByMe,
       int likesAmount,
-      int commentsAmount});
+      int commentsAmount,
+      List<String> tags});
 
   @override
   $PostIDCopyWith<$Res> get id;
@@ -167,6 +175,7 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
     Object? likedByMe = null,
     Object? likesAmount = null,
     Object? commentsAmount = null,
+    Object? tags = null,
   }) {
     return _then(_$_Post(
       id: null == id
@@ -201,6 +210,10 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
           ? _value.commentsAmount
           : commentsAmount // ignore: cast_nullable_to_non_nullable
               as int,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -216,8 +229,10 @@ class _$_Post implements _Post {
       required final List<String> mediaUrls,
       required this.likedByMe,
       required this.likesAmount,
-      required this.commentsAmount})
-      : _mediaUrls = mediaUrls;
+      required this.commentsAmount,
+      required final List<String> tags})
+      : _mediaUrls = mediaUrls,
+        _tags = tags;
 
   factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
@@ -243,10 +258,17 @@ class _$_Post implements _Post {
   final int likesAmount;
   @override
   final int commentsAmount;
+  final List<String> _tags;
+  @override
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
 
   @override
   String toString() {
-    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, likedByMe: $likedByMe, likesAmount: $likesAmount, commentsAmount: $commentsAmount)';
+    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, likedByMe: $likedByMe, likesAmount: $likesAmount, commentsAmount: $commentsAmount, tags: $tags)';
   }
 
   @override
@@ -267,7 +289,8 @@ class _$_Post implements _Post {
             (identical(other.likesAmount, likesAmount) ||
                 other.likesAmount == likesAmount) &&
             (identical(other.commentsAmount, commentsAmount) ||
-                other.commentsAmount == commentsAmount));
+                other.commentsAmount == commentsAmount) &&
+            const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @JsonKey(ignore: true)
@@ -281,7 +304,8 @@ class _$_Post implements _Post {
       const DeepCollectionEquality().hash(_mediaUrls),
       likedByMe,
       likesAmount,
-      commentsAmount);
+      commentsAmount,
+      const DeepCollectionEquality().hash(_tags));
 
   @JsonKey(ignore: true)
   @override
@@ -306,7 +330,8 @@ abstract class _Post implements Post {
       required final List<String> mediaUrls,
       required final bool likedByMe,
       required final int likesAmount,
-      required final int commentsAmount}) = _$_Post;
+      required final int commentsAmount,
+      required final List<String> tags}) = _$_Post;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
@@ -326,6 +351,8 @@ abstract class _Post implements Post {
   int get likesAmount;
   @override
   int get commentsAmount;
+  @override
+  List<String> get tags;
   @override
   @JsonKey(ignore: true)
   _$$_PostCopyWith<_$_Post> get copyWith => throw _privateConstructorUsedError;

@@ -16,6 +16,7 @@ _$_Post _$$_PostFromJson(Map<String, dynamic> json) => _$_Post(
       likedByMe: json['likedByMe'] as bool,
       likesAmount: json['likesAmount'] as int,
       commentsAmount: json['commentsAmount'] as int,
+      tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
@@ -27,4 +28,5 @@ Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
       'likedByMe': instance.likedByMe,
       'likesAmount': instance.likesAmount,
       'commentsAmount': instance.commentsAmount,
+      'tags': instance.tags,
     };

@@ -37,6 +37,10 @@ class TestPostService implements PostService {
                   ? 1
                   : 0,
           commentsAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
+          tags: List.generate(
+            _rand.nextInt(10),
+                (index) => _randString(_rand.nextInt(8) + 3),
+          ),
         );
       },
     );

@@ -28,10 +28,15 @@ class TestCategoryService implements CategoryService {
         throw Exception();
       }
 
-      return List.generate(
-        _rand.nextInt(5) + 3,
-        (index) => _randString(_rand.nextInt(10) + 3),
-      );
+      final customTags = ['thefirst', 'helloworld', 'itrust'];
+
+      return [
+        ...customTags,
+        ...List.generate(
+          _rand.nextInt(5) + 3,
+          (index) => _randString(_rand.nextInt(10) + 3),
+        ),
+      ];
     });
   }
 }

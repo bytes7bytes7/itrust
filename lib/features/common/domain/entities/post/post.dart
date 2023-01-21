@@ -17,6 +17,7 @@ class Post with _$Post {
     required bool likedByMe,
     required int likesAmount,
     required int commentsAmount,
+    required List<String> tags,
   }) = _Post;
 
   factory Post.fromJson(Map<String, Object?> json) => _$PostFromJson(json);

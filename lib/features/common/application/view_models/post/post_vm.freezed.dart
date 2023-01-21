@@ -26,6 +26,7 @@ mixin _$PostVM {
   String get likesAmountWithoutMyLike => throw _privateConstructorUsedError;
   String get likesAmountWithMyLike => throw _privateConstructorUsedError;
   String get commentsAmount => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -48,6 +49,7 @@ abstract class $PostVMCopyWith<$Res> {
       String likesAmountWithoutMyLike,
       String likesAmountWithMyLike,
       String commentsAmount,
+      List<String> tags,
       String? avatarUrl});
 }
 
@@ -74,6 +76,7 @@ class _$PostVMCopyWithImpl<$Res, $Val extends PostVM>
     Object? likesAmountWithoutMyLike = null,
     Object? likesAmountWithMyLike = null,
     Object? commentsAmount = null,
+    Object? tags = null,
     Object? avatarUrl = freezed,
   }) {
     return _then(_value.copyWith(
@@ -117,6 +120,10 @@ class _$PostVMCopyWithImpl<$Res, $Val extends PostVM>
           ? _value.commentsAmount
           : commentsAmount // ignore: cast_nullable_to_non_nullable
               as String,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -142,6 +149,7 @@ abstract class _$$_PostVMCopyWith<$Res> implements $PostVMCopyWith<$Res> {
       String likesAmountWithoutMyLike,
       String likesAmountWithMyLike,
       String commentsAmount,
+      List<String> tags,
       String? avatarUrl});
 }
 
@@ -165,6 +173,7 @@ class __$$_PostVMCopyWithImpl<$Res>
     Object? likesAmountWithoutMyLike = null,
     Object? likesAmountWithMyLike = null,
     Object? commentsAmount = null,
+    Object? tags = null,
     Object? avatarUrl = freezed,
   }) {
     return _then(_$_PostVM(
@@ -208,6 +217,10 @@ class __$$_PostVMCopyWithImpl<$Res>
           ? _value.commentsAmount
           : commentsAmount // ignore: cast_nullable_to_non_nullable
               as String,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -230,8 +243,10 @@ class _$_PostVM implements _PostVM {
       required this.likesAmountWithoutMyLike,
       required this.likesAmountWithMyLike,
       required this.commentsAmount,
+      required final List<String> tags,
       this.avatarUrl})
-      : _mediaUrls = mediaUrls;
+      : _mediaUrls = mediaUrls,
+        _tags = tags;
 
   @override
   final String id;
@@ -259,12 +274,20 @@ class _$_PostVM implements _PostVM {
   final String likesAmountWithMyLike;
   @override
   final String commentsAmount;
+  final List<String> _tags;
+  @override
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
+
   @override
   final String? avatarUrl;
 
   @override
   String toString() {
-    return 'PostVM(id: $id, authorID: $authorID, authorName: $authorName, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, likedByMe: $likedByMe, likesAmountWithoutMyLike: $likesAmountWithoutMyLike, likesAmountWithMyLike: $likesAmountWithMyLike, commentsAmount: $commentsAmount, avatarUrl: $avatarUrl)';
+    return 'PostVM(id: $id, authorID: $authorID, authorName: $authorName, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, likedByMe: $likedByMe, likesAmountWithoutMyLike: $likesAmountWithoutMyLike, likesAmountWithMyLike: $likesAmountWithMyLike, commentsAmount: $commentsAmount, tags: $tags, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -291,6 +314,7 @@ class _$_PostVM implements _PostVM {
                 other.likesAmountWithMyLike == likesAmountWithMyLike) &&
             (identical(other.commentsAmount, commentsAmount) ||
                 other.commentsAmount == commentsAmount) &&
+            const DeepCollectionEquality().equals(other._tags, _tags) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl));
   }
@@ -308,6 +332,7 @@ class _$_PostVM implements _PostVM {
       likesAmountWithoutMyLike,
       likesAmountWithMyLike,
       commentsAmount,
+      const DeepCollectionEquality().hash(_tags),
       avatarUrl);
 
   @JsonKey(ignore: true)
@@ -329,6 +354,7 @@ abstract class _PostVM implements PostVM {
       required final String likesAmountWithoutMyLike,
       required final String likesAmountWithMyLike,
       required final String commentsAmount,
+      required final List<String> tags,
       final String? avatarUrl}) = _$_PostVM;
 
   @override
@@ -351,6 +377,8 @@ abstract class _PostVM implements PostVM {
   String get likesAmountWithMyLike;
   @override
   String get commentsAmount;
+  @override
+  List<String> get tags;
   @override
   String? get avatarUrl;
   @override

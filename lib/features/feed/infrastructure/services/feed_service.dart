@@ -16,20 +16,26 @@ class ProdFeedService implements FeedService {
 
   @override
   Future<List<Post>> loadPosts({required String category}) async {
-    return (await _posts.orderBy('createdAt').limitToLast(10).get())
+    return (await _posts
+            .where(
+              'tags',
+              arrayContains: category,
+            )
+            .orderBy('createdAt')
+            .limitToLast(10)
+            .get())
         .docs
         .map((e) {
       return Post(
         id: PostID(e.get('id')),
         authorID: UserID(e.get('authorID')),
         createdAt: (e.get('createdAt') as Timestamp).toDate(),
-        mediaUrls: (e.get('mediaUrls') as List<dynamic>)
-            .map<String>((e) => e)
-            .toList(),
+        mediaUrls: (e.get('mediaUrls') as List).map<String>((e) => e).toList(),
         commentsAmount: e.get('commentsAmount'),
         likedByMe: e.get('likedByMe'),
         text: e.get('text'),
         likesAmount: e.get('likesAmount'),
+        tags: (e.get('tags') as List).map<String>((e) => e).toList(),
       );
     }).toList();
   }
@@ -72,6 +78,10 @@ class TestFeedService implements FeedService {
                     ? 1
                     : 0,
             commentsAmount: _rand.nextBool() ? _rand.nextInt(2000) : 0,
+            tags: List.generate(
+              _rand.nextInt(10),
+              (index) => _randString(_rand.nextInt(8) + 3),
+            ),
           );
         },
       );

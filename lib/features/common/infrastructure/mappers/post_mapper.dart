@@ -38,6 +38,7 @@ class PostMapper implements TwoEntitiesToViewModelMapper<Post, User, PostVM> {
       likesAmountWithMyLike:
           _beautifiedNumberProvider.beautify(likesAmountWithMyLike),
       commentsAmount: _beautifiedNumberProvider.beautify(post.commentsAmount),
+      tags: post.tags,
     );
   }
 }

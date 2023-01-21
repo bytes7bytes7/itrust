@@ -18,6 +18,7 @@ class PostVM with _$PostVM {
     required String likesAmountWithoutMyLike,
     required String likesAmountWithMyLike,
     required String commentsAmount,
+    required List<String> tags,
     String? avatarUrl,
   }) = _PostVM;
 }
