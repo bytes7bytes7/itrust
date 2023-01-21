@@ -131,24 +131,27 @@ class _Body extends StatelessWidget {
           );
         }
 
-        return CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              pinned: false,
-              snap: true,
-              floating: true,
-              expandedHeight: _categoryListHeight,
-              automaticallyImplyLeading: false,
-              titleSpacing: _categoryListTitlePaddingH,
-              title: _CategoryList(
-                key: _categoryListKey,
-                categoryStore: categoryStore,
+        return RefreshIndicator(
+          onRefresh: categoryStore.refresh,
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                pinned: false,
+                snap: true,
+                floating: true,
+                expandedHeight: _categoryListHeight,
+                automaticallyImplyLeading: false,
+                titleSpacing: _categoryListTitlePaddingH,
+                title: _CategoryList(
+                  key: _categoryListKey,
+                  categoryStore: categoryStore,
+                ),
               ),
-            ),
-            _PostList(
-              feedStore: categoryStore.feedStore,
-            ),
-          ],
+              _PostList(
+                feedStore: categoryStore.feedStore,
+              ),
+            ],
+          ),
         );
       },
     );

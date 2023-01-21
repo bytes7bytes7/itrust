@@ -71,4 +71,9 @@ abstract class _CategoryStore extends SyncStore with Store {
       feedStore.loadPosts(category);
     }
   }
+
+  @action
+  Future<void> refresh() async {
+    loadCategories();
+  }
 }
