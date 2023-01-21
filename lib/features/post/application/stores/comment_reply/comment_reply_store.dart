@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/common.dart';
 import '../../../domain/domain.dart';
 import '../../coordinators/comment_coordinator.dart';
+import '../../providers/comment_reply_string_provider.dart';
 import '../../view_models/comment/comment_vm.dart';
 
 part 'comment_reply_store.g.dart';
@@ -15,14 +16,17 @@ abstract class _CommentReplyStore extends SyncStore with Store {
   _CommentReplyStore({
     required CommentService commentService,
     required CommentCoordinator commentCoordinator,
+    required CommentReplyStringProvider commentReplyStringProvider,
     required TwoEntitiesToViewModelMapper<Comment, User, CommentVM>
         commentMapper,
   })  : _commentService = commentService,
         _commentCoordinator = commentCoordinator,
+        _commentReplyStringProvider = commentReplyStringProvider,
         _commentMapper = commentMapper;
 
   final CommentService _commentService;
   final CommentCoordinator _commentCoordinator;
+  final CommentReplyStringProvider _commentReplyStringProvider;
   final TwoEntitiesToViewModelMapper<Comment, User, CommentVM> _commentMapper;
 
   @readonly
@@ -40,37 +44,54 @@ abstract class _CommentReplyStore extends SyncStore with Store {
   @readonly
   List<CommentVM> _replies = const [];
 
+  @computed
+  bool get hasError => _error.isNotEmpty;
+
   // TODO: add pagination
   @action
   void loadCommentReplies({required String postID, required String commentID}) {
     perform(
       () async {
-        _postID = postID;
-        _commentID = commentID;
+        try {
+          _postID = postID;
+          _commentID = commentID;
 
-        final comments = await _commentService.loadCommentReplies(
-          commentID: CommentID(commentID),
-        );
+          final comments = await _commentService.loadCommentReplies(
+            commentID: CommentID(commentID),
+          );
 
-        // TODO: implement
-        const user = User.end(
-          id: UserID('user'),
-          avatarUrls: [],
-          email: 'email@email.com',
-        );
+          // TODO: implement
+          const user = User.end(
+            id: UserID('user'),
+            avatarUrls: [],
+            email: 'email@email.com',
+          );
 
-        _replies = comments
-            .map(
-              (comment) => _commentMapper.map(
-                comment,
-                user,
-              ),
-            )
-            .toList();
+          _replies = comments
+              .map(
+                (comment) => _commentMapper.map(
+                  comment,
+                  user,
+                ),
+              )
+              .toList();
+        } catch (e) {
+          _error = _commentReplyStringProvider.canNotLoadCommentReplies;
+        }
       },
       setIsLoading: (v) => _isLoading = v,
       removeError: () => _error = '',
     );
+  }
+
+  @action
+  void retry() {
+    final postID = _postID;
+    final commentID = _commentID;
+
+    if (postID != null && commentID != null) {
+      loadCommentReplies(postID: postID, commentID: commentID);
+    }
   }
 
   @action
@@ -93,8 +114,8 @@ abstract class _CommentReplyStore extends SyncStore with Store {
 
     if (postID != null) {
       _commentCoordinator.onCommentPressed(
-        commentID: commentID,
         postID: postID,
+        commentID: commentID,
       );
     }
   }
@@ -104,8 +125,8 @@ abstract class _CommentReplyStore extends SyncStore with Store {
 
     if (postID != null) {
       _commentCoordinator.onCommentReplyButtonPressed(
-        commentID: commentID,
         postID: postID,
+        commentID: commentID,
       );
     }
   }

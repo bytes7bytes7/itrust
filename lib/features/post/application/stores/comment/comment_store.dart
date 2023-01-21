@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/common.dart';
 import '../../../domain/domain.dart';
 import '../../coordinators/comment_coordinator.dart';
+import '../../providers/comment_string_provider.dart';
 import '../../view_models/comment/comment_vm.dart';
 import '../comment_reply/comment_reply_store.dart';
 
@@ -17,16 +18,19 @@ abstract class _CommentStore extends SyncStore with Store {
     required this.commentReplyStore,
     required CommentService commentService,
     required CommentCoordinator commentCoordinator,
+    required CommentStringProvider commentStringProvider,
     required TwoEntitiesToViewModelMapper<Comment, User, CommentVM>
         commentMapper,
   })  : _commentService = commentService,
         _commentCoordinator = commentCoordinator,
+        _commentStringProvider = commentStringProvider,
         _commentMapper = commentMapper;
 
   final CommentReplyStore commentReplyStore;
 
   final CommentService _commentService;
   final CommentCoordinator _commentCoordinator;
+  final CommentStringProvider _commentStringProvider;
   final TwoEntitiesToViewModelMapper<Comment, User, CommentVM> _commentMapper;
 
   @readonly
@@ -36,28 +40,52 @@ abstract class _CommentStore extends SyncStore with Store {
   String _error = '';
 
   @readonly
+  String? _postID;
+
+  @readonly
   String? _commentID;
 
   @readonly
   CommentVM? _comment;
 
+  @computed
+  bool get hasError => _error.isNotEmpty;
+
+  @computed
+  bool get isAllLoaded =>
+      !_isLoading &&
+      !hasError &&
+      !commentReplyStore.isLoading &&
+      !commentReplyStore.hasError;
+
   @action
-  void loadComment({required String commentID}) {
+  void loadComment({required String postID, required String commentID}) {
     perform(
       () async {
-        _commentID = commentID;
+        try {
+          _postID = postID;
+          _commentID = commentID;
 
-        final comment =
-            await _commentService.loadComment(commentID: CommentID(commentID));
+          final comment = await _commentService.loadComment(
+            commentID: CommentID(commentID),
+          );
 
-        // TODO: implement
-        const user = User.end(
-          id: UserID('user'),
-          avatarUrls: [],
-          email: 'email@email.com',
-        );
+          // TODO: implement
+          const user = User.end(
+            id: UserID('user'),
+            avatarUrls: [],
+            email: 'email@email.com',
+          );
 
-        _comment = _commentMapper.map(comment, user);
+          _comment = _commentMapper.map(comment, user);
+
+          commentReplyStore.loadCommentReplies(
+            postID: postID,
+            commentID: commentID,
+          );
+        } catch (e) {
+          _error = _commentStringProvider.canNotLoadComment;
+        }
       },
       setIsLoading: (v) => _isLoading = v,
       removeError: () => _error = '',
@@ -66,10 +94,21 @@ abstract class _CommentStore extends SyncStore with Store {
 
   @action
   Future<void> refresh() async {
+    final postID = _postID;
     final commentID = _commentID;
 
-    if (commentID != null) {
-      loadComment(commentID: commentID);
+    if (postID != null && commentID != null) {
+      loadComment(postID: postID, commentID: commentID);
+    }
+  }
+
+  @action
+  void retry() {
+    final postID = _postID;
+    final commentID = _commentID;
+
+    if (postID != null && commentID != null) {
+      loadComment(postID: postID, commentID: commentID);
     }
   }
 

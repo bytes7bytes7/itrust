@@ -109,34 +109,37 @@ class _Body extends StatelessWidget {
         }
 
         if (!postStore.isAllLoaded) {
-          return Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  key: _pageScrollKey,
-                  children: [
-                    PostCard(
-                      post: post,
-                      isPreview: false,
-                      onLikePressed: postStore.onLikePostPressed,
-                    ),
-                    if (postStore.postCommentStore.isLoading)
-                      const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    else
-                      SmallLoadingErrorContainer(
-                        onRetry: postStore.postCommentStore.retry,
+          return RefreshIndicator(
+            onRefresh: postStore.refresh,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    key: _pageScrollKey,
+                    children: [
+                      PostCard(
+                        post: post,
+                        isPreview: false,
+                        onLikePressed: postStore.onLikePostPressed,
                       ),
-                  ],
+                      if (postStore.postCommentStore.isLoading)
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      else
+                        SmallLoadingErrorContainer(
+                          onRetry: postStore.postCommentStore.retry,
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-              MessageField(
-                hint: l10n.comment_field_hint,
-                onSendPressed: () {},
-                onEmojiPressed: () {},
-              ),
-            ],
+                MessageField(
+                  hint: l10n.comment_field_hint,
+                  onSendPressed: () {},
+                  onEmojiPressed: () {},
+                ),
+              ],
+            ),
           );
         }
 

@@ -33,18 +33,7 @@ class CommentScreen extends HookWidget {
 
     useEffect(
       () {
-        commentStore.loadComment(commentID: commentID);
-        return null;
-      },
-      const [],
-    );
-
-    useEffect(
-      () {
-        commentStore.commentReplyStore.loadCommentReplies(
-          commentID: commentID,
-          postID: postID,
-        );
+        commentStore.loadComment(postID: postID ,commentID: commentID);
         return null;
       },
       const [],
@@ -115,30 +104,44 @@ class _Body extends StatelessWidget {
           );
         }
 
-        if (commentStore.commentReplyStore.isLoading) {
-          return Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  key: _listScrollKey,
-                  children: [
-                    CommentCard(
-                      isPreview: false,
-                      comment: comment,
-                      onLikePressed: commentStore.onLikeCommentPressed,
-                    ),
-                    const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  ],
+        if (commentStore.hasError) {
+          return LoadingErrorContainer(
+            onRetry: commentStore.retry,
+          );
+        }
+
+        if (!commentStore.isAllLoaded) {
+          return RefreshIndicator(
+            onRefresh: commentStore.refresh,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    key: _listScrollKey,
+                    children: [
+                      CommentCard(
+                        isPreview: false,
+                        comment: comment,
+                        onLikePressed: commentStore.onLikeCommentPressed,
+                      ),
+                      if (commentStore.commentReplyStore.isLoading)
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      else
+                        SmallLoadingErrorContainer(
+                          onRetry: commentStore.commentReplyStore.retry,
+                        ),
+                    ],
+                  ),
                 ),
-              ),
-              MessageField(
-                hint: l10n.comment_field_hint,
-                onSendPressed: () {},
-                onEmojiPressed: () {},
-              ),
-            ],
+                MessageField(
+                  hint: l10n.comment_field_hint,
+                  onSendPressed: () {},
+                  onEmojiPressed: () {},
+                ),
+              ],
+            ),
           );
         }
 

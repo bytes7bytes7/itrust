@@ -111,7 +111,8 @@ class _Body extends StatelessWidget {
                   key: _categoryListKey,
                   categoryStore: categoryStore,
                 ),
-              if (categoryStore.isLoading || categoryStore.feedStore.isLoading)
+              if (categoryStore.isLoading ||
+                  categoryStore.feedStore.isLoading)
                 const Expanded(
                   child: Center(
                     child: CircularProgressIndicator(),

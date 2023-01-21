@@ -23,8 +23,8 @@ class ProdCommentCoordinator extends Coordinator implements CommentCoordinator {
     required String commentID,
   }) {
     CommentRoute(
-      id: commentID,
       postID: postID,
+      id: commentID,
     ).push(goRouter);
   }
 
@@ -34,8 +34,8 @@ class ProdCommentCoordinator extends Coordinator implements CommentCoordinator {
     required String commentID,
   }) {
     CommentRoute(
-      id: commentID,
       postID: postID,
+      id: commentID,
     ).push(goRouter);
   }
 }
