@@ -58,5 +58,6 @@
   "load_post_error": "Can not load the post",
   "load_comments_error": "Can not load comments",
   "load_comment_error": "Can not load the comment",
-  "load_comment_replies_error": "Can not load comment replies"
+  "load_comment_replies_error": "Can not load comment replies",
+  "load_user_info_error": "Can not load user info"
 }

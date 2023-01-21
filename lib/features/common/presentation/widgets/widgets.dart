@@ -17,4 +17,4 @@ export 'sized_icon.dart';
 export 'small_loading_error_container.dart';
 export 'switching_icon_button.dart';
 export 'user_circle_avatar.dart';
-export 'user_info.dart';
+export 'user_info_card.dart';

@@ -65,7 +65,7 @@ class SettingsScreen extends HookWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            UserInfo(
+            UserInfoCard(
               id: _user.id.str,
               nameOrEmail: _user.name ?? _user.email,
               avatarUrl: _user.avatarUrls.firstOrNull,

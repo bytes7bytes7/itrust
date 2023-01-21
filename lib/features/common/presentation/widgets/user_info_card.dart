@@ -10,8 +10,8 @@ const _userAvatarBorderRadius = 8.0;
 const _userAvatarSize = 100.0;
 const _userIconSize = 32.0;
 
-class UserInfo extends StatelessWidget {
-  const UserInfo({
+class UserInfoCard extends StatelessWidget {
+  const UserInfoCard({
     super.key,
     required this.id,
     this.avatarUrl,
