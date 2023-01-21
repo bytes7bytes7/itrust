@@ -129,6 +129,17 @@ mixin _$CategoryStore on _CategoryStore, Store {
   }
 
   @override
+  void retry() {
+    final _$actionInfo = _$_CategoryStoreActionController.startAction(
+        name: '_CategoryStore.retry');
+    try {
+      return super.retry();
+    } finally {
+      _$_CategoryStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 hasError: ${hasError},

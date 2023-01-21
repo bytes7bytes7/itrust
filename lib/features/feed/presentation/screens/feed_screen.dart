@@ -102,17 +102,27 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
+        if (categoryStore.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (categoryStore.hasError) {
+          return LoadingErrorContainer(
+            onRetry: categoryStore.retry,
+          );
+        }
+
         if (!categoryStore.isAllLoaded) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!categoryStore.isLoading)
-                _CategoryList(
-                  key: _categoryListKey,
-                  categoryStore: categoryStore,
-                ),
-              if (categoryStore.isLoading ||
-                  categoryStore.feedStore.isLoading)
+              _CategoryList(
+                key: _categoryListKey,
+                categoryStore: categoryStore,
+              ),
+              if (categoryStore.feedStore.isLoading)
                 const Expanded(
                   child: Center(
                     child: CircularProgressIndicator(),
@@ -121,11 +131,7 @@ class _Body extends StatelessWidget {
               else
                 Expanded(
                   child: LoadingErrorContainer(
-                    onRetry: categoryStore.hasError
-                        ? categoryStore.loadCategories
-                        : () => categoryStore.feedStore.loadPosts(
-                              categoryStore.selectedCategory,
-                            ),
+                    onRetry: categoryStore.feedStore.retry,
                   ),
                 ),
             ],

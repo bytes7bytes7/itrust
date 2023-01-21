@@ -68,12 +68,17 @@ abstract class _CategoryStore extends SyncStore with Store {
   void selectCategory(String category) {
     if (_selectedCategory != category) {
       _selectedCategory = category;
-      feedStore.loadPosts(category);
+      feedStore.selectCategory(category);
     }
   }
 
   @action
   Future<void> refresh() async {
+    loadCategories();
+  }
+
+  @action
+  void retry() {
     loadCategories();
   }
 }

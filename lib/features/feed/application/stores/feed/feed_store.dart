@@ -35,10 +35,21 @@ abstract class _FeedStore extends SyncStore with Store {
   String _error = '';
 
   @readonly
+  String _selectedCategory = '';
+
+  @readonly
   List<PostVM> _posts = const [];
 
   @computed
   bool get hasError => _error.isNotEmpty;
+
+  @action
+  void selectCategory(String category) {
+    if (_selectedCategory != category) {
+      _selectedCategory = category;
+      loadPosts(category);
+    }
+  }
 
   @action
   void loadPosts(String category) {
@@ -73,6 +84,15 @@ abstract class _FeedStore extends SyncStore with Store {
       setIsLoading: (v) => _isLoading = v,
       removeError: () => _error = '',
     );
+  }
+
+  @action
+  void retry() {
+    final selectedCategory = _selectedCategory;
+
+    if (selectedCategory.isNotEmpty) {
+      loadPosts(selectedCategory);
+    }
   }
 
   @action

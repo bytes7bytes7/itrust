@@ -51,6 +51,24 @@ mixin _$FeedStore on _FeedStore, Store {
     });
   }
 
+  late final _$_selectedCategoryAtom =
+      Atom(name: '_FeedStore._selectedCategory', context: context);
+
+  String get selectedCategory {
+    _$_selectedCategoryAtom.reportRead();
+    return super._selectedCategory;
+  }
+
+  @override
+  String get _selectedCategory => selectedCategory;
+
+  @override
+  set _selectedCategory(String value) {
+    _$_selectedCategoryAtom.reportWrite(value, super._selectedCategory, () {
+      super._selectedCategory = value;
+    });
+  }
+
   late final _$_postsAtom = Atom(name: '_FeedStore._posts', context: context);
 
   List<PostVM> get posts {
@@ -72,11 +90,33 @@ mixin _$FeedStore on _FeedStore, Store {
       ActionController(name: '_FeedStore', context: context);
 
   @override
+  void selectCategory(String category) {
+    final _$actionInfo = _$_FeedStoreActionController.startAction(
+        name: '_FeedStore.selectCategory');
+    try {
+      return super.selectCategory(category);
+    } finally {
+      _$_FeedStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void loadPosts(String category) {
     final _$actionInfo =
         _$_FeedStoreActionController.startAction(name: '_FeedStore.loadPosts');
     try {
       return super.loadPosts(category);
+    } finally {
+      _$_FeedStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void retry() {
+    final _$actionInfo =
+        _$_FeedStoreActionController.startAction(name: '_FeedStore.retry');
+    try {
+      return super.retry();
     } finally {
       _$_FeedStoreActionController.endAction(_$actionInfo);
     }
