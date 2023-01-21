@@ -167,12 +167,14 @@ class _Body extends StatelessWidget {
                       );
                     }
 
-                    final reply = commentStore.commentReplyStore.replies[index - 2];
+                    final reply =
+                        commentStore.commentReplyStore.replies[index - 2];
 
                     return CommentCard(
                       comment: reply,
                       isPreview: true,
-                      onPressed: () => commentStore.commentReplyStore.onCommentPressed(
+                      onPressed: () =>
+                          commentStore.commentReplyStore.onCommentPressed(
                         commentID: reply.id,
                       ),
                       onLikePressed: () => commentStore.commentReplyStore

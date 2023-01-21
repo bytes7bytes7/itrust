@@ -13,6 +13,10 @@ class TestCommentService implements CommentService {
     return Future.delayed(
       Duration(seconds: _rand.nextInt(3) + 1),
       () {
+        if (_rand.nextInt(3) == 0) {
+          throw Exception();
+        }
+
         return List.generate(
           _rand.nextBool() ? _rand.nextInt(30) + 1 : 0,
           (index) {
@@ -45,6 +49,10 @@ class TestCommentService implements CommentService {
     return Future.delayed(
       Duration(seconds: _rand.nextInt(3) + 1),
       () {
+        if (_rand.nextInt(3) == 0) {
+          throw Exception();
+        }
+
         final likedByMe = _rand.nextBool();
 
         return Comment(
@@ -74,6 +82,10 @@ class TestCommentService implements CommentService {
     return Future.delayed(
       Duration(seconds: _rand.nextInt(3) + 1),
       () {
+        if (_rand.nextInt(3) == 0) {
+          throw Exception();
+        }
+
         return List.generate(
           _rand.nextBool() ? _rand.nextInt(30) + 1 : 0,
           (index) {

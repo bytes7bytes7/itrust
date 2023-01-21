@@ -13,6 +13,10 @@ class TestPostService implements PostService {
     return Future.delayed(
       Duration(seconds: _rand.nextInt(3) + 1),
       () {
+        if (_rand.nextInt(3) == 0) {
+          throw Exception();
+        }
+
         final likedByMe = _rand.nextBool();
 
         return Post(

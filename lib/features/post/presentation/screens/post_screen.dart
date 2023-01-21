@@ -102,7 +102,13 @@ class _Body extends StatelessWidget {
           );
         }
 
-        if (postStore.postCommentStore.isLoading) {
+        if (postStore.hasError) {
+          return LoadingErrorContainer(
+            onRetry: postStore.retry,
+          );
+        }
+
+        if (!postStore.isAllLoaded) {
           return Column(
             children: [
               Expanded(
@@ -114,9 +120,14 @@ class _Body extends StatelessWidget {
                       isPreview: false,
                       onLikePressed: postStore.onLikePostPressed,
                     ),
-                    const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    if (postStore.postCommentStore.isLoading)
+                      const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    else
+                      SmallLoadingErrorContainer(
+                        onRetry: postStore.postCommentStore.retry,
+                      ),
                   ],
                 ),
               ),

@@ -5,9 +5,10 @@ import 'retry_button.dart';
 
 const _paddingH = 20.0;
 const _paddingV = 14.0;
+const _titleAndButtonPadding = 20.0;
 
-class LoadingErrorContainer extends StatelessWidget {
-  const LoadingErrorContainer({
+class SmallLoadingErrorContainer extends StatelessWidget {
+  const SmallLoadingErrorContainer({
     super.key,
     required this.onRetry,
   });
@@ -27,13 +28,14 @@ class LoadingErrorContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Spacer(),
           Text(
             l10n.error_during_loading,
             style: theme.textTheme.bodyText1,
             textAlign: TextAlign.center,
           ),
-          const Spacer(),
+          const SizedBox(
+            height: _titleAndButtonPadding,
+          ),
           RetryButton(
             onPressed: onRetry,
           ),
