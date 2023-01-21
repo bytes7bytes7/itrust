@@ -33,6 +33,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.postBackground,
     required this.commentBackground,
     required this.sectionTitleBackground,
+    required this.moreImagesForeground,
+    required this.moreImagesBackground,
   });
 
   final Color avatarBackground;
@@ -68,6 +70,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color postBackground;
   final Color commentBackground;
   final Color sectionTitleBackground;
+  final Color moreImagesForeground;
+  final Color moreImagesBackground;
 
   @override
   ThemeExtension<ColorSchemeTX> copyWith({
@@ -102,13 +106,16 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? postBackground,
     Color? commentBackground,
     Color? sectionTitleBackground,
+    Color? moreImagesForeground,
+    Color? moreImagesBackground,
   }) {
     return ColorSchemeTX(
       avatarBackground: avatarBackground ?? this.avatarBackground,
       avatarForeground: avatarForeground ?? this.avatarForeground,
       unreadIndicatorForeground:
           unreadIndicatorForeground ?? this.unreadIndicatorForeground,
-      unreadIndicatorBackground: unreadIndicatorBackground ?? this.unreadIndicatorBackground,
+      unreadIndicatorBackground:
+          unreadIndicatorBackground ?? this.unreadIndicatorBackground,
       onlineMarkStroke: onlineMarkStroke ?? this.onlineMarkStroke,
       onlineMarkCenter: onlineMarkCenter ?? this.onlineMarkCenter,
       chatCard: chatCard ?? this.chatCard,
@@ -142,6 +149,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       commentBackground: commentBackground ?? this.commentBackground,
       sectionTitleBackground:
           sectionTitleBackground ?? this.sectionTitleBackground,
+      moreImagesForeground: moreImagesForeground ?? this.moreImagesForeground,
+      moreImagesBackground: moreImagesBackground ?? this.moreImagesBackground,
     );
   }
 
@@ -308,6 +317,16 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       sectionTitleBackground: Color.lerp(
         sectionTitleBackground,
         other.sectionTitleBackground,
+        t,
+      )!,
+      moreImagesForeground: Color.lerp(
+        moreImagesForeground,
+        other.moreImagesForeground,
+        t,
+      )!,
+      moreImagesBackground: Color.lerp(
+        moreImagesBackground,
+        other.moreImagesBackground,
         t,
       )!,
     );

@@ -251,6 +251,8 @@ final lightTheme = ThemeData.light().copyWith(
       postBackground: _LightColors.cFFFFFFFF,
       commentBackground: _LightColors.cFFFFFFFF,
       sectionTitleBackground: _LightColors.cFFFFFFFF,
+      moreImagesForeground: _LightColors.cFFFFFFFF,
+      moreImagesBackground: _LightColors.c26000000,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(

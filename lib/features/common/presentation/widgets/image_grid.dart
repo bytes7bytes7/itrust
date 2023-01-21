@@ -1,7 +1,14 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+
+import '../../../../themes/themes.dart';
 
 const _borderRadius = 4.0;
 const _itemSeparator = 2.0;
+const _maxImages = 9;
+const _sigmaX = 1.0;
+const _sigmaY = 1.0;
 
 class ImageGrid extends StatelessWidget {
   const ImageGrid({
@@ -16,6 +23,8 @@ class ImageGrid extends StatelessWidget {
     final firstRowAmount = _getItemAmountForRow(0);
     final secondRowAmount = _getItemAmountForRow(1);
     final thirdRowAmount = _getItemAmountForRow(2);
+    final exceeded = imageUrls.length > _maxImages;
+    final exceededAmount = imageUrls.length - _maxImages + 1;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(_borderRadius),
@@ -45,6 +54,11 @@ class ImageGrid extends StatelessWidget {
                 firstRowAmount + secondRowAmount + thirdRowAmount,
               ),
               addSeparatorAbove: true,
+              lastItem: exceeded
+                  ? _MoreImages(
+                      text: '$exceededAmount+',
+                    )
+                  : null,
             ),
         ],
       ),
@@ -79,14 +93,11 @@ class ImageGrid extends StatelessWidget {
             return 3;
         }
       case 2:
-        switch (imageUrls.length) {
-          case 7:
-          case 8:
-          case 9:
-            return 3;
-          default:
-            return 0;
+        if (imageUrls.length >= 7) {
+          return 3;
         }
+
+        return 0;
     }
 
     return 0;
@@ -98,11 +109,13 @@ class _Row extends StatelessWidget {
     required this.amount,
     required this.urls,
     required this.addSeparatorAbove,
+    this.lastItem,
   });
 
   final int amount;
   final List<String> urls;
   final bool addSeparatorAbove;
+  final Widget? lastItem;
 
   @override
   Widget build(BuildContext context) {
@@ -116,14 +129,29 @@ class _Row extends StatelessWidget {
           children: List.generate(
             amount,
             (index) {
+              final showLastItem = index == amount - 1 && lastItem != null;
+
               return Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: index != 0 ? _itemSeparator : 0,
                   ),
-                  child: _Image(
-                    url: urls[index],
-                  ),
+                  child: showLastItem
+                      ? Stack(
+                          children: [
+                            Positioned.fill(
+                              child: _Image(
+                                url: urls[index],
+                              ),
+                            ),
+                            Positioned.fill(
+                              child: lastItem!,
+                            ),
+                          ],
+                        )
+                      : _Image(
+                          url: urls[index],
+                        ),
                 ),
               );
             },
@@ -150,6 +178,40 @@ class _Image extends StatelessWidget {
         // TODO: implement
         return const ColoredBox(color: Colors.grey);
       },
+    );
+  }
+}
+
+class _MoreImages extends StatelessWidget {
+  const _MoreImages({
+    required this.text,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
+
+    return ClipRRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(
+          sigmaX: _sigmaX,
+          sigmaY: _sigmaY,
+        ),
+        child: ColoredBox(
+          color: colorSchemeTX.moreImagesBackground,
+          child: Center(
+            child: Text(
+              text,
+              style: theme.textTheme.headline3?.copyWith(
+                color: colorSchemeTX.moreImagesForeground,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
