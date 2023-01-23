@@ -4,9 +4,9 @@ import 'package:injectable/injectable.dart';
 import '../../application/application.dart';
 import '../../domain/domain.dart';
 
-@Singleton(as: TwoEntitiesToViewModelMapper<Post, User, PostVM>)
-class PostMapper implements TwoEntitiesToViewModelMapper<Post, User, PostVM> {
-  const PostMapper({
+@Singleton(as: TwoInputsMapper<Post, User, PostVM>)
+class PostUserToPostVMMapper implements TwoInputsMapper<Post, User, PostVM> {
+  const PostUserToPostVMMapper({
     required FormattedDateProvider formattedDateProvider,
     required BeautifiedNumberProvider beautifiedNumberProvider,
   })  : _formattedDateProvider = formattedDateProvider,

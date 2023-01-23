@@ -17,7 +17,7 @@ abstract class _CommentReplyStore extends SyncStore with Store {
     required CommentService commentService,
     required CommentCoordinator commentCoordinator,
     required CommentReplyStringProvider commentReplyStringProvider,
-    required TwoEntitiesToViewModelMapper<Comment, User, CommentVM>
+    required TwoInputsMapper<Comment, User, CommentVM>
         commentMapper,
   })  : _commentService = commentService,
         _commentCoordinator = commentCoordinator,
@@ -27,7 +27,7 @@ abstract class _CommentReplyStore extends SyncStore with Store {
   final CommentService _commentService;
   final CommentCoordinator _commentCoordinator;
   final CommentReplyStringProvider _commentReplyStringProvider;
-  final TwoEntitiesToViewModelMapper<Comment, User, CommentVM> _commentMapper;
+  final TwoInputsMapper<Comment, User, CommentVM> _commentMapper;
 
   @readonly
   bool _isLoading = false;

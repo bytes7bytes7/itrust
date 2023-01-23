@@ -4,9 +4,10 @@ import '../../value_objects/value_objects.dart';
 
 part 'post.freezed.dart';
 
-part 'post.g.dart';
-
-@freezed
+@Freezed(
+  toJson: false,
+  fromJson: false,
+)
 class Post with _$Post {
   const factory Post({
     required PostID id,
@@ -19,6 +20,4 @@ class Post with _$Post {
     required int commentsAmount,
     required List<String> tags,
   }) = _Post;
-
-  factory Post.fromJson(Map<String, Object?> json) => _$PostFromJson(json);
 }

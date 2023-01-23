@@ -5,9 +5,9 @@ import '../../../common/common.dart';
 import '../../application/view_models/comment/comment_vm.dart';
 import '../../domain/domain.dart';
 
-@Singleton(as: TwoEntitiesToViewModelMapper<Comment, User, CommentVM>)
+@Singleton(as: TwoInputsMapper<Comment, User, CommentVM>)
 class CommentMapper
-    implements TwoEntitiesToViewModelMapper<Comment, User, CommentVM> {
+    implements TwoInputsMapper<Comment, User, CommentVM> {
   CommentMapper({
     required FormattedDateProvider dateFormatProvider,
     required BeautifiedNumberProvider beautifiedNumberProvider,

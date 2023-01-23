@@ -18,7 +18,7 @@ abstract class _PostStore extends SyncStore with Store {
     required PostService postService,
     required PostCoordinator postCoordinator,
     required PostStringProvider postStringProvider,
-    required TwoEntitiesToViewModelMapper<Post, User, PostVM> postMapper,
+    required TwoInputsMapper<Post, User, PostVM> postMapper,
   })  : _postService = postService,
         _postCoordinator = postCoordinator,
         _postStringProvider = postStringProvider,
@@ -29,7 +29,7 @@ abstract class _PostStore extends SyncStore with Store {
   final PostService _postService;
   final PostCoordinator _postCoordinator;
   final PostStringProvider _postStringProvider;
-  final TwoEntitiesToViewModelMapper<Post, User, PostVM> _postMapper;
+  final TwoInputsMapper<Post, User, PostVM> _postMapper;
 
   @readonly
   bool _isLoading = false;

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../common/common.dart';
@@ -9,35 +8,22 @@ import '../../domain/services/feed_service.dart';
 @Singleton(as: FeedService)
 class ProdFeedService implements FeedService {
   ProdFeedService({
-    required FirebaseFirestore firebaseFirestore,
-  }) : _posts = firebaseFirestore.collection('posts');
+    required PostRepository postRepository,
+  }) : _postRepository = postRepository;
 
-  final CollectionReference _posts;
+  final PostRepository _postRepository;
 
   @override
-  Future<List<Post>> loadPosts({required String category}) async {
-    return (await _posts
-            .where(
-              'tags',
-              arrayContains: category,
-            )
-            .orderBy('createdAt')
-            .limitToLast(10)
-            .get())
-        .docs
-        .map((e) {
-      return Post(
-        id: PostID(e.get('id')),
-        authorID: UserID(e.get('authorID')),
-        createdAt: (e.get('createdAt') as Timestamp).toDate(),
-        mediaUrls: (e.get('mediaUrls') as List).map<String>((e) => e).toList(),
-        commentsAmount: e.get('commentsAmount'),
-        likedByMe: e.get('likedByMe'),
-        text: e.get('text'),
-        likesAmount: e.get('likesAmount'),
-        tags: (e.get('tags') as List).map<String>((e) => e).toList(),
-      );
-    }).toList();
+  Future<List<Post>> loadPosts({
+    required String category,
+    required int limit,
+    bool nextPage = true,
+  }) {
+    return _postRepository.loadPosts(
+      category: category,
+      limit: limit,
+      nextPage: nextPage,
+    );
   }
 
   @override
@@ -51,7 +37,11 @@ class ProdFeedService implements FeedService {
 // @Singleton(as: FeedService)
 class TestFeedService implements FeedService {
   @override
-  Future<List<Post>> loadPosts({required String category}) {
+  Future<List<Post>> loadPosts({
+    required String category,
+    required int limit,
+    bool nextPage = true,
+  }) {
     return Future.delayed(Duration(seconds: _rand.nextInt(3) + 1), () {
       if (_rand.nextInt(3) == 0) {
         throw Exception();

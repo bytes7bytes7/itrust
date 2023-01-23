@@ -8,6 +8,8 @@ import '../../providers/feed_string_repository.dart';
 
 part 'feed_store.g.dart';
 
+const _limit = 10;
+
 @injectable
 class FeedStore = _FeedStore with _$FeedStore;
 
@@ -16,7 +18,7 @@ abstract class _FeedStore extends SyncStore with Store {
     required FeedService feedService,
     required FeedCoordinator feedCoordinator,
     required FeedStringProvider feedStringProvider,
-    required TwoEntitiesToViewModelMapper<Post, User, PostVM> postMapper,
+    required TwoInputsMapper<Post, User, PostVM> postMapper,
   })  : _feedService = feedService,
         _feedCoordinator = feedCoordinator,
         _feedStringProvider = feedStringProvider,
@@ -25,7 +27,7 @@ abstract class _FeedStore extends SyncStore with Store {
   final FeedService _feedService;
   final FeedCoordinator _feedCoordinator;
   final FeedStringProvider _feedStringProvider;
-  final TwoEntitiesToViewModelMapper<Post, User, PostVM> _postMapper;
+  final TwoInputsMapper<Post, User, PostVM> _postMapper;
   var _processingCategory = '';
 
   @readonly
@@ -58,7 +60,10 @@ abstract class _FeedStore extends SyncStore with Store {
     perform(
       () async {
         try {
-          final data = await _feedService.loadPosts(category: category);
+          final data = await _feedService.loadPosts(
+            category: category,
+            limit: _limit,
+          );
 
           if (_processingCategory == category) {
             // TODO: implement

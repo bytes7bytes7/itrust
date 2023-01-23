@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Post _$PostFromJson(Map<String, dynamic> json) {
-  return _Post.fromJson(json);
-}
-
 /// @nodoc
 mixin _$Post {
   PostID get id => throw _privateConstructorUsedError;
@@ -30,7 +26,6 @@ mixin _$Post {
   int get commentsAmount => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PostCopyWith<Post> get copyWith => throw _privateConstructorUsedError;
 }
@@ -219,7 +214,7 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_Post implements _Post {
   const _$_Post(
       {required this.id,
@@ -233,8 +228,6 @@ class _$_Post implements _Post {
       required final List<String> tags})
       : _mediaUrls = mediaUrls,
         _tags = tags;
-
-  factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
   @override
   final PostID id;
@@ -293,7 +286,6 @@ class _$_Post implements _Post {
             const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -312,13 +304,6 @@ class _$_Post implements _Post {
   @pragma('vm:prefer-inline')
   _$$_PostCopyWith<_$_Post> get copyWith =>
       __$$_PostCopyWithImpl<_$_Post>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_PostToJson(
-      this,
-    );
-  }
 }
 
 abstract class _Post implements Post {
@@ -332,8 +317,6 @@ abstract class _Post implements Post {
       required final int likesAmount,
       required final int commentsAmount,
       required final List<String> tags}) = _$_Post;
-
-  factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
   @override
   PostID get id;
