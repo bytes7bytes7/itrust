@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../dto/dto.dart';
 import '../providers/auth_provider.dart';
@@ -12,13 +13,13 @@ class AuthService {
 
   final AuthProvider _authProvider;
   late bool _isLoggedIn;
-  final _isLoggedInController = StreamController<bool>();
+  final _isLoggedInController = BehaviorSubject<bool>();
 
   bool get isLoggedIn => _isLoggedIn;
 
   Stream<bool> get onIsLoggedInChanged => _isLoggedInController.stream;
 
-  @postConstruct
+  @PostConstruct(preResolve: true)
   Future<void> init() async {
     // TODO: add init
     _isLoggedIn = false;

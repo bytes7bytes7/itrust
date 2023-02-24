@@ -2,8 +2,11 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../domain/domain.dart';
+
+// TODO: refactor this file
 
 class ChatListResponse {
   final List<ChatID> remove;
@@ -26,7 +29,7 @@ class LongPolling<T> {
 
   Stream<T> get stream => _controller.stream;
 
-  final _controller = StreamController<T>.broadcast();
+  final _controller = BehaviorSubject<T>();
   var _working = false;
   var _isPolling = false;
 

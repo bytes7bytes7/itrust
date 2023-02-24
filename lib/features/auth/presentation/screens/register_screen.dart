@@ -105,6 +105,20 @@ class _Body extends HookWidget {
             registerStore: registerStore,
             l10n: l10n,
           ),
+          const SizedBox(
+            height: _textFieldsSeparator,
+          ),
+          _FirstNameField(
+            registerStore: registerStore,
+            l10n: l10n,
+          ),
+          const SizedBox(
+            height: _textFieldsSeparator,
+          ),
+          _LastNameField(
+            registerStore: registerStore,
+            l10n: l10n,
+          ),
           const Spacer(
             flex: _underTextFieldsFlex,
           ),
@@ -187,6 +201,56 @@ class _PasswordField extends HookWidget {
   }
 }
 
+class _FirstNameField extends StatelessWidget {
+  const _FirstNameField({
+    required this.registerStore,
+    required this.l10n,
+  });
+
+  final RegisterStore registerStore;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(
+      builder: (context) {
+        return OutlinedTextField(
+          onChanged: (value) {
+            registerStore.firstName = value;
+          },
+          hintText: l10n.first_name_hint,
+          enabled: !registerStore.isLoading,
+        );
+      },
+    );
+  }
+}
+
+class _LastNameField extends StatelessWidget {
+  const _LastNameField({
+    required this.registerStore,
+    required this.l10n,
+  });
+
+  final RegisterStore registerStore;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(
+      builder: (context) {
+        return OutlinedTextField(
+          onChanged: (value) {
+            registerStore.lastName = value;
+          },
+          hintText: l10n.last_name_hint,
+          enabled: !registerStore.isLoading,
+        );
+      },
+    );
+  }
+}
+
 class _RulesButton extends StatelessWidget {
   const _RulesButton({
     required this.registerStore,
@@ -228,8 +292,9 @@ class _LogInButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ElevatedButton(
-              onPressed: registerStore.canLogIn ? registerStore.register : null,
-              child: Text(l10n.log_in_btn),
+              onPressed:
+                  registerStore.canRegister ? registerStore.register : null,
+              child: Text(l10n.register_btn),
             ),
           ],
         );

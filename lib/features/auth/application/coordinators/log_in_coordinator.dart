@@ -1,4 +1,4 @@
-abstract class AuthCoordinator {
+abstract class LogInCoordinator {
   void init();
 
   void dispose();

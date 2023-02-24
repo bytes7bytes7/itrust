@@ -3,7 +3,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/application.dart';
 import '../../../../common/domain/domain.dart';
-import '../../coordinators/auth_coordinator.dart';
+import '../../coordinators/register_coordinator.dart';
 import '../../providers/auth_string_provider.dart';
 
 part 'register_store.g.dart';
@@ -14,14 +14,14 @@ class RegisterStore = _RegisterStore with _$RegisterStore;
 abstract class _RegisterStore extends SyncStore with Store {
   _RegisterStore({
     required AuthService authService,
-    required AuthCoordinator authCoordinator,
+    required RegisterCoordinator registerCoordinator,
     required AuthStringProvider authStringProvider,
   })  : _authService = authService,
-        _authCoordinator = authCoordinator,
+        _registerCoordinator = registerCoordinator,
         _authStringProvider = authStringProvider;
 
   final AuthService _authService;
-  final AuthCoordinator _authCoordinator;
+  final RegisterCoordinator _registerCoordinator;
   final AuthStringProvider _authStringProvider;
 
   @readonly
@@ -43,7 +43,12 @@ abstract class _RegisterStore extends SyncStore with Store {
   String lastName = '';
 
   @computed
-  bool get canLogIn => !_isLoading && email.isNotEmpty && password.isNotEmpty;
+  bool get canRegister =>
+      !_isLoading &&
+      email.isNotEmpty &&
+      password.isNotEmpty &&
+      firstName.isNotEmpty &&
+      lastName.isNotEmpty;
 
   @action
   void register() {
@@ -72,6 +77,6 @@ abstract class _RegisterStore extends SyncStore with Store {
   }
 
   void onRulesButtonPressed() {
-    _authCoordinator.onRulesButtonPressed();
+    _registerCoordinator.onRulesButtonPressed();
   }
 }

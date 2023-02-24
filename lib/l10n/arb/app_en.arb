@@ -59,5 +59,8 @@
   "load_comments_error": "Can not load comments",
   "load_comment_error": "Can not load the comment",
   "load_comment_replies_error": "Can not load comment replies",
-  "load_user_info_error": "Can not load user info"
+  "load_user_info_error": "Can not load user info",
+  "first_name_hint": "First name",
+  "last_name_hint": "Last name",
+  "register_btn": "Register"
 }

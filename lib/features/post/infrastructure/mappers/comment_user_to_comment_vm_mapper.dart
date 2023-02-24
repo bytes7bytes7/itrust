@@ -5,12 +5,13 @@ import '../../../common/common.dart';
 import '../../application/view_models/comment/comment_vm.dart';
 import '../../domain/domain.dart';
 
-class CommentMapper extends TwoSourcesMapper<Comment, User, CommentVM> {
-  CommentMapper(
+class CommentUserToCommentVMMapper
+    extends TwoSourcesMapper<Comment, User, CommentVM> {
+  CommentUserToCommentVMMapper(
     super.input, {
-    required FormattedDateProvider dateFormatProvider,
+    required FormattedDateProvider formattedDateProvider,
     required BeautifiedNumberProvider beautifiedNumberProvider,
-  })  : _formattedDateProvider = dateFormatProvider,
+  })  : _formattedDateProvider = formattedDateProvider,
         _beautifiedNumberProvider = beautifiedNumberProvider;
 
   final FormattedDateProvider _formattedDateProvider;

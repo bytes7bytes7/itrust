@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../domain/domain.dart';
 
@@ -8,7 +9,7 @@ import '../../domain/domain.dart';
 @Singleton(as: UserRepository)
 class TestUserRepository implements UserRepository {
   EndUser? _me;
-  final _meController = StreamController<EndUser?>();
+  final _meController = BehaviorSubject<EndUser?>();
 
   @override
   EndUser? get me => _me;
@@ -16,6 +17,7 @@ class TestUserRepository implements UserRepository {
   @override
   Stream<EndUser?> get onMeChanged => _meController.stream;
 
+  @override
   @disposeMethod
   void dispose() {
     _meController.close();

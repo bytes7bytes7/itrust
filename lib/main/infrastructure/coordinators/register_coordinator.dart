@@ -6,9 +6,10 @@ import '../../../features/features.dart';
 import '../router/router.dart';
 import 'coordinator.dart';
 
-@Singleton(as: AuthCoordinator)
-class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
-  ProdAuthCoordinator({
+@Singleton(as: RegisterCoordinator)
+class ProdRegisterCoordinator extends Coordinator
+    implements RegisterCoordinator {
+  ProdRegisterCoordinator({
     required super.goRouter,
     required AuthService authService,
   }) : _authService = authService;
@@ -22,16 +23,16 @@ class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
     _authSub = _authService.onIsLoggedInChanged.listen((isLoggedIn) {
       final location = goRouter.location;
 
-      final isLoggingIn =
-          location == const AuthRoute().namedLocation(goRouter) ||
-              location == const RulesRoute().namedLocation(goRouter) ||
+      final isRegistering =
+          location == const RegisterRoute().namedLocation(goRouter) ||
+              location == const RegisterRules().namedLocation(goRouter) ||
               location == '/';
 
-      if (!isLoggedIn && !isLoggingIn) {
-        return const AuthRoute().go(goRouter);
+      if (!isLoggedIn && !isRegistering) {
+        return const RegisterRoute().go(goRouter);
       }
 
-      if (isLoggedIn && isLoggingIn) {
+      if (isLoggedIn && isRegistering) {
         return const FeedRoute().go(goRouter);
       }
     });
@@ -45,6 +46,6 @@ class ProdAuthCoordinator extends Coordinator implements AuthCoordinator {
 
   @override
   void onRulesButtonPressed() {
-    const RulesRoute().push(goRouter);
+    const RegisterRules().push(goRouter);
   }
 }

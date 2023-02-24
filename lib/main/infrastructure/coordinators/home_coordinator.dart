@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../application/coordinators/home_coordinator.dart';
 import '../router/router.dart';
@@ -11,7 +12,7 @@ class ProdHomeCoordinator extends Coordinator implements HomeCoordinator {
   ProdHomeCoordinator({required super.goRouter});
 
   var _currentIndex = 0;
-  final _currentIndexController = StreamController<int>.broadcast();
+  final _currentIndexController = BehaviorSubject<int>();
 
   final _routes = const [
     FeedRoute(),

@@ -3,7 +3,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/application.dart';
 import '../../../../common/domain/domain.dart';
-import '../../coordinators/auth_coordinator.dart';
+import '../../coordinators/log_in_coordinator.dart';
 import '../../providers/auth_string_provider.dart';
 
 part 'log_in_store.g.dart';
@@ -14,14 +14,14 @@ class LogInStore = _LogInStore with _$LogInStore;
 abstract class _LogInStore extends SyncStore with Store {
   _LogInStore({
     required AuthService authService,
-    required AuthCoordinator authCoordinator,
+    required LogInCoordinator logInCoordinator,
     required AuthStringProvider authStringProvider,
   })  : _authService = authService,
-        _authCoordinator = authCoordinator,
+        _logInCoordinator = logInCoordinator,
         _authStringProvider = authStringProvider;
 
   final AuthService _authService;
-  final AuthCoordinator _authCoordinator;
+  final LogInCoordinator _logInCoordinator;
   final AuthStringProvider _authStringProvider;
 
   @readonly
@@ -64,6 +64,6 @@ abstract class _LogInStore extends SyncStore with Store {
   }
 
   void onRulesButtonPressed() {
-    _authCoordinator.onRulesButtonPressed();
+    _logInCoordinator.onRulesButtonPressed();
   }
 }

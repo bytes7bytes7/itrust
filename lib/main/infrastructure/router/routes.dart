@@ -14,18 +14,32 @@ class NotFoundRoute extends CosyRoute {
   GoRoute get route => _AppRoutes.notFound;
 }
 
-class AuthRoute extends CosyRoute {
-  const AuthRoute();
+class LogInRoute extends CosyRoute {
+  const LogInRoute();
 
   @override
-  GoRoute get route => _AppRoutes.auth;
+  GoRoute get route => _AppRoutes.logIn;
 }
 
-class RulesRoute extends CosyRoute {
-  const RulesRoute();
+class RegisterRoute extends CosyRoute {
+  const RegisterRoute();
 
   @override
-  GoRoute get route => _AppRoutes.rules;
+  GoRoute get route => _AppRoutes.register;
+}
+
+class LogInRulesRoute extends CosyRoute {
+  const LogInRulesRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.logInRules;
+}
+
+class RegisterRules extends CosyRoute {
+  const RegisterRules();
+
+  @override
+  GoRoute get route => _AppRoutes.registerRules;
 }
 
 class FeedRoute extends CosyRoute {

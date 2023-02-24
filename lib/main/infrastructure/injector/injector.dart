@@ -8,7 +8,7 @@ import 'injector.config.dart';
   asExtension: false,
 )
 Future<void> configInjector({required String env}) async {
-  init(
+  await init(
     GetIt.instance,
     environment: env,
   );

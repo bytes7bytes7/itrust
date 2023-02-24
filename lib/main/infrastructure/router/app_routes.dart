@@ -15,7 +15,7 @@ class _AppRoutes {
 
   static final notFound = GoRoute(
     path: '/not_found',
-    name: 'not_found',
+    name: 'notFound',
     parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       return NoTransitionPage(
@@ -27,9 +27,9 @@ class _AppRoutes {
     },
   );
 
-  static final auth = GoRoute(
-    path: '/auth',
-    name: 'auth',
+  static final logIn = GoRoute(
+    path: '/log_in',
+    name: 'logIn',
     parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       return NoTransitionPage(
@@ -40,13 +40,45 @@ class _AppRoutes {
       );
     },
     routes: [
-      rules,
+      logInRules,
     ],
   );
 
-  static final rules = GoRoute(
+  static final register = GoRoute(
+    path: '/register',
+    name: 'register',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      return NoTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        child: const RegisterScreen(),
+      );
+    },
+    routes: [
+      registerRules,
+    ],
+  );
+
+  static final logInRules = GoRoute(
     path: 'rules',
-    name: 'rules',
+    name: 'logInRules',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const RulesScreen(),
+      );
+    },
+  );
+
+  static final registerRules = GoRoute(
+    path: 'rules',
+    name: 'registerRules',
     parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       return CustomTransitionPage(

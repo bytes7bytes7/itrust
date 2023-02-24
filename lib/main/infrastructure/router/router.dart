@@ -28,11 +28,12 @@ abstract class RouterModule {
   ) {
     return GoRouter(
       navigatorKey: key,
-      initialLocation: const AuthRoute().route.path,
+      initialLocation: const RegisterRoute().route.path,
       errorPageBuilder: const NotFoundRoute().route.pageBuilder,
       routes: [
         const NotFoundRoute().route,
-        const AuthRoute().route,
+        const LogInRoute().route,
+        const RegisterRoute().route,
         const HomeRoute().route,
         const SettingsRoute().route,
       ],
