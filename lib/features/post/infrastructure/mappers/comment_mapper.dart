@@ -1,14 +1,13 @@
 import 'package:collection/collection.dart';
-import 'package:injectable/injectable.dart';
+import 'package:mapster/mapster.dart';
 
 import '../../../common/common.dart';
 import '../../application/view_models/comment/comment_vm.dart';
 import '../../domain/domain.dart';
 
-@Singleton(as: TwoInputsMapper<Comment, User, CommentVM>)
-class CommentMapper
-    implements TwoInputsMapper<Comment, User, CommentVM> {
-  CommentMapper({
+class CommentMapper extends TwoSourcesMapper<Comment, User, CommentVM> {
+  CommentMapper(
+    super.input, {
     required FormattedDateProvider dateFormatProvider,
     required BeautifiedNumberProvider beautifiedNumberProvider,
   })  : _formattedDateProvider = dateFormatProvider,
@@ -18,8 +17,8 @@ class CommentMapper
   final BeautifiedNumberProvider _beautifiedNumberProvider;
 
   @override
-  CommentVM map(Comment comment, User user) {
-    final modifiedAt = comment.modifiedAt;
+  CommentVM map() {
+    final modifiedAt = _comment.modifiedAt;
 
     String? formattedModifiedAt;
     if (modifiedAt != null) {
@@ -29,33 +28,37 @@ class CommentMapper
     }
 
     final formattedCreatedAt = _formattedDateProvider.inRelationToNow(
-      comment.createdAt,
+      _comment.createdAt,
     );
 
     final likesAmountWithoutMyLike =
-        comment.likesAmount - (comment.likedByMe ? 1 : 0);
+        _comment.likesAmount - (_comment.likedByMe ? 1 : 0);
     final likesAmountWithMyLike =
-        comment.likesAmount + (comment.likedByMe ? 0 : 1);
+        _comment.likesAmount + (_comment.likedByMe ? 0 : 1);
 
     return CommentVM(
-      id: comment.id.str,
-      authorID: comment.authorID.str,
-      postID: comment.postID.str,
-      text: comment.text,
+      id: _comment.id.str,
+      authorID: _comment.authorID.str,
+      postID: _comment.postID.str,
+      text: _comment.text,
       createdAt: formattedCreatedAt,
       modifiedAt: formattedModifiedAt,
-      authorName: user.map(
+      authorName: _user.map(
         staff: (user) => user.name,
         end: (user) => user.name ?? user.email,
       ),
-      avatarUrl: user.avatarUrls.firstOrNull,
-      likedByMe: comment.likedByMe,
+      avatarUrl: _user.avatarUrls.firstOrNull,
+      likedByMe: _comment.likedByMe,
       likesAmountWithoutMyLike:
           _beautifiedNumberProvider.beautify(likesAmountWithoutMyLike),
       likesAmountWithMyLike:
           _beautifiedNumberProvider.beautify(likesAmountWithMyLike),
-      repliesAmount: _beautifiedNumberProvider.beautify(comment.repliesAmount),
-      replyTo: comment.replyTo?.str,
+      repliesAmount: _beautifiedNumberProvider.beautify(_comment.repliesAmount),
+      replyTo: _comment.replyTo?.str,
     );
   }
+
+  Comment get _comment => source1;
+
+  User get _user => source2;
 }

@@ -7,5 +7,5 @@ abstract class FeedService {
     bool nextPage,
   });
 
-  Future<void> likePost({required String postID});
+  Future<void> likePost({required PostID postID});
 }

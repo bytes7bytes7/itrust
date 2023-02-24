@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
@@ -19,19 +20,18 @@ abstract class _CommentStore extends SyncStore with Store {
     required CommentService commentService,
     required CommentCoordinator commentCoordinator,
     required CommentStringProvider commentStringProvider,
-    required TwoInputsMapper<Comment, User, CommentVM>
-        commentMapper,
+    required Mapster mapster,
   })  : _commentService = commentService,
         _commentCoordinator = commentCoordinator,
         _commentStringProvider = commentStringProvider,
-        _commentMapper = commentMapper;
+        _mapster = mapster;
 
   final CommentReplyStore commentReplyStore;
 
   final CommentService _commentService;
   final CommentCoordinator _commentCoordinator;
   final CommentStringProvider _commentStringProvider;
-  final TwoInputsMapper<Comment, User, CommentVM> _commentMapper;
+  final Mapster _mapster;
 
   @readonly
   bool _isLoading = false;
@@ -77,7 +77,7 @@ abstract class _CommentStore extends SyncStore with Store {
             email: 'email@email.com',
           );
 
-          _comment = _commentMapper.map(comment, user);
+          _comment = _mapster.map2(comment, user, To<CommentVM>());
 
           commentReplyStore.loadCommentReplies(
             postID: postID,

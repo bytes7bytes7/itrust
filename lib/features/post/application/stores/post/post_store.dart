@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
@@ -18,18 +19,18 @@ abstract class _PostStore extends SyncStore with Store {
     required PostService postService,
     required PostCoordinator postCoordinator,
     required PostStringProvider postStringProvider,
-    required TwoInputsMapper<Post, User, PostVM> postMapper,
+    required Mapster mapster,
   })  : _postService = postService,
         _postCoordinator = postCoordinator,
         _postStringProvider = postStringProvider,
-        _postMapper = postMapper;
+        _mapster = mapster;
 
   final PostCommentStore postCommentStore;
 
   final PostService _postService;
   final PostCoordinator _postCoordinator;
   final PostStringProvider _postStringProvider;
-  final TwoInputsMapper<Post, User, PostVM> _postMapper;
+  final Mapster _mapster;
 
   @readonly
   bool _isLoading = false;
@@ -68,7 +69,7 @@ abstract class _PostStore extends SyncStore with Store {
             email: 'email@email.com',
           );
 
-          _post = _postMapper.map(post, user);
+          _post = _mapster.map2(post, user, To<PostVM>());
 
           postCommentStore.loadPostComments(postID: postID);
         } catch (e) {

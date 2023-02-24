@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
@@ -18,16 +19,16 @@ abstract class _FeedStore extends SyncStore with Store {
     required FeedService feedService,
     required FeedCoordinator feedCoordinator,
     required FeedStringProvider feedStringProvider,
-    required TwoInputsMapper<Post, User, PostVM> postMapper,
+    required Mapster mapster,
   })  : _feedService = feedService,
         _feedCoordinator = feedCoordinator,
         _feedStringProvider = feedStringProvider,
-        _postMapper = postMapper;
+        _mapster = mapster;
 
   final FeedService _feedService;
   final FeedCoordinator _feedCoordinator;
   final FeedStringProvider _feedStringProvider;
-  final TwoInputsMapper<Post, User, PostVM> _postMapper;
+  final Mapster _mapster;
   var _processingCategory = '';
 
   @readonly
@@ -75,9 +76,10 @@ abstract class _FeedStore extends SyncStore with Store {
 
             _posts = data
                 .map(
-                  (post) => _postMapper.map(
+                  (post) => _mapster.map2(
                     post,
                     user,
+                    To<PostVM>(),
                   ),
                 )
                 .toList();
@@ -102,14 +104,7 @@ abstract class _FeedStore extends SyncStore with Store {
 
   @action
   void onLikeButtonPressed({required String postID}) {
-    // TODO: implement
-    final index = _posts.indexWhere((e) => e.id == postID);
-
-    if (index != -1) {
-      final post = _posts[index];
-
-      _posts = List.from(_posts)..[index] = post;
-    }
+    _feedService.likePost(postID: PostID(postID));
   }
 
   void onPostPressed({required String postID}) {

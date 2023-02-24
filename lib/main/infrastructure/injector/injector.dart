@@ -7,8 +7,8 @@ import 'injector.config.dart';
   preferRelativeImports: true,
   asExtension: false,
 )
-Future<void> configInjector({required String env}) {
-  return init(
+Future<void> configInjector({required String env}) async {
+  init(
     GetIt.instance,
     environment: env,
   );

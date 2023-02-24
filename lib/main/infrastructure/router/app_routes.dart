@@ -36,7 +36,7 @@ class _AppRoutes {
         key: state.pageKey,
         name: _getName(state),
         arguments: _getArgs(state),
-        child: const AuthScreen(),
+        child: const LogInScreen(),
       );
     },
     routes: [
