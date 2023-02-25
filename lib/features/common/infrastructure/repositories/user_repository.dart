@@ -9,12 +9,11 @@ import '../../domain/domain.dart';
 @test
 @Singleton(as: EndUserRepository)
 class TestEndUserRepository implements EndUserRepository {
-  EndUser? _me;
   final _storage = HashMap<UserID, EndUser>();
   final _meController = BehaviorSubject<EndUser?>();
 
   @override
-  EndUser? get me => _me;
+  EndUser? get me => _meController.valueOrNull;
 
   @override
   Stream<EndUser?> get onMeChanged => _meController.stream;
@@ -26,7 +25,13 @@ class TestEndUserRepository implements EndUserRepository {
   }
 
   @override
-  Future<void> add(EndUser user) async {
+  Future<void> setMe(EndUser user) async {
+    _meController.add(user);
+    _storage[user.id] = user;
+  }
+
+  @override
+  Future<void> addOrUpdate(EndUser user) async {
     _storage[user.id] = user;
   }
 }

@@ -1,2 +1,2 @@
-export 'providers/providers.dart';
+export 'app_providers/app_providers.dart';
 export 'services/services.dart';

@@ -18,6 +18,16 @@ class $AssetsImageGen {
   $AssetsImageSvgGen get svg => const $AssetsImageSvgGen();
 }
 
+class $AssetsJsonGen {
+  const $AssetsJsonGen();
+
+  /// File path: assets/json/server_exceptions.json
+  String get serverExceptions => 'assets/json/server_exceptions.json';
+
+  /// List of all assets
+  List<String> get values => [serverExceptions];
+}
+
 class $AssetsImagePngGen {
   const $AssetsImagePngGen();
 
@@ -197,6 +207,7 @@ class Assets {
   Assets._();
 
   static const $AssetsImageGen image = $AssetsImageGen();
+  static const $AssetsJsonGen json = $AssetsJsonGen();
 }
 
 class AssetGenImage {

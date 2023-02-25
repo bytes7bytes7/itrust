@@ -19,55 +19,7 @@ class _ProdAuthProvider implements ProdAuthProvider {
   String? baseUrl;
 
   @override
-  Future<RegisterResponse> register(request) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<RegisterResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/register',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = RegisterResponse.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<LogInResponse> logIn(request) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(request.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<LogInResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/login',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = LogInResponse.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<JsonEitherWrapper<ProblemDetails, RegisterResponse>> some(
+  Future<JsonEitherWrapper<ProblemDetails, RegisterResponse>> register(
       request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -89,6 +41,33 @@ class _ProdAuthProvider implements ProdAuthProvider {
                 )
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = JsonEitherWrapper<ProblemDetails, RegisterResponse>.fromJson(
+        _result.data!);
+    return value;
+  }
+
+  @override
+  Future<JsonEitherWrapper<ProblemDetails, LogInResponse>> logIn(
+      request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<JsonEitherWrapper<ProblemDetails, LogInResponse>>(
+            Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+                .compose(
+                  _dio.options,
+                  '/login',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = JsonEitherWrapper<ProblemDetails, LogInResponse>.fromJson(
         _result.data!);
     return value;
   }

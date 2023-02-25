@@ -4,7 +4,7 @@ import '../../../common/application/application.dart';
 import '../../application/providers/user_info_string_provider.dart';
 
 @Singleton(as: UserInfoStringProvider)
-class ProdUserInfoStringProvider extends StringProvider
+class ProdUserInfoStringProvider extends L10nProvider
     implements UserInfoStringProvider {
   ProdUserInfoStringProvider({required super.navigatorKey});
 

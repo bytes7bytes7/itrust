@@ -4,9 +4,7 @@
   "password_hint": "Password",
   "rules_btn": "Rules of the app",
   "log_in_btn": "Log In",
-  "wrong_password_error": "Wrong password",
-  "user_not_found_error": "User not found",
-  "too_many_requests": "Too many requests. Try again later",
+  "invalid_credentials_error": "Invalid credentials",
   "unknown_error": "Unknown error",
   "unable_to_load_data": "Unable to load data. Try again later",
   "chat_tab_title": "Chats",
@@ -62,5 +60,6 @@
   "load_user_info_error": "Can not load user info",
   "first_name_hint": "First name",
   "last_name_hint": "Last name",
-  "register_btn": "Register"
+  "register_btn": "Register",
+  "email_is_already_in_use": "This email is already in use"
 }

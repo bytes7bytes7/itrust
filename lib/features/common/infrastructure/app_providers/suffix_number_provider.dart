@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import '../../application/application.dart';
 
 @Singleton(as: SuffixNumberProvider)
-class ProdSuffixNumberProvider extends StringProvider
+class ProdSuffixNumberProvider extends L10nProvider
     implements SuffixNumberProvider {
   const ProdSuffixNumberProvider({required super.navigatorKey});
 

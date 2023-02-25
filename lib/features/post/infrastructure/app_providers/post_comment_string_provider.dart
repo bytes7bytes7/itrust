@@ -4,7 +4,7 @@ import '../../../common/application/application.dart';
 import '../../application/providers/post_comment_string_provider.dart';
 
 @Singleton(as: PostCommentStringProvider)
-class ProdPostCommentStringProvider extends StringProvider
+class ProdPostCommentStringProvider extends L10nProvider
     implements PostCommentStringProvider {
   ProdPostCommentStringProvider({required super.navigatorKey});
 

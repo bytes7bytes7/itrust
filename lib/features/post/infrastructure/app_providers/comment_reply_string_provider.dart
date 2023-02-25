@@ -4,7 +4,7 @@ import '../../../common/application/application.dart';
 import '../../application/providers/comment_reply_string_provider.dart';
 
 @Singleton(as: CommentReplyStringProvider)
-class ProdCommentReplyStringProvider extends StringProvider
+class ProdCommentReplyStringProvider extends L10nProvider
     implements CommentReplyStringProvider {
   ProdCommentReplyStringProvider({required super.navigatorKey});
 

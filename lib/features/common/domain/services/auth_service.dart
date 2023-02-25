@@ -1,27 +1,29 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
-import 'package:mapster/mapster.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../dto/dto.dart';
 import '../entities/user/user.dart';
+import '../exceptions/exceptions.dart';
+import '../providers/auth_exception_provider.dart';
 import '../providers/auth_provider.dart';
 import '../repositories/end_user_repository.dart';
+import '../value_objects/user_id/user_id.dart';
 
 @singleton
 class AuthService {
   AuthService({
     required AuthProvider authProvider,
     required EndUserRepository endUserRepository,
-    required Mapster mapster,
+    required AuthExceptionProvider authExceptionProvider,
   })  : _authProvider = authProvider,
         _endUserRepository = endUserRepository,
-        _mapster = mapster;
+        _authExceptionProvider = authExceptionProvider;
 
   final AuthProvider _authProvider;
   final EndUserRepository _endUserRepository;
-  final Mapster _mapster;
+  final AuthExceptionProvider _authExceptionProvider;
   late bool _isLoggedIn;
   final _isLoggedInController = BehaviorSubject<bool>();
 
@@ -53,20 +55,29 @@ class AuthService {
       lastName: lastName,
     );
 
-    final response = await _authProvider.some(request);
-
-    // TODO: match problem with error
+    final response = await _authProvider.register(request);
 
     response.value.fold(
-      (l) => null,
-      (r) => null,
-    );
+      (l) {
+        _isLoggedInController.add(false);
 
-    // final user = _mapster.map1(response, To<EndUser>());
-    //
-    // _isLoggedInController.add(user);
-    //
-    // await _endUserRepository.add(user);
+        if (l.title == _authExceptionProvider.emailIsAlreadyInUse) {
+          throw const EmailIsAlreadyInUse();
+        }
+      },
+      (r) {
+        _isLoggedInController.add(true);
+
+        // TODO: implement
+        _endUserRepository.setMe(
+          EndUser(
+            id: UserID(r.id.values.first as String),
+            avatarUrls: [],
+            email: r.email,
+          ),
+        );
+      },
+    );
   }
 
   Future<void> logIn({
@@ -80,7 +91,27 @@ class AuthService {
 
     final response = await _authProvider.logIn(request);
 
-    // TODO: do more stuff
+    response.value.fold(
+      (l) {
+        _isLoggedInController.add(false);
+
+        if (l.title == _authExceptionProvider.invalidCredentials) {
+          throw const InvalidCredentials();
+        }
+      },
+      (r) {
+        _isLoggedInController.add(true);
+
+        // TODO: implement
+        _endUserRepository.setMe(
+          EndUser(
+            id: UserID(r.id.values.first as String),
+            avatarUrls: [],
+            email: r.email,
+          ),
+        );
+      },
+    );
   }
 
   Future<void> logOut() async {

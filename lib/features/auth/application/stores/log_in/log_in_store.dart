@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/application/application.dart';
 import '../../../../common/domain/domain.dart';
 import '../../coordinators/log_in_coordinator.dart';
-import '../../providers/auth_string_provider.dart';
+import '../../providers/log_in_string_provider.dart';
 
 part 'log_in_store.g.dart';
 
@@ -15,14 +15,14 @@ abstract class _LogInStore extends SyncStore with Store {
   _LogInStore({
     required AuthService authService,
     required LogInCoordinator logInCoordinator,
-    required AuthStringProvider authStringProvider,
+    required LogInStringProvider logInStringProvider,
   })  : _authService = authService,
         _logInCoordinator = logInCoordinator,
-        _authStringProvider = authStringProvider;
+        _logInStringProvider = logInStringProvider;
 
   final AuthService _authService;
   final LogInCoordinator _logInCoordinator;
-  final AuthStringProvider _authStringProvider;
+  final LogInStringProvider _logInStringProvider;
 
   @readonly
   bool _isLoading = false;
@@ -48,14 +48,10 @@ abstract class _LogInStore extends SyncStore with Store {
             email: email,
             password: password,
           );
-        } on WrongPasswordException {
-          _error = _authStringProvider.wrongPassword;
-        } on UserNotFoundException {
-          _error = _authStringProvider.userNotFound;
-        } on TooManyRequestsException {
-          _error = _authStringProvider.tooManyRequests;
+        } on InvalidCredentials {
+          _error = _logInStringProvider.invalidCredentials;
         } catch (e) {
-          _error = _authStringProvider.unknownError;
+          _error = _logInStringProvider.unknownError;
         }
       },
       setIsLoading: (v) => _isLoading = v,

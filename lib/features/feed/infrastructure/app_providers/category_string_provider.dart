@@ -4,7 +4,7 @@ import '../../../common/application/application.dart';
 import '../../application/providers/category_string_provider.dart';
 
 @Singleton(as: CategoryStringProvider)
-class ProdCategoryStringProvider extends StringProvider
+class ProdCategoryStringProvider extends L10nProvider
     implements CategoryStringProvider {
   ProdCategoryStringProvider({required super.navigatorKey});
 

@@ -4,7 +4,7 @@ import '../../../common/application/application.dart';
 import '../../application/providers/feed_string_repository.dart';
 
 @Singleton(as: FeedStringProvider)
-class ProdFeedStringProvider extends StringProvider
+class ProdFeedStringProvider extends L10nProvider
     implements FeedStringProvider {
   const ProdFeedStringProvider({required super.navigatorKey});
 

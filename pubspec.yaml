@@ -61,6 +61,7 @@ flutter:
   assets:
     - assets/image/png/
     - assets/image/svg/
+    - assets/json/
 
 flutter_gen:
   output: lib/gen/

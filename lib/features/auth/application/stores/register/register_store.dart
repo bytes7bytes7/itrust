@@ -4,7 +4,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/application/application.dart';
 import '../../../../common/domain/domain.dart';
 import '../../coordinators/register_coordinator.dart';
-import '../../providers/auth_string_provider.dart';
+import '../../providers/register_string_provider.dart';
 
 part 'register_store.g.dart';
 
@@ -15,14 +15,14 @@ abstract class _RegisterStore extends SyncStore with Store {
   _RegisterStore({
     required AuthService authService,
     required RegisterCoordinator registerCoordinator,
-    required AuthStringProvider authStringProvider,
+    required RegisterStringProvider registerStringProvider,
   })  : _authService = authService,
         _registerCoordinator = registerCoordinator,
-        _authStringProvider = authStringProvider;
+        _registerStringProvider = registerStringProvider;
 
   final AuthService _authService;
   final RegisterCoordinator _registerCoordinator;
-  final AuthStringProvider _authStringProvider;
+  final RegisterStringProvider _registerStringProvider;
 
   @readonly
   bool _isLoading = false;
@@ -61,14 +61,10 @@ abstract class _RegisterStore extends SyncStore with Store {
             firstName: firstName,
             lastName: lastName,
           );
-        } on WrongPasswordException {
-          _error = _authStringProvider.wrongPassword;
-        } on UserNotFoundException {
-          _error = _authStringProvider.userNotFound;
-        } on TooManyRequestsException {
-          _error = _authStringProvider.tooManyRequests;
+        } on EmailIsAlreadyInUse {
+          _error = _registerStringProvider.emailIsAlreadyInUse;
         } catch (e) {
-          _error = _authStringProvider.unknownError;
+          _error = _registerStringProvider.unknownError;
         }
       },
       setIsLoading: (v) => _isLoading = v,

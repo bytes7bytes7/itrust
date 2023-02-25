@@ -7,5 +7,7 @@ abstract class EndUserRepository {
 
   void dispose();
 
-  Future<void> add(EndUser user);
+  Future<void> setMe(EndUser user);
+
+  Future<void> addOrUpdate(EndUser user);
 }

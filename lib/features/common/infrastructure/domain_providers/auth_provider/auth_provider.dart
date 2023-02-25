@@ -29,15 +29,13 @@ abstract class ProdAuthProvider implements AuthProvider {
 
   @override
   @POST('/register')
-  Future<RegisterResponse> register(@Body() RegisterRequest request);
+  Future<JsonEitherWrapper<ProblemDetails, RegisterResponse>> register(
+    @Body() RegisterRequest request,
+  );
 
   @override
   @POST('/login')
-  Future<LogInResponse> logIn(@Body() LogInRequest request);
-
-  @override
-  @POST('/register')
-  Future<JsonEitherWrapper<ProblemDetails, RegisterResponse>> some(
-    @Body() RegisterRequest request,
+  Future<JsonEitherWrapper<ProblemDetails, LogInResponse>> logIn(
+    @Body() LogInRequest request,
   );
 }
