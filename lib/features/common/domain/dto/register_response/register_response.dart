@@ -14,7 +14,7 @@ class RegisterResponse {
     required this.token,
   });
 
-  final String id;
+  final JsonMap id;
   final String firstName;
   final String lastName;
   final String email;

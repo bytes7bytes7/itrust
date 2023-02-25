@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 import '../../../../utils/typedef.dart';
 import '../../domain/dto/register_response/register_response.dart';
 
-@singleton
+@Singleton(as: JsonConverter<RegisterResponse, JsonMap>)
 class RegisterResponseJsonConverter
     extends JsonConverter<RegisterResponse, JsonMap> {
   const RegisterResponseJsonConverter();

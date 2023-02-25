@@ -4,7 +4,7 @@ import 'package:problem_details/problem_details.dart';
 
 import '../../../utils/typedef.dart';
 
-@singleton
+@Singleton(as: JsonConverter<ProblemDetails, JsonMap>)
 class ProblemDetailsJsonConverter
     extends JsonConverter<ProblemDetails, JsonMap> {
   @override

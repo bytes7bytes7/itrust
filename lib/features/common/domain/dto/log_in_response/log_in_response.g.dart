@@ -8,7 +8,7 @@ part of 'log_in_response.dart';
 
 LogInResponse _$LogInResponseFromJson(Map<String, dynamic> json) =>
     LogInResponse(
-      id: json['id'] as String,
+      id: json['id'] as Map<String, dynamic>,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,
