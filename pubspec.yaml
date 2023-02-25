@@ -25,6 +25,7 @@ dependencies:
   flutter_mobx: ^2.0.6+5
   flutter_native_splash: ^2.2.18
   flutter_svg: ^1.1.6
+  fpdart: ^0.4.0
   freezed_annotation: ^2.2.0
   get_it: ^7.2.0
   go_router: ^6.0.9
@@ -34,6 +35,7 @@ dependencies:
   logging: ^1.1.1
   mapster: ^0.3.0
   mobx: ^2.1.4
+  problem_details: ^0.0.2
   retrofit: ^4.0.1
   rxdart: ^0.27.7
   url_strategy: ^0.2.0

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../utils/typedef.dart';
 import '../../../common/domain/domain.dart';
 
 part 'auth_detail.freezed.dart';
@@ -14,6 +15,6 @@ class AuthDetail with _$AuthDetail {
     String? avatarUrl,
   }) = _AuthDetail;
 
-  factory AuthDetail.fromJson(Map<String, Object?> json) =>
+  factory AuthDetail.fromJson(JsonMap json) =>
       _$AuthDetailFromJson(json);
 }

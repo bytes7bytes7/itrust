@@ -378,6 +378,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fpdart:
+    dependency: "direct main"
+    description:
+      name: fpdart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   freezed:
     dependency: "direct dev"
     description:
@@ -707,6 +714,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.1"
+  problem_details:
+    dependency: "direct main"
+    description:
+      name: problem_details
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   process:
     dependency: transitive
     description:

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:problem_details/problem_details.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../../../utils/utils.dart';
@@ -33,4 +34,10 @@ abstract class ProdAuthProvider implements AuthProvider {
   @override
   @POST('/login')
   Future<LogInResponse> logIn(@Body() LogInRequest request);
+
+  @override
+  @POST('/register')
+  Future<JsonEitherWrapper<ProblemDetails, RegisterResponse>> some(
+    @Body() RegisterRequest request,
+  );
 }

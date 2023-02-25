@@ -1,9 +1,11 @@
 import '../../domain/domain.dart';
 
-abstract class UserRepository {
+abstract class EndUserRepository {
   EndUser? get me;
 
   Stream<EndUser?> get onMeChanged;
 
   void dispose();
+
+  Future<void> add(EndUser user);
 }

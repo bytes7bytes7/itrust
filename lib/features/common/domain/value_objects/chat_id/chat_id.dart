@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
+
 part 'chat_id.freezed.dart';
 
 part 'chat_id.g.dart';
@@ -12,7 +14,7 @@ class ChatID with _$ChatID {
 
   const ChatID._();
 
-  factory ChatID.fromJson(Map<String, Object?> json) => _$ChatIDFromJson(json);
+  factory ChatID.fromJson(JsonMap json) => _$ChatIDFromJson(json);
 
   String get str => value;
 }

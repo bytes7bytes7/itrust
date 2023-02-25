@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../utils/typedef.dart';
 import '../../../common/domain/domain.dart';
 import '../domain.dart';
 
@@ -15,6 +16,6 @@ class ChatMute with _$ChatMute {
     Duration? muteAt,
   }) = _ChatMute;
 
-  factory ChatMute.fromJson(Map<String, Object?> json) =>
+  factory ChatMute.fromJson(JsonMap json) =>
       _$ChatMuteFromJson(json);
 }

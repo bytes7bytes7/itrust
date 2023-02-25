@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
+
 part 'register_response.g.dart';
 
 @JsonSerializable()
@@ -18,8 +20,8 @@ class RegisterResponse {
   final String email;
   final String token;
 
-  factory RegisterResponse.fromJson(Map<String, Object?> json) =>
+  factory RegisterResponse.fromJson(JsonMap json) =>
       _$RegisterResponseFromJson(json);
 
-  Map<String, Object?> toJson() => _$RegisterResponseToJson(this);
+  JsonMap toJson() => _$RegisterResponseToJson(this);
 }

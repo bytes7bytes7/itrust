@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
+
 part 'register_request.g.dart';
 
 @JsonSerializable()
@@ -16,8 +18,8 @@ class RegisterRequest {
   final String firstName;
   final String lastName;
 
-  factory RegisterRequest.fromJson(Map<String, Object?> json) =>
+  factory RegisterRequest.fromJson(JsonMap json) =>
       _$RegisterRequestFromJson(json);
 
-  Map<String, Object?> toJson() => _$RegisterRequestToJson(this);
+  JsonMap toJson() => _$RegisterRequestToJson(this);
 }

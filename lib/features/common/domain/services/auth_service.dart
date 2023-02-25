@@ -1,17 +1,27 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
+import 'package:mapster/mapster.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../dto/dto.dart';
+import '../entities/user/user.dart';
 import '../providers/auth_provider.dart';
+import '../repositories/end_user_repository.dart';
 
 @singleton
 class AuthService {
-  AuthService({required AuthProvider authProvider})
-      : _authProvider = authProvider;
+  AuthService({
+    required AuthProvider authProvider,
+    required EndUserRepository endUserRepository,
+    required Mapster mapster,
+  })  : _authProvider = authProvider,
+        _endUserRepository = endUserRepository,
+        _mapster = mapster;
 
   final AuthProvider _authProvider;
+  final EndUserRepository _endUserRepository;
+  final Mapster _mapster;
   late bool _isLoggedIn;
   final _isLoggedInController = BehaviorSubject<bool>();
 
@@ -43,9 +53,20 @@ class AuthService {
       lastName: lastName,
     );
 
-    final response = await _authProvider.register(request);
+    final response = await _authProvider.some(request);
 
-    // TODO: do more stuff
+    // TODO: match problem with error
+
+    response.value.fold(
+      (l) => null,
+      (r) => null,
+    );
+
+    // final user = _mapster.map1(response, To<EndUser>());
+    //
+    // _isLoggedInController.add(user);
+    //
+    // await _endUserRepository.add(user);
   }
 
   Future<void> logIn({

@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
+
 part 'comment_id.freezed.dart';
 
 part 'comment_id.g.dart';
@@ -12,7 +14,7 @@ class CommentID with _$CommentID {
 
   const CommentID._();
 
-  factory CommentID.fromJson(Map<String, Object?> json) =>
+  factory CommentID.fromJson(JsonMap json) =>
       _$CommentIDFromJson(json);
 
   String get str => value;

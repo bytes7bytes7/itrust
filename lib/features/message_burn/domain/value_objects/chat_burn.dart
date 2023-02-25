@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../utils/typedef.dart';
 import '../../../common/domain/domain.dart';
 
 part 'chat_burn.freezed.dart';
@@ -14,6 +15,6 @@ class ChatBurn with _$ChatBurn {
     Duration? burnAfter,
   }) = _ChatBurn;
 
-  factory ChatBurn.fromJson(Map<String, Object?> json) =>
+  factory ChatBurn.fromJson(JsonMap json) =>
       _$ChatBurnFromJson(json);
 }

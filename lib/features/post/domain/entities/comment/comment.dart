@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
 import '../../../../common/common.dart';
 import '../../value_objects/value_objects.dart';
 
@@ -26,6 +27,6 @@ class Comment with _$Comment {
     DateTime? modifiedAt,
   }) = _Comment;
 
-  factory Comment.fromJson(Map<String, Object?> json) =>
+  factory Comment.fromJson(JsonMap json) =>
       _$CommentFromJson(json);
 }

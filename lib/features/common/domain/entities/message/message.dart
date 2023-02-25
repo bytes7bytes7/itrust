@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
 import '../../value_objects/value_objects.dart';
 
 part 'message.freezed.dart';
@@ -32,6 +33,6 @@ class Message with _$Message {
     DateTime? modifiedAt,
   }) = UserMessage;
 
-  factory Message.fromJson(Map<String, Object?> json) =>
+  factory Message.fromJson(JsonMap json) =>
       _$MessageFromJson(json);
 }

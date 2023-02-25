@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
+
 part 'log_in_response.g.dart';
 
 @JsonSerializable()
@@ -18,8 +20,8 @@ class LogInResponse {
   final String email;
   final String token;
 
-  factory LogInResponse.fromJson(Map<String, Object?> json) =>
+  factory LogInResponse.fromJson(JsonMap json) =>
       _$LogInResponseFromJson(json);
 
-  Map<String, Object?> toJson() => _$LogInResponseToJson(this);
+  JsonMap toJson() => _$LogInResponseToJson(this);
 }

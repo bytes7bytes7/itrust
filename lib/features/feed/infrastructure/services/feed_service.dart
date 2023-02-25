@@ -9,12 +9,12 @@ import '../../domain/services/feed_service.dart';
 class ProdFeedService implements FeedService {
   ProdFeedService({
     required PostRepository postRepository,
-    required UserRepository userRepository,
+    required EndUserRepository endUserRepository,
   })  : _postRepository = postRepository,
-        _userRepository = userRepository;
+        _endUserRepository = endUserRepository;
 
   final PostRepository _postRepository;
-  final UserRepository _userRepository;
+  final EndUserRepository _endUserRepository;
 
   @override
   Future<List<Post>> loadPosts({
@@ -33,7 +33,7 @@ class ProdFeedService implements FeedService {
   Future<void> likePost({required PostID postID}) {
     return _postRepository.likePost(
       postID: postID,
-      userID: _userRepository.me!.id,
+      userID: _endUserRepository.me!.id,
     );
   }
 }

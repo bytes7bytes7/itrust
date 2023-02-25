@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
+
 part 'post_id.freezed.dart';
 
 part 'post_id.g.dart';
@@ -12,7 +14,7 @@ class PostID with _$PostID {
 
   const PostID._();
 
-  factory PostID.fromJson(Map<String, Object?> json) => _$PostIDFromJson(json);
+  factory PostID.fromJson(JsonMap json) => _$PostIDFromJson(json);
 
   String get str => value;
 }

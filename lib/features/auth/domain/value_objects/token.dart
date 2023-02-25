@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../utils/typedef.dart';
+
 part 'token.freezed.dart';
 
 part 'token.g.dart';
@@ -11,5 +13,5 @@ class Token with _$Token {
     required String refresh,
   }) = _Token;
 
-  factory Token.fromJson(Map<String, Object?> json) => _$TokenFromJson(json);
+  factory Token.fromJson(JsonMap json) => _$TokenFromJson(json);
 }

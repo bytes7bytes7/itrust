@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
 import '../../value_objects/value_objects.dart';
 
 part 'chat.freezed.dart';
@@ -39,5 +40,5 @@ class Chat with _$Chat {
     String? picUrl,
   }) = GroupChat;
 
-  factory Chat.fromJson(Map<String, Object?> json) => _$ChatFromJson(json);
+  factory Chat.fromJson(JsonMap json) => _$ChatFromJson(json);
 }

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../utils/typedef.dart';
 import '../../../common/domain/domain.dart';
 import 'user_chat_info.dart';
 
@@ -14,6 +15,6 @@ class ChatInfo with _$ChatInfo {
     required List<UserChatInfo> participants,
   }) = _ChatInfo;
 
-  factory ChatInfo.fromJson(Map<String, Object?> json) =>
+  factory ChatInfo.fromJson(JsonMap json) =>
       _$ChatInfoFromJson(json);
 }

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../utils/typedef.dart';
 import '../../../common/domain/domain.dart';
 import '../domain.dart';
 
@@ -14,6 +15,6 @@ class UserChatInfo with _$UserChatInfo {
     required ChatRole role,
   }) = _UserChatInfo;
 
-  factory UserChatInfo.fromJson(Map<String, Object?> json) =>
+  factory UserChatInfo.fromJson(JsonMap json) =>
       _$UserChatInfoFromJson(json);
 }

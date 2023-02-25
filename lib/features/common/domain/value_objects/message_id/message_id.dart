@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
+
 part 'message_id.freezed.dart';
 
 part 'message_id.g.dart';
@@ -12,7 +14,7 @@ class MessageID with _$MessageID {
 
   const MessageID._();
 
-  factory MessageID.fromJson(Map<String, Object?> json) =>
+  factory MessageID.fromJson(JsonMap json) =>
       _$MessageIDFromJson(json);
 
   String get str => value;

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../utils/typedef.dart';
 import '../../../../common/common.dart';
 
 part 'user_info.freezed.dart';
@@ -17,6 +18,6 @@ class UserInfo with _$UserInfo {
     required UserID id,
   }) = EndUserInfo;
 
-  factory UserInfo.fromJson(Map<String, Object?> json) =>
+  factory UserInfo.fromJson(JsonMap json) =>
       _$UserInfoFromJson(json);
 }
