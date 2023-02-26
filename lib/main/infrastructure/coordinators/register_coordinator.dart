@@ -25,7 +25,7 @@ class ProdRegisterCoordinator extends Coordinator
 
       final isRegistering =
           location == const RegisterRoute().namedLocation(goRouter) ||
-              location == const RegisterRules().namedLocation(goRouter) ||
+              location == const RulesRoute().namedLocation(goRouter) ||
               location == '/';
 
       if (!isLoggedIn && !isRegistering) {
@@ -46,6 +46,11 @@ class ProdRegisterCoordinator extends Coordinator
 
   @override
   void onRulesButtonPressed() {
-    const RegisterRules().push(goRouter);
+    const RulesRoute().push(goRouter);
+  }
+
+  @override
+  void onGoToLogInButtonPressed() {
+    const LogInRoute().pushReplacement(goRouter);
   }
 }

@@ -2,7 +2,6 @@
   "app_name": "ITrust",
   "login_hint": "Login",
   "password_hint": "Password",
-  "rules_btn": "Rules of the app",
   "log_in_btn": "Log In",
   "invalid_credentials_error": "Invalid credentials",
   "unknown_error": "Unknown error",
@@ -61,5 +60,9 @@
   "first_name_hint": "First name",
   "last_name_hint": "Last name",
   "register_btn": "Register",
-  "email_is_already_in_use": "This email is already in use"
+  "email_is_already_in_use": "This email is already in use",
+  "go_to_log_in": "Already have an account?",
+  "go_to_register": "Do not have an account?",
+  "terms_checkbox_first_part": "I agree to the ",
+  "terms_checkbox_second_part": "Terms of Service and Privacy Policy"
 }

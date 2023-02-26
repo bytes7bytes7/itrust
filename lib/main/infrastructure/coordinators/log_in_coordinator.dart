@@ -24,7 +24,6 @@ class ProdLogInCoordinator extends Coordinator implements LogInCoordinator {
 
       final isLoggingIn =
           location == const LogInRoute().namedLocation(goRouter) ||
-              location == const LogInRulesRoute().namedLocation(goRouter) ||
               location == '/';
 
       if (!isLoggedIn && !isLoggingIn) {
@@ -44,7 +43,7 @@ class ProdLogInCoordinator extends Coordinator implements LogInCoordinator {
   }
 
   @override
-  void onRulesButtonPressed() {
-    const LogInRulesRoute().push(goRouter);
+  void onGoToRegisterButtonPressed() {
+    const RegisterRoute().pushReplacement(goRouter);
   }
 }

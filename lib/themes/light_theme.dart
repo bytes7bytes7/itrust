@@ -47,6 +47,17 @@ final lightTheme = ThemeData.light().copyWith(
       color: _LightColors.cFFC7C7C7,
     ),
   ),
+  checkboxTheme: CheckboxThemeData(
+    fillColor: MaterialStateProperty.resolveWith(
+      (states) {
+        if (states.contains(MaterialState.disabled)) {
+          return _LightColors.cFFC7C7C7;
+        }
+
+        return _LightColors.cFF000000;
+      },
+    ),
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       padding: const MaterialStatePropertyAll(

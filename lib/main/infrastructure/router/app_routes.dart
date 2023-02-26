@@ -39,9 +39,6 @@ class _AppRoutes {
         child: const LogInScreen(),
       );
     },
-    routes: [
-      logInRules,
-    ],
   );
 
   static final register = GoRoute(
@@ -57,28 +54,13 @@ class _AppRoutes {
       );
     },
     routes: [
-      registerRules,
+      rules,
     ],
   );
 
-  static final logInRules = GoRoute(
+  static final rules = GoRoute(
     path: 'rules',
-    name: 'logInRules',
-    parentNavigatorKey: _rootKey,
-    pageBuilder: (context, state) {
-      return CustomTransitionPage(
-        key: state.pageKey,
-        name: _getName(state),
-        arguments: _getArgs(state),
-        transitionsBuilder: _leftward,
-        child: const RulesScreen(),
-      );
-    },
-  );
-
-  static final registerRules = GoRoute(
-    path: 'rules',
-    name: 'registerRules',
+    name: 'rules',
     parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       return CustomTransitionPage(

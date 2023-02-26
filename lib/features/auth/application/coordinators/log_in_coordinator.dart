@@ -3,5 +3,5 @@ abstract class LogInCoordinator {
 
   void dispose();
 
-  void onRulesButtonPressed();
+  void onGoToRegisterButtonPressed();
 }

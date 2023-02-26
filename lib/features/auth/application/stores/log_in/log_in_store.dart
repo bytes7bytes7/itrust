@@ -59,7 +59,7 @@ abstract class _LogInStore extends SyncStore with Store {
     );
   }
 
-  void onRulesButtonPressed() {
-    _logInCoordinator.onRulesButtonPressed();
+  void onGoToRegisterButtonPressed() {
+    _logInCoordinator.onGoToRegisterButtonPressed();
   }
 }

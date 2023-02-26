@@ -116,6 +116,22 @@ mixin _$RegisterStore on _RegisterStore, Store {
     });
   }
 
+  late final _$agreeToTermsAtom =
+      Atom(name: '_RegisterStore.agreeToTerms', context: context);
+
+  @override
+  bool get agreeToTerms {
+    _$agreeToTermsAtom.reportRead();
+    return super.agreeToTerms;
+  }
+
+  @override
+  set agreeToTerms(bool value) {
+    _$agreeToTermsAtom.reportWrite(value, super.agreeToTerms, () {
+      super.agreeToTerms = value;
+    });
+  }
+
   late final _$_RegisterStoreActionController =
       ActionController(name: '_RegisterStore', context: context);
 
@@ -137,6 +153,7 @@ email: ${email},
 password: ${password},
 firstName: ${firstName},
 lastName: ${lastName},
+agreeToTerms: ${agreeToTerms},
 canRegister: ${canRegister}
     ''';
   }

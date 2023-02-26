@@ -119,10 +119,18 @@ class _Body extends HookWidget {
             registerStore: registerStore,
             l10n: l10n,
           ),
+          const SizedBox(
+            height: _textFieldsSeparator,
+          ),
+          _RulesButton(
+            registerStore: registerStore,
+            l10n: l10n,
+            theme: theme,
+          ),
           const Spacer(
             flex: _underTextFieldsFlex,
           ),
-          _RulesButton(
+          _ToLogInButton(
             registerStore: registerStore,
             l10n: l10n,
           ),
@@ -251,8 +259,66 @@ class _LastNameField extends StatelessWidget {
   }
 }
 
-class _RulesButton extends StatelessWidget {
+class _RulesButton extends HookWidget {
   const _RulesButton({
+    required this.registerStore,
+    required this.l10n,
+    required this.theme,
+  });
+
+  final RegisterStore registerStore;
+  final AppLocalizations l10n;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    final recognizer = useTapGestureRecognizer()
+      ..onTap = registerStore.onRulesButtonPressed;
+
+    return Observer(
+      builder: (context) {
+        return Row(
+          children: [
+            Checkbox(
+              value: registerStore.agreeToTerms,
+              onChanged: (selected) {
+                if (registerStore.isLoading) {
+                  return;
+                }
+
+                if (selected != null) {
+                  registerStore.agreeToTerms = selected;
+                }
+              },
+            ),
+            Expanded(
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: l10n.terms_checkbox_first_part,
+                      style: theme.textTheme.bodyText2,
+                    ),
+                    TextSpan(
+                      text: l10n.terms_checkbox_second_part,
+                      style: theme.textTheme.bodyText2?.copyWith(
+                        color: theme.colorScheme.primary,
+                      ),
+                      recognizer: recognizer,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _ToLogInButton extends StatelessWidget {
+  const _ToLogInButton({
     required this.registerStore,
     required this.l10n,
   });
@@ -267,8 +333,8 @@ class _RulesButton extends StatelessWidget {
         return TextButton(
           onPressed: registerStore.isLoading
               ? null
-              : registerStore.onRulesButtonPressed,
-          child: Text(l10n.rules_btn),
+              : registerStore.onGoToLogInButtonPressed,
+          child: Text(l10n.go_to_log_in),
         );
       },
     );

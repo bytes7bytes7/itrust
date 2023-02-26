@@ -28,18 +28,11 @@ class RegisterRoute extends CosyRoute {
   GoRoute get route => _AppRoutes.register;
 }
 
-class LogInRulesRoute extends CosyRoute {
-  const LogInRulesRoute();
+class RulesRoute extends CosyRoute {
+  const RulesRoute();
 
   @override
-  GoRoute get route => _AppRoutes.logInRules;
-}
-
-class RegisterRules extends CosyRoute {
-  const RegisterRules();
-
-  @override
-  GoRoute get route => _AppRoutes.registerRules;
+  GoRoute get route => _AppRoutes.rules;
 }
 
 class FeedRoute extends CosyRoute {

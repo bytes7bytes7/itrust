@@ -108,7 +108,7 @@ class _Body extends HookWidget {
           const Spacer(
             flex: _underTextFieldsFlex,
           ),
-          _RulesButton(
+          _ToRegisterButton(
             logInStore: logInStore,
             l10n: l10n,
           ),
@@ -187,8 +187,8 @@ class _PasswordField extends HookWidget {
   }
 }
 
-class _RulesButton extends StatelessWidget {
-  const _RulesButton({
+class _ToRegisterButton extends StatelessWidget {
+  const _ToRegisterButton({
     required this.logInStore,
     required this.l10n,
   });
@@ -201,9 +201,10 @@ class _RulesButton extends StatelessWidget {
     return Observer(
       builder: (context) {
         return TextButton(
-          onPressed:
-              logInStore.isLoading ? null : logInStore.onRulesButtonPressed,
-          child: Text(l10n.rules_btn),
+          onPressed: logInStore.isLoading
+              ? null
+              : logInStore.onGoToRegisterButtonPressed,
+          child: Text(l10n.go_to_register),
         );
       },
     );

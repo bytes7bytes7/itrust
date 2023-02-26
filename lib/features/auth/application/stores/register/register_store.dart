@@ -42,13 +42,17 @@ abstract class _RegisterStore extends SyncStore with Store {
   @observable
   String lastName = '';
 
+  @observable
+  bool agreeToTerms = false;
+
   @computed
   bool get canRegister =>
       !_isLoading &&
       email.isNotEmpty &&
       password.isNotEmpty &&
       firstName.isNotEmpty &&
-      lastName.isNotEmpty;
+      lastName.isNotEmpty &&
+      agreeToTerms;
 
   @action
   void register() {
@@ -74,5 +78,9 @@ abstract class _RegisterStore extends SyncStore with Store {
 
   void onRulesButtonPressed() {
     _registerCoordinator.onRulesButtonPressed();
+  }
+
+  void onGoToLogInButtonPressed() {
+    _registerCoordinator.onGoToLogInButtonPressed();
   }
 }

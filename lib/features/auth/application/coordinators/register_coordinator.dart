@@ -4,4 +4,6 @@ abstract class RegisterCoordinator {
   void dispose();
 
   void onRulesButtonPressed();
+
+  void onGoToLogInButtonPressed();
 }
