@@ -9,6 +9,7 @@ import '../exceptions/exceptions.dart';
 import '../providers/auth_exception_provider.dart';
 import '../providers/auth_provider.dart';
 import '../repositories/end_user_repository.dart';
+import '../value_objects/token_pair/token_pair.dart';
 import '../value_objects/user_id/user_id.dart';
 import 'token_service.dart';
 
@@ -39,9 +40,9 @@ class AuthService {
   Future<void> init() async {
     await _tokenService.init();
 
-    final tokenOrNull = await _tokenService.getToken();
+    final accessTokenOrNull = await _tokenService.getAccessToken();
 
-    if (tokenOrNull != null) {
+    if (accessTokenOrNull != null) {
       // TODO: what if client is offline?
       await verifyToken();
     }
@@ -80,7 +81,12 @@ class AuthService {
       (r) {
         _isLoggedInController.add(true);
 
-        _tokenService.setToken(r.token);
+        _tokenService.setTokenPair(
+          TokenPair(
+            access: r.accessToken,
+            refresh: r.refreshToken,
+          ),
+        );
 
         // TODO: implement
         _endUserRepository.setMe(
@@ -118,7 +124,12 @@ class AuthService {
       (r) {
         _isLoggedInController.add(true);
 
-        _tokenService.setToken(r.token);
+        _tokenService.setTokenPair(
+          TokenPair(
+            access: r.accessToken,
+            refresh: r.refreshToken,
+          ),
+        );
 
         // TODO: implement
         _endUserRepository.setMe(

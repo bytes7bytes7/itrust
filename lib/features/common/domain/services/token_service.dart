@@ -1,9 +1,13 @@
+import '../value_objects/token_pair/token_pair.dart';
+
 abstract class TokenService {
   Future<void> init();
 
-  Future<String?> getToken();
+  Future<String?> getAccessToken();
 
-  Future<void> setToken(String token);
+  Future<String?> getRefreshToken();
+
+  Future<void> setTokenPair(TokenPair tokenPair);
 
   Future<void> removeToken();
 }

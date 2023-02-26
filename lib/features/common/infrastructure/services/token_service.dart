@@ -5,7 +5,8 @@ import 'package:injectable/injectable.dart';
 import '../../domain/domain.dart';
 
 const _authTokenHeaderKey = 'Authorization';
-const _authTokenStorageKey = 'auth token';
+const _accessTokenStorageKey = 'access token';
+const _refreshTokenStorageKey = 'refresh token';
 
 @Singleton(as: TokenService)
 class ProdTokenService implements TokenService {
@@ -20,7 +21,7 @@ class ProdTokenService implements TokenService {
 
   @override
   Future<void> init() async {
-    final tokenOrNull = await _secureStorage.read(key: _authTokenStorageKey);
+    final tokenOrNull = await _secureStorage.read(key: _accessTokenStorageKey);
 
     if (tokenOrNull != null) {
       _setTokenToHeaders(tokenOrNull);
@@ -28,15 +29,27 @@ class ProdTokenService implements TokenService {
   }
 
   @override
-  Future<String?> getToken() async {
-    return _secureStorage.read(key: _authTokenStorageKey);
+  Future<String?> getAccessToken() async {
+    return _secureStorage.read(key: _accessTokenStorageKey);
   }
 
   @override
-  Future<void> setToken(String token) async {
-    _setTokenToHeaders(token);
+  Future<String?> getRefreshToken() async {
+    return _secureStorage.read(key: _refreshTokenStorageKey);
+  }
 
-    await _secureStorage.write(key: _authTokenStorageKey, value: token);
+  @override
+  Future<void> setTokenPair(TokenPair tokenPair) async {
+    _setTokenToHeaders(tokenPair.access);
+
+    await _secureStorage.write(
+      key: _accessTokenStorageKey,
+      value: tokenPair.access,
+    );
+    await _secureStorage.write(
+      key: _refreshTokenStorageKey,
+      value: tokenPair.refresh,
+    );
   }
 
   @override
@@ -46,7 +59,8 @@ class ProdTokenService implements TokenService {
 
     _dio.options.headers = newHeaders;
 
-    await _secureStorage.delete(key: _authTokenStorageKey);
+    await _secureStorage.delete(key: _accessTokenStorageKey);
+    await _secureStorage.delete(key: _refreshTokenStorageKey);
   }
 
   String _formatToken(String token) {

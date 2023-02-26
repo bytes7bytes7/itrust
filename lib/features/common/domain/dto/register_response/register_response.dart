@@ -11,14 +11,16 @@ class RegisterResponse {
     required this.firstName,
     required this.lastName,
     required this.email,
-    required this.token,
+    required this.accessToken,
+    required this.refreshToken,
   });
 
   final JsonMap id;
   final String firstName;
   final String lastName;
   final String email;
-  final String token;
+  final String accessToken;
+  final String refreshToken;
 
   factory RegisterResponse.fromJson(JsonMap json) =>
       _$RegisterResponseFromJson(json);

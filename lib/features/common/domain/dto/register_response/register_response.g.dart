@@ -12,7 +12,8 @@ RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) =>
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,
-      token: json['token'] as String,
+      accessToken: json['accessToken'] as String,
+      refreshToken: json['refreshToken'] as String,
     );
 
 Map<String, dynamic> _$RegisterResponseToJson(RegisterResponse instance) =>
@@ -21,5 +22,6 @@ Map<String, dynamic> _$RegisterResponseToJson(RegisterResponse instance) =>
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'email': instance.email,
-      'token': instance.token,
+      'accessToken': instance.accessToken,
+      'refreshToken': instance.refreshToken,
     };
