@@ -54,7 +54,7 @@ import 'package:itrust/features/common/domain/domain.dart' as _i5;
 import 'package:itrust/features/common/domain/dto/log_in_response/log_in_response.dart'
     as _i25;
 import 'package:itrust/features/common/domain/dto/log_out_response/log_out_response.dart'
-    as _i23;
+    as _i27;
 import 'package:itrust/features/common/domain/dto/register_response/register_response.dart'
     as _i30;
 import 'package:itrust/features/common/domain/providers/auth_exception_provider.dart'
@@ -86,7 +86,7 @@ import 'package:itrust/features/common/infrastructure/domain_providers/server_ex
 import 'package:itrust/features/common/infrastructure/json_converters/log_in_response_json_converter.dart'
     as _i26;
 import 'package:itrust/features/common/infrastructure/json_converters/log_out_response_json_converter.dart'
-    as _i24;
+    as _i28;
 import 'package:itrust/features/common/infrastructure/json_converters/register_response_json_converter.dart'
     as _i31;
 import 'package:itrust/features/common/infrastructure/repositories/chat_repository.dart'
@@ -208,12 +208,12 @@ import 'package:itrust/main/infrastructure/coordinators/rules_coordinator.dart'
 import 'package:itrust/main/infrastructure/coordinators/settings_coordinator.dart'
     as _i103;
 import 'package:itrust/main/infrastructure/json_converters/problem_details_json_converter.dart'
-    as _i28;
+    as _i24;
 import 'package:itrust/utils/server_settings.dart' as _i53;
 import 'package:itrust/utils/utils.dart' as _i66;
 import 'package:json_annotation/json_annotation.dart' as _i29;
 import 'package:mapster/mapster.dart' as _i38;
-import 'package:problem_details/problem_details.dart' as _i27;
+import 'package:problem_details/problem_details.dart' as _i23;
 
 import '../../../env/env_module.dart' as _i117;
 import '../../../features/common/infrastructure/third_party/mapster_module.dart'
@@ -276,12 +276,12 @@ Future<_i1.GetIt> init(
   gh.singleton<_i19.FormattedDateProvider>(_i20.ProdFormattedDateProvider(
       dateTimeProvider: gh<_i15.DateTimeProvider>()));
   gh.singleton<_i21.GlobalKey<_i21.NavigatorState>>(routerModule.rootKey);
-  gh.singleton<_i22.JsonConverter<_i23.LogOutResponse, Map<String, Object?>>>(
-      _i24.LogOutResponseJsonConverter());
+  gh.singleton<_i22.JsonConverter<_i23.ProblemDetails, Map<String, Object?>>>(
+      _i24.ProblemDetailsJsonConverter());
   gh.singleton<_i22.JsonConverter<_i25.LogInResponse, Map<String, Object?>>>(
       _i26.LogInResponseJsonConverter());
-  gh.singleton<_i22.JsonConverter<_i27.ProblemDetails, Map<String, Object?>>>(
-      _i28.ProblemDetailsJsonConverter());
+  gh.singleton<_i22.JsonConverter<_i27.LogOutResponse, Map<String, Object?>>>(
+      _i28.LogOutResponseJsonConverter());
   gh.singleton<_i29.JsonConverter<_i30.RegisterResponse, Map<String, Object?>>>(
       _i31.RegisterResponseJsonConverter());
   gh.singleton<_i32.LockService>(

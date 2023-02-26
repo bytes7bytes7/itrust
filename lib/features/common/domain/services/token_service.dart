@@ -1,5 +1,5 @@
 abstract class TokenService {
-  void setToken(String token);
+  Future<void> setToken(String token);
 
-  void removeToken();
+  Future<void> removeToken();
 }
