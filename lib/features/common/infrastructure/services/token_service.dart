@@ -19,11 +19,22 @@ class ProdTokenService implements TokenService {
   final FlutterSecureStorage _secureStorage;
 
   @override
-  Future<void> setToken(String token) async {
-    final newHeaders = Map<String, Object?>.from(_dio.options.headers)
-      ..[_authTokenHeaderKey] = _formatToken(token);
+  Future<void> init() async {
+    final tokenOrNull = await _secureStorage.read(key: _authTokenStorageKey);
 
-    _dio.options.headers = newHeaders;
+    if (tokenOrNull != null) {
+      _setTokenToHeaders(tokenOrNull);
+    }
+  }
+
+  @override
+  Future<String?> getToken() async {
+    return _secureStorage.read(key: _authTokenStorageKey);
+  }
+
+  @override
+  Future<void> setToken(String token) async {
+    _setTokenToHeaders(token);
 
     await _secureStorage.write(key: _authTokenStorageKey, value: token);
   }
@@ -40,5 +51,12 @@ class ProdTokenService implements TokenService {
 
   String _formatToken(String token) {
     return 'Bearer $token';
+  }
+
+  void _setTokenToHeaders(String token) {
+    final newHeaders = Map<String, Object?>.from(_dio.options.headers)
+      ..[_authTokenHeaderKey] = _formatToken(token);
+
+    _dio.options.headers = newHeaders;
   }
 }

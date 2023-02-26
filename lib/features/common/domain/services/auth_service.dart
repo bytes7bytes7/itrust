@@ -37,8 +37,14 @@ class AuthService {
 
   @PostConstruct(preResolve: true)
   Future<void> init() async {
-    // TODO: add init
-    _isLoggedIn = false;
+    await _tokenService.init();
+
+    final tokenOrNull = await _tokenService.getToken();
+
+    if (tokenOrNull != null) {
+      // TODO: what if client is offline?
+      await verifyToken();
+    }
   }
 
   @disposeMethod
@@ -141,6 +147,22 @@ class AuthService {
         _tokenService.removeToken();
 
         _endUserRepository.removeMe();
+      },
+    );
+  }
+
+  Future<void> verifyToken() async {
+    const request = VerifyTokenRequest();
+
+    final response = await _authProvider.verifyToken(request);
+
+    response.value.fold(
+      (l) {
+        _tokenService.removeToken();
+        _isLoggedInController.add(false);
+      },
+      (r) {
+        _isLoggedInController.add(true);
       },
     );
   }

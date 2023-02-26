@@ -7,6 +7,8 @@ import '../../domain/dto/log_out_response/log_out_response.dart';
 @Singleton(as: JsonConverter<LogOutResponse, JsonMap>)
 class LogOutResponseJsonConverter
     extends JsonConverter<LogOutResponse, JsonMap> {
+  const LogOutResponseJsonConverter();
+
   @override
   LogOutResponse fromJson(JsonMap json) {
     return LogOutResponse.fromJson(json);
