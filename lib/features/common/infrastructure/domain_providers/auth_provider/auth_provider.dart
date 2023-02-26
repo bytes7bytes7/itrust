@@ -9,8 +9,6 @@ import '../../../domain/providers/auth_provider.dart';
 
 part 'auth_provider.g.dart';
 
-const _subRoute = '/auth';
-
 @Singleton(as: AuthProvider)
 @RestApi()
 abstract class ProdAuthProvider implements AuthProvider {
@@ -18,7 +16,7 @@ abstract class ProdAuthProvider implements AuthProvider {
   factory ProdAuthProvider(Dio dio, ServerSettings settings) {
     return ProdAuthProvider._(
       dio,
-      baseUrl: '${settings.protocol}://${settings.authority}$_subRoute',
+      baseUrl: '${settings.protocol}://${settings.authority}',
     );
   }
 
@@ -34,8 +32,14 @@ abstract class ProdAuthProvider implements AuthProvider {
   );
 
   @override
-  @POST('/login')
+  @POST('/log_in')
   Future<JsonEitherWrapper<ProblemDetails, LogInResponse>> logIn(
     @Body() LogInRequest request,
+  );
+
+  @override
+  @POST('/log_out')
+  Future<JsonEitherWrapper<ProblemDetails, LogOutResponse>> logOut(
+    LogOutRequest request,
   );
 }

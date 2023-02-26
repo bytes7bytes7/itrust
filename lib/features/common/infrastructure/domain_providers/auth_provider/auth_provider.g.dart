@@ -62,12 +62,38 @@ class _ProdAuthProvider implements ProdAuthProvider {
     )
                 .compose(
                   _dio.options,
-                  '/login',
+                  '/log_in',
                   queryParameters: queryParameters,
                   data: _data,
                 )
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = JsonEitherWrapper<ProblemDetails, LogInResponse>.fromJson(
+        _result.data!);
+    return value;
+  }
+
+  @override
+  Future<JsonEitherWrapper<ProblemDetails, LogOutResponse>> logOut(
+      request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<JsonEitherWrapper<ProblemDetails, LogOutResponse>>(
+            Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+                .compose(
+                  _dio.options,
+                  '/log_out',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = JsonEitherWrapper<ProblemDetails, LogOutResponse>.fromJson(
         _result.data!);
     return value;
   }

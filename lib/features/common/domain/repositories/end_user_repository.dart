@@ -9,5 +9,7 @@ abstract class EndUserRepository {
 
   Future<void> setMe(EndUser user);
 
+  Future<void> removeMe();
+
   Future<void> addOrUpdate(EndUser user);
 }

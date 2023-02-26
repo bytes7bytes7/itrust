@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
 import '../../coordinators/settings_coordinator.dart';
+import '../../providers/settings_string_provider.dart';
 
 part 'settings_store.g.dart';
 
@@ -13,11 +14,14 @@ abstract class _SettingsStore extends SyncStore with Store {
   _SettingsStore({
     required AuthService authService,
     required SettingsCoordinator settingsCoordinator,
+    required SettingsStringProvider settingsStringProvider,
   })  : _authService = authService,
-        _settingsCoordinator = settingsCoordinator;
+        _settingsCoordinator = settingsCoordinator,
+        _settingsStringProvider = settingsStringProvider;
 
   final AuthService _authService;
   final SettingsCoordinator _settingsCoordinator;
+  final SettingsStringProvider _settingsStringProvider;
 
   @readonly
   bool _isLoading = false;
@@ -29,7 +33,11 @@ abstract class _SettingsStore extends SyncStore with Store {
   void logOut() {
     perform(
       () async {
-        await _authService.logOut();
+        try {
+          await _authService.logOut();
+        } catch (e) {
+          _error = _settingsStringProvider.unknownError;
+        }
       },
       setIsLoading: (v) => _isLoading = v,
       removeError: () => _error = '',

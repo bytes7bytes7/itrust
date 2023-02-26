@@ -10,17 +10,21 @@ import '../providers/auth_exception_provider.dart';
 import '../providers/auth_provider.dart';
 import '../repositories/end_user_repository.dart';
 import '../value_objects/user_id/user_id.dart';
+import 'token_service.dart';
 
 @singleton
 class AuthService {
   AuthService({
+    required TokenService tokenService,
     required AuthProvider authProvider,
     required EndUserRepository endUserRepository,
     required AuthExceptionProvider authExceptionProvider,
-  })  : _authProvider = authProvider,
+  })  : _tokenService = tokenService,
+        _authProvider = authProvider,
         _endUserRepository = endUserRepository,
         _authExceptionProvider = authExceptionProvider;
 
+  final TokenService _tokenService;
   final AuthProvider _authProvider;
   final EndUserRepository _endUserRepository;
   final AuthExceptionProvider _authExceptionProvider;
@@ -63,10 +67,14 @@ class AuthService {
 
         if (l.title == _authExceptionProvider.emailIsAlreadyInUse) {
           throw const EmailIsAlreadyInUse();
+        } else {
+          throw Exception();
         }
       },
       (r) {
         _isLoggedInController.add(true);
+
+        _tokenService.setToken(r.token);
 
         // TODO: implement
         _endUserRepository.setMe(
@@ -97,10 +105,14 @@ class AuthService {
 
         if (l.title == _authExceptionProvider.invalidCredentials) {
           throw const InvalidCredentials();
+        } else {
+          throw Exception();
         }
       },
       (r) {
         _isLoggedInController.add(true);
+
+        _tokenService.setToken(r.token);
 
         // TODO: implement
         _endUserRepository.setMe(
@@ -115,6 +127,21 @@ class AuthService {
   }
 
   Future<void> logOut() async {
-    // TODO: implement
+    const request = LogOutRequest();
+
+    final response = await _authProvider.logOut(request);
+
+    response.value.fold(
+      (l) {
+        throw Exception();
+      },
+      (r) {
+        _isLoggedInController.add(false);
+
+        _tokenService.removeToken();
+
+        _endUserRepository.removeMe();
+      },
+    );
   }
 }

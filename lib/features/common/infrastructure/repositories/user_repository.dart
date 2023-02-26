@@ -31,6 +31,17 @@ class TestEndUserRepository implements EndUserRepository {
   }
 
   @override
+  Future<void> removeMe() async {
+    _meController.add(null);
+
+    final me = _meController.valueOrNull;
+
+    if (me != null) {
+      _storage.remove(me.id);
+    }
+  }
+
+  @override
   Future<void> addOrUpdate(EndUser user) async {
     _storage[user.id] = user;
   }

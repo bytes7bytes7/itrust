@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../utils/hooks/reaction.dart';
 import '../../../common/domain/domain.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/settings/settings_store.dart';
@@ -47,6 +48,17 @@ class SettingsScreen extends HookWidget {
     final l10n = context.l10n;
 
     final settingsStore = useMemoized(() => _getIt.get<SettingsStore>());
+
+    useReaction<String>(
+      (_) => settingsStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
+    );
 
     // TODO: separate on widgets and add Observer
 

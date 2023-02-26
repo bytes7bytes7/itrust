@@ -11,4 +11,8 @@ abstract class AuthProvider {
   Future<JsonEitherWrapper<ProblemDetails, LogInResponse>> logIn(
     LogInRequest request,
   );
+
+  Future<JsonEitherWrapper<ProblemDetails, LogOutResponse>> logOut(
+    LogOutRequest request,
+  );
 }
