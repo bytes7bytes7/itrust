@@ -14,4 +14,7 @@ class ProdAuthExceptionProvider implements AuthExceptionProvider {
 
   @override
   String get invalidCredentials => _serverExceptionProvider.invalidCredentials;
+
+  @override
+  String get tokenExpired => _serverExceptionProvider.tokenExpired;
 }

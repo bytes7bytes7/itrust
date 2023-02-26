@@ -4,4 +4,6 @@ abstract class ServerExceptionProvider {
   String get emailIsAlreadyInUse;
 
   String get invalidCredentials;
+
+  String get tokenExpired;
 }

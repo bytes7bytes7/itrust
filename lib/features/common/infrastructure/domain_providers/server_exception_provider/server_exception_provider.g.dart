@@ -11,6 +11,7 @@ ProdServerExceptionProvider _$ProdServerExceptionProviderFromJson(
     ProdServerExceptionProvider(
       emailIsAlreadyInUse: json['email_is_already_in_use'] as String,
       invalidCredentials: json['invalid_credentials'] as String,
+      tokenExpired: json['token_expired'] as String,
     );
 
 Map<String, dynamic> _$ProdServerExceptionProviderToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$ProdServerExceptionProviderToJson(
     <String, dynamic>{
       'email_is_already_in_use': instance.emailIsAlreadyInUse,
       'invalid_credentials': instance.invalidCredentials,
+      'token_expired': instance.tokenExpired,
     };

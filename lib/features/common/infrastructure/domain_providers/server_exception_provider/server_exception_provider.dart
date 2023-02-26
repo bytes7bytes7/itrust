@@ -16,6 +16,7 @@ class ProdServerExceptionProvider implements ServerExceptionProvider {
   const ProdServerExceptionProvider({
     required this.emailIsAlreadyInUse,
     required this.invalidCredentials,
+    required this.tokenExpired,
   });
 
   @override
@@ -23,6 +24,9 @@ class ProdServerExceptionProvider implements ServerExceptionProvider {
 
   @override
   final String invalidCredentials;
+
+  @override
+  final String tokenExpired;
 
   @FactoryMethod(preResolve: true)
   static Future<ProdServerExceptionProvider> create() async {

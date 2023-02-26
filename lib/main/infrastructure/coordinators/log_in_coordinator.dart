@@ -26,7 +26,10 @@ class ProdLogInCoordinator extends Coordinator implements LogInCoordinator {
           location == const LogInRoute().namedLocation(goRouter) ||
               location == '/';
 
-      if (!isLoggedIn && !isLoggingIn) {
+      final isRegistering =
+          location == const RegisterRoute().namedLocation(goRouter);
+
+      if (!isLoggedIn && !isLoggingIn && !isRegistering) {
         return const LogInRoute().go(goRouter);
       }
 

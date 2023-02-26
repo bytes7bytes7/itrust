@@ -150,7 +150,15 @@ class AuthService {
 
     response.value.fold(
       (l) {
-        throw Exception();
+        if (l.title == _authExceptionProvider.tokenExpired) {
+          _isLoggedInController.add(false);
+
+          _tokenService.removeToken();
+
+          _endUserRepository.removeMe();
+        } else {
+          throw Exception();
+        }
       },
       (r) {
         _isLoggedInController.add(false);

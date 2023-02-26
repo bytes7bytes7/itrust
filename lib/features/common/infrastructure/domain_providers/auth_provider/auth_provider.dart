@@ -9,6 +9,8 @@ import '../../../domain/providers/auth_provider.dart';
 
 part 'auth_provider.g.dart';
 
+const _authRoute = '/auth/';
+
 @Singleton(as: AuthProvider)
 @RestApi()
 abstract class ProdAuthProvider implements AuthProvider {
@@ -16,7 +18,7 @@ abstract class ProdAuthProvider implements AuthProvider {
   factory ProdAuthProvider(Dio dio, ServerSettings settings) {
     return ProdAuthProvider._(
       dio,
-      baseUrl: '${settings.protocol}://${settings.authority}',
+      baseUrl: '${settings.protocol}://${settings.authority}$_authRoute',
     );
   }
 

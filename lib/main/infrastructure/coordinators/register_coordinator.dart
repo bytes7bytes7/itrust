@@ -28,7 +28,10 @@ class ProdRegisterCoordinator extends Coordinator
               location == const RulesRoute().namedLocation(goRouter) ||
               location == '/';
 
-      if (!isLoggedIn && !isRegistering) {
+      final isLoggingIn =
+          location == const LogInRoute().namedLocation(goRouter);
+
+      if (!isLoggedIn && !isRegistering && !isLoggingIn) {
         return const RegisterRoute().go(goRouter);
       }
 
