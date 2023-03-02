@@ -1,3 +1,4 @@
+export 'device_info/device_info.dart';
 export 'log_in_request/log_in_request.dart';
 export 'log_in_response/log_in_response.dart';
 export 'log_out_request/log_out_request.dart';

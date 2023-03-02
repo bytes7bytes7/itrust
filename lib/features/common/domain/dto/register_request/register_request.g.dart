@@ -12,6 +12,8 @@ RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
       password: json['password'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
+      deviceInfo: const DeviceInfoJsonConverter()
+          .fromJson(json['deviceInfo'] as String),
     );
 
 Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
@@ -20,4 +22,5 @@ Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
       'password': instance.password,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
+      'deviceInfo': const DeviceInfoJsonConverter().toJson(instance.deviceInfo),
     };

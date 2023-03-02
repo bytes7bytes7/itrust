@@ -17,6 +17,7 @@ dependencies:
   collection: ^1.16.0
   connectivity_plus: ^3.0.3
   cupertino_icons: ^1.0.5
+  device_info_plus: ^8.1.0
   dio: ^5.0.1
   drift: ^2.4.2
   envied: ^0.3.0

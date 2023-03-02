@@ -11,24 +11,28 @@ import '../providers/auth_provider.dart';
 import '../repositories/end_user_repository.dart';
 import '../value_objects/token_pair/token_pair.dart';
 import '../value_objects/user_id/user_id.dart';
+import 'device_info_service.dart';
 import 'token_service.dart';
 
 @singleton
 class AuthService {
   AuthService({
-    required TokenService tokenService,
     required AuthProvider authProvider,
+    required TokenService tokenService,
     required EndUserRepository endUserRepository,
     required AuthExceptionProvider authExceptionProvider,
-  })  : _tokenService = tokenService,
-        _authProvider = authProvider,
+    required DeviceInfoService deviceInfoService,
+  })  : _authProvider = authProvider,
+        _tokenService = tokenService,
         _endUserRepository = endUserRepository,
-        _authExceptionProvider = authExceptionProvider;
+        _authExceptionProvider = authExceptionProvider,
+        _deviceInfoService = deviceInfoService;
 
-  final TokenService _tokenService;
   final AuthProvider _authProvider;
+  final TokenService _tokenService;
   final EndUserRepository _endUserRepository;
   final AuthExceptionProvider _authExceptionProvider;
+  final DeviceInfoService _deviceInfoService;
   late bool _isLoggedIn;
   final _isLoggedInController = BehaviorSubject<bool>();
 
@@ -59,11 +63,14 @@ class AuthService {
     required String firstName,
     required String lastName,
   }) async {
+    final deviceInfo = await _deviceInfoService.getDeviceInfo();
+
     final request = RegisterRequest(
       email: email,
       password: password,
       firstName: firstName,
       lastName: lastName,
+      deviceInfo: deviceInfo,
     );
 
     final response = await _authProvider.register(request);
@@ -104,9 +111,12 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+    final deviceInfo = await _deviceInfoService.getDeviceInfo();
+
     final request = LogInRequest(
       email: email,
       password: password,
+      deviceInfo: deviceInfo,
     );
 
     final response = await _authProvider.logIn(request);
@@ -171,7 +181,11 @@ class AuthService {
   }
 
   Future<void> verifyToken() async {
-    const request = VerifyTokenRequest();
+    final deviceInfo = await _deviceInfoService.getDeviceInfo();
+
+    final request = VerifyTokenRequest(
+      deviceInfo: deviceInfo,
+    );
 
     final response = await _authProvider.verifyToken(request);
 
