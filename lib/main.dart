@@ -14,12 +14,12 @@ Future<void> main() async {
     widgetsBinding: WidgetsFlutterBinding.ensureInitialized(),
   );
 
-  const env = String.fromEnvironment('ENV', defaultValue: 'prod');
-  const printLogs = bool.fromEnvironment('PRINT_LOGS', defaultValue: false);
+  const env = String.fromEnvironment('ENV', defaultValue: 'test');
+  const printLogs = bool.fromEnvironment('PRINT_LOGS', defaultValue: true);
 
   _configLogger(printLogs: printLogs);
   setPathUrlStrategy();
-  _configMobX();
+  _configMobX(env: env);
   await configInjector(env: env);
 
   FlutterNativeSplash.remove();
@@ -44,12 +44,14 @@ void _configLogger({required bool printLogs}) {
   }
 }
 
-void _configMobX() {
+void _configMobX({required String env}) {
   final logger = Logger('MobX');
 
-  mainContext.config = mainContext.config.clone(
-    isSpyEnabled: true,
-  );
+  if (env == 'test') {
+    mainContext.config = mainContext.config.clone(
+      isSpyEnabled: true,
+    );
 
-  mainContext.spy(logger.info);
+    mainContext.spy(logger.info);
+  }
 }
