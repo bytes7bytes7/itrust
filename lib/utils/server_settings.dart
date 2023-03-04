@@ -1,9 +1,11 @@
 class ServerSettings {
   const ServerSettings({
-    required this.authority,
-    required this.protocol,
+    required this.ip,
+    required this.port,
+    required this.baseUri,
   });
 
-  final String authority;
-  final String protocol;
+  final String ip;
+  final int port;
+  final String baseUri;
 }

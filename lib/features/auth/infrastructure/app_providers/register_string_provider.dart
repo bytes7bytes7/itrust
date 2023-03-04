@@ -9,6 +9,9 @@ class ProdRegisterStringProvider extends L10nProvider
   const ProdRegisterStringProvider({required super.navigatorKey});
 
   @override
+  String get serverNotAvailable => l10n.server_not_available;
+
+  @override
   String get emailIsAlreadyInUse => l10n.email_is_already_in_use;
 
   @override

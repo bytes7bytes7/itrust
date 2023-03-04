@@ -7,7 +7,8 @@ import 'env.dart';
 abstract class EnvModule {
   @singleton
   ServerSettings get serverSettings => ServerSettings(
-        authority: Env.authority,
-        protocol: Env.protocol,
+        ip: Env.serverIp,
+        port: int.parse(Env.serverPort),
+        baseUri: '${Env.serverProtocol}://${Env.serverIp}:${Env.serverPort}/',
       );
 }

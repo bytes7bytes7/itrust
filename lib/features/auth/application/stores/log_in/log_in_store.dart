@@ -48,6 +48,8 @@ abstract class _LogInStore extends SyncStore with Store {
             email: email,
             password: password,
           );
+        } on ServerNotAvailable {
+          _error = _logInStringProvider.serverNotAvailable;
         } on InvalidCredentials {
           _error = _logInStringProvider.invalidCredentials;
         } catch (e) {

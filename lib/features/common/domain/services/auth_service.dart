@@ -8,6 +8,7 @@ import '../entities/user/user.dart';
 import '../exceptions/exceptions.dart';
 import '../providers/auth_exception_provider.dart';
 import '../providers/auth_provider.dart';
+import '../providers/server_availability_provider.dart';
 import '../repositories/end_user_repository.dart';
 import '../value_objects/token_pair/token_pair.dart';
 import '../value_objects/user_id/user_id.dart';
@@ -17,17 +18,20 @@ import 'token_service.dart';
 @singleton
 class AuthService {
   AuthService({
+    required ServerAvailabilityProvider serverAvailabilityProvider,
     required AuthProvider authProvider,
     required TokenService tokenService,
     required EndUserRepository endUserRepository,
     required AuthExceptionProvider authExceptionProvider,
     required DeviceInfoService deviceInfoService,
-  })  : _authProvider = authProvider,
+  })  : _serverAvailabilityProvider = serverAvailabilityProvider,
+        _authProvider = authProvider,
         _tokenService = tokenService,
         _endUserRepository = endUserRepository,
         _authExceptionProvider = authExceptionProvider,
         _deviceInfoService = deviceInfoService;
 
+  final ServerAvailabilityProvider _serverAvailabilityProvider;
   final AuthProvider _authProvider;
   final TokenService _tokenService;
   final EndUserRepository _endUserRepository;
@@ -47,8 +51,13 @@ class AuthService {
     final accessTokenOrNull = await _tokenService.getAccessToken();
 
     if (accessTokenOrNull != null) {
-      // TODO: what if client is offline?
-      await verifyToken();
+      final serverAvailable = await _serverAvailabilityProvider.check();
+
+      if (serverAvailable) {
+        await _verifyToken();
+      } else {
+        _isLoggedInController.add(true);
+      }
     }
   }
 
@@ -63,6 +72,8 @@ class AuthService {
     required String firstName,
     required String lastName,
   }) async {
+    await _checkServerAvailability();
+
     final deviceInfo = await _deviceInfoService.getDeviceInfo();
 
     final request = RegisterRequest(
@@ -111,6 +122,8 @@ class AuthService {
     required String email,
     required String password,
   }) async {
+    await _checkServerAvailability();
+
     final deviceInfo = await _deviceInfoService.getDeviceInfo();
 
     final request = LogInRequest(
@@ -154,6 +167,8 @@ class AuthService {
   }
 
   Future<void> logOut() async {
+    await _checkServerAvailability();
+
     const request = LogOutRequest();
 
     final response = await _authProvider.logOut(request);
@@ -180,7 +195,7 @@ class AuthService {
     );
   }
 
-  Future<void> verifyToken() async {
+  Future<void> _verifyToken() async {
     final deviceInfo = await _deviceInfoService.getDeviceInfo();
 
     final request = VerifyTokenRequest(
@@ -198,5 +213,13 @@ class AuthService {
         _isLoggedInController.add(true);
       },
     );
+  }
+
+  Future<void> _checkServerAvailability() async {
+    final serverAvailable = await _serverAvailabilityProvider.check();
+
+    if (!serverAvailable) {
+      throw const ServerNotAvailable();
+    }
   }
 }

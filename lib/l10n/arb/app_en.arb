@@ -64,5 +64,6 @@
   "go_to_log_in": "Already have an account?",
   "go_to_register": "Do not have an account?",
   "terms_checkbox_first_part": "I agree to the ",
-  "terms_checkbox_second_part": "Terms of Service and Privacy Policy"
+  "terms_checkbox_second_part": "Terms of Service and Privacy Policy",
+  "server_not_available": "Server is not available. Try again later."
 }

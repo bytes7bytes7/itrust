@@ -35,6 +35,8 @@ abstract class _SettingsStore extends SyncStore with Store {
       () async {
         try {
           await _authService.logOut();
+        } on ServerNotAvailable {
+          _error = _settingsStringProvider.serverNotAvailable;
         } catch (e) {
           _error = _settingsStringProvider.unknownError;
         }

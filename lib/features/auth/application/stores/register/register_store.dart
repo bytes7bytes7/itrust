@@ -65,6 +65,8 @@ abstract class _RegisterStore extends SyncStore with Store {
             firstName: firstName,
             lastName: lastName,
           );
+        } on ServerNotAvailable {
+          _error = _registerStringProvider.serverNotAvailable;
         } on EmailIsAlreadyInUse {
           _error = _registerStringProvider.emailIsAlreadyInUse;
         } catch (e) {

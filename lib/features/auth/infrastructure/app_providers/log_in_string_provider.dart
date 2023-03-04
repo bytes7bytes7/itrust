@@ -9,6 +9,9 @@ class ProdLogInStringProvider extends L10nProvider
   const ProdLogInStringProvider({required super.navigatorKey});
 
   @override
+  String get serverNotAvailable => l10n.server_not_available;
+
+  @override
   String get unknownError => l10n.unknown_error;
 
   @override
