@@ -54,13 +54,13 @@ import 'package:itrust/features/common/application/providers/formatted_date_prov
 import 'package:itrust/features/common/common.dart' as _i87;
 import 'package:itrust/features/common/domain/domain.dart' as _i5;
 import 'package:itrust/features/common/domain/dto/log_in_response/log_in_response.dart'
-    as _i32;
+    as _i33;
 import 'package:itrust/features/common/domain/dto/log_out_response/log_out_response.dart'
-    as _i26;
+    as _i31;
 import 'package:itrust/features/common/domain/dto/register_response/register_response.dart'
-    as _i35;
+    as _i29;
 import 'package:itrust/features/common/domain/dto/verify_token_response/verify_token_response.dart'
-    as _i30;
+    as _i26;
 import 'package:itrust/features/common/domain/providers/auth_exception_provider.dart'
     as _i75;
 import 'package:itrust/features/common/domain/providers/auth_provider.dart'
@@ -90,13 +90,13 @@ import 'package:itrust/features/common/infrastructure/domain_providers/auth_prov
 import 'package:itrust/features/common/infrastructure/domain_providers/server_exception_provider/server_exception_provider.dart'
     as _i57;
 import 'package:itrust/features/common/infrastructure/json_converters/log_in_response_json_converter.dart'
-    as _i33;
+    as _i34;
 import 'package:itrust/features/common/infrastructure/json_converters/log_out_response_json_converter.dart'
-    as _i27;
+    as _i32;
 import 'package:itrust/features/common/infrastructure/json_converters/register_response_json_converter.dart'
-    as _i36;
+    as _i30;
 import 'package:itrust/features/common/infrastructure/json_converters/verify_token_response_json_converter.dart'
-    as _i31;
+    as _i27;
 import 'package:itrust/features/common/infrastructure/repositories/chat_repository.dart'
     as _i8;
 import 'package:itrust/features/common/infrastructure/repositories/post_repository.dart'
@@ -218,12 +218,12 @@ import 'package:itrust/main/infrastructure/coordinators/rules_coordinator.dart'
 import 'package:itrust/main/infrastructure/coordinators/settings_coordinator.dart'
     as _i109;
 import 'package:itrust/main/infrastructure/json_converters/problem_details_json_converter.dart'
-    as _i29;
+    as _i36;
 import 'package:itrust/utils/server_settings.dart' as _i58;
 import 'package:itrust/utils/utils.dart' as _i71;
-import 'package:json_annotation/json_annotation.dart' as _i34;
+import 'package:json_annotation/json_annotation.dart' as _i28;
 import 'package:mapster/mapster.dart' as _i43;
-import 'package:problem_details/problem_details.dart' as _i28;
+import 'package:problem_details/problem_details.dart' as _i35;
 
 import '../../../env/env_module.dart' as _i123;
 import '../../../features/common/infrastructure/third_party/mapster_module.dart'
@@ -294,17 +294,17 @@ Future<_i1.GetIt> init(
   gh.singleton<_i22.FormattedDateProvider>(_i23.ProdFormattedDateProvider(
       dateTimeProvider: gh<_i15.DateTimeProvider>()));
   gh.singleton<_i24.GlobalKey<_i24.NavigatorState>>(routerModule.rootKey);
-  gh.singleton<_i25.JsonConverter<_i26.LogOutResponse, Map<String, Object?>>>(
-      _i27.LogOutResponseJsonConverter());
-  gh.singleton<_i25.JsonConverter<_i28.ProblemDetails, Map<String, Object?>>>(
-      _i29.ProblemDetailsJsonConverter());
   gh.singleton<
-          _i25.JsonConverter<_i30.VerifyTokenResponse, Map<String, Object?>>>(
-      _i31.VerifyTokenResponseJsonConverter());
-  gh.singleton<_i25.JsonConverter<_i32.LogInResponse, Map<String, Object?>>>(
-      _i33.LogInResponseJsonConverter());
-  gh.singleton<_i34.JsonConverter<_i35.RegisterResponse, Map<String, Object?>>>(
-      _i36.RegisterResponseJsonConverter());
+          _i25.JsonConverter<_i26.VerifyTokenResponse, Map<String, Object?>>>(
+      _i27.VerifyTokenResponseJsonConverter());
+  gh.singleton<_i28.JsonConverter<_i29.RegisterResponse, Map<String, Object?>>>(
+      _i30.RegisterResponseJsonConverter());
+  gh.singleton<_i25.JsonConverter<_i31.LogOutResponse, Map<String, Object?>>>(
+      _i32.LogOutResponseJsonConverter());
+  gh.singleton<_i25.JsonConverter<_i33.LogInResponse, Map<String, Object?>>>(
+      _i34.LogInResponseJsonConverter());
+  gh.singleton<_i25.JsonConverter<_i35.ProblemDetails, Map<String, Object?>>>(
+      _i36.ProblemDetailsJsonConverter());
   gh.singleton<_i37.LockService>(
     _i38.TestLockService(),
     registerFor: {_test},

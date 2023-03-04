@@ -195,9 +195,11 @@ class _PasswordField extends HookWidget {
                 registerStore.password = value;
               },
               hintText: l10n.password_hint,
-              obscureText: obscureText.value,
+              obscureText: value,
               enabled: !registerStore.isLoading,
-              suffixIconPath: Assets.image.svg.removeRedEye.path,
+              suffixIconPath: value
+                  ? Assets.image.svg.removeRedEye.path
+                  : Assets.image.svg.visibilityOff.path,
               onSuffixPressed: () {
                 obscureText.value = !value;
               },

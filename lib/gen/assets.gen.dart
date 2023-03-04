@@ -163,6 +163,10 @@ class $AssetsImageSvgGen {
   /// File path: assets/image/svg/share.svg
   SvgGenImage get share => const SvgGenImage('assets/image/svg/share.svg');
 
+  /// File path: assets/image/svg/visibility_off.svg
+  SvgGenImage get visibilityOff =>
+      const SvgGenImage('assets/image/svg/visibility_off.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
         add,
@@ -199,7 +203,8 @@ class $AssetsImageSvgGen {
         search,
         send,
         settings,
-        share
+        share,
+        visibilityOff
       ];
 }
 
