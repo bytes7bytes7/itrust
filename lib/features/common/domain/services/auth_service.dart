@@ -1,18 +1,19 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../dto/dto.dart';
 import '../entities/user/user.dart';
 import '../exceptions/exceptions.dart';
 import '../providers/auth_exception_provider.dart';
 import '../providers/auth_provider.dart';
+import '../providers/auth_status_provider.dart';
 import '../providers/server_availability_provider.dart';
 import '../repositories/end_user_repository.dart';
 import '../value_objects/token_pair/token_pair.dart';
 import '../value_objects/user_id/user_id.dart';
 import 'device_info_service.dart';
+import 'keep_fresh_token_service.dart';
 import 'token_service.dart';
 
 @singleton
@@ -24,12 +25,16 @@ class AuthService {
     required EndUserRepository endUserRepository,
     required AuthExceptionProvider authExceptionProvider,
     required DeviceInfoService deviceInfoService,
+    required KeepFreshTokenService keepFreshTokenService,
+    required AuthStatusProvider authStatusProvider,
   })  : _serverAvailabilityProvider = serverAvailabilityProvider,
         _authProvider = authProvider,
         _tokenService = tokenService,
         _endUserRepository = endUserRepository,
         _authExceptionProvider = authExceptionProvider,
-        _deviceInfoService = deviceInfoService;
+        _deviceInfoService = deviceInfoService,
+        _keepFreshTokenService = keepFreshTokenService,
+        _authStatusProvider = authStatusProvider;
 
   final ServerAvailabilityProvider _serverAvailabilityProvider;
   final AuthProvider _authProvider;
@@ -37,12 +42,8 @@ class AuthService {
   final EndUserRepository _endUserRepository;
   final AuthExceptionProvider _authExceptionProvider;
   final DeviceInfoService _deviceInfoService;
-  late bool _isLoggedIn;
-  final _isLoggedInController = BehaviorSubject<bool>();
-
-  bool get isLoggedIn => _isLoggedIn;
-
-  Stream<bool> get onIsLoggedInChanged => _isLoggedInController.stream;
+  final KeepFreshTokenService _keepFreshTokenService;
+  final AuthStatusProvider _authStatusProvider;
 
   @PostConstruct(preResolve: true)
   Future<void> init() async {
@@ -54,16 +55,15 @@ class AuthService {
       final serverAvailable = await _serverAvailabilityProvider.check();
 
       if (serverAvailable) {
-        await _verifyToken();
+        try {
+          await _verifyToken();
+        } catch (e) {
+          _authStatusProvider.setTo(false);
+        }
       } else {
-        _isLoggedInController.add(true);
+        _authStatusProvider.setTo(true);
       }
     }
-  }
-
-  @disposeMethod
-  void dispose() {
-    _isLoggedInController.close();
   }
 
   Future<void> register({
@@ -88,7 +88,7 @@ class AuthService {
 
     response.value.fold(
       (l) {
-        _isLoggedInController.add(false);
+        _authStatusProvider.setTo(false);
 
         if (l.title == _authExceptionProvider.emailIsAlreadyInUse) {
           throw const EmailIsAlreadyInUse();
@@ -97,7 +97,7 @@ class AuthService {
         }
       },
       (r) {
-        _isLoggedInController.add(true);
+        _authStatusProvider.setTo(true);
 
         _tokenService.setTokenPair(
           TokenPair(
@@ -136,7 +136,7 @@ class AuthService {
 
     response.value.fold(
       (l) {
-        _isLoggedInController.add(false);
+        _authStatusProvider.setTo(false);
 
         if (l.title == _authExceptionProvider.invalidCredentials) {
           throw const InvalidCredentials();
@@ -145,7 +145,7 @@ class AuthService {
         }
       },
       (r) {
-        _isLoggedInController.add(true);
+        _authStatusProvider.setTo(true);
 
         _tokenService.setTokenPair(
           TokenPair(
@@ -167,28 +167,19 @@ class AuthService {
   }
 
   Future<void> logOut() async {
-    await _checkServerAvailability();
-
     const request = LogOutRequest();
 
-    final response = await _authProvider.logOut(request);
+    final response = await _keepFreshTokenService
+        .request(() => _authProvider.logOut(request));
 
     response.value.fold(
       (l) {
-        if (l.title == _authExceptionProvider.tokenExpired) {
-          _isLoggedInController.add(false);
-
-          _tokenService.removeToken();
-
-          _endUserRepository.removeMe();
-        } else {
-          throw Exception();
-        }
+        throw Exception();
       },
       (r) {
-        _isLoggedInController.add(false);
+        _authStatusProvider.setTo(false);
 
-        _tokenService.removeToken();
+        _tokenService.removeTokens();
 
         _endUserRepository.removeMe();
       },
@@ -202,15 +193,16 @@ class AuthService {
       deviceInfo: deviceInfo,
     );
 
-    final response = await _authProvider.verifyToken(request);
+    final response = await _keepFreshTokenService
+        .request(() => _authProvider.verifyToken(request));
 
     response.value.fold(
       (l) {
-        _tokenService.removeToken();
-        _isLoggedInController.add(false);
+        _tokenService.removeTokens();
+        _authStatusProvider.setTo(false);
       },
       (r) {
-        _isLoggedInController.add(true);
+        _authStatusProvider.setTo(true);
       },
     );
   }

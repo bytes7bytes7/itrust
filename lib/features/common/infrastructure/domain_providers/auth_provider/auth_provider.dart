@@ -9,7 +9,7 @@ import '../../../domain/providers/auth_provider.dart';
 
 part 'auth_provider.g.dart';
 
-const _authRoute = '/auth/';
+const _route = '/auth/';
 
 @Singleton(as: AuthProvider)
 @RestApi()
@@ -18,7 +18,7 @@ abstract class ProdAuthProvider implements AuthProvider {
   factory ProdAuthProvider(Dio dio, ServerSettings settings) {
     return ProdAuthProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_authRoute',
+      baseUrl: '${settings.baseUri}$_route',
     );
   }
 
@@ -42,12 +42,12 @@ abstract class ProdAuthProvider implements AuthProvider {
   @override
   @POST('/log_out')
   Future<JsonEitherWrapper<ProblemDetails, LogOutResponse>> logOut(
-    LogOutRequest request,
+    @Body() LogOutRequest request,
   );
 
   @override
   @POST('/verify_token')
   Future<JsonEitherWrapper<ProblemDetails, VerifyTokenResponse>> verifyToken(
-    VerifyTokenRequest request,
+    @Body() VerifyTokenRequest request,
   );
 }

@@ -79,6 +79,7 @@ class _ProdAuthProvider implements ProdAuthProvider {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<JsonEitherWrapper<ProblemDetails, LogOutResponse>>(
             Options(
@@ -105,6 +106,7 @@ class _ProdAuthProvider implements ProdAuthProvider {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<JsonEitherWrapper<ProblemDetails, VerifyTokenResponse>>(
             Options(

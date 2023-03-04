@@ -10,16 +10,16 @@ import 'coordinator.dart';
 class ProdLogInCoordinator extends Coordinator implements LogInCoordinator {
   ProdLogInCoordinator({
     required super.goRouter,
-    required AuthService authService,
-  }) : _authService = authService;
+    required AuthStatusProvider authStatusProvider,
+  }) : _authStatusProvider = authStatusProvider;
 
-  final AuthService _authService;
+  final AuthStatusProvider _authStatusProvider;
   StreamSubscription? _authSub;
 
   @override
   @postConstruct
   void init() {
-    _authSub = _authService.onIsLoggedInChanged.listen((isLoggedIn) {
+    _authSub = _authStatusProvider.onIsLoggedInChanged.listen((isLoggedIn) {
       final location = goRouter.location;
 
       final isLoggingIn =

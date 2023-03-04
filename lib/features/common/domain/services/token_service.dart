@@ -9,5 +9,5 @@ abstract class TokenService {
 
   Future<void> setTokenPair(TokenPair tokenPair);
 
-  Future<void> removeToken();
+  Future<void> removeTokens();
 }

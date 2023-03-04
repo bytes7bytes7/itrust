@@ -53,7 +53,7 @@ class ProdTokenService implements TokenService {
   }
 
   @override
-  Future<void> removeToken() async {
+  Future<void> removeTokens() async {
     final newHeaders = Map<String, Object?>.from(_dio.options.headers)
       ..remove(_authTokenHeaderKey);
 
