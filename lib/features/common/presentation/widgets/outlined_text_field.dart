@@ -11,17 +11,19 @@ const _iconSize = 24.0;
 class OutlinedTextField extends StatelessWidget {
   const OutlinedTextField({
     super.key,
+    this.initialText,
     this.controller,
     this.onChanged,
-    this.obscureText = false,
+    bool? obscureText,
     this.hintText,
     this.enabled,
     this.prefixIconPath,
     this.suffixIconPath,
     this.onPrefixPressed,
     this.onSuffixPressed,
-  });
+  }) : obscureText = obscureText ?? false;
 
+  final String? initialText;
   final TextEditingController? controller;
   final void Function(String)? onChanged;
   final String? hintText;
@@ -50,7 +52,8 @@ class OutlinedTextField extends StatelessWidget {
               onPressed: onPrefixPressed!,
             ),
           Expanded(
-            child: TextField(
+            child: TextFormField(
+              initialValue: initialText,
               controller: controller,
               obscureText: obscureText,
               enabled: enabled,

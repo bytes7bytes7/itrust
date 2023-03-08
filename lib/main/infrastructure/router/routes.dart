@@ -97,3 +97,17 @@ class SettingsRoute extends CosyRoute {
   @override
   GoRoute get route => _AppRoutes.settings;
 }
+
+class AccountSettingsRoute extends CosyRoute {
+  const AccountSettingsRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.accountSettings;
+}
+
+class ChangePersonalInfoRoute extends CosyRoute {
+  const ChangePersonalInfoRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.changePersonalInfo;
+}

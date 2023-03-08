@@ -10,7 +10,7 @@ import 'package:dio/dio.dart' as _i21;
 import 'package:flutter/material.dart' as _i26;
 import 'package:flutter/widgets.dart' as _i48;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i23;
-import 'package:freezed_annotation/freezed_annotation.dart' as _i27;
+import 'package:freezed_annotation/freezed_annotation.dart' as _i30;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:go_router/go_router.dart' as _i106;
 import 'package:injectable/injectable.dart' as _i2;
@@ -51,18 +51,18 @@ import 'package:itrust/features/common/application/providers/date_time_provider.
     as _i17;
 import 'package:itrust/features/common/application/providers/formatted_date_provider.dart'
     as _i24;
-import 'package:itrust/features/common/common.dart' as _i41;
+import 'package:itrust/features/common/common.dart' as _i39;
 import 'package:itrust/features/common/domain/domain.dart' as _i7;
 import 'package:itrust/features/common/domain/dto/get_user_by_id_response/get_user_by_id_response.dart'
-    as _i37;
-import 'package:itrust/features/common/domain/dto/log_in_response/log_in_response.dart'
     as _i35;
+import 'package:itrust/features/common/domain/dto/log_in_response/log_in_response.dart'
+    as _i41;
 import 'package:itrust/features/common/domain/dto/log_out_response/log_out_response.dart'
     as _i33;
 import 'package:itrust/features/common/domain/dto/register_response/register_response.dart'
-    as _i31;
-import 'package:itrust/features/common/domain/dto/verify_token_response/verify_token_response.dart'
     as _i28;
+import 'package:itrust/features/common/domain/dto/verify_token_response/verify_token_response.dart'
+    as _i37;
 import 'package:itrust/features/common/domain/providers/auth_exception_provider.dart'
     as _i105;
 import 'package:itrust/features/common/domain/providers/auth_provider.dart'
@@ -81,8 +81,6 @@ import 'package:itrust/features/common/domain/providers/user_provider.dart'
     as _i75;
 import 'package:itrust/features/common/domain/repositories/end_user_repository.dart'
     as _i102;
-import 'package:itrust/features/common/domain/services/account_service.dart'
-    as _i103;
 import 'package:itrust/features/common/domain/services/auth_service.dart'
     as _i104;
 import 'package:itrust/features/common/domain/services/device_info_service.dart'
@@ -116,17 +114,17 @@ import 'package:itrust/features/common/infrastructure/domain_providers/server_ex
 import 'package:itrust/features/common/infrastructure/domain_providers/user_provider/user_provider.dart'
     as _i76;
 import 'package:itrust/features/common/infrastructure/json_converters/get_user_by_id_response_json_converter.dart'
-    as _i38;
-import 'package:itrust/features/common/infrastructure/json_converters/log_in_response_json_converter.dart'
     as _i36;
+import 'package:itrust/features/common/infrastructure/json_converters/log_in_response_json_converter.dart'
+    as _i42;
 import 'package:itrust/features/common/infrastructure/json_converters/log_out_response_json_converter.dart'
     as _i34;
 import 'package:itrust/features/common/infrastructure/json_converters/refresh_token_response_json_converter.dart'
-    as _i42;
+    as _i40;
 import 'package:itrust/features/common/infrastructure/json_converters/register_response_json_converter.dart'
-    as _i32;
-import 'package:itrust/features/common/infrastructure/json_converters/verify_token_response_json_converter.dart'
     as _i29;
+import 'package:itrust/features/common/infrastructure/json_converters/verify_token_response_json_converter.dart'
+    as _i38;
 import 'package:itrust/features/common/infrastructure/repositories/chat_repository.dart'
     as _i10;
 import 'package:itrust/features/common/infrastructure/repositories/post_repository.dart'
@@ -145,15 +143,15 @@ import 'package:itrust/features/connection/application/stores/connection/connect
     as _i16;
 import 'package:itrust/features/features.dart' as _i107;
 import 'package:itrust/features/feed/application/coordinators/feed_coordinator.dart'
-    as _i134;
+    as _i141;
 import 'package:itrust/features/feed/application/providers/category_string_provider.dart'
     as _i82;
 import 'package:itrust/features/feed/application/providers/feed_string_repository.dart'
     as _i91;
 import 'package:itrust/features/feed/application/stores/category/category_store.dart'
-    as _i138;
+    as _i145;
 import 'package:itrust/features/feed/application/stores/feed/feed_store.dart'
-    as _i133;
+    as _i140;
 import 'package:itrust/features/feed/domain/services/category_service.dart'
     as _i5;
 import 'package:itrust/features/feed/domain/services/feed_service.dart' as _i89;
@@ -175,9 +173,9 @@ import 'package:itrust/features/menu/application/coordinators/menu_coordinator.d
 import 'package:itrust/features/menu/application/stores/menu/menu_store.dart'
     as _i115;
 import 'package:itrust/features/post/application/coordinators/comment_coordinator.dart'
-    as _i130;
-import 'package:itrust/features/post/application/coordinators/post_coordinator.dart'
     as _i137;
+import 'package:itrust/features/post/application/coordinators/post_coordinator.dart'
+    as _i144;
 import 'package:itrust/features/post/application/providers/comment_reply_string_provider.dart'
     as _i84;
 import 'package:itrust/features/post/application/providers/comment_string_provider.dart'
@@ -187,13 +185,13 @@ import 'package:itrust/features/post/application/providers/post_comment_string_p
 import 'package:itrust/features/post/application/providers/post_string_provider.dart'
     as _i56;
 import 'package:itrust/features/post/application/stores/comment/comment_store.dart'
-    as _i131;
+    as _i138;
 import 'package:itrust/features/post/application/stores/comment_reply/comment_reply_store.dart'
-    as _i129;
-import 'package:itrust/features/post/application/stores/post/post_store.dart'
     as _i136;
+import 'package:itrust/features/post/application/stores/post/post_store.dart'
+    as _i143;
 import 'package:itrust/features/post/application/stores/post_comment/post_comment_store.dart'
-    as _i135;
+    as _i142;
 import 'package:itrust/features/post/domain/domain.dart' as _i14;
 import 'package:itrust/features/post/domain/services/post_service.dart' as _i54;
 import 'package:itrust/features/post/infrastructure/app_providers/comment_reply_string_provider.dart'
@@ -210,12 +208,23 @@ import 'package:itrust/features/post/infrastructure/services/post_service.dart'
     as _i55;
 import 'package:itrust/features/post/infrastructure/third_party/mapster_registrar.dart'
     as _i52;
+import 'package:itrust/features/settings/application/coordinators/account_settings_coordinator.dart'
+    as _i130;
+import 'package:itrust/features/settings/application/coordinators/change_personal_info_coordinator.dart'
+    as _i134;
 import 'package:itrust/features/settings/application/coordinators/settings_coordinator.dart'
     as _i127;
 import 'package:itrust/features/settings/application/providers/settings_string_provider.dart'
     as _i66;
+import 'package:itrust/features/settings/application/stores/account_settings/account_settings_store.dart'
+    as _i129;
+import 'package:itrust/features/settings/application/stores/change_personal_info/change_personal_info_store.dart'
+    as _i132;
 import 'package:itrust/features/settings/application/stores/settings/settings_store.dart'
     as _i126;
+import 'package:itrust/features/settings/domain/domain.dart' as _i133;
+import 'package:itrust/features/settings/domain/services/account_service.dart'
+    as _i103;
 import 'package:itrust/features/settings/infrastructure/providers/settings_string_provider.dart'
     as _i67;
 import 'package:itrust/features/settings/infrastructure/third_party/mapster_registrar.dart'
@@ -231,10 +240,14 @@ import 'package:itrust/features/user_wall/infrastructure/services/user_info_serv
 import 'package:itrust/main/application/coordinators/home_coordinator.dart'
     as _i108;
 import 'package:itrust/main/application/stores/home/home_store.dart' as _i110;
-import 'package:itrust/main/infrastructure/coordinators/comment_coordinator.dart'
+import 'package:itrust/main/infrastructure/coordinators/account_settings_coordinator.dart'
     as _i128;
+import 'package:itrust/main/infrastructure/coordinators/change_personal_info_coordinator.dart'
+    as _i131;
+import 'package:itrust/main/infrastructure/coordinators/comment_coordinator.dart'
+    as _i135;
 import 'package:itrust/main/infrastructure/coordinators/feed_coordinator.dart'
-    as _i132;
+    as _i139;
 import 'package:itrust/main/infrastructure/coordinators/home_coordinator.dart'
     as _i109;
 import 'package:itrust/main/infrastructure/coordinators/log_in_coordinator.dart'
@@ -250,20 +263,20 @@ import 'package:itrust/main/infrastructure/coordinators/rules_coordinator.dart'
 import 'package:itrust/main/infrastructure/coordinators/settings_coordinator.dart'
     as _i125;
 import 'package:itrust/main/infrastructure/json_converters/problem_details_json_converter.dart'
-    as _i40;
+    as _i32;
 import 'package:itrust/utils/server_settings.dart' as _i64;
 import 'package:itrust/utils/utils.dart' as _i80;
-import 'package:json_annotation/json_annotation.dart' as _i30;
+import 'package:json_annotation/json_annotation.dart' as _i27;
 import 'package:mapster/mapster.dart' as _i49;
-import 'package:problem_details/problem_details.dart' as _i39;
+import 'package:problem_details/problem_details.dart' as _i31;
 
-import '../../../env/env_module.dart' as _i139;
+import '../../../env/env_module.dart' as _i146;
 import '../../../features/common/infrastructure/third_party/mapster_module.dart'
-    as _i140;
-import '../router/router.dart' as _i141;
-import '../third_party/device_info_plus_module.dart' as _i142;
-import '../third_party/dio_module.dart' as _i143;
-import '../third_party/secure_storage_module.dart' as _i144;
+    as _i147;
+import '../router/router.dart' as _i148;
+import '../third_party/device_info_plus_module.dart' as _i149;
+import '../third_party/dio_module.dart' as _i150;
+import '../third_party/secure_storage_module.dart' as _i151;
 
 const String _test = 'test';
 
@@ -330,23 +343,23 @@ Future<_i1.GetIt> init(
   gh.singleton<_i24.FormattedDateProvider>(_i25.ProdFormattedDateProvider(
       dateTimeProvider: gh<_i17.DateTimeProvider>()));
   gh.singleton<_i26.GlobalKey<_i26.NavigatorState>>(routerModule.rootKey);
-  gh.singleton<
-          _i27.JsonConverter<_i28.VerifyTokenResponse, Map<String, Object?>>>(
-      _i29.VerifyTokenResponseJsonConverter());
-  gh.singleton<_i30.JsonConverter<_i31.RegisterResponse, Map<String, Object?>>>(
-      _i32.RegisterResponseJsonConverter());
-  gh.singleton<_i27.JsonConverter<_i33.LogOutResponse, Map<String, Object?>>>(
+  gh.singleton<_i27.JsonConverter<_i28.RegisterResponse, Map<String, Object?>>>(
+      _i29.RegisterResponseJsonConverter());
+  gh.singleton<_i30.JsonConverter<_i31.ProblemDetails, Map<String, Object?>>>(
+      _i32.ProblemDetailsJsonConverter());
+  gh.singleton<_i30.JsonConverter<_i33.LogOutResponse, Map<String, Object?>>>(
       _i34.LogOutResponseJsonConverter());
-  gh.singleton<_i27.JsonConverter<_i35.LogInResponse, Map<String, Object?>>>(
-      _i36.LogInResponseJsonConverter());
   gh.singleton<
-          _i27.JsonConverter<_i37.GetUserByIDResponse, Map<String, Object?>>>(
-      _i38.GetUserByIDResponseJsonConverter());
-  gh.singleton<_i27.JsonConverter<_i39.ProblemDetails, Map<String, Object?>>>(
-      _i40.ProblemDetailsJsonConverter());
+          _i30.JsonConverter<_i35.GetUserByIDResponse, Map<String, Object?>>>(
+      _i36.GetUserByIDResponseJsonConverter());
   gh.singleton<
-          _i30.JsonConverter<_i41.RefreshTokenResponse, Map<String, Object?>>>(
-      _i42.RefreshTokenResponseJsonConverter());
+          _i30.JsonConverter<_i37.VerifyTokenResponse, Map<String, Object?>>>(
+      _i38.VerifyTokenResponseJsonConverter());
+  gh.singleton<
+          _i27.JsonConverter<_i39.RefreshTokenResponse, Map<String, Object?>>>(
+      _i40.RefreshTokenResponseJsonConverter());
+  gh.singleton<_i30.JsonConverter<_i41.LogInResponse, Map<String, Object?>>>(
+      _i42.LogInResponseJsonConverter());
   gh.singleton<_i43.LockService>(
     _i44.TestLockService(),
     registerFor: {_test},
@@ -414,8 +427,8 @@ Future<_i1.GetIt> init(
   gh.singleton<_i88.CommonMapsterRegistrar>(
       _i88.CommonMapsterRegistrar(gh<_i49.Mapster>())..register());
   gh.singleton<_i89.FeedService>(_i90.ProdFeedService(
-    postRepository: gh<_i41.PostRepository>(),
-    endUserRepository: gh<_i41.EndUserRepository>(),
+    postRepository: gh<_i39.PostRepository>(),
+    endUserRepository: gh<_i39.EndUserRepository>(),
   ));
   gh.singleton<_i91.FeedStringProvider>(_i92.ProdFeedStringProvider(
       navigatorKey: gh<_i48.GlobalKey<_i48.NavigatorState>>()));
@@ -439,10 +452,10 @@ Future<_i1.GetIt> init(
   ));
   gh.singleton<_i103.AccountService>(
     _i103.AccountService(
-      authStatusProvider: gh<_i3.AuthStatusProvider>(),
-      userProvider: gh<_i75.UserProvider>(),
-      keepFreshTokenService: gh<_i98.KeepFreshTokenService>(),
-      endUserRepository: gh<_i102.EndUserRepository>(),
+      authStatusProvider: gh<_i39.AuthStatusProvider>(),
+      userProvider: gh<_i39.UserProvider>(),
+      keepFreshTokenService: gh<_i39.KeepFreshTokenService>(),
+      endUserRepository: gh<_i39.EndUserRepository>(),
     )..init(),
     dispose: (i) => i.dispose(),
   );
@@ -511,64 +524,75 @@ Future<_i1.GetIt> init(
   gh.singleton<_i107.SettingsCoordinator>(
       _i125.ProdSettingsCoordinator(goRouter: gh<_i106.GoRouter>()));
   gh.singleton<_i126.SettingsStore>(_i126.SettingsStore(
-    authService: gh<_i41.AuthService>(),
+    authService: gh<_i39.AuthService>(),
     settingsCoordinator: gh<_i127.SettingsCoordinator>(),
     settingsStringProvider: gh<_i66.SettingsStringProvider>(),
     accountService: gh<_i103.AccountService>(),
     mapster: gh<_i49.Mapster>(),
   ));
+  gh.singleton<_i107.AccountSettingsCoordinator>(
+      _i128.ProdAccountSettingsCoordinator(goRouter: gh<_i106.GoRouter>()));
+  gh.factory<_i129.AccountSettingsStore>(() => _i129.AccountSettingsStore(
+      accountSettingsCoordinator: gh<_i130.AccountSettingsCoordinator>()));
+  gh.singleton<_i107.ChangePersonalInfoCoordinator>(
+      _i131.ProdChangePersonalInfoCoordinator(goRouter: gh<_i106.GoRouter>()));
+  gh.factory<_i132.ChangePersonalInfoStore>(() => _i132.ChangePersonalInfoStore(
+        accountService: gh<_i133.AccountService>(),
+        changePersonalInfoCoordinator:
+            gh<_i134.ChangePersonalInfoCoordinator>(),
+      ));
   gh.singleton<_i107.CommentCoordinator>(
-      _i128.ProdCommentCoordinator(goRouter: gh<_i106.GoRouter>()));
-  gh.factory<_i129.CommentReplyStore>(() => _i129.CommentReplyStore(
+      _i135.ProdCommentCoordinator(goRouter: gh<_i106.GoRouter>()));
+  gh.factory<_i136.CommentReplyStore>(() => _i136.CommentReplyStore(
         commentService: gh<_i14.CommentService>(),
-        commentCoordinator: gh<_i130.CommentCoordinator>(),
+        commentCoordinator: gh<_i137.CommentCoordinator>(),
         commentReplyStringProvider: gh<_i84.CommentReplyStringProvider>(),
         mapster: gh<_i49.Mapster>(),
       ));
-  gh.factory<_i131.CommentStore>(() => _i131.CommentStore(
-        commentReplyStore: gh<_i129.CommentReplyStore>(),
+  gh.factory<_i138.CommentStore>(() => _i138.CommentStore(
+        commentReplyStore: gh<_i136.CommentReplyStore>(),
         commentService: gh<_i14.CommentService>(),
-        commentCoordinator: gh<_i130.CommentCoordinator>(),
+        commentCoordinator: gh<_i137.CommentCoordinator>(),
         commentStringProvider: gh<_i86.CommentStringProvider>(),
         mapster: gh<_i49.Mapster>(),
       ));
   gh.singleton<_i107.FeedCoordinator>(
-      _i132.ProdFeedCoordinator(goRouter: gh<_i106.GoRouter>()));
-  gh.factory<_i133.FeedStore>(() => _i133.FeedStore(
+      _i139.ProdFeedCoordinator(goRouter: gh<_i106.GoRouter>()));
+  gh.factory<_i140.FeedStore>(() => _i140.FeedStore(
         feedService: gh<_i89.FeedService>(),
-        feedCoordinator: gh<_i134.FeedCoordinator>(),
+        feedCoordinator: gh<_i141.FeedCoordinator>(),
         feedStringProvider: gh<_i91.FeedStringProvider>(),
         mapster: gh<_i49.Mapster>(),
       ));
-  gh.factory<_i135.PostCommentStore>(() => _i135.PostCommentStore(
+  gh.factory<_i142.PostCommentStore>(() => _i142.PostCommentStore(
         commentService: gh<_i14.CommentService>(),
-        commentCoordinator: gh<_i130.CommentCoordinator>(),
+        commentCoordinator: gh<_i137.CommentCoordinator>(),
         postCommentStringProvider: gh<_i50.PostCommentStringProvider>(),
         mapster: gh<_i49.Mapster>(),
       ));
-  gh.factory<_i136.PostStore>(() => _i136.PostStore(
-        postCommentStore: gh<_i135.PostCommentStore>(),
+  gh.factory<_i143.PostStore>(() => _i143.PostStore(
+        postCommentStore: gh<_i142.PostCommentStore>(),
         postService: gh<_i54.PostService>(),
-        postCoordinator: gh<_i137.PostCoordinator>(),
+        postCoordinator: gh<_i144.PostCoordinator>(),
         postStringProvider: gh<_i56.PostStringProvider>(),
         mapster: gh<_i49.Mapster>(),
       ));
-  gh.singleton<_i138.CategoryStore>(_i138.CategoryStore(
-    feedStore: gh<_i133.FeedStore>(),
+  gh.singleton<_i145.CategoryStore>(_i145.CategoryStore(
+    feedStore: gh<_i140.FeedStore>(),
     categoryService: gh<_i5.CategoryService>(),
     categoryStringProvider: gh<_i82.CategoryStringProvider>(),
   ));
   return getIt;
 }
 
-class _$EnvModule extends _i139.EnvModule {}
+class _$EnvModule extends _i146.EnvModule {}
 
-class _$MapsterModule extends _i140.MapsterModule {}
+class _$MapsterModule extends _i147.MapsterModule {}
 
-class _$RouterModule extends _i141.RouterModule {}
+class _$RouterModule extends _i148.RouterModule {}
 
-class _$DeviceInfoPlusModule extends _i142.DeviceInfoPlusModule {}
+class _$DeviceInfoPlusModule extends _i149.DeviceInfoPlusModule {}
 
-class _$DioModule extends _i143.DioModule {}
+class _$DioModule extends _i150.DioModule {}
 
-class _$SecureStorageModule extends _i144.SecureStorageModule {}
+class _$SecureStorageModule extends _i151.SecureStorageModule {}

@@ -5,7 +5,7 @@ import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
-import '../../../../common/domain/services/account_service.dart';
+import '../../../domain/services/account_service.dart';
 import '../../coordinators/settings_coordinator.dart';
 import '../../providers/settings_string_provider.dart';
 import '../../view_models/end_user_vm/end_user_vm.dart';
@@ -73,5 +73,9 @@ abstract class _SettingsStore extends SyncStore with Store {
 
   void onBackButtonPressed() {
     _settingsCoordinator.onBackButtonPressed();
+  }
+
+  void onAccountButtonPressed() {
+    _settingsCoordinator.onAccountButtonPressed();
   }
 }

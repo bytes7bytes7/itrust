@@ -77,6 +77,9 @@ class $AssetsImageSvgGen {
   /// File path: assets/image/svg/close.svg
   SvgGenImage get close => const SvgGenImage('assets/image/svg/close.svg');
 
+  /// File path: assets/image/svg/devices.svg
+  SvgGenImage get devices => const SvgGenImage('assets/image/svg/devices.svg');
+
   /// File path: assets/image/svg/done.svg
   SvgGenImage get done => const SvgGenImage('assets/image/svg/done.svg');
 
@@ -113,6 +116,9 @@ class $AssetsImageSvgGen {
   /// File path: assets/image/svg/local_fire_department.svg
   SvgGenImage get localFireDepartment =>
       const SvgGenImage('assets/image/svg/local_fire_department.svg');
+
+  /// File path: assets/image/svg/lock.svg
+  SvgGenImage get lock => const SvgGenImage('assets/image/svg/lock.svg');
 
   /// File path: assets/image/svg/logout.svg
   SvgGenImage get logout => const SvgGenImage('assets/image/svg/logout.svg');
@@ -179,6 +185,7 @@ class $AssetsImageSvgGen {
         checkBox,
         checkBoxOutlineBlank,
         close,
+        devices,
         done,
         doneAll,
         emoji,
@@ -190,6 +197,7 @@ class $AssetsImageSvgGen {
         like,
         likeFilled,
         localFireDepartment,
+        lock,
         logout,
         menu,
         mic,

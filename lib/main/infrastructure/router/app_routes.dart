@@ -185,5 +185,41 @@ class _AppRoutes {
         child: const SettingsScreen(),
       );
     },
+    routes: [
+      accountSettings,
+    ],
+  );
+
+  static final accountSettings = GoRoute(
+    path: 'account',
+    name: 'account_settings',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const AccountSettingsScreen(),
+      );
+    },
+    routes: [
+      changePersonalInfo,
+    ],
+  );
+
+  static final changePersonalInfo = GoRoute(
+    path: 'personal_info',
+    name: 'change_personal_info',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const ChangePersonalInfoScreen(),
+      );
+    },
   );
 }

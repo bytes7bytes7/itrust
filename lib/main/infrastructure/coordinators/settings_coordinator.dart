@@ -19,4 +19,9 @@ class ProdSettingsCoordinator extends Coordinator
       const MenuRoute().go(goRouter);
     }
   }
+
+  @override
+  void onAccountButtonPressed() {
+    const AccountSettingsRoute().push(goRouter);
+  }
 }

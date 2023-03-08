@@ -65,5 +65,13 @@
   "go_to_register": "Do not have an account?",
   "terms_checkbox_first_part": "I agree to the ",
   "terms_checkbox_second_part": "Terms of Service and Privacy Policy",
-  "server_not_available": "Server is not available. Try again later."
+  "server_not_available": "Server is not available. Try again later.",
+  "account_settings_screen_title": "Account",
+  "change_personal_info_btn": "Personal Info",
+  "change_password_btn": "Password",
+  "change_devices_btn": "Devices",
+  "change_personal_info_screen_title": "Personal info",
+  "change_first_name_field": "First name",
+  "change_last_name_field": "Last name",
+  "apply_changes_btn": "Apply"
 }

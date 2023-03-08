@@ -2,11 +2,7 @@ import 'dart:async';
 
 import 'package:injectable/injectable.dart';
 
-import '../entities/user/user.dart';
-import '../providers/auth_status_provider.dart';
-import '../providers/user_provider.dart';
-import '../repositories/end_user_repository.dart';
-import 'keep_fresh_token_service.dart';
+import '../../../common/common.dart';
 
 @singleton
 class AccountService {
