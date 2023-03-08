@@ -8,7 +8,7 @@ part of 'register_response.dart';
 
 RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) =>
     RegisterResponse(
-      id: json['id'] as Map<String, dynamic>,
+      id: UserID.fromJson(json['id'] as Map<String, dynamic>),
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,
@@ -18,7 +18,7 @@ RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$RegisterResponseToJson(RegisterResponse instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'id': instance.id.toJson(),
       'firstName': instance.firstName,
       'lastName': instance.lastName,
       'email': instance.email,

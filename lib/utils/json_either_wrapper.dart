@@ -1,10 +1,12 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logging/logging.dart';
 
 import 'typedef.dart';
 
 final _getIt = GetIt.instance;
+final _logger = Logger('JsonEitherWrapper');
 
 class JsonEitherWrapper<L, R> {
   const JsonEitherWrapper(this.value);
@@ -17,9 +19,15 @@ class JsonEitherWrapper<L, R> {
 
       return JsonEitherWrapper(left(leftConverter.fromJson(json)));
     } catch (_) {
-      final rightConverter = _getIt.get<JsonConverter<R, JsonMap>>();
+      try {
+        final rightConverter = _getIt.get<JsonConverter<R, JsonMap>>();
 
-      return JsonEitherWrapper(right(rightConverter.fromJson(json)));
+        return JsonEitherWrapper(right(rightConverter.fromJson(json)));
+      } catch (e) {
+        _logger.shout(e);
+
+        rethrow;
+      }
     }
   }
 

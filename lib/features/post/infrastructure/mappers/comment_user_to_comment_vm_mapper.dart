@@ -46,7 +46,10 @@ class CommentUserToCommentVMMapper
       modifiedAt: formattedModifiedAt,
       authorName: _user.map(
         staff: (user) => user.name,
-        end: (user) => user.name ?? user.email,
+        end: (user) {
+          return user.firstName +
+              (user.lastName != null ? ' ${user.lastName!}' : '');
+        },
       ),
       avatarUrl: _user.avatarUrls.firstOrNull,
       likedByMe: _comment.likedByMe,

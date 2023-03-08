@@ -26,7 +26,10 @@ class PostUserToPostVMMapper extends TwoSourcesMapper<Post, User, PostVM> {
       authorID: _post.authorID.str,
       authorName: _user.map(
         staff: (user) => user.name,
-        end: (user) => user.name ?? user.email,
+        end: (user) {
+          return user.firstName +
+              (user.lastName != null ? ' ${user.lastName!}' : '');
+        },
       ),
       avatarUrl: _user.avatarUrls.firstOrNull,
       text: _post.text,

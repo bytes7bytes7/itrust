@@ -75,6 +75,8 @@ abstract class _CommentStore extends SyncStore with Store {
             id: UserID('user'),
             avatarUrls: [],
             email: 'email@email.com',
+            firstName: 'first',
+            lastName: 'last',
           );
 
           _comment = _mapster.map2(comment, user, To<CommentVM>());

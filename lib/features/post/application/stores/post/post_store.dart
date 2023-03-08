@@ -67,6 +67,8 @@ abstract class _PostStore extends SyncStore with Store {
             id: UserID('user'),
             avatarUrls: [],
             email: 'email@email.com',
+            firstName: 'first',
+            lastName: 'last',
           );
 
           _post = _mapster.map2(post, user, To<PostVM>());

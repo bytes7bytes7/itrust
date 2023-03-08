@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
+import '../../value_objects/user_id/user_id.dart';
 
 part 'log_in_response.g.dart';
 
@@ -15,7 +16,7 @@ class LogInResponse {
     required this.refreshToken,
   });
 
-  final JsonMap id;
+  final UserID id;
   final String firstName;
   final String lastName;
   final String email;

@@ -72,6 +72,8 @@ abstract class _FeedStore extends SyncStore with Store {
               id: UserID('user'),
               avatarUrls: [],
               email: 'email@email.com',
+              firstName: 'first',
+              lastName: 'last',
             );
 
             _posts = data

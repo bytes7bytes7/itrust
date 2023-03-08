@@ -60,6 +60,8 @@ abstract class _PostCommentStore extends SyncStore with Store {
             id: UserID('user'),
             avatarUrls: [],
             email: 'email@email.com',
+            firstName: 'first',
+            lastName: 'last',
           );
 
           _comments = comments

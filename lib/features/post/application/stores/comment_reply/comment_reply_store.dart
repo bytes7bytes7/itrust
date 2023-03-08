@@ -65,6 +65,8 @@ abstract class _CommentReplyStore extends SyncStore with Store {
             id: UserID('user'),
             avatarUrls: [],
             email: 'email@email.com',
+            firstName: 'first',
+            lastName: 'last',
           );
 
           _replies = comments

@@ -17,7 +17,8 @@ final _getIt = GetIt.instance;
 const _me = User.end(
   id: UserID('me'),
   email: 'bytes7@gmail.com',
-  name: 'bytes7 bytes7',
+  firstName: 'first',
+  lastName: 'last',
   avatarUrls: [],
 );
 

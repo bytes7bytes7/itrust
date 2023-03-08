@@ -102,7 +102,7 @@ class KeepFreshTokenService {
   }
 
   Future<void> _logOut() async {
-    _authStatusProvider.setTo(false);
+    _authStatusProvider.remove();
     await _tokenService.removeTokens();
     await _endUserRepository.removeMe();
   }

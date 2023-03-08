@@ -14,13 +14,13 @@ class UserInfoCard extends StatelessWidget {
   const UserInfoCard({
     super.key,
     required this.id,
+    required this.name,
     this.avatarUrl,
-    this.nameOrEmail,
   });
 
   final String id;
+  final String name;
   final String? avatarUrl;
-  final String? nameOrEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,6 @@ class UserInfoCard extends StatelessWidget {
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
     final hasAvatar = avatarUrl != null;
-    final hasNameOrEmail = nameOrEmail != null;
 
     return Align(
       alignment: Alignment.center,
@@ -79,11 +78,10 @@ class UserInfoCard extends StatelessWidget {
                       ),
                     ),
             ),
-            if (hasNameOrEmail)
-              Text(
-                nameOrEmail!,
-                style: theme.textTheme.headline3,
-              ),
+            Text(
+              name,
+              style: theme.textTheme.headline3,
+            ),
             Text(
               id,
               style: theme.textTheme.bodyText1,

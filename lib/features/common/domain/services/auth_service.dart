@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 
 import '../dto/dto.dart';
-import '../entities/user/user.dart';
 import '../exceptions/exceptions.dart';
 import '../providers/auth_exception_provider.dart';
 import '../providers/auth_provider.dart';
@@ -11,7 +10,6 @@ import '../providers/auth_status_provider.dart';
 import '../providers/server_availability_provider.dart';
 import '../repositories/end_user_repository.dart';
 import '../value_objects/token_pair/token_pair.dart';
-import '../value_objects/user_id/user_id.dart';
 import 'device_info_service.dart';
 import 'keep_fresh_token_service.dart';
 import 'token_service.dart';
@@ -58,10 +56,14 @@ class AuthService {
         try {
           await _verifyToken();
         } catch (e) {
-          _authStatusProvider.setTo(false);
+          _authStatusProvider.remove();
         }
       } else {
-        _authStatusProvider.setTo(true);
+        final me = _endUserRepository.me;
+
+        if (me != null) {
+          _authStatusProvider.setTo(me.id);
+        }
       }
     }
   }
@@ -88,7 +90,7 @@ class AuthService {
 
     response.value.fold(
       (l) {
-        _authStatusProvider.setTo(false);
+        _authStatusProvider.remove();
 
         if (l.title == _authExceptionProvider.emailIsAlreadyInUse) {
           throw const EmailIsAlreadyInUse();
@@ -97,21 +99,12 @@ class AuthService {
         }
       },
       (r) {
-        _authStatusProvider.setTo(true);
+        _authStatusProvider.setTo(r.id);
 
         _tokenService.setTokenPair(
           TokenPair(
             access: r.accessToken,
             refresh: r.refreshToken,
-          ),
-        );
-
-        // TODO: implement
-        _endUserRepository.setMe(
-          EndUser(
-            id: UserID(r.id.values.first as String),
-            avatarUrls: [],
-            email: r.email,
           ),
         );
       },
@@ -136,7 +129,7 @@ class AuthService {
 
     response.value.fold(
       (l) {
-        _authStatusProvider.setTo(false);
+        _authStatusProvider.remove();
 
         if (l.title == _authExceptionProvider.invalidCredentials) {
           throw const InvalidCredentials();
@@ -145,21 +138,12 @@ class AuthService {
         }
       },
       (r) {
-        _authStatusProvider.setTo(true);
+        _authStatusProvider.setTo(r.id);
 
         _tokenService.setTokenPair(
           TokenPair(
             access: r.accessToken,
             refresh: r.refreshToken,
-          ),
-        );
-
-        // TODO: implement
-        _endUserRepository.setMe(
-          EndUser(
-            id: UserID(r.id.values.first as String),
-            avatarUrls: [],
-            email: r.email,
           ),
         );
       },
@@ -177,7 +161,7 @@ class AuthService {
         throw Exception();
       },
       (r) {
-        _authStatusProvider.setTo(false);
+        _authStatusProvider.remove();
 
         _tokenService.removeTokens();
 
@@ -199,10 +183,14 @@ class AuthService {
     response.value.fold(
       (l) {
         _tokenService.removeTokens();
-        _authStatusProvider.setTo(false);
+        _authStatusProvider.remove();
       },
       (r) {
-        _authStatusProvider.setTo(true);
+        final me = _endUserRepository.me;
+
+        if (me != null) {
+          _authStatusProvider.setTo(me.id);
+        }
       },
     );
   }

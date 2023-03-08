@@ -21,7 +21,9 @@ class TestUserService implements UserInfoService {
                   ]
                 : [],
             email: _randString(_rand.nextInt(8) + 10),
-            name: _rand.nextBool() ? _randString(_rand.nextInt(8) + 10) : null,
+            firstName: _randString(_rand.nextInt(5) + 5),
+            lastName:
+                _rand.nextBool() ? _randString(_rand.nextInt(5) + 5) : null,
           );
         }
 

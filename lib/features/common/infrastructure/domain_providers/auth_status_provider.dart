@@ -2,13 +2,18 @@ import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../domain/providers/auth_status_provider.dart';
+import '../../domain/value_objects/user_id/user_id.dart';
 
 @Singleton(as: AuthStatusProvider)
 class ProdAuthStatusProvider implements AuthStatusProvider {
-  final _controller = BehaviorSubject<bool>();
+  final _controller = BehaviorSubject<UserID?>();
 
   @override
-  Stream<bool> get onIsLoggedInChanged => _controller.stream;
+  Stream<bool> get onIsLoggedInChanged =>
+      _controller.stream.map((e) => e != null);
+
+  @override
+  Stream<UserID?> get onUserIDChanged => _controller.stream;
 
   @disposeMethod
   @override
@@ -17,7 +22,12 @@ class ProdAuthStatusProvider implements AuthStatusProvider {
   }
 
   @override
-  void setTo(bool isLoggedIn) {
-    _controller.value = isLoggedIn;
+  void setTo(UserID userID) {
+    _controller.add(userID);
+  }
+
+  @override
+  void remove() {
+    _controller.add(null);
   }
 }

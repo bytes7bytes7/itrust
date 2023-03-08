@@ -11,21 +11,24 @@ part 'user.g.dart';
   unionKey: 'type',
 )
 class User with _$User {
-  const factory User.staff({
-    required UserID id,
-    required String name,
-    required List<String> avatarUrls,
-  }) = StaffUser;
-
   // Can be added later:
   //  bool online
   //  DateTime lastSeenAt
   const factory User.end({
     required UserID id,
-    required List<String> avatarUrls,
     required String email,
-    String? name,
+    required String firstName,
+    required List<String> avatarUrls,
+    String? lastName,
+    String? nick,
   }) = EndUser;
+
+  const factory User.staff({
+    required UserID id,
+    required String name,
+    required List<String> avatarUrls,
+    String? nick,
+  }) = StaffUser;
 
   factory User.fromJson(JsonMap json) => _$UserFromJson(json);
 }

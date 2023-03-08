@@ -45,6 +45,23 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
+  late final _$_meAtom = Atom(name: '_SettingsStore._me', context: context);
+
+  EndUserVM? get me {
+    _$_meAtom.reportRead();
+    return super._me;
+  }
+
+  @override
+  EndUserVM? get _me => me;
+
+  @override
+  set _me(EndUserVM? value) {
+    _$_meAtom.reportWrite(value, super._me, () {
+      super._me = value;
+    });
+  }
+
   late final _$_SettingsStoreActionController =
       ActionController(name: '_SettingsStore', context: context);
 
