@@ -39,9 +39,9 @@ abstract class _ChangePersonalInfoStore extends SyncStore with Store {
 
   @computed
   bool get canApply =>
+      !_isLoading &&
       firstName.isNotEmpty &&
-      _initFirstName != firstName &&
-      _initLastName != lastName;
+      (firstName != _initFirstName || lastName != _initLastName);
 
   @action
   void init() {
