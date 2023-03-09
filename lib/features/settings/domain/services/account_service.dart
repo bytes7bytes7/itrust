@@ -2,22 +2,27 @@ import 'dart:async';
 
 import 'package:injectable/injectable.dart';
 
-import '../../../common/common.dart';
+import '../../../common/domain/domain.dart';
+import '../dto/change_personal_info_request/change_personal_info_request.dart';
+import '../providers/account_provider.dart';
 
 @singleton
 class AccountService {
   AccountService({
     required AuthStatusProvider authStatusProvider,
     required UserProvider userProvider,
+    required AccountProvider accountProvider,
     required KeepFreshTokenService keepFreshTokenService,
     required EndUserRepository endUserRepository,
   })  : _authStatusProvider = authStatusProvider,
         _userProvider = userProvider,
+        _accountProvider = accountProvider,
         _keepFreshTokenService = keepFreshTokenService,
         _endUserRepository = endUserRepository;
 
   final AuthStatusProvider _authStatusProvider;
   final UserProvider _userProvider;
+  final AccountProvider _accountProvider;
   final KeepFreshTokenService _keepFreshTokenService;
   final EndUserRepository _endUserRepository;
   StreamSubscription? _authStatusSub;
@@ -35,7 +40,7 @@ class AccountService {
 
       try {
         final response = await _keepFreshTokenService
-            .request(() async => _userProvider.getUserByID(id.str));
+            .request(() => _userProvider.getUserByID(id.str));
 
         await response.value.match(
           (l) {
@@ -58,5 +63,29 @@ class AccountService {
   @disposeMethod
   void dispose() {
     _authStatusSub?.cancel();
+  }
+
+  Future<void> changePersonalInfo({
+    required String firstName,
+    required String lastName,
+  }) async {
+    final request = ChangePersonalInfoRequest(
+      firstName: firstName,
+      lastName: lastName,
+    );
+
+    final response = await _keepFreshTokenService
+        .request(() => _accountProvider.changePersonalInfo(request));
+
+    await response.value.fold(
+      (l) {
+        // TODO:
+        throw Exception();
+      },
+      (r) async {
+        final user = r.user;
+        await _endUserRepository.setMe(user);
+      },
+    );
   }
 }

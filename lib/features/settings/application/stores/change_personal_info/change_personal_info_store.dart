@@ -60,7 +60,25 @@ abstract class _ChangePersonalInfoStore extends SyncStore with Store {
   }
 
   @action
-  void applyChanges() {}
+  void applyChanges() {
+    perform(
+      () async {
+        try {
+          await _accountService.changePersonalInfo(
+            firstName: firstName,
+            lastName: lastName,
+          );
+
+          _initFirstName = firstName;
+          _initLastName = lastName;
+        } catch (e) {
+          // TODO:
+        }
+      },
+      setIsLoading: (v) => _isLoading = v,
+      removeError: () => _error = '',
+    );
+  }
 
   void onBackButtonPressed() {
     _changePersonalInfoCoordinator.onBackButtonPressed();

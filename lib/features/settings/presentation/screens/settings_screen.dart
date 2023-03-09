@@ -46,6 +46,33 @@ class SettingsScreen extends HookWidget {
   }
 }
 
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _AppBar({
+    required this.settingsStore,
+    required this.l10n,
+  });
+
+  final SettingsStore settingsStore;
+  final AppLocalizations l10n;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(_appBarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: FilledIconButton(
+        iconPath: Assets.image.svg.arrowBack.path,
+        onPressed: settingsStore.onBackButtonPressed,
+      ),
+      centerTitle: true,
+      title: Text(
+        l10n.settings_tab_title,
+      ),
+    );
+  }
+}
+
 class _Body extends StatelessWidget {
   const _Body({
     required this.l10n,
@@ -100,33 +127,6 @@ class _Body extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar({
-    required this.settingsStore,
-    required this.l10n,
-  });
-
-  final SettingsStore settingsStore;
-  final AppLocalizations l10n;
-
-  @override
-  Size get preferredSize => const Size.fromHeight(_appBarHeight);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      leading: FilledIconButton(
-        iconPath: Assets.image.svg.arrowBack.path,
-        onPressed: settingsStore.onBackButtonPressed,
-      ),
-      centerTitle: true,
-      title: Text(
-        l10n.settings_tab_title,
-      ),
     );
   }
 }
