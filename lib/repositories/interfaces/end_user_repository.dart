@@ -13,5 +13,7 @@ abstract class EndUserRepository {
 
   Future<void> removeMe();
 
-  Future<void> addOrUpdate(EndUser user);
+  Future<void> addOrUpdate({required EndUser user});
+
+  Future<EndUser?> getByID({required UserID id});
 }

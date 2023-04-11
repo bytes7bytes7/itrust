@@ -16,15 +16,18 @@ class FeedStore = _FeedStore with _$FeedStore;
 abstract class _FeedStore extends SyncStore with Store {
   _FeedStore({
     required FeedService feedService,
+    required UserService userService,
     required FeedCoordinator feedCoordinator,
     required FeedStringProvider feedStringProvider,
     required Mapster mapster,
   })  : _feedService = feedService,
+        _userService = userService,
         _feedCoordinator = feedCoordinator,
         _feedStringProvider = feedStringProvider,
         _mapster = mapster;
 
   final FeedService _feedService;
+  final UserService _userService;
   final FeedCoordinator _feedCoordinator;
   final FeedStringProvider _feedStringProvider;
   final Mapster _mapster;
@@ -69,24 +72,25 @@ abstract class _FeedStore extends SyncStore with Store {
           );
 
           if (_processingCategory == category) {
-            // TODO: implement
-            const author = User.end(
-              id: UserID('user'),
-              avatarUrls: [],
-              email: 'email@email.com',
-              firstName: 'first',
-              lastName: 'last',
-            );
+            final newPosts = <PostVM>[];
+            for (final post in data) {
+              final author = await _userService.getUserByID(id: post.authorID);
 
-            _posts = data
-                .map(
-                  (post) => _mapster.map2(
-                    post,
-                    author,
-                    To<PostVM>(),
-                  ),
-                )
-                .toList();
+              if (author == null) {
+                // TODO: maybe create deleted user or don't show their posts
+                continue;
+              }
+
+              newPosts.add(
+                _mapster.map2(
+                  post,
+                  author,
+                  To<PostVM>(),
+                ),
+              );
+            }
+
+            _posts = newPosts;
           }
         } catch (e) {
           _error = _feedStringProvider.canNotLoadPosts;

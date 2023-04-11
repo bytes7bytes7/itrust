@@ -49,8 +49,13 @@ class TestEndUserRepository implements EndUserRepository {
   }
 
   @override
-  Future<void> addOrUpdate(EndUser user) async {
+  Future<void> addOrUpdate({required EndUser user}) async {
     _storage[user.id] = user;
+  }
+
+  @override
+  Future<EndUser?> getByID({required UserID id}) async {
+    return _storage[id];
   }
 }
 
@@ -117,7 +122,18 @@ class ProdEndUserRepository implements EndUserRepository {
   }
 
   @override
-  Future<void> addOrUpdate(EndUser user) async {
+  Future<void> addOrUpdate({required EndUser user}) async {
     await _usersBox.put(user.id.str, _jsonCodec.encode(user.toJson()));
+  }
+
+  @override
+  Future<EndUser?> getByID({required UserID id}) async {
+    final string = _usersBox.get(id.str);
+
+    if (string == null) {
+      return null;
+    }
+
+    return EndUser.fromJson(_jsonCodec.decode(string));
   }
 }
