@@ -3,17 +3,21 @@ import 'package:mapster/mapster.dart';
 
 import '../../application/application.dart';
 import '../../domain/domain.dart';
+import '../other/media_url_creator.dart';
 
 class PostUserToPostVMMapper extends TwoSourcesMapper<Post, User, PostVM> {
   PostUserToPostVMMapper(
     super.input, {
     required FormattedDateProvider formattedDateProvider,
     required BeautifiedNumberProvider beautifiedNumberProvider,
+    required MediaUrlCreator mediaUrlCreator,
   })  : _formattedDateProvider = formattedDateProvider,
-        _beautifiedNumberProvider = beautifiedNumberProvider;
+        _beautifiedNumberProvider = beautifiedNumberProvider,
+        _mediaUrlCreator = mediaUrlCreator;
 
   final FormattedDateProvider _formattedDateProvider;
   final BeautifiedNumberProvider _beautifiedNumberProvider;
+  final MediaUrlCreator _mediaUrlCreator;
 
   @override
   PostVM map() {
@@ -34,7 +38,15 @@ class PostUserToPostVMMapper extends TwoSourcesMapper<Post, User, PostVM> {
       avatarUrl: _user.avatarUrls.firstOrNull,
       text: _post.text,
       createdAt: _formattedDateProvider.inRelationToNow(_post.createdAt),
-      mediaUrls: _post.mediaUrls,
+      media: _post.media
+          .map(
+            (e) => MediaVM(
+              id: e.id.str,
+              type: e.type,
+              url: _mediaUrlCreator.create(e.id),
+            ),
+          )
+          .toList(),
       likedByMe: _post.likedByMe,
       likesAmountWithoutMyLike:
           _beautifiedNumberProvider.beautify(likesAmountWithoutMyLike),

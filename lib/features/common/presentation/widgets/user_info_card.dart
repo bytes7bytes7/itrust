@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
+import 'custom_cached_network_image.dart';
 import 'sized_icon.dart';
 
 const _paddingV = 24.0;
@@ -48,7 +48,7 @@ class UserInfoCard extends StatelessWidget {
                 color: colorSchemeTX.avatarBackground,
               ),
               child: hasAvatar
-                  ? CachedNetworkImage(
+                  ? CustomCachedNetworkImage(
                       imageUrl: avatarUrl!,
                       imageBuilder: (context, imageProvider) {
                         return Container(

@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
+import 'custom_cached_network_image.dart';
 import 'sized_icon.dart';
 
 const _radius = 28.0;
@@ -30,7 +30,7 @@ class CustomInCircleAvatar extends StatelessWidget {
       backgroundColor: colorSchemeTX.avatarBackground,
       radius: _radius,
       child: url != null
-          ? CachedNetworkImage(
+          ? CustomCachedNetworkImage(
               imageUrl: url!,
               imageBuilder: (context, imageProvider) {
                 return Container(

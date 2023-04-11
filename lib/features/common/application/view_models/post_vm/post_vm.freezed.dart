@@ -21,7 +21,7 @@ mixin _$PostVM {
   String get authorName => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  List<String> get mediaUrls => throw _privateConstructorUsedError;
+  List<MediaVM> get media => throw _privateConstructorUsedError;
   bool get likedByMe => throw _privateConstructorUsedError;
   String get likesAmountWithoutMyLike => throw _privateConstructorUsedError;
   String get likesAmountWithMyLike => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $PostVMCopyWith<$Res> {
       String authorName,
       String createdAt,
       String text,
-      List<String> mediaUrls,
+      List<MediaVM> media,
       bool likedByMe,
       String likesAmountWithoutMyLike,
       String likesAmountWithMyLike,
@@ -71,7 +71,7 @@ class _$PostVMCopyWithImpl<$Res, $Val extends PostVM>
     Object? authorName = null,
     Object? createdAt = null,
     Object? text = null,
-    Object? mediaUrls = null,
+    Object? media = null,
     Object? likedByMe = null,
     Object? likesAmountWithoutMyLike = null,
     Object? likesAmountWithMyLike = null,
@@ -100,10 +100,10 @@ class _$PostVMCopyWithImpl<$Res, $Val extends PostVM>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      mediaUrls: null == mediaUrls
-          ? _value.mediaUrls
-          : mediaUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      media: null == media
+          ? _value.media
+          : media // ignore: cast_nullable_to_non_nullable
+              as List<MediaVM>,
       likedByMe: null == likedByMe
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
@@ -144,7 +144,7 @@ abstract class _$$_PostVMCopyWith<$Res> implements $PostVMCopyWith<$Res> {
       String authorName,
       String createdAt,
       String text,
-      List<String> mediaUrls,
+      List<MediaVM> media,
       bool likedByMe,
       String likesAmountWithoutMyLike,
       String likesAmountWithMyLike,
@@ -168,7 +168,7 @@ class __$$_PostVMCopyWithImpl<$Res>
     Object? authorName = null,
     Object? createdAt = null,
     Object? text = null,
-    Object? mediaUrls = null,
+    Object? media = null,
     Object? likedByMe = null,
     Object? likesAmountWithoutMyLike = null,
     Object? likesAmountWithMyLike = null,
@@ -197,10 +197,10 @@ class __$$_PostVMCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      mediaUrls: null == mediaUrls
-          ? _value._mediaUrls
-          : mediaUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      media: null == media
+          ? _value._media
+          : media // ignore: cast_nullable_to_non_nullable
+              as List<MediaVM>,
       likedByMe: null == likedByMe
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
@@ -238,14 +238,14 @@ class _$_PostVM implements _PostVM {
       required this.authorName,
       required this.createdAt,
       required this.text,
-      required final List<String> mediaUrls,
+      required final List<MediaVM> media,
       required this.likedByMe,
       required this.likesAmountWithoutMyLike,
       required this.likesAmountWithMyLike,
       required this.commentsAmount,
       required final List<String> tags,
       this.avatarUrl})
-      : _mediaUrls = mediaUrls,
+      : _media = media,
         _tags = tags;
 
   @override
@@ -258,12 +258,12 @@ class _$_PostVM implements _PostVM {
   final String createdAt;
   @override
   final String text;
-  final List<String> _mediaUrls;
+  final List<MediaVM> _media;
   @override
-  List<String> get mediaUrls {
-    if (_mediaUrls is EqualUnmodifiableListView) return _mediaUrls;
+  List<MediaVM> get media {
+    if (_media is EqualUnmodifiableListView) return _media;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_mediaUrls);
+    return EqualUnmodifiableListView(_media);
   }
 
   @override
@@ -287,7 +287,7 @@ class _$_PostVM implements _PostVM {
 
   @override
   String toString() {
-    return 'PostVM(id: $id, authorID: $authorID, authorName: $authorName, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, likedByMe: $likedByMe, likesAmountWithoutMyLike: $likesAmountWithoutMyLike, likesAmountWithMyLike: $likesAmountWithMyLike, commentsAmount: $commentsAmount, tags: $tags, avatarUrl: $avatarUrl)';
+    return 'PostVM(id: $id, authorID: $authorID, authorName: $authorName, createdAt: $createdAt, text: $text, media: $media, likedByMe: $likedByMe, likesAmountWithoutMyLike: $likesAmountWithoutMyLike, likesAmountWithMyLike: $likesAmountWithMyLike, commentsAmount: $commentsAmount, tags: $tags, avatarUrl: $avatarUrl)';
   }
 
   @override
@@ -303,8 +303,7 @@ class _$_PostVM implements _PostVM {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.text, text) || other.text == text) &&
-            const DeepCollectionEquality()
-                .equals(other._mediaUrls, _mediaUrls) &&
+            const DeepCollectionEquality().equals(other._media, _media) &&
             (identical(other.likedByMe, likedByMe) ||
                 other.likedByMe == likedByMe) &&
             (identical(
@@ -327,7 +326,7 @@ class _$_PostVM implements _PostVM {
       authorName,
       createdAt,
       text,
-      const DeepCollectionEquality().hash(_mediaUrls),
+      const DeepCollectionEquality().hash(_media),
       likedByMe,
       likesAmountWithoutMyLike,
       likesAmountWithMyLike,
@@ -349,7 +348,7 @@ abstract class _PostVM implements PostVM {
       required final String authorName,
       required final String createdAt,
       required final String text,
-      required final List<String> mediaUrls,
+      required final List<MediaVM> media,
       required final bool likedByMe,
       required final String likesAmountWithoutMyLike,
       required final String likesAmountWithMyLike,
@@ -368,7 +367,7 @@ abstract class _PostVM implements PostVM {
   @override
   String get text;
   @override
-  List<String> get mediaUrls;
+  List<MediaVM> get media;
   @override
   bool get likedByMe;
   @override

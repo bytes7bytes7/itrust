@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
@@ -8,8 +9,6 @@ import '../../coordinators/feed_coordinator.dart';
 import '../../providers/feed_string_repository.dart';
 
 part 'feed_store.g.dart';
-
-const _limit = 10;
 
 @injectable
 class FeedStore = _FeedStore with _$FeedStore;
@@ -61,9 +60,12 @@ abstract class _FeedStore extends SyncStore with Store {
     perform(
       () async {
         try {
+          final lastPostID = _posts.lastOrNull?.id;
+
           final data = await _feedService.loadPosts(
             category: category,
-            limit: _limit,
+            lastPostID:
+                lastPostID != null ? PostID.fromString(lastPostID) : null,
           );
 
           if (_processingCategory == category) {
@@ -106,7 +108,7 @@ abstract class _FeedStore extends SyncStore with Store {
 
   @action
   void onLikeButtonPressed({required String postID}) {
-    _feedService.likePost(postID: PostID(postID));
+    _feedService.likePost(postID: PostID.fromString(postID));
   }
 
   void onPostPressed({required String postID}) {

@@ -4,6 +4,7 @@ import 'package:mapster/mapster.dart';
 
 import '../../application/application.dart';
 import '../mappers/post_user_to_post_vm_mapper.dart';
+import '../other/media_url_creator.dart';
 
 final _getIt = GetIt.instance;
 
@@ -21,6 +22,7 @@ class CommonMapsterRegistrar {
           input,
           formattedDateProvider: _getIt.get<FormattedDateProvider>(),
           beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
+          mediaUrlCreator: _getIt.get<MediaUrlCreator>(),
         ),
       ),
     );

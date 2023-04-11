@@ -1,45 +1,22 @@
+import 'dart:collection';
+
 import 'package:injectable/injectable.dart';
 
 import '../../features/common/domain/domain.dart';
 import '../interfaces/post_repository.dart';
 
+@test
 @Singleton(as: PostRepository)
-class ProdPostRepository implements PostRepository {
+class TestPostRepository implements PostRepository {
+  final _storage = HashMap<PostID, Post>();
+
   @override
-  Future<Post?> getOrLoadPost({required PostID postID}) async {
-    // TODO: implement
-    return null;
+  Future<Post?> getByID({required PostID postID}) async {
+    return _storage[postID];
   }
 
   @override
-  Future<Post?> loadPost({required PostID postID}) async {
-    // TODO: implement
-    return null;
-  }
-
-  @override
-  Future<List<Post>> loadPosts({
-    required String category,
-    required int limit,
-    required bool nextPage,
-  }) async {
-    // TODO: implement
-    return [];
-  }
-
-  @override
-  Future<void> likePost({
-    required PostID postID,
-    required UserID userID,
-  }) async {
-    // TODO: implement
-  }
-
-  @override
-  Future<void> unlikePost({
-    required PostID postID,
-    required UserID userID,
-  }) async {
-    // TODO: implement
+  Future<void> addOrUpdate({required Post post}) async {
+    _storage[post.id] = post;
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
-import '../../application/view_models/post/post_vm.dart';
+import '../../application/view_models/post_vm/post_vm.dart';
 import 'author_card_header.dart';
 import 'image_grid.dart';
 import 'outlined_icon_button.dart';
@@ -61,11 +61,11 @@ class PostCard extends StatelessWidget {
                 const SizedBox(
                   height: _underAuthorHeaderPadding,
                 ),
-                if (post.mediaUrls.isNotEmpty) ...[
+                if (post.media.isNotEmpty) ...[
                   SizedBox(
                     height: _imageGridHeight,
                     child: ImageGrid(
-                      imageUrls: post.mediaUrls,
+                      mediaList: post.media,
                     ),
                   ),
                   const SizedBox(

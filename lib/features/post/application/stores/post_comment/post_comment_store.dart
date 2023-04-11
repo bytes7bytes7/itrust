@@ -52,8 +52,9 @@ abstract class _PostCommentStore extends SyncStore with Store {
         try {
           _postID = postID;
 
-          final comments =
-              await _commentService.loadPostComments(postID: PostID(postID));
+          final comments = await _commentService.loadPostComments(
+            postID: PostID.fromString(postID),
+          );
 
           // TODO: implement
           const user = User.end(

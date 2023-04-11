@@ -16,5 +16,7 @@ class PostID with _$PostID {
 
   factory PostID.fromJson(JsonMap json) => _$PostIDFromJson(json);
 
+  factory PostID.fromString(String string) => PostID(string);
+
   String get str => value;
 }

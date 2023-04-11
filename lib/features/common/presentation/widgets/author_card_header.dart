@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
-import '../../common.dart';
+import 'custom_cached_network_image.dart';
+import 'sized_icon.dart';
 
 const _avatarSize = 40.0;
 const _imageBorderRadius = 8.0;
@@ -40,7 +40,7 @@ class AuthorCardHeader extends StatelessWidget {
             color: colorSchemeTX.avatarBackground,
           ),
           child: avatarUrl != null
-              ? CachedNetworkImage(
+              ? CustomCachedNetworkImage(
                   imageUrl: avatarUrl!,
                   imageBuilder: (context, imageProvider) {
                     return Container(

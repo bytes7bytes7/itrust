@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../../../themes/themes.dart';
+import '../../application/view_models/media_vm/media_vm.dart';
+import 'custom_cached_network_image.dart';
 
 const _borderRadius = 4.0;
 const _itemSeparator = 2.0;
@@ -13,18 +15,18 @@ const _sigmaY = 1.0;
 class ImageGrid extends StatelessWidget {
   const ImageGrid({
     super.key,
-    required this.imageUrls,
+    required this.mediaList,
   });
 
-  final List<String> imageUrls;
+  final List<MediaVM> mediaList;
 
   @override
   Widget build(BuildContext context) {
     final firstRowAmount = _getItemAmountForRow(0);
     final secondRowAmount = _getItemAmountForRow(1);
     final thirdRowAmount = _getItemAmountForRow(2);
-    final exceeded = imageUrls.length > _maxImages;
-    final exceededAmount = imageUrls.length - _maxImages;
+    final exceeded = mediaList.length > _maxImages;
+    final exceededAmount = mediaList.length - _maxImages;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(_borderRadius),
@@ -34,13 +36,13 @@ class ImageGrid extends StatelessWidget {
           if (firstRowAmount > 0)
             _Row(
               amount: firstRowAmount,
-              urls: imageUrls.sublist(0, firstRowAmount),
+              mediaList: mediaList.sublist(0, firstRowAmount),
               addSeparatorAbove: false,
             ),
           if (secondRowAmount > 0)
             _Row(
               amount: secondRowAmount,
-              urls: imageUrls.sublist(
+              mediaList: mediaList.sublist(
                 firstRowAmount,
                 firstRowAmount + secondRowAmount,
               ),
@@ -49,7 +51,7 @@ class ImageGrid extends StatelessWidget {
           if (thirdRowAmount > 0)
             _Row(
               amount: thirdRowAmount,
-              urls: imageUrls.sublist(
+              mediaList: mediaList.sublist(
                 firstRowAmount + secondRowAmount,
                 firstRowAmount + secondRowAmount + thirdRowAmount,
               ),
@@ -68,7 +70,7 @@ class ImageGrid extends StatelessWidget {
   int _getItemAmountForRow(int rowIndex) {
     switch (rowIndex) {
       case 0:
-        switch (imageUrls.length) {
+        switch (mediaList.length) {
           case 1:
           case 3:
           case 7:
@@ -82,7 +84,7 @@ class ImageGrid extends StatelessWidget {
             return 3;
         }
       case 1:
-        switch (imageUrls.length) {
+        switch (mediaList.length) {
           case 1:
           case 2:
             return 0;
@@ -93,7 +95,7 @@ class ImageGrid extends StatelessWidget {
             return 3;
         }
       case 2:
-        if (imageUrls.length >= 7) {
+        if (mediaList.length >= 7) {
           return 3;
         }
 
@@ -107,13 +109,13 @@ class ImageGrid extends StatelessWidget {
 class _Row extends StatelessWidget {
   const _Row({
     required this.amount,
-    required this.urls,
+    required this.mediaList,
     required this.addSeparatorAbove,
     this.lastItem,
   });
 
   final int amount;
-  final List<String> urls;
+  final List<MediaVM> mediaList;
   final bool addSeparatorAbove;
   final Widget? lastItem;
 
@@ -141,7 +143,7 @@ class _Row extends StatelessWidget {
                           children: [
                             Positioned.fill(
                               child: _Image(
-                                url: urls[index],
+                                media: mediaList[index],
                               ),
                             ),
                             Positioned.fill(
@@ -150,7 +152,7 @@ class _Row extends StatelessWidget {
                           ],
                         )
                       : _Image(
-                          url: urls[index],
+                          media: mediaList[index],
                         ),
                 ),
               );
@@ -164,17 +166,17 @@ class _Row extends StatelessWidget {
 
 class _Image extends StatelessWidget {
   const _Image({
-    required this.url,
+    required this.media,
   });
 
-  final String url;
+  final MediaVM media;
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      url,
+    return CustomCachedNetworkImage(
+      imageUrl: media.url,
       fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) {
+      errorWidget: (context, url, error) {
         // TODO: implement
         return const ColoredBox(color: Colors.grey);
       },

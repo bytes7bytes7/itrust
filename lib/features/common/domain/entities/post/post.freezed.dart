@@ -14,18 +14,23 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+Post _$PostFromJson(Map<String, dynamic> json) {
+  return _Post.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Post {
   PostID get id => throw _privateConstructorUsedError;
   UserID get authorID => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  List<String> get mediaUrls => throw _privateConstructorUsedError;
+  List<Media> get media => throw _privateConstructorUsedError;
   bool get likedByMe => throw _privateConstructorUsedError;
   int get likesAmount => throw _privateConstructorUsedError;
   int get commentsAmount => throw _privateConstructorUsedError;
   List<String> get tags => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PostCopyWith<Post> get copyWith => throw _privateConstructorUsedError;
 }
@@ -40,7 +45,7 @@ abstract class $PostCopyWith<$Res> {
       UserID authorID,
       DateTime createdAt,
       String text,
-      List<String> mediaUrls,
+      List<Media> media,
       bool likedByMe,
       int likesAmount,
       int commentsAmount,
@@ -67,7 +72,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? authorID = null,
     Object? createdAt = null,
     Object? text = null,
-    Object? mediaUrls = null,
+    Object? media = null,
     Object? likedByMe = null,
     Object? likesAmount = null,
     Object? commentsAmount = null,
@@ -90,10 +95,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      mediaUrls: null == mediaUrls
-          ? _value.mediaUrls
-          : mediaUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      media: null == media
+          ? _value.media
+          : media // ignore: cast_nullable_to_non_nullable
+              as List<Media>,
       likedByMe: null == likedByMe
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
@@ -141,7 +146,7 @@ abstract class _$$_PostCopyWith<$Res> implements $PostCopyWith<$Res> {
       UserID authorID,
       DateTime createdAt,
       String text,
-      List<String> mediaUrls,
+      List<Media> media,
       bool likedByMe,
       int likesAmount,
       int commentsAmount,
@@ -166,7 +171,7 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
     Object? authorID = null,
     Object? createdAt = null,
     Object? text = null,
-    Object? mediaUrls = null,
+    Object? media = null,
     Object? likedByMe = null,
     Object? likesAmount = null,
     Object? commentsAmount = null,
@@ -189,10 +194,10 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      mediaUrls: null == mediaUrls
-          ? _value._mediaUrls
-          : mediaUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      media: null == media
+          ? _value._media
+          : media // ignore: cast_nullable_to_non_nullable
+              as List<Media>,
       likedByMe: null == likedByMe
           ? _value.likedByMe
           : likedByMe // ignore: cast_nullable_to_non_nullable
@@ -214,20 +219,22 @@ class __$$_PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res, _$_Post>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_Post implements _Post {
   const _$_Post(
       {required this.id,
       required this.authorID,
       required this.createdAt,
       required this.text,
-      required final List<String> mediaUrls,
+      required final List<Media> media,
       required this.likedByMe,
       required this.likesAmount,
       required this.commentsAmount,
       required final List<String> tags})
-      : _mediaUrls = mediaUrls,
+      : _media = media,
         _tags = tags;
+
+  factory _$_Post.fromJson(Map<String, dynamic> json) => _$$_PostFromJson(json);
 
   @override
   final PostID id;
@@ -237,12 +244,12 @@ class _$_Post implements _Post {
   final DateTime createdAt;
   @override
   final String text;
-  final List<String> _mediaUrls;
+  final List<Media> _media;
   @override
-  List<String> get mediaUrls {
-    if (_mediaUrls is EqualUnmodifiableListView) return _mediaUrls;
+  List<Media> get media {
+    if (_media is EqualUnmodifiableListView) return _media;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_mediaUrls);
+    return EqualUnmodifiableListView(_media);
   }
 
   @override
@@ -261,7 +268,7 @@ class _$_Post implements _Post {
 
   @override
   String toString() {
-    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, text: $text, mediaUrls: $mediaUrls, likedByMe: $likedByMe, likesAmount: $likesAmount, commentsAmount: $commentsAmount, tags: $tags)';
+    return 'Post(id: $id, authorID: $authorID, createdAt: $createdAt, text: $text, media: $media, likedByMe: $likedByMe, likesAmount: $likesAmount, commentsAmount: $commentsAmount, tags: $tags)';
   }
 
   @override
@@ -275,8 +282,7 @@ class _$_Post implements _Post {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.text, text) || other.text == text) &&
-            const DeepCollectionEquality()
-                .equals(other._mediaUrls, _mediaUrls) &&
+            const DeepCollectionEquality().equals(other._media, _media) &&
             (identical(other.likedByMe, likedByMe) ||
                 other.likedByMe == likedByMe) &&
             (identical(other.likesAmount, likesAmount) ||
@@ -286,6 +292,7 @@ class _$_Post implements _Post {
             const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -293,7 +300,7 @@ class _$_Post implements _Post {
       authorID,
       createdAt,
       text,
-      const DeepCollectionEquality().hash(_mediaUrls),
+      const DeepCollectionEquality().hash(_media),
       likedByMe,
       likesAmount,
       commentsAmount,
@@ -304,6 +311,13 @@ class _$_Post implements _Post {
   @pragma('vm:prefer-inline')
   _$$_PostCopyWith<_$_Post> get copyWith =>
       __$$_PostCopyWithImpl<_$_Post>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PostToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Post implements Post {
@@ -312,11 +326,13 @@ abstract class _Post implements Post {
       required final UserID authorID,
       required final DateTime createdAt,
       required final String text,
-      required final List<String> mediaUrls,
+      required final List<Media> media,
       required final bool likedByMe,
       required final int likesAmount,
       required final int commentsAmount,
       required final List<String> tags}) = _$_Post;
+
+  factory _Post.fromJson(Map<String, dynamic> json) = _$_Post.fromJson;
 
   @override
   PostID get id;
@@ -327,7 +343,7 @@ abstract class _Post implements Post {
   @override
   String get text;
   @override
-  List<String> get mediaUrls;
+  List<Media> get media;
   @override
   bool get likedByMe;
   @override

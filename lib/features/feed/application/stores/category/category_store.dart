@@ -82,6 +82,7 @@ abstract class _CategoryStore extends SyncStore with Store {
 
   @action
   void refresh() {
+    // TODO: fix - posts do NOT update
     loadCategories();
   }
 

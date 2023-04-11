@@ -60,7 +60,7 @@ abstract class _PostStore extends SyncStore with Store {
       () async {
         try {
           _postID = postID;
-          final post = await _postService.loadPost(PostID(postID));
+          final post = await _postService.loadPost(PostID.fromString(postID));
 
           // TODO: implement
           const user = User.end(
