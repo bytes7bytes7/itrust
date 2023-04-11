@@ -88,7 +88,7 @@ class _Body extends StatelessWidget {
           OptionButton(
             iconPath: Assets.image.svg.devices.path,
             title: l10n.change_devices_btn,
-            onPressed: () {},
+            onPressed: accountSettingsStore.onDevicesPressed,
           ),
         ],
       ),

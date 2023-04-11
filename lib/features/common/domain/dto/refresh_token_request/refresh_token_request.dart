@@ -13,9 +13,7 @@ class RefreshTokenRequest {
   });
 
   final String refreshToken;
-
-  @DeviceInfoJsonConverter()
-  final DeviceInfo deviceInfo;
+  final PrivateDeviceInfo deviceInfo;
 
   factory RefreshTokenRequest.fromJson(JsonMap json) =>
       _$RefreshTokenRequestFromJson(json);

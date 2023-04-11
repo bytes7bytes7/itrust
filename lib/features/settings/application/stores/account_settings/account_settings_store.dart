@@ -23,4 +23,8 @@ abstract class _AccountSettingsStore extends SyncStore with Store {
   void onPersonalInfoPressed() {
     _accountSettingsCoordinator.onPersonalInfoPressed();
   }
+
+  void onDevicesPressed() {
+    _accountSettingsCoordinator.onDevicesPressed();
+  }
 }

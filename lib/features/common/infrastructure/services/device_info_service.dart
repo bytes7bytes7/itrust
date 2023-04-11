@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../domain/domain.dart';
 
+const _unknownID = 'unknown';
 const _unknownName = 'unknown';
 
 enum DevicePlatform {
@@ -68,52 +69,59 @@ class ProdDeviceInfoService implements DeviceInfoService {
   final DeviceInfoPlugin _deviceInfoPlugin;
 
   @override
-  Future<DeviceInfo> getDeviceInfo() async {
+  Future<PrivateDeviceInfo> getDeviceInfo() async {
     if (Platform.isAndroid) {
       final info = await _deviceInfoPlugin.androidInfo;
 
-      return DeviceInfo(
+      return PrivateDeviceInfo(
+        id: info.id,
         name: info.model,
         platform: DevicePlatform.android.title,
       );
     } else if (Platform.isIOS) {
       final info = await _deviceInfoPlugin.iosInfo;
 
-      return DeviceInfo(
+      return PrivateDeviceInfo(
+        id: info.identifierForVendor ?? _unknownID,
         name: info.model ?? info.name ?? _unknownName,
         platform: DevicePlatform.ios.title,
       );
     } else if (Platform.isLinux) {
       final info = await _deviceInfoPlugin.linuxInfo;
 
-      return DeviceInfo(
+      return PrivateDeviceInfo(
+        id: info.machineId ?? info.buildId ?? _unknownID,
         name: info.prettyName,
         platform: DevicePlatform.linux.title,
       );
     } else if (Platform.isWindows) {
       final info = await _deviceInfoPlugin.windowsInfo;
 
-      return DeviceInfo(
+      return PrivateDeviceInfo(
+        id: info.deviceId,
         name: info.productName,
         platform: DevicePlatform.windows.title,
       );
     } else if (Platform.isMacOS) {
       final info = await _deviceInfoPlugin.macOsInfo;
 
-      return DeviceInfo(
+      return PrivateDeviceInfo(
+        id: info.systemGUID ?? info.kernelVersion,
         name: info.model,
         platform: DevicePlatform.macos.title,
       );
     } else if (kIsWeb) {
       final info = await _deviceInfoPlugin.webBrowserInfo;
 
-      return DeviceInfo(
+      return PrivateDeviceInfo(
+        id: info.appVersion ?? info.vendor ?? _unknownID,
         name: Browsers.fromBrowserNameEnum(info.browserName).title +
             (info.appVersion != null ? ' ${info.appVersion}' : ''),
         platform: DevicePlatform.web.title,
       );
     } else {
-      return DeviceInfo(
+      return PrivateDeviceInfo(
+        id: _unknownID,
         name: _unknownName,
         platform: DevicePlatform.unknown.title,
       );

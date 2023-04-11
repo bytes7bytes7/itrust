@@ -205,6 +205,7 @@ class _AppRoutes {
     },
     routes: [
       changePersonalInfo,
+      devices,
     ],
   );
 
@@ -219,6 +220,21 @@ class _AppRoutes {
         arguments: _getArgs(state),
         transitionsBuilder: _leftward,
         child: const ChangePersonalInfoScreen(),
+      );
+    },
+  );
+
+  static final devices = GoRoute(
+    path: 'devices',
+    name: 'devices',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const DevicesScreen(),
       );
     },
   );

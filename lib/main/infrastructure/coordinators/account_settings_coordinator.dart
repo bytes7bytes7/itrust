@@ -22,4 +22,9 @@ class ProdAccountSettingsCoordinator extends Coordinator
   void onPersonalInfoPressed() {
     const ChangePersonalInfoRoute().push(goRouter);
   }
+
+  @override
+  void onDevicesPressed() {
+    const DevicesRoute().push(goRouter);
+  }
 }

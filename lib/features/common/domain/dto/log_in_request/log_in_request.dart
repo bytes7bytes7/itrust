@@ -1,8 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
-import '../../json_converters/device_info_json_converter.dart';
-import '../device_info/device_info.dart';
+import '../private_device_info/private_device_info.dart';
 
 part 'log_in_request.g.dart';
 
@@ -16,9 +15,7 @@ class LogInRequest {
 
   final String email;
   final String password;
-
-  @DeviceInfoJsonConverter()
-  final DeviceInfo deviceInfo;
+  final PrivateDeviceInfo deviceInfo;
 
   factory LogInRequest.fromJson(JsonMap json) => _$LogInRequestFromJson(json);
 

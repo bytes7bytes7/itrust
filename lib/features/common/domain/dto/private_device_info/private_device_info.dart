@@ -2,11 +2,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
 
-part 'device_info.g.dart';
+part 'private_device_info.g.dart';
 
 @JsonSerializable()
-class DeviceInfo {
-  const DeviceInfo({
+class PrivateDeviceInfo {
+  const PrivateDeviceInfo({
     required this.id,
     required this.name,
     required this.platform,
@@ -16,7 +16,8 @@ class DeviceInfo {
   final String name;
   final String platform;
 
-  factory DeviceInfo.fromJson(JsonMap json) => _$DeviceInfoFromJson(json);
+  factory PrivateDeviceInfo.fromJson(JsonMap json) =>
+      _$PrivateDeviceInfoFromJson(json);
 
-  JsonMap toJson() => _$DeviceInfoToJson(this);
+  JsonMap toJson() => _$PrivateDeviceInfoToJson(this);
 }

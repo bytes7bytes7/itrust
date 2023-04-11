@@ -81,7 +81,7 @@ abstract class _CategoryStore extends SyncStore with Store {
   }
 
   @action
-  Future<void> refresh() async {
+  void refresh() {
     loadCategories();
   }
 

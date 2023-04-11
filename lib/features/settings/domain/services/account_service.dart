@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:injectable/injectable.dart';
 
 import '../../../common/domain/domain.dart';
-import '../dto/change_personal_info_request/change_personal_info_request.dart';
+import '../dto/dto.dart';
 import '../providers/account_provider.dart';
+import '../value_objects/device_session_list/device_session_list.dart';
 
 @singleton
 class AccountService {
@@ -35,6 +36,7 @@ class AccountService {
   void init() {
     _authStatusSub = _authStatusProvider.onUserIDChanged.listen((id) async {
       if (id == null) {
+        await _endUserRepository.removeMe();
         return;
       }
 
@@ -85,6 +87,24 @@ class AccountService {
       (r) async {
         final user = r.user;
         await _endUserRepository.setMe(user);
+      },
+    );
+  }
+
+  Future<DeviceSessionList> getDevices() async {
+    final response =
+        await _keepFreshTokenService.request(_accountProvider.getDevices);
+
+    return response.value.fold(
+      (l) {
+        // TODO:
+        throw Exception();
+      },
+      (r) {
+        return DeviceSessionList(
+          thisSession: r.thisSession,
+          otherSessions: r.otherSessions,
+        );
       },
     );
   }

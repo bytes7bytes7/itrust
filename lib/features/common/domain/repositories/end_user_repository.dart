@@ -5,7 +5,9 @@ abstract class EndUserRepository {
 
   Stream<EndUser?> get onMeChanged;
 
-  void dispose();
+  Future<void> init();
+
+  Future<void> dispose();
 
   Future<void> setMe(EndUser user);
 

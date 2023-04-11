@@ -132,7 +132,7 @@ class _Body extends StatelessWidget {
         }
 
         return RefreshIndicator(
-          onRefresh: categoryStore.refresh,
+          onRefresh: () async => categoryStore.refresh(),
           child: CustomScrollView(
             slivers: [
               SliverAppBar(

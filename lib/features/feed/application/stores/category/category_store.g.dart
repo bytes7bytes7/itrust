@@ -95,14 +95,6 @@ mixin _$CategoryStore on _CategoryStore, Store {
     });
   }
 
-  late final _$refreshAsyncAction =
-      AsyncAction('_CategoryStore.refresh', context: context);
-
-  @override
-  Future<void> refresh() {
-    return _$refreshAsyncAction.run(() => super.refresh());
-  }
-
   late final _$_CategoryStoreActionController =
       ActionController(name: '_CategoryStore', context: context);
 
@@ -123,6 +115,17 @@ mixin _$CategoryStore on _CategoryStore, Store {
         name: '_CategoryStore.selectCategory');
     try {
       return super.selectCategory(category);
+    } finally {
+      _$_CategoryStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void refresh() {
+    final _$actionInfo = _$_CategoryStoreActionController.startAction(
+        name: '_CategoryStore.refresh');
+    try {
+      return super.refresh();
     } finally {
       _$_CategoryStoreActionController.endAction(_$actionInfo);
     }

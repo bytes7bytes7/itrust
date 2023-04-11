@@ -5,8 +5,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../../../utils/json_either_wrapper.dart';
 import '../../../../../utils/server_settings.dart';
-import '../../../domain/dto/change_personal_info_request/change_personal_info_request.dart';
-import '../../../domain/dto/change_personal_info_response/change_personal_info_response.dart';
+import '../../../domain/dto/dto.dart';
 import '../../../domain/providers/account_provider.dart';
 
 part 'account_provider.g.dart';
@@ -35,4 +34,8 @@ abstract class ProdAccountProvider implements AccountProvider {
       changePersonalInfo(
     @Body() ChangePersonalInfoRequest request,
   );
+
+  @override
+  @GET('/devices')
+  Future<JsonEitherWrapper<ProblemDetails, GetDevicesResponse>> getDevices();
 }

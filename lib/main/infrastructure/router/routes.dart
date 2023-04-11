@@ -111,3 +111,10 @@ class ChangePersonalInfoRoute extends CosyRoute {
   @override
   GoRoute get route => _AppRoutes.changePersonalInfo;
 }
+
+class DevicesRoute extends CosyRoute {
+  const DevicesRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.devices;
+}

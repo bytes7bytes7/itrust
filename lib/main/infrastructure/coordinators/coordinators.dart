@@ -2,6 +2,7 @@ export 'account_settings_coordinator.dart';
 export 'change_personal_info_coordinator.dart';
 export 'comment_coordinator.dart';
 export 'coordinator.dart';
+export 'devices_coordinator.dart';
 export 'feed_coordinator.dart';
 export 'home_coordinator.dart';
 export 'log_in_coordinator.dart';

@@ -11,6 +11,10 @@ class SettingsMapsterRegistrar {
 
   @postConstruct
   void register() {
-    _mapster.register(MapperMeta.one(EndUserToEndUserVMMapper.new));
+    _mapster
+      ..register(MapperMeta.one(EndUserToEndUserVMMapper.new))
+      ..register(
+        MapperMeta.one(DeviceSessionToDeviceSessionVMMapper.new),
+      );
   }
 }

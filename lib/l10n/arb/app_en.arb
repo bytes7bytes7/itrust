@@ -73,5 +73,10 @@
   "change_personal_info_screen_title": "Personal info",
   "change_first_name_field": "First name",
   "change_last_name_field": "Last name",
-  "apply_changes_btn": "Apply"
+  "apply_changes_btn": "Apply",
+  "can_not_get_user_info": "Can not get user information",
+  "connected_devices_screen_title": "Devices",
+  "this_device_title": "This device",
+  "other_devices_title": "Other devices",
+  "terminate_session_btn": "Terminate session"
 }
