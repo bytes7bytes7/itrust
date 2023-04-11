@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:problem_details/problem_details.dart';
 
+import '../../../../repositories/interfaces/interfaces.dart';
 import '../../../../utils/json_either_wrapper.dart';
 import '../dto/refresh_token_request/refresh_token_request.dart';
 import '../exceptions/server_not_available.dart';
@@ -8,7 +9,6 @@ import '../providers/auth_status_provider.dart';
 import '../providers/keep_fresh_token_exception_provider.dart';
 import '../providers/keep_fresh_token_provider.dart';
 import '../providers/server_availability_provider.dart';
-import '../repositories/end_user_repository.dart';
 import '../services/token_service.dart';
 import '../value_objects/token_pair/token_pair.dart';
 import 'device_info_service.dart';

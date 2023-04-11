@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:injectable/injectable.dart';
 
+import '../../../../repositories/interfaces/interfaces.dart';
 import '../dto/dto.dart';
 import '../exceptions/exceptions.dart';
 import '../providers/auth_exception_provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/auth_status_provider.dart';
 import '../providers/server_availability_provider.dart';
-import '../repositories/end_user_repository.dart';
 import '../value_objects/token_pair/token_pair.dart';
 import 'device_info_service.dart';
 import 'keep_fresh_token_service.dart';

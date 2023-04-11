@@ -68,7 +68,7 @@ abstract class _FeedStore extends SyncStore with Store {
 
           if (_processingCategory == category) {
             // TODO: implement
-            const user = User.end(
+            const author = User.end(
               id: UserID('user'),
               avatarUrls: [],
               email: 'email@email.com',
@@ -80,7 +80,7 @@ abstract class _FeedStore extends SyncStore with Store {
                 .map(
                   (post) => _mapster.map2(
                     post,
-                    user,
+                    author,
                     To<PostVM>(),
                   ),
                 )

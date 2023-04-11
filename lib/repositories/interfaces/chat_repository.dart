@@ -1,5 +1,5 @@
-import '../entities/entities.dart';
-import '../value_objects/value_objects.dart';
+import '../../features/common/domain/entities/entities.dart';
+import '../../features/common/domain/value_objects/value_objects.dart';
 
 abstract class ChatRepository {
   /// Stream of specific chat.

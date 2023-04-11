@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:injectable/injectable.dart';
 
+import '../../../../repositories/interfaces/interfaces.dart';
 import '../../../common/domain/domain.dart';
 import '../dto/dto.dart';
 import '../providers/account_provider.dart';

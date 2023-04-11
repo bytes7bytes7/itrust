@@ -1,4 +1,4 @@
-import '../../domain/domain.dart';
+import '../../features/common/domain/domain.dart';
 
 abstract class EndUserRepository {
   EndUser? get me;

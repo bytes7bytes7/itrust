@@ -4,7 +4,8 @@ import 'dart:math';
 import 'package:injectable/injectable.dart';
 
 import '../../../../utils/long_polling.dart';
-import '../../domain/domain.dart';
+import '../../features/common/domain/domain.dart';
+import '../interfaces/chat_repository.dart';
 
 // TODO: refactor this file
 

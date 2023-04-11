@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
-import '../../domain/domain.dart';
+import '../../features/common/domain/domain.dart';
+import '../interfaces/post_repository.dart';
 
 @Singleton(as: PostRepository)
 class ProdPostRepository implements PostRepository {

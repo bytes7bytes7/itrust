@@ -1,16 +1,13 @@
-import '../entities/post/post.dart';
-import '../value_objects/post_id/post_id.dart';
-import '../value_objects/user_id/user_id.dart';
+import '../../features/common/domain/entities/post/post.dart';
+import '../../features/common/domain/value_objects/post_id/post_id.dart';
+import '../../features/common/domain/value_objects/user_id/user_id.dart';
 
 abstract class PostRepository {
-  Future<Post?> getOrLoadPost({required PostID postID});
-
   Future<Post?> loadPost({required PostID postID});
 
   Future<List<Post>> loadPosts({
-    required String category,
-    required int limit,
-    required bool nextPage,
+    String? category,
+    PostID? lastPostID,
   });
 
   Future<void> likePost({

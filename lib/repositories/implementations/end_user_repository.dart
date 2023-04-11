@@ -6,7 +6,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../domain/domain.dart';
+import '../../features/common/domain/domain.dart';
+import '../interfaces/end_user_repository.dart';
 
 // @test
 // @Singleton(as: EndUserRepository)
