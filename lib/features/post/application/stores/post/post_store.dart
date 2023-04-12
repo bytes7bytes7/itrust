@@ -26,7 +26,6 @@ abstract class _PostStore extends SyncStore with Store {
         _mapster = mapster;
 
   final PostCommentStore postCommentStore;
-
   final PostService _postService;
   final PostCoordinator _postCoordinator;
   final PostStringProvider _postStringProvider;
