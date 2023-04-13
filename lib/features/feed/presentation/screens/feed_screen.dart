@@ -270,11 +270,13 @@ class _PostList extends StatelessWidget {
           );
         }
 
+        final length = feedStore.posts.length + 1;
+
         return SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: feedStore.posts.length + 1,
+            childCount: length,
             (context, index) {
-              if (index == feedStore.posts.length) {
+              if (index == length - 1) {
                 if (feedStore.canLoadMore) {
                   feedStore.loadMorePosts();
                 }

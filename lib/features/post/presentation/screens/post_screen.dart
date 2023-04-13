@@ -183,15 +183,18 @@ class _Body extends HookWidget {
           );
         }
 
+        final length = postStore.postCommentStore.comments.length + 3;
+
         return RefreshIndicator(
-          onRefresh: postStore.refresh,
+          onRefresh: () async => postStore.refresh,
           child: Column(
             children: [
               Expanded(
                 child: ListView.builder(
                   key: _pageScrollKey,
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: scrollController,
-                  itemCount: postStore.postCommentStore.comments.length + 2,
+                  itemCount: length,
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return PostCard(
@@ -207,6 +210,20 @@ class _Body extends HookWidget {
                           postStore.postCommentStore.comments.length,
                         ),
                       );
+                    }
+
+                    if (index == length - 1) {
+                      if (postStore.postCommentStore.canLoadMore) {
+                        postStore.postCommentStore.loadMoreComments();
+                      }
+
+                      if (postStore.postCommentStore.isLoadingMore) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      return const SizedBox.shrink();
                     }
 
                     final comment =

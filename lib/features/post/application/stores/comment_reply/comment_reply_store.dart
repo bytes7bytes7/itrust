@@ -46,6 +46,12 @@ abstract class _CommentReplyStore extends SyncStore with Store {
   String? _commentID;
 
   @readonly
+  bool _canLoadMore = true;
+
+  @readonly
+  bool _isLoadingMore = false;
+
+  @readonly
   List<CommentVM> _replies = const [];
 
   @computed
@@ -64,17 +70,9 @@ abstract class _CommentReplyStore extends SyncStore with Store {
           _postID = postID;
           _commentID = commentID;
 
-          String? lastCommentID;
-          if (!refresh) {
-            lastCommentID = _replies.lastOrNull?.id;
-          }
-
           final comments = await _commentService.loadCommentReplies(
             postID: PostID.fromString(postID),
             commentID: CommentID.fromString(commentID),
-            lastCommentID: lastCommentID != null
-                ? CommentID.fromString(lastCommentID)
-                : null,
           );
 
           final newComments = <CommentVM>[];
@@ -114,6 +112,60 @@ abstract class _CommentReplyStore extends SyncStore with Store {
         refresh: true,
       );
     }
+  }
+
+  @action
+  void loadMoreReplies() {
+    perform(
+      () async {
+        try {
+          final postID = _postID;
+          final commentID = _commentID;
+          final lateReplyID = _replies.lastOrNull?.id;
+
+          if (postID == null || commentID == null) {
+            return;
+          }
+
+          final comments = await _commentService.loadCommentReplies(
+            postID: PostID.fromString(postID),
+            commentID: CommentID.fromString(commentID),
+            lastCommentID:
+                lateReplyID != null ? CommentID.fromString(lateReplyID) : null,
+          );
+
+          final newReplies = <CommentVM>[];
+          for (final c in comments) {
+            final author = await _userService.getUserByID(
+              id: c.authorID,
+            );
+
+            if (author == null) {
+              // TODO: maybe create deleted user or don't show their posts
+              continue;
+            }
+
+            newReplies.add(_mapster.map2(c, author, To<CommentVM>()));
+          }
+
+          _canLoadMore = false;
+          doAfterDelay(() {
+            _canLoadMore = true;
+          });
+
+          _replies = List.of(_replies)..addAll(newReplies);
+        } catch (e) {
+          _canLoadMore = false;
+          doAfterDelay(() {
+            _canLoadMore = true;
+          });
+
+          _error = _commentReplyStringProvider.canNotLoadCommentReplies;
+        }
+      },
+      setIsLoading: (v) => _isLoadingMore = v,
+      removeError: () => _error = '',
+    );
   }
 
   @action

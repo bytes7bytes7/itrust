@@ -89,6 +89,42 @@ mixin _$PostCommentStore on _PostCommentStore, Store {
     });
   }
 
+  late final _$_canLoadMoreAtom =
+      Atom(name: '_PostCommentStore._canLoadMore', context: context);
+
+  bool get canLoadMore {
+    _$_canLoadMoreAtom.reportRead();
+    return super._canLoadMore;
+  }
+
+  @override
+  bool get _canLoadMore => canLoadMore;
+
+  @override
+  set _canLoadMore(bool value) {
+    _$_canLoadMoreAtom.reportWrite(value, super._canLoadMore, () {
+      super._canLoadMore = value;
+    });
+  }
+
+  late final _$_isLoadingMoreAtom =
+      Atom(name: '_PostCommentStore._isLoadingMore', context: context);
+
+  bool get isLoadingMore {
+    _$_isLoadingMoreAtom.reportRead();
+    return super._isLoadingMore;
+  }
+
+  @override
+  bool get _isLoadingMore => isLoadingMore;
+
+  @override
+  set _isLoadingMore(bool value) {
+    _$_isLoadingMoreAtom.reportWrite(value, super._isLoadingMore, () {
+      super._isLoadingMore = value;
+    });
+  }
+
   late final _$_PostCommentStoreActionController =
       ActionController(name: '_PostCommentStore', context: context);
 
@@ -109,6 +145,17 @@ mixin _$PostCommentStore on _PostCommentStore, Store {
         name: '_PostCommentStore.refresh');
     try {
       return super.refresh();
+    } finally {
+      _$_PostCommentStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void loadMoreComments() {
+    final _$actionInfo = _$_PostCommentStoreActionController.startAction(
+        name: '_PostCommentStore.loadMoreComments');
+    try {
+      return super.loadMoreComments();
     } finally {
       _$_PostCommentStoreActionController.endAction(_$actionInfo);
     }

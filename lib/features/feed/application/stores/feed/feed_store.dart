@@ -67,7 +67,6 @@ abstract class _FeedStore extends SyncStore with Store {
     }
   }
 
-  // TODO: add pagination
   @action
   void loadPosts(
     String? category, {
@@ -78,15 +77,8 @@ abstract class _FeedStore extends SyncStore with Store {
     perform(
       () async {
         try {
-          String? lastPostID;
-          if (!refresh) {
-            lastPostID = _posts.lastOrNull?.id;
-          }
-
           final data = await _feedService.loadPosts(
             category: category,
-            lastPostID:
-                lastPostID != null ? PostID.fromString(lastPostID) : null,
           );
 
           if (_processingCategory == category) {

@@ -185,15 +185,18 @@ class _Body extends HookWidget {
           );
         }
 
+        final length = commentStore.commentReplyStore.replies.length + 3;
+
         return RefreshIndicator(
-          onRefresh: commentStore.refresh,
+          onRefresh: () async => commentStore.refresh,
           child: Column(
             children: [
               Expanded(
                 child: ListView.builder(
                   key: _listScrollKey,
+                  physics: const AlwaysScrollableScrollPhysics(),
                   controller: scrollController,
-                  itemCount: commentStore.commentReplyStore.replies.length + 2,
+                  itemCount: length,
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return CommentCard(
@@ -209,6 +212,20 @@ class _Body extends HookWidget {
                           commentStore.commentReplyStore.replies.length,
                         ),
                       );
+                    }
+
+                    if (index == length - 1) {
+                      if (commentStore.commentReplyStore.canLoadMore) {
+                        commentStore.commentReplyStore.loadMoreReplies();
+                      }
+
+                      if (commentStore.commentReplyStore.isLoadingMore) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      return const SizedBox.shrink();
                     }
 
                     final reply =

@@ -42,7 +42,7 @@ abstract class _CategoryStore extends SyncStore with Store {
   void init() {
     if (!_isInitialized) {
       loadCategories();
-      feedStore.loadPosts(null, refresh: true);
+      feedStore.loadPosts(null);
       _isInitialized = true;
     }
   }

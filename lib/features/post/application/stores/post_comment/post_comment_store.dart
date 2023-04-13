@@ -45,6 +45,12 @@ abstract class _PostCommentStore extends SyncStore with Store {
   @readonly
   List<CommentVM> _comments = const [];
 
+  @readonly
+  bool _canLoadMore = true;
+
+  @readonly
+  bool _isLoadingMore = false;
+
   @computed
   bool get hasError => _error.isNotEmpty;
 
@@ -59,16 +65,8 @@ abstract class _PostCommentStore extends SyncStore with Store {
         try {
           _postID = postID;
 
-          String? lastCommentID;
-          if (!refresh) {
-            lastCommentID = _comments.lastOrNull?.id;
-          }
-
           final comments = await _commentService.loadPostComments(
             postID: PostID.fromString(postID),
-            lastCommentID: lastCommentID != null
-                ? CommentID.fromString(lastCommentID)
-                : null,
           );
 
           final newComments = <CommentVM>[];
@@ -103,6 +101,60 @@ abstract class _PostCommentStore extends SyncStore with Store {
     if (postID != null) {
       loadPostComments(postID: postID, refresh: true);
     }
+  }
+
+  @action
+  void loadMoreComments() {
+    perform(
+      () async {
+        try {
+          final postID = _postID;
+          final lastCommentID = _comments.lastOrNull?.id;
+
+          if (postID == null) {
+            return;
+          }
+
+          final comments = await _commentService.loadPostComments(
+            postID: PostID.fromString(postID),
+            lastCommentID: lastCommentID != null
+                ? CommentID.fromString(lastCommentID)
+                : null,
+          );
+
+          final newComments = <CommentVM>[];
+          for (final c in comments) {
+            final author = await _userService.getUserByID(
+              id: c.authorID,
+              cached: false,
+            );
+
+            if (author == null) {
+              // TODO: maybe create deleted user or don't show their posts
+              continue;
+            }
+
+            newComments.add(_mapster.map2(c, author, To<CommentVM>()));
+          }
+
+          _canLoadMore = false;
+          doAfterDelay(() {
+            _canLoadMore = true;
+          });
+
+          _comments = List.of(_comments)..addAll(newComments);
+        } catch (e) {
+          _canLoadMore = false;
+          doAfterDelay(() {
+            _canLoadMore = true;
+          });
+
+          _error = _postCommentStringProvider.canNotLoadComments;
+        }
+      },
+      setIsLoading: (v) => _isLoadingMore = v,
+      removeError: () => _error = '',
+    );
   }
 
   @action

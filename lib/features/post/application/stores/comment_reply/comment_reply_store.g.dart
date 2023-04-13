@@ -89,6 +89,42 @@ mixin _$CommentReplyStore on _CommentReplyStore, Store {
     });
   }
 
+  late final _$_canLoadMoreAtom =
+      Atom(name: '_CommentReplyStore._canLoadMore', context: context);
+
+  bool get canLoadMore {
+    _$_canLoadMoreAtom.reportRead();
+    return super._canLoadMore;
+  }
+
+  @override
+  bool get _canLoadMore => canLoadMore;
+
+  @override
+  set _canLoadMore(bool value) {
+    _$_canLoadMoreAtom.reportWrite(value, super._canLoadMore, () {
+      super._canLoadMore = value;
+    });
+  }
+
+  late final _$_isLoadingMoreAtom =
+      Atom(name: '_CommentReplyStore._isLoadingMore', context: context);
+
+  bool get isLoadingMore {
+    _$_isLoadingMoreAtom.reportRead();
+    return super._isLoadingMore;
+  }
+
+  @override
+  bool get _isLoadingMore => isLoadingMore;
+
+  @override
+  set _isLoadingMore(bool value) {
+    _$_isLoadingMoreAtom.reportWrite(value, super._isLoadingMore, () {
+      super._isLoadingMore = value;
+    });
+  }
+
   late final _$_repliesAtom =
       Atom(name: '_CommentReplyStore._replies', context: context);
 
@@ -131,6 +167,17 @@ mixin _$CommentReplyStore on _CommentReplyStore, Store {
         name: '_CommentReplyStore.retry');
     try {
       return super.retry();
+    } finally {
+      _$_CommentReplyStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void loadMoreReplies() {
+    final _$actionInfo = _$_CommentReplyStoreActionController.startAction(
+        name: '_CommentReplyStore.loadMoreReplies');
+    try {
+      return super.loadMoreReplies();
     } finally {
       _$_CommentReplyStoreActionController.endAction(_$actionInfo);
     }
