@@ -8,17 +8,19 @@ part 'register_request.g.dart';
 @JsonSerializable()
 class RegisterRequest {
   const RegisterRequest({
-    required this.email,
-    required this.password,
     required this.firstName,
     required this.lastName,
+    required this.email,
+    required this.password,
+    required this.agreeWithRules,
     required this.deviceInfo,
   });
 
-  final String email;
-  final String password;
   final String firstName;
   final String lastName;
+  final String email;
+  final String password;
+  final bool agreeWithRules;
   final PrivateDeviceInfo deviceInfo;
 
   factory RegisterRequest.fromJson(JsonMap json) =>

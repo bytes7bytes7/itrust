@@ -8,19 +8,21 @@ part of 'register_request.dart';
 
 RegisterRequest _$RegisterRequestFromJson(Map<String, dynamic> json) =>
     RegisterRequest(
-      email: json['email'] as String,
-      password: json['password'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
+      email: json['email'] as String,
+      password: json['password'] as String,
+      agreeWithRules: json['agreeWithRules'] as bool,
       deviceInfo: PrivateDeviceInfo.fromJson(
           json['deviceInfo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$RegisterRequestToJson(RegisterRequest instance) =>
     <String, dynamic>{
-      'email': instance.email,
-      'password': instance.password,
       'firstName': instance.firstName,
       'lastName': instance.lastName,
+      'email': instance.email,
+      'password': instance.password,
+      'agreeWithRules': instance.agreeWithRules,
       'deviceInfo': instance.deviceInfo.toJson(),
     };

@@ -282,14 +282,14 @@ class _RulesButton extends HookWidget {
         return Row(
           children: [
             Checkbox(
-              value: registerStore.agreeToTerms,
+              value: registerStore.agreeWithRules,
               onChanged: (selected) {
                 if (registerStore.isLoading) {
                   return;
                 }
 
                 if (selected != null) {
-                  registerStore.agreeToTerms = selected;
+                  registerStore.agreeWithRules = selected;
                 }
               },
             ),

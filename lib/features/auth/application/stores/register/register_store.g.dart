@@ -116,19 +116,19 @@ mixin _$RegisterStore on _RegisterStore, Store {
     });
   }
 
-  late final _$agreeToTermsAtom =
-      Atom(name: '_RegisterStore.agreeToTerms', context: context);
+  late final _$agreeWithRulesAtom =
+      Atom(name: '_RegisterStore.agreeWithRules', context: context);
 
   @override
-  bool get agreeToTerms {
-    _$agreeToTermsAtom.reportRead();
-    return super.agreeToTerms;
+  bool get agreeWithRules {
+    _$agreeWithRulesAtom.reportRead();
+    return super.agreeWithRules;
   }
 
   @override
-  set agreeToTerms(bool value) {
-    _$agreeToTermsAtom.reportWrite(value, super.agreeToTerms, () {
-      super.agreeToTerms = value;
+  set agreeWithRules(bool value) {
+    _$agreeWithRulesAtom.reportWrite(value, super.agreeWithRules, () {
+      super.agreeWithRules = value;
     });
   }
 
@@ -153,7 +153,7 @@ email: ${email},
 password: ${password},
 firstName: ${firstName},
 lastName: ${lastName},
-agreeToTerms: ${agreeToTerms},
+agreeWithRules: ${agreeWithRules},
 canRegister: ${canRegister}
     ''';
   }

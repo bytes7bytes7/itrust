@@ -72,6 +72,7 @@ class AuthService {
     required String password,
     required String firstName,
     required String lastName,
+    required bool agreeWithRules,
   }) async {
     await _checkServerAvailability();
 
@@ -83,6 +84,7 @@ class AuthService {
       firstName: firstName,
       lastName: lastName,
       deviceInfo: deviceInfo,
+      agreeWithRules: agreeWithRules,
     );
 
     final response = await _authProvider.register(request);

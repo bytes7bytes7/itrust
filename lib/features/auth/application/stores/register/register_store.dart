@@ -43,7 +43,7 @@ abstract class _RegisterStore extends SyncStore with Store {
   String lastName = '';
 
   @observable
-  bool agreeToTerms = false;
+  bool agreeWithRules = false;
 
   @computed
   bool get canRegister =>
@@ -52,7 +52,7 @@ abstract class _RegisterStore extends SyncStore with Store {
       password.isNotEmpty &&
       firstName.isNotEmpty &&
       lastName.isNotEmpty &&
-      agreeToTerms;
+      agreeWithRules;
 
   @action
   void register() {
@@ -64,6 +64,7 @@ abstract class _RegisterStore extends SyncStore with Store {
             password: password,
             firstName: firstName,
             lastName: lastName,
+            agreeWithRules: agreeWithRules,
           );
         } on ServerNotAvailable {
           _error = _registerStringProvider.serverNotAvailable;
