@@ -2,15 +2,17 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/domain.dart';
+import '../../features/common/domain/domain.dart';
+import '../interfaces/token_repository.dart';
 
 const _authTokenHeaderKey = 'Authorization';
 const _accessTokenStorageKey = 'access token';
 const _refreshTokenStorageKey = 'refresh token';
 
-@Singleton(as: TokenService)
-class ProdTokenService implements TokenService {
-  const ProdTokenService({
+// @prod
+@Singleton(as: TokenRepository)
+class ProdTokenRepository implements TokenRepository {
+  const ProdTokenRepository({
     required Dio dio,
     required FlutterSecureStorage secureStorage,
   })  : _dio = dio,

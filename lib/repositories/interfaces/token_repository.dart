@@ -1,6 +1,6 @@
-import '../value_objects/token_pair/token_pair.dart';
+import '../../features/common/domain/value_objects/token_pair/token_pair.dart';
 
-abstract class TokenService {
+abstract class TokenRepository {
   Future<void> init();
 
   Future<String?> getAccessToken();

@@ -8,21 +8,20 @@ import '../exceptions/exceptions.dart';
 import '../providers/auth_exception_provider.dart';
 import '../providers/auth_provider.dart';
 import '../providers/auth_status_provider.dart';
+import '../providers/device_info_provider.dart';
 import '../providers/server_availability_provider.dart';
 import '../value_objects/token_pair/token_pair.dart';
-import 'device_info_service.dart';
 import 'keep_fresh_token_service.dart';
-import 'token_service.dart';
 
 @singleton
 class AuthService {
   AuthService({
     required ServerAvailabilityProvider serverAvailabilityProvider,
     required AuthProvider authProvider,
-    required TokenService tokenService,
+    required TokenRepository tokenService,
     required EndUserRepository endUserRepository,
     required AuthExceptionProvider authExceptionProvider,
-    required DeviceInfoService deviceInfoService,
+    required DeviceInfoProvider deviceInfoProvider,
     required KeepFreshTokenService keepFreshTokenService,
     required AuthStatusProvider authStatusProvider,
   })  : _serverAvailabilityProvider = serverAvailabilityProvider,
@@ -30,16 +29,16 @@ class AuthService {
         _tokenService = tokenService,
         _endUserRepository = endUserRepository,
         _authExceptionProvider = authExceptionProvider,
-        _deviceInfoService = deviceInfoService,
+        _deviceInfoProvider = deviceInfoProvider,
         _keepFreshTokenService = keepFreshTokenService,
         _authStatusProvider = authStatusProvider;
 
   final ServerAvailabilityProvider _serverAvailabilityProvider;
   final AuthProvider _authProvider;
-  final TokenService _tokenService;
+  final TokenRepository _tokenService;
   final EndUserRepository _endUserRepository;
   final AuthExceptionProvider _authExceptionProvider;
-  final DeviceInfoService _deviceInfoService;
+  final DeviceInfoProvider _deviceInfoProvider;
   final KeepFreshTokenService _keepFreshTokenService;
   final AuthStatusProvider _authStatusProvider;
 
@@ -76,7 +75,7 @@ class AuthService {
   }) async {
     await _checkServerAvailability();
 
-    final deviceInfo = await _deviceInfoService.getDeviceInfo();
+    final deviceInfo = await _deviceInfoProvider.getDeviceInfo();
 
     final request = RegisterRequest(
       email: email,
@@ -117,7 +116,7 @@ class AuthService {
   }) async {
     await _checkServerAvailability();
 
-    final deviceInfo = await _deviceInfoService.getDeviceInfo();
+    final deviceInfo = await _deviceInfoProvider.getDeviceInfo();
 
     final request = LogInRequest(
       email: email,
@@ -171,7 +170,7 @@ class AuthService {
   }
 
   Future<void> _verifyToken() async {
-    final deviceInfo = await _deviceInfoService.getDeviceInfo();
+    final deviceInfo = await _deviceInfoProvider.getDeviceInfo();
 
     final request = VerifyTokenRequest(
       deviceInfo: deviceInfo,

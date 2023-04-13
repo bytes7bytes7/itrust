@@ -22,25 +22,30 @@ class FeedService {
     String? category,
     PostID? lastPostID,
   }) async {
-    final response = await _keepFreshTokenService.request(
-      () => _feedProvider.getFeed(
-        category: category,
-        lastPostID: lastPostID?.str,
-      ),
-    );
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _feedProvider.getFeed(
+          category: category,
+          lastPostID: lastPostID?.str,
+        ),
+      );
 
-    return await response.value.fold(
-      (l) {
-        // TODO: implement
-        throw Exception();
-      },
-      (r) async {
-        for (final p in r.posts) {
-          await _postRepository.addOrUpdate(post: p);
-        }
+      return await response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) async {
+          for (final p in r.posts) {
+            await _postRepository.addOrUpdate(post: p);
+          }
 
-        return r.posts;
-      },
-    );
+          return r.posts;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
   }
 }

@@ -5,9 +5,9 @@ import 'package:injectable/injectable.dart';
 import '../../features/common/domain/domain.dart';
 import '../interfaces/staff_user_repository.dart';
 
-@test
+@dev
 @Singleton(as: StaffUserRepository)
-class TestStaffUserRepository implements StaffUserRepository {
+class DevStaffUserRepository implements StaffUserRepository {
   final _storage = HashMap<UserID, StaffUser>();
 
   @override

@@ -1,11 +1,94 @@
+import 'package:injectable/injectable.dart';
+
+import '../../../../repositories/interfaces/interfaces.dart';
 import '../../../common/common.dart';
 import '../entities/entities.dart';
+import '../providers/comment_provider.dart';
 import '../value_objects/comment_id/comment_id.dart';
 
-abstract class CommentService {
-  Future<List<Comment>> loadPostComments({required PostID postID});
+@singleton
+class CommentService {
+  const CommentService({
+    required KeepFreshTokenService keepFreshTokenService,
+    required CommentProvider commentProvider,
+    required CommentRepository commentRepository,
+  })  : _keepFreshTokenService = keepFreshTokenService,
+        _commentProvider = commentProvider,
+        _commentRepository = commentRepository;
 
-  Future<Comment> loadComment({required CommentID commentID});
+  final KeepFreshTokenService _keepFreshTokenService;
+  final CommentProvider _commentProvider;
+  final CommentRepository _commentRepository;
 
-  Future<List<Comment>> loadCommentReplies({required CommentID commentID});
+  Future<List<Comment>> loadPostComments({
+    required PostID postID,
+    CommentID? lastCommentID,
+  }) async {
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _commentProvider.getComments(
+          id: postID.str,
+          lastCommentID: lastCommentID?.str,
+        ),
+      );
+
+      return await response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) async {
+          for (final c in r.comments) {
+            await _commentRepository.addOrUpdate(comment: c);
+          }
+
+          return r.comments;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
+  }
+
+  Future<Comment> loadComment({
+    required PostID postID,
+    required CommentID commentID,
+  }) async {
+    // TODO: implement
+    throw Exception();
+  }
+
+  Future<List<Comment>> loadCommentReplies({
+    required PostID postID,
+    required CommentID commentID,
+    CommentID? lastCommentID,
+  }) async {
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _commentProvider.getComments(
+          id: postID.str,
+          lastCommentID: lastCommentID?.str,
+          repliedToCommentID: commentID.str,
+        ),
+      );
+
+      return await response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) async {
+          for (final c in r.comments) {
+            await _commentRepository.addOrUpdate(comment: c);
+          }
+
+          return r.comments;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
+  }
 }

@@ -6,35 +6,34 @@ import '../../../../utils/json_either_wrapper.dart';
 import '../dto/refresh_token_request/refresh_token_request.dart';
 import '../exceptions/server_not_available.dart';
 import '../providers/auth_status_provider.dart';
+import '../providers/device_info_provider.dart';
 import '../providers/keep_fresh_token_exception_provider.dart';
 import '../providers/keep_fresh_token_provider.dart';
 import '../providers/server_availability_provider.dart';
-import '../services/token_service.dart';
 import '../value_objects/token_pair/token_pair.dart';
-import 'device_info_service.dart';
 
 @singleton
 class KeepFreshTokenService {
   const KeepFreshTokenService({
-    required TokenService tokenService,
+    required TokenRepository tokenService,
     required KeepFreshTokenProvider keepFreshTokenProvider,
     required AuthStatusProvider authStatusProvider,
-    required DeviceInfoService deviceInfoService,
+    required DeviceInfoProvider deviceInfoProvider,
     required KeepFreshTokenExceptionProvider keepFreshTokenExceptionProvider,
     required ServerAvailabilityProvider serverAvailabilityProvider,
     required EndUserRepository endUserRepository,
   })  : _tokenService = tokenService,
         _keepFreshTokenProvider = keepFreshTokenProvider,
         _authStatusProvider = authStatusProvider,
-        _deviceInfoService = deviceInfoService,
+        _deviceInfoProvider = deviceInfoProvider,
         _keepFreshTokenExceptionProvider = keepFreshTokenExceptionProvider,
         _serverAvailabilityProvider = serverAvailabilityProvider,
         _endUserRepository = endUserRepository;
 
-  final TokenService _tokenService;
+  final TokenRepository _tokenService;
   final KeepFreshTokenProvider _keepFreshTokenProvider;
   final AuthStatusProvider _authStatusProvider;
-  final DeviceInfoService _deviceInfoService;
+  final DeviceInfoProvider _deviceInfoProvider;
   final KeepFreshTokenExceptionProvider _keepFreshTokenExceptionProvider;
   final ServerAvailabilityProvider _serverAvailabilityProvider;
   final EndUserRepository _endUserRepository;
@@ -57,7 +56,7 @@ class KeepFreshTokenService {
             throw Exception('No tokens found');
           }
 
-          final deviceInfo = await _deviceInfoService.getDeviceInfo();
+          final deviceInfo = await _deviceInfoProvider.getDeviceInfo();
           final request = RefreshTokenRequest(
             refreshToken: refreshToken,
             deviceInfo: deviceInfo,

@@ -61,6 +61,7 @@ abstract class _FeedStore extends SyncStore with Store {
     }
   }
 
+  // TODO: add pagination
   @action
   void loadPosts(String? category, {bool useCached = true}) {
     _processingCategory = category;

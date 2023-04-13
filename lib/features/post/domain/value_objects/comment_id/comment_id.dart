@@ -14,8 +14,9 @@ class CommentID with _$CommentID {
 
   const CommentID._();
 
-  factory CommentID.fromJson(JsonMap json) =>
-      _$CommentIDFromJson(json);
+  factory CommentID.fromJson(JsonMap json) => _$CommentIDFromJson(json);
+
+  factory CommentID.fromString(String string) => CommentID(string);
 
   String get str => value;
 }

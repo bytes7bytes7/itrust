@@ -1,12 +1,22 @@
+import 'package:injectable/injectable.dart';
+
 import '../entities/entities.dart';
 
-abstract class ChatListService {
-  void init();
+@singleton
+class ChatListService {
+  void init() {
+    // TODO: implement
+  }
 
-  void dispose();
+  void dispose() {
+    // TODO: implement
+  }
 
   Future<List<Chat>> load({
     required int limit,
     required int offset,
-  });
+  }) async {
+    // TODO: implement
+    return [];
+  }
 }

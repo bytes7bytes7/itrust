@@ -57,7 +57,8 @@ abstract class _CommentReplyStore extends SyncStore with Store {
           _commentID = commentID;
 
           final comments = await _commentService.loadCommentReplies(
-            commentID: CommentID(commentID),
+            postID: PostID.fromString(postID),
+            commentID: CommentID.fromString(commentID),
           );
 
           // TODO: implement

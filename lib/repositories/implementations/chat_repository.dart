@@ -23,9 +23,9 @@ class ChatListResponse {
         update = const [];
 }
 
-@test
+@dev
 @LazySingleton(as: ChatRepository)
-class TestChatRepository implements ChatRepository {
+class DevChatRepository implements ChatRepository {
   final _storage = <ChatID, Chat>{};
   final _rand = Random();
   LongPolling<ChatListResponse> _polling = LongPolling<ChatListResponse>(

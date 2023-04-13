@@ -5,9 +5,9 @@ import 'package:injectable/injectable.dart';
 import '../../features/common/domain/domain.dart';
 import '../interfaces/post_repository.dart';
 
-@test
+@dev
 @Singleton(as: PostRepository)
-class TestPostRepository implements PostRepository {
+class DevPostRepository implements PostRepository {
   final _storage = HashMap<PostID, Post>();
 
   @override

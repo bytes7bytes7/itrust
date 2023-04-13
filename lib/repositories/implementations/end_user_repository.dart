@@ -9,9 +9,9 @@ import 'package:rxdart/rxdart.dart';
 import '../../features/common/domain/domain.dart';
 import '../interfaces/end_user_repository.dart';
 
-// @test
+// @dev
 // @Singleton(as: EndUserRepository)
-class TestEndUserRepository implements EndUserRepository {
+class DevEndUserRepository implements EndUserRepository {
   final _storage = HashMap<UserID, EndUser>();
   final _meController = BehaviorSubject<EndUser?>();
 

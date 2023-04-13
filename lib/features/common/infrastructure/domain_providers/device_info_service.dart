@@ -60,9 +60,10 @@ enum Browsers {
   }
 }
 
-@Singleton(as: DeviceInfoService)
-class ProdDeviceInfoService implements DeviceInfoService {
-  ProdDeviceInfoService({
+// @prod
+@Singleton(as: DeviceInfoProvider)
+class ProdDeviceInfoProvider implements DeviceInfoProvider {
+  ProdDeviceInfoProvider({
     required DeviceInfoPlugin deviceInfoPlugin,
   }) : _deviceInfoPlugin = deviceInfoPlugin;
 
