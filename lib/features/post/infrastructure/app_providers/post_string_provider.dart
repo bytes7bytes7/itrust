@@ -10,4 +10,10 @@ class ProdPostStringProvider extends L10nProvider
 
   @override
   String get canNotLoadPost => l10n.load_post_error;
+
+  @override
+  String get canNotLikePost => l10n.can_not_like_post;
+
+  @override
+  String get canNotUnlikePost => l10n.can_not_unlike_post;
 }
