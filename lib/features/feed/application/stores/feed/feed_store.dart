@@ -50,6 +50,12 @@ abstract class _FeedStore extends SyncStore with Store {
   @readonly
   List<PostVM> _posts = const [];
 
+  @readonly
+  bool _canLoadMore = true;
+
+  @readonly
+  bool _isLoadingMore = false;
+
   @computed
   bool get hasError => _error.isNotEmpty;
 
@@ -63,13 +69,19 @@ abstract class _FeedStore extends SyncStore with Store {
 
   // TODO: add pagination
   @action
-  void loadPosts(String? category, {bool useCached = true}) {
+  void loadPosts(
+    String? category, {
+    bool refresh = false,
+  }) {
     _processingCategory = category;
 
     perform(
       () async {
         try {
-          final lastPostID = _posts.lastOrNull?.id;
+          String? lastPostID;
+          if (!refresh) {
+            lastPostID = _posts.lastOrNull?.id;
+          }
 
           final data = await _feedService.loadPosts(
             category: category,
@@ -82,7 +94,7 @@ abstract class _FeedStore extends SyncStore with Store {
             for (final post in data) {
               final author = await _userService.getUserByID(
                 id: post.authorID,
-                cached: useCached,
+                cached: !refresh,
               );
 
               if (author == null) {
@@ -111,9 +123,65 @@ abstract class _FeedStore extends SyncStore with Store {
   }
 
   @action
+  void loadMorePosts() {
+    perform(
+      () async {
+        try {
+          final category = _selectedCategory;
+          final lastPostID = _posts.lastOrNull?.id;
+
+          final data = await _feedService.loadPosts(
+            category: category,
+            lastPostID:
+                lastPostID != null ? PostID.fromString(lastPostID) : null,
+          );
+
+          if (_processingCategory == category) {
+            final newPosts = <PostVM>[];
+            for (final post in data) {
+              final author = await _userService.getUserByID(
+                id: post.authorID,
+              );
+
+              if (author == null) {
+                // TODO: maybe create deleted user or don't show their posts
+                continue;
+              }
+
+              newPosts.add(
+                _mapster.map2(
+                  post,
+                  author,
+                  To<PostVM>(),
+                ),
+              );
+            }
+
+            _canLoadMore = false;
+            doAfterDelay(() {
+              _canLoadMore = true;
+            });
+
+            _posts = List.of(_posts)..addAll(newPosts);
+          }
+        } catch (e) {
+          _canLoadMore = false;
+          doAfterDelay(() {
+            _canLoadMore = true;
+          });
+
+          _error = _feedStringProvider.canNotLoadPosts;
+        }
+      },
+      setIsLoading: (v) => _isLoadingMore = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
   void refresh() {
     final selectedCategory = _selectedCategory;
-    loadPosts(selectedCategory, useCached: false);
+    loadPosts(selectedCategory, refresh: true);
   }
 
   @action

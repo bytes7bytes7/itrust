@@ -67,7 +67,7 @@ abstract class _CommentStore extends SyncStore with Store {
   void loadComment({
     required String postID,
     required String commentID,
-    bool useCached = true,
+    bool refresh = false,
   }) {
     perform(
       () async {
@@ -78,12 +78,12 @@ abstract class _CommentStore extends SyncStore with Store {
           final comment = await _commentService.loadComment(
             postID: PostID.fromString(postID),
             commentID: CommentID.fromString(commentID),
-            cached: useCached,
+            cached: !refresh,
           );
 
           final author = await _userService.getUserByID(
             id: comment.authorID,
-            cached: useCached,
+            cached: !refresh,
           );
 
           if (author == null) {
@@ -96,7 +96,7 @@ abstract class _CommentStore extends SyncStore with Store {
           commentReplyStore.loadCommentReplies(
             postID: postID,
             commentID: commentID,
-            useCached: useCached,
+            refresh: refresh,
           );
         } catch (e) {
           _error = _commentStringProvider.canNotLoadComment;
@@ -113,7 +113,7 @@ abstract class _CommentStore extends SyncStore with Store {
     final commentID = _commentID;
 
     if (postID != null && commentID != null) {
-      loadComment(postID: postID, commentID: commentID, useCached: false);
+      loadComment(postID: postID, commentID: commentID, refresh: true);
     }
   }
 

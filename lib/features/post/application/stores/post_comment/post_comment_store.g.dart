@@ -93,11 +93,11 @@ mixin _$PostCommentStore on _PostCommentStore, Store {
       ActionController(name: '_PostCommentStore', context: context);
 
   @override
-  void loadPostComments({required String postID, bool useCached = true}) {
+  void loadPostComments({required String postID, bool refresh = false}) {
     final _$actionInfo = _$_PostCommentStoreActionController.startAction(
         name: '_PostCommentStore.loadPostComments');
     try {
-      return super.loadPostComments(postID: postID, useCached: useCached);
+      return super.loadPostComments(postID: postID, refresh: refresh);
     } finally {
       _$_PostCommentStoreActionController.endAction(_$actionInfo);
     }

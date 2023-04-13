@@ -59,7 +59,10 @@ abstract class _PostStore extends SyncStore with Store {
       !postCommentStore.hasError;
 
   @action
-  void loadPost({required String postID, bool useCached = true}) {
+  void loadPost({
+    required String postID,
+    bool refresh = false,
+  }) {
     perform(
       () async {
         try {
@@ -67,12 +70,12 @@ abstract class _PostStore extends SyncStore with Store {
 
           final post = await _postService.loadPost(
             PostID.fromString(postID),
-            cached: useCached,
+            cached: !refresh,
           );
 
           final author = await _userService.getUserByID(
             id: post.authorID,
-            cached: useCached,
+            cached: !refresh,
           );
 
           if (author == null) {
@@ -97,7 +100,7 @@ abstract class _PostStore extends SyncStore with Store {
     final postID = _postID;
 
     if (postID != null) {
-      loadPost(postID: postID, useCached: false);
+      loadPost(postID: postID, refresh: true);
     }
   }
 

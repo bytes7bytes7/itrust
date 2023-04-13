@@ -83,5 +83,6 @@
   "can_not_like_post": "Can not like post. Try again later.",
   "can_not_unlike_post": "Can not unlike post. Try again later.",
   "can_not_reply_to_post": "Can not leave a comment. Try again later.",
-  "can_not_reply_to_comment": "Can not reply. Try again later."
+  "can_not_reply_to_comment": "Can not reply. Try again later.",
+  "feed_has_no_posts": "There will be posts when you have at least one friend. Go and make some!"
 }

@@ -146,12 +146,12 @@ mixin _$CommentStore on _CommentStore, Store {
   void loadComment(
       {required String postID,
       required String commentID,
-      bool useCached = true}) {
+      bool refresh = false}) {
     final _$actionInfo = _$_CommentStoreActionController.startAction(
         name: '_CommentStore.loadComment');
     try {
-      return super.loadComment(
-          postID: postID, commentID: commentID, useCached: useCached);
+      return super
+          .loadComment(postID: postID, commentID: commentID, refresh: refresh);
     } finally {
       _$_CommentStoreActionController.endAction(_$actionInfo);
     }

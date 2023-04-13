@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../gen/assets.gen.dart';
 import '../../../l10n/l10n.dart';
 import '../../application/application.dart';
 
@@ -35,6 +36,7 @@ class NotFoundScreen extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Spacer(),
+              Assets.lottie.routeError.lottie(),
               Text(
                 l10n.navi_not_found_body,
                 style: theme.textTheme.bodyText1,

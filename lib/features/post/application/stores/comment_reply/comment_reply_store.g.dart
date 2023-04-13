@@ -114,12 +114,12 @@ mixin _$CommentReplyStore on _CommentReplyStore, Store {
   void loadCommentReplies(
       {required String postID,
       required String commentID,
-      bool useCached = true}) {
+      bool refresh = false}) {
     final _$actionInfo = _$_CommentReplyStoreActionController.startAction(
         name: '_CommentReplyStore.loadCommentReplies');
     try {
       return super.loadCommentReplies(
-          postID: postID, commentID: commentID, useCached: useCached);
+          postID: postID, commentID: commentID, refresh: refresh);
     } finally {
       _$_CommentReplyStoreActionController.endAction(_$actionInfo);
     }

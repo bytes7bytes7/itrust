@@ -86,6 +86,42 @@ mixin _$FeedStore on _FeedStore, Store {
     });
   }
 
+  late final _$_canLoadMoreAtom =
+      Atom(name: '_FeedStore._canLoadMore', context: context);
+
+  bool get canLoadMore {
+    _$_canLoadMoreAtom.reportRead();
+    return super._canLoadMore;
+  }
+
+  @override
+  bool get _canLoadMore => canLoadMore;
+
+  @override
+  set _canLoadMore(bool value) {
+    _$_canLoadMoreAtom.reportWrite(value, super._canLoadMore, () {
+      super._canLoadMore = value;
+    });
+  }
+
+  late final _$_isLoadingMoreAtom =
+      Atom(name: '_FeedStore._isLoadingMore', context: context);
+
+  bool get isLoadingMore {
+    _$_isLoadingMoreAtom.reportRead();
+    return super._isLoadingMore;
+  }
+
+  @override
+  bool get _isLoadingMore => isLoadingMore;
+
+  @override
+  set _isLoadingMore(bool value) {
+    _$_isLoadingMoreAtom.reportWrite(value, super._isLoadingMore, () {
+      super._isLoadingMore = value;
+    });
+  }
+
   late final _$_FeedStoreActionController =
       ActionController(name: '_FeedStore', context: context);
 
@@ -101,11 +137,22 @@ mixin _$FeedStore on _FeedStore, Store {
   }
 
   @override
-  void loadPosts(String? category, {bool useCached = true}) {
+  void loadPosts(String? category, {bool refresh = false}) {
     final _$actionInfo =
         _$_FeedStoreActionController.startAction(name: '_FeedStore.loadPosts');
     try {
-      return super.loadPosts(category, useCached: useCached);
+      return super.loadPosts(category, refresh: refresh);
+    } finally {
+      _$_FeedStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void loadMorePosts() {
+    final _$actionInfo = _$_FeedStoreActionController.startAction(
+        name: '_FeedStore.loadMorePosts');
+    try {
+      return super.loadMorePosts();
     } finally {
       _$_FeedStoreActionController.endAction(_$actionInfo);
     }

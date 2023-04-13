@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../utils/hooks/reaction.dart';
 import '../../../common/presentation/widgets/widgets.dart';
@@ -54,6 +55,7 @@ class FeedScreen extends HookWidget {
         l10n: l10n,
       ),
       body: _Body(
+        l10n: l10n,
         categoryStore: categoryStore,
       ),
     );
@@ -86,13 +88,17 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 
 class _Body extends StatelessWidget {
   const _Body({
+    required this.l10n,
     required this.categoryStore,
   });
 
+  final AppLocalizations l10n;
   final CategoryStore categoryStore;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Observer(
       builder: (context) {
         if (categoryStore.isLoading) {
@@ -104,6 +110,23 @@ class _Body extends StatelessWidget {
         if (categoryStore.hasError) {
           return LoadingErrorContainer(
             onRetry: categoryStore.refresh,
+          );
+        }
+
+        if (!categoryStore.hasError && categoryStore.feedStore.isLoading) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _CategoryList(
+                key: _categoryListKey,
+                categoryStore: categoryStore,
+              ),
+              const Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            ],
           );
         }
 
@@ -132,6 +155,39 @@ class _Body extends StatelessWidget {
           );
         }
 
+        if (categoryStore.feedStore.posts.isEmpty) {
+          // TODO: add refresh indicator
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _CategoryList(
+                key: _categoryListKey,
+                categoryStore: categoryStore,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Assets.lottie.noFeed.lottie(),
+                      Text(
+                        l10n.feed_has_no_posts,
+                        style: theme.textTheme.bodyText1,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+
         return RefreshIndicator(
           onRefresh: () async => categoryStore.refresh(),
           child: CustomScrollView(
@@ -149,6 +205,7 @@ class _Body extends StatelessWidget {
                 ),
               ),
               _PostList(
+                l10n: l10n,
                 feedStore: categoryStore.feedStore,
               ),
             ],
@@ -194,9 +251,11 @@ class _CategoryList extends StatelessWidget {
 
 class _PostList extends StatelessWidget {
   const _PostList({
+    required this.l10n,
     required this.feedStore,
   });
 
+  final AppLocalizations l10n;
   final FeedStore feedStore;
 
   @override
@@ -213,8 +272,22 @@ class _PostList extends StatelessWidget {
 
         return SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: feedStore.posts.length,
+            childCount: feedStore.posts.length + 1,
             (context, index) {
+              if (index == feedStore.posts.length) {
+                if (feedStore.canLoadMore) {
+                  feedStore.loadMorePosts();
+                }
+
+                if (feedStore.isLoadingMore) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return const SizedBox.shrink();
+              }
+
               final post = feedStore.posts[index];
 
               return PostCard(

@@ -114,6 +114,8 @@ class _Body extends StatelessWidget {
 
     return Observer(
       builder: (context) {
+        // TODO: place start_chatting.json lottie animation
+
         return chatListStore.showItems
             ? NotificationListener<ScrollNotification>(
                 onNotification: (notification) {

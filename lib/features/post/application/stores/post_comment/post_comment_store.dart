@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
@@ -51,22 +52,30 @@ abstract class _PostCommentStore extends SyncStore with Store {
   @action
   void loadPostComments({
     required String postID,
-    bool useCached = true,
+    bool refresh = false,
   }) {
     perform(
       () async {
         try {
           _postID = postID;
 
+          String? lastCommentID;
+          if (!refresh) {
+            lastCommentID = _comments.lastOrNull?.id;
+          }
+
           final comments = await _commentService.loadPostComments(
             postID: PostID.fromString(postID),
+            lastCommentID: lastCommentID != null
+                ? CommentID.fromString(lastCommentID)
+                : null,
           );
 
           final newComments = <CommentVM>[];
           for (final c in comments) {
             final author = await _userService.getUserByID(
               id: c.authorID,
-              cached: useCached,
+              cached: !refresh,
             );
 
             if (author == null) {
@@ -92,7 +101,7 @@ abstract class _PostCommentStore extends SyncStore with Store {
     final postID = _postID;
 
     if (postID != null) {
-      loadPostComments(postID: postID, useCached: false);
+      loadPostComments(postID: postID, refresh: true);
     }
   }
 
