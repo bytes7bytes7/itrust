@@ -82,7 +82,7 @@ class _ProdCommentProvider implements ProdCommentProvider {
   }
 
   @override
-  Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> comment({
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentsResponse>> comment({
     required request,
     required postID,
     repliedToCommentID,
@@ -96,7 +96,7 @@ class _ProdCommentProvider implements ProdCommentProvider {
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<JsonEitherWrapper<ProblemDetails, PostCommentResponse>>(
+        _setStreamType<JsonEitherWrapper<ProblemDetails, PostCommentsResponse>>(
             Options(
       method: 'POST',
       headers: _headers,
@@ -110,7 +110,7 @@ class _ProdCommentProvider implements ProdCommentProvider {
                 )
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value =
-        JsonEitherWrapper<ProblemDetails, PostCommentResponse>.fromJson(
+        JsonEitherWrapper<ProblemDetails, PostCommentsResponse>.fromJson(
             _result.data!);
     return value;
   }

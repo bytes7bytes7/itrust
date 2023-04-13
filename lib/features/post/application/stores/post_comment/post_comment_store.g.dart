@@ -93,22 +93,22 @@ mixin _$PostCommentStore on _PostCommentStore, Store {
       ActionController(name: '_PostCommentStore', context: context);
 
   @override
-  void loadPostComments({required String postID}) {
+  void loadPostComments({required String postID, bool useCached = true}) {
     final _$actionInfo = _$_PostCommentStoreActionController.startAction(
         name: '_PostCommentStore.loadPostComments');
     try {
-      return super.loadPostComments(postID: postID);
+      return super.loadPostComments(postID: postID, useCached: useCached);
     } finally {
       _$_PostCommentStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void retry() {
+  void refresh() {
     final _$actionInfo = _$_PostCommentStoreActionController.startAction(
-        name: '_PostCommentStore.retry');
+        name: '_PostCommentStore.refresh');
     try {
-      return super.retry();
+      return super.refresh();
     } finally {
       _$_PostCommentStoreActionController.endAction(_$actionInfo);
     }
@@ -120,6 +120,17 @@ mixin _$PostCommentStore on _PostCommentStore, Store {
         name: '_PostCommentStore.onLikeCommentPressed');
     try {
       return super.onLikeCommentPressed(commentID: commentID);
+    } finally {
+      _$_PostCommentStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setComments(List<Comment> comments) {
+    final _$actionInfo = _$_PostCommentStoreActionController.startAction(
+        name: '_PostCommentStore.setComments');
+    try {
+      return super.setComments(comments);
     } finally {
       _$_PostCommentStoreActionController.endAction(_$actionInfo);
     }

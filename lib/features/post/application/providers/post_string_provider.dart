@@ -4,4 +4,6 @@ abstract class PostStringProvider {
   String get canNotLikePost;
 
   String get canNotUnlikePost;
+
+  String get canNotReplyToPost;
 }

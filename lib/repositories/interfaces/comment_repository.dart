@@ -1,4 +1,4 @@
-import '../../features/post/domain/domain.dart';
+import '../../features/common/domain/domain.dart';
 
 abstract class CommentRepository {
   Future<Comment?> getByID(CommentID id);

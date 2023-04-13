@@ -161,7 +161,7 @@ class _Body extends StatelessWidget {
                 ),
                 MessageField(
                   hint: l10n.comment_field_hint,
-                  onSendPressed: () {},
+                  onSendPressed: (value) {},
                   onEmojiPressed: () {},
                 ),
               ],
@@ -214,7 +214,7 @@ class _Body extends StatelessWidget {
               ),
               MessageField(
                 hint: l10n.comment_field_hint,
-                onSendPressed: () {},
+                onSendPressed: (value) {},
                 onEmojiPressed: () {},
               ),
             ],

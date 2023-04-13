@@ -2,9 +2,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../repositories/interfaces/interfaces.dart';
 import '../../../common/common.dart';
-import '../entities/entities.dart';
 import '../providers/comment_provider.dart';
-import '../value_objects/comment_id/comment_id.dart';
 
 @singleton
 class CommentService {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../gen/assets.gen.dart';
+import '../../../../utils/typedef.dart';
 import 'filled_icon_button.dart';
 import 'outlined_text_field.dart';
 
@@ -8,7 +10,7 @@ const _paddingH = 20.0;
 const _paddingV = 10.0;
 const _textFieldAndButtonSeparator = 20.0;
 
-class MessageField extends StatelessWidget {
+class MessageField extends HookWidget {
   const MessageField({
     super.key,
     required this.hint,
@@ -20,10 +22,13 @@ class MessageField extends StatelessWidget {
   final String hint;
   final VoidCallback? onEmojiPressed;
   final VoidCallback? onAttachFilePressed;
-  final VoidCallback onSendPressed;
+  final OnSendPressed onSendPressed;
 
   @override
   Widget build(BuildContext context) {
+    final textController = useTextEditingController();
+    final focusNode = useFocusNode();
+
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: _paddingH,
@@ -33,11 +38,13 @@ class MessageField extends StatelessWidget {
         children: [
           Expanded(
             child: OutlinedTextField(
+              controller: textController,
               hintText: hint,
               prefixIconPath: Assets.image.svg.emoji.path,
               suffixIconPath: Assets.image.svg.attachFile.path,
               onPrefixPressed: onEmojiPressed,
               onSuffixPressed: onAttachFilePressed,
+              focusNode: focusNode,
             ),
           ),
           const SizedBox(
@@ -45,7 +52,11 @@ class MessageField extends StatelessWidget {
           ),
           FilledIconButton(
             iconPath: Assets.image.svg.send.path,
-            onPressed: onSendPressed,
+            onPressed: () {
+              onSendPressed.call(textController.text);
+              textController.clear();
+              focusNode.unfocus();
+            },
           ),
         ],
       ),

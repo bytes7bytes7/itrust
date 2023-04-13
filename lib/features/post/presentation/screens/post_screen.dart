@@ -105,7 +105,7 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends HookWidget {
   const _Body({
     required this.postStore,
     required this.l10n,
@@ -116,6 +116,21 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scrollController = useScrollController();
+
+    useReaction<bool>(
+      (_) => postStore.moveUp,
+      (moveUp) {
+        if (moveUp) {
+          scrollController.animateTo(
+            0,
+            duration: const Duration(milliseconds: 800),
+            curve: Curves.easeIn,
+          );
+        }
+      },
+    );
+
     return Observer(
       builder: (context) {
         final post = postStore.post;
@@ -140,6 +155,7 @@ class _Body extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     key: _pageScrollKey,
+                    controller: scrollController,
                     children: [
                       PostCard(
                         post: post,
@@ -152,14 +168,14 @@ class _Body extends StatelessWidget {
                         )
                       else
                         SmallLoadingErrorContainer(
-                          onRetry: postStore.postCommentStore.retry,
+                          onRetry: postStore.postCommentStore.refresh,
                         ),
                     ],
                   ),
                 ),
                 MessageField(
                   hint: l10n.comment_field_hint,
-                  onSendPressed: () {},
+                  onSendPressed: postStore.reply,
                   onEmojiPressed: () {},
                 ),
               ],
@@ -174,6 +190,7 @@ class _Body extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   key: _pageScrollKey,
+                  controller: scrollController,
                   itemCount: postStore.postCommentStore.comments.length + 2,
                   itemBuilder: (context, index) {
                     if (index == 0) {
@@ -210,7 +227,7 @@ class _Body extends StatelessWidget {
               ),
               MessageField(
                 hint: l10n.comment_field_hint,
-                onSendPressed: () {},
+                onSendPressed: postStore.reply,
                 onEmojiPressed: () {},
               ),
             ],

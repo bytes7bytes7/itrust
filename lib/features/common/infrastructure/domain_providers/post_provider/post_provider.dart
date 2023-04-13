@@ -5,7 +5,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../../../utils/json_either_wrapper.dart';
 import '../../../../../utils/server_settings.dart';
-import '../../../domain/dto/post_response/post_response.dart';
+import '../../../domain/dto/dto.dart';
 import '../../../domain/providers/post_provider.dart';
 
 part 'post_provider.g.dart';
@@ -44,5 +44,12 @@ abstract class ProdPostProvider implements PostProvider {
   @POST('/{id}/unlike')
   Future<JsonEitherWrapper<ProblemDetails, PostResponse>> unlikePost({
     @Path() required String id,
+  });
+
+  @override
+  @POST('/{postID}/comment')
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentsResponse>> comment({
+    @Body() required PostCommentRequest request,
+    @Path() required String postID,
   });
 }

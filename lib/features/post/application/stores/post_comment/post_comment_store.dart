@@ -16,15 +16,18 @@ class PostCommentStore = _PostCommentStore with _$PostCommentStore;
 abstract class _PostCommentStore extends SyncStore with Store {
   _PostCommentStore({
     required CommentService commentService,
+    required UserService userService,
     required CommentCoordinator commentCoordinator,
     required PostCommentStringProvider postCommentStringProvider,
     required Mapster mapster,
   })  : _commentService = commentService,
+        _userService = userService,
         _commentCoordinator = commentCoordinator,
         _postCommentStringProvider = postCommentStringProvider,
         _mapster = mapster;
 
   final CommentService _commentService;
+  final UserService _userService;
   final CommentCoordinator _commentCoordinator;
   final PostCommentStringProvider _postCommentStringProvider;
   final Mapster _mapster;
@@ -46,7 +49,10 @@ abstract class _PostCommentStore extends SyncStore with Store {
 
   // TODO: add pagination
   @action
-  void loadPostComments({required String postID}) {
+  void loadPostComments({
+    required String postID,
+    bool useCached = true,
+  }) {
     perform(
       () async {
         try {
@@ -56,24 +62,22 @@ abstract class _PostCommentStore extends SyncStore with Store {
             postID: PostID.fromString(postID),
           );
 
-          // TODO: implement
-          final user = User.end(
-            id: UserID.fromString('user'),
-            avatarUrls: [],
-            email: 'email@email.com',
-            firstName: 'first',
-            lastName: 'last',
-          );
+          final newComments = <CommentVM>[];
+          for (final c in comments) {
+            final author = await _userService.getUserByID(
+              id: c.authorID,
+              cached: useCached,
+            );
 
-          _comments = comments
-              .map(
-                (comment) => _mapster.map2(
-                  comment,
-                  user,
-                  To<CommentVM>(),
-                ),
-              )
-              .toList();
+            if (author == null) {
+              // TODO: maybe create deleted user or don't show their posts
+              continue;
+            }
+
+            newComments.add(_mapster.map2(c, author, To<CommentVM>()));
+          }
+
+          _comments = newComments;
         } catch (e) {
           _error = _postCommentStringProvider.canNotLoadComments;
         }
@@ -84,11 +88,11 @@ abstract class _PostCommentStore extends SyncStore with Store {
   }
 
   @action
-  void retry() {
+  void refresh() {
     final postID = _postID;
 
     if (postID != null) {
-      loadPostComments(postID: postID);
+      loadPostComments(postID: postID, useCached: false);
     }
   }
 
@@ -105,6 +109,33 @@ abstract class _PostCommentStore extends SyncStore with Store {
           likedByMe: !comment.likedByMe,
         );
     }
+  }
+
+  @action
+  void setComments(List<Comment> comments) {
+    perform(
+      () async {
+        final newComments = <CommentVM>[];
+        for (final c in comments) {
+          final author = await _userService.getUserByID(
+            id: c.authorID,
+            cached: true,
+          );
+
+          if (author == null) {
+            // TODO: maybe create deleted user or don't show their posts
+            continue;
+          }
+
+          newComments.add(_mapster.map2(c, author, To<CommentVM>()));
+        }
+
+        _comments = newComments;
+      },
+      startLoading: false,
+      setIsLoading: (v) => _isLoading = v,
+      removeError: () => _error = '',
+    );
   }
 
   void onCommentPressed({required String commentID}) {

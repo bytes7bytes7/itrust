@@ -3,7 +3,6 @@ import 'package:mapster/mapster.dart';
 
 import '../../../common/common.dart';
 import '../../application/view_models/comment/comment_vm.dart';
-import '../../domain/domain.dart';
 
 class CommentUserToCommentVMMapper
     extends TwoSourcesMapper<Comment, User, CommentVM> {

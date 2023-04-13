@@ -45,6 +45,9 @@ abstract class _PostStore extends SyncStore with Store {
   @readonly
   PostVM? _post;
 
+  @readonly
+  bool _moveUp = false;
+
   @computed
   bool get hasError => _error.isNotEmpty;
 
@@ -156,6 +159,37 @@ abstract class _PostStore extends SyncStore with Store {
 
             _updatePost(likedByMe: false);
           }
+        }
+      },
+      startLoading: false,
+      setIsLoading: (v) => _isLoading = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void reply(String text) {
+    perform(
+      () async {
+        try {
+          final postID = _postID;
+          if (postID == null) {
+            return;
+          }
+
+          final comments = await _postService.replyToPost(
+            text: text,
+            postID: PostID.fromString(postID),
+          );
+
+          _moveUp = true;
+          doAfterDelay(() {
+            _moveUp = false;
+          });
+
+          postCommentStore.setComments(comments);
+        } catch (e) {
+          _error = _postStringProvider.canNotReplyToPost;
         }
       },
       startLoading: false,

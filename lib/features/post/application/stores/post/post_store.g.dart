@@ -92,6 +92,23 @@ mixin _$PostStore on _PostStore, Store {
     });
   }
 
+  late final _$_moveUpAtom = Atom(name: '_PostStore._moveUp', context: context);
+
+  bool get moveUp {
+    _$_moveUpAtom.reportRead();
+    return super._moveUp;
+  }
+
+  @override
+  bool get _moveUp => moveUp;
+
+  @override
+  set _moveUp(bool value) {
+    _$_moveUpAtom.reportWrite(value, super._moveUp, () {
+      super._moveUp = value;
+    });
+  }
+
   late final _$refreshAsyncAction =
       AsyncAction('_PostStore.refresh', context: context);
 
@@ -120,6 +137,17 @@ mixin _$PostStore on _PostStore, Store {
         name: '_PostStore.onLikePostPressed');
     try {
       return super.onLikePostPressed();
+    } finally {
+      _$_PostStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void reply(String text) {
+    final _$actionInfo =
+        _$_PostStoreActionController.startAction(name: '_PostStore.reply');
+    try {
+      return super.reply(text);
     } finally {
       _$_PostStoreActionController.endAction(_$actionInfo);
     }

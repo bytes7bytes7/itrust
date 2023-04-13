@@ -5,7 +5,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../../../utils/json_either_wrapper.dart';
 import '../../../../../utils/server_settings.dart';
-import '../../../domain/dto/dto.dart';
+import '../../../../common/domain/dto/dto.dart';
 import '../../../domain/providers/comment_provider.dart';
 
 part 'comment_provider.g.dart';
@@ -45,8 +45,8 @@ abstract class ProdCommentProvider implements CommentProvider {
 
   @override
   @POST('/{postID}/comment')
-  Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> comment({
-    @Body() required CommentPostRequest request,
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentsResponse>> comment({
+    @Body() required PostCommentRequest request,
     @Path() required String postID,
     @Query('repliedToCommentID') String? repliedToCommentID,
   });

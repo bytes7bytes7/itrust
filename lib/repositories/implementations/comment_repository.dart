@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:injectable/injectable.dart';
 
-import '../../features/post/domain/domain.dart';
+import '../../features/common/domain/domain.dart';
 import '../interfaces/comment_repository.dart';
 
 @dev

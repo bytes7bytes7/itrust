@@ -16,4 +16,7 @@ class ProdPostStringProvider extends L10nProvider
 
   @override
   String get canNotUnlikePost => l10n.can_not_unlike_post;
+
+  @override
+  String get canNotReplyToPost => l10n.can_not_reply_to_post;
 }

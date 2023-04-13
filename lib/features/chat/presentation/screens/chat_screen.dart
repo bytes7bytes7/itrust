@@ -46,7 +46,7 @@ class ChatScreen extends StatelessWidget {
               hint: l10n.message_field_hint,
               onEmojiPressed: () {},
               onAttachFilePressed: () {},
-              onSendPressed: () {},
+              onSendPressed: (value) {},
             ),
           ],
         ),

@@ -21,6 +21,7 @@ class OutlinedTextField extends StatelessWidget {
     this.suffixIconPath,
     this.onPrefixPressed,
     this.onSuffixPressed,
+    this.focusNode,
   }) : obscureText = obscureText ?? false;
 
   final String? initialText;
@@ -33,6 +34,7 @@ class OutlinedTextField extends StatelessWidget {
   final String? suffixIconPath;
   final VoidCallback? onPrefixPressed;
   final VoidCallback? onSuffixPressed;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,7 @@ class OutlinedTextField extends StatelessWidget {
               obscureText: obscureText,
               enabled: enabled,
               onChanged: onChanged,
+              focusNode: focusNode,
               decoration: InputDecoration(
                 hintText: hintText,
               ),
