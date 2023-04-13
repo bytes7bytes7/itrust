@@ -138,40 +138,4 @@ class PostService {
     }
   }
 
-  Future<List<Comment>> replyToComment({
-    required String text,
-    required PostID postID,
-    required CommentID commentID,
-  }) async {
-    try {
-      final request = PostCommentRequest(
-        text: text,
-        repliedToCommentID: commentID.str,
-      );
-
-      final response = await _keepFreshTokenService.request(
-        () => _postProvider.comment(
-          request: request,
-          postID: postID.str,
-        ),
-      );
-
-      return await response.value.fold(
-        (l) {
-          // TODO: implement
-          throw Exception();
-        },
-        (r) async {
-          for (final c in r.comments) {
-            await _commentRepository.addOrUpdate(comment: c);
-          }
-
-          return r.comments;
-        },
-      );
-    } catch (e) {
-      // TODO: implement
-      rethrow;
-    }
-  }
 }

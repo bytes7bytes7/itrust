@@ -82,5 +82,6 @@
   "terminate_session_btn": "Terminate session",
   "can_not_like_post": "Can not like post. Try again later.",
   "can_not_unlike_post": "Can not unlike post. Try again later.",
-  "can_not_reply_to_post": "Can not leave a comment. Try again later."
+  "can_not_reply_to_post": "Can not leave a comment. Try again later.",
+  "can_not_reply_to_comment": "Can not reply. Try again later."
 }

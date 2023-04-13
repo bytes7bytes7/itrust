@@ -113,6 +113,24 @@ mixin _$CommentStore on _CommentStore, Store {
     });
   }
 
+  late final _$_moveUpAtom =
+      Atom(name: '_CommentStore._moveUp', context: context);
+
+  bool get moveUp {
+    _$_moveUpAtom.reportRead();
+    return super._moveUp;
+  }
+
+  @override
+  bool get _moveUp => moveUp;
+
+  @override
+  set _moveUp(bool value) {
+    _$_moveUpAtom.reportWrite(value, super._moveUp, () {
+      super._moveUp = value;
+    });
+  }
+
   late final _$refreshAsyncAction =
       AsyncAction('_CommentStore.refresh', context: context);
 
@@ -145,6 +163,17 @@ mixin _$CommentStore on _CommentStore, Store {
         name: '_CommentStore.onLikeCommentPressed');
     try {
       return super.onLikeCommentPressed();
+    } finally {
+      _$_CommentStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void reply(String text) {
+    final _$actionInfo = _$_CommentStoreActionController.startAction(
+        name: '_CommentStore.reply');
+    try {
+      return super.reply(text);
     } finally {
       _$_CommentStoreActionController.endAction(_$actionInfo);
     }

@@ -10,4 +10,7 @@ class ProdCommentStringProvider extends L10nProvider
 
   @override
   String get canNotLoadComment => l10n.load_comment_error;
+
+  @override
+  String get canNotReplyToPost => l10n.can_not_reply_to_comment;
 }

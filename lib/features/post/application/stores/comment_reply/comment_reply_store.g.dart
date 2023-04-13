@@ -111,11 +111,15 @@ mixin _$CommentReplyStore on _CommentReplyStore, Store {
       ActionController(name: '_CommentReplyStore', context: context);
 
   @override
-  void loadCommentReplies({required String postID, required String commentID}) {
+  void loadCommentReplies(
+      {required String postID,
+      required String commentID,
+      bool useCached = true}) {
     final _$actionInfo = _$_CommentReplyStoreActionController.startAction(
         name: '_CommentReplyStore.loadCommentReplies');
     try {
-      return super.loadCommentReplies(postID: postID, commentID: commentID);
+      return super.loadCommentReplies(
+          postID: postID, commentID: commentID, useCached: useCached);
     } finally {
       _$_CommentReplyStoreActionController.endAction(_$actionInfo);
     }
@@ -138,6 +142,17 @@ mixin _$CommentReplyStore on _CommentReplyStore, Store {
         name: '_CommentReplyStore.onLikeReplyPressed');
     try {
       return super.onLikeReplyPressed(commentID: commentID);
+    } finally {
+      _$_CommentReplyStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setComments(List<Comment> comments) {
+    final _$actionInfo = _$_CommentReplyStoreActionController.startAction(
+        name: '_CommentReplyStore.setComments');
+    try {
+      return super.setComments(comments);
     } finally {
       _$_CommentReplyStoreActionController.endAction(_$actionInfo);
     }

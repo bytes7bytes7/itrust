@@ -18,16 +18,19 @@ abstract class _CommentStore extends SyncStore with Store {
   _CommentStore({
     required this.commentReplyStore,
     required CommentService commentService,
+    required UserService userService,
     required CommentCoordinator commentCoordinator,
     required CommentStringProvider commentStringProvider,
     required Mapster mapster,
   })  : _commentService = commentService,
+        _userService = userService,
         _commentCoordinator = commentCoordinator,
         _commentStringProvider = commentStringProvider,
         _mapster = mapster;
 
   final CommentReplyStore commentReplyStore;
   final CommentService _commentService;
+  final UserService _userService;
   final CommentCoordinator _commentCoordinator;
   final CommentStringProvider _commentStringProvider;
   final Mapster _mapster;
@@ -46,6 +49,9 @@ abstract class _CommentStore extends SyncStore with Store {
 
   @readonly
   CommentVM? _comment;
+
+  @readonly
+  bool _moveUp = false;
 
   @computed
   bool get hasError => _error.isNotEmpty;
@@ -75,20 +81,22 @@ abstract class _CommentStore extends SyncStore with Store {
             cached: useCached,
           );
 
-          // TODO: implement
-          final user = User.end(
-            id: UserID.fromString('user'),
-            avatarUrls: [],
-            email: 'email@email.com',
-            firstName: 'first',
-            lastName: 'last',
+          final author = await _userService.getUserByID(
+            id: comment.authorID,
+            cached: useCached,
           );
 
-          _comment = _mapster.map2(comment, user, To<CommentVM>());
+          if (author == null) {
+            // TODO: maybe create deleted user or don't show their posts
+            return;
+          }
+
+          _comment = _mapster.map2(comment, author, To<CommentVM>());
 
           commentReplyStore.loadCommentReplies(
             postID: postID,
             commentID: commentID,
+            useCached: useCached,
           );
         } catch (e) {
           _error = _commentStringProvider.canNotLoadComment;
@@ -119,6 +127,39 @@ abstract class _CommentStore extends SyncStore with Store {
         likedByMe: !comment.likedByMe,
       );
     }
+  }
+
+  @action
+  void reply(String text) {
+    perform(
+      () async {
+        try {
+          final postID = _postID;
+          final commentID = _commentID;
+          if (postID == null || commentID == null) {
+            return;
+          }
+
+          final comments = await _commentService.replyToComment(
+            text: text,
+            postID: PostID.fromString(postID),
+            commentID: CommentID.fromString(commentID),
+          );
+
+          _moveUp = true;
+          doAfterDelay(() {
+            _moveUp = false;
+          });
+
+          commentReplyStore.setComments(comments);
+        } catch (e) {
+          _error = _commentStringProvider.canNotReplyToPost;
+        }
+      },
+      startLoading: false,
+      setIsLoading: (v) => _isLoading = v,
+      removeError: () => _error = '',
+    );
   }
 
   void onBackButtonPressed() {

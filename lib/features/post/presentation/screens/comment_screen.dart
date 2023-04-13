@@ -107,7 +107,7 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends HookWidget {
   const _Body({
     required this.commentStore,
     required this.l10n,
@@ -118,6 +118,21 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scrollController = useScrollController();
+
+    useReaction<bool>(
+      (_) => commentStore.moveUp,
+      (moveUp) {
+        if (moveUp) {
+          scrollController.animateTo(
+            0,
+            duration: const Duration(milliseconds: 800),
+            curve: Curves.easeIn,
+          );
+        }
+      },
+    );
+
     return Observer(
       builder: (context) {
         final comment = commentStore.comment;
@@ -142,6 +157,7 @@ class _Body extends StatelessWidget {
                 Expanded(
                   child: ListView(
                     key: _listScrollKey,
+                    controller: scrollController,
                     children: [
                       CommentCard(
                         isPreview: false,
@@ -161,7 +177,7 @@ class _Body extends StatelessWidget {
                 ),
                 MessageField(
                   hint: l10n.comment_field_hint,
-                  onSendPressed: (value) {},
+                  onSendPressed: commentStore.reply,
                   onEmojiPressed: () {},
                 ),
               ],
@@ -176,6 +192,7 @@ class _Body extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   key: _listScrollKey,
+                  controller: scrollController,
                   itemCount: commentStore.commentReplyStore.replies.length + 2,
                   itemBuilder: (context, index) {
                     if (index == 0) {
@@ -214,7 +231,7 @@ class _Body extends StatelessWidget {
               ),
               MessageField(
                 hint: l10n.comment_field_hint,
-                onSendPressed: (value) {},
+                onSendPressed: commentStore.reply,
                 onEmojiPressed: () {},
               ),
             ],
