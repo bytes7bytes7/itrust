@@ -14,6 +14,7 @@ class CategoryService {
   final KeepFreshTokenService _keepFreshTokenService;
   final FeedProvider _feedProvider;
 
+  // TODO: add tag repo and cached param
   Future<List<String>> loadCategories() async {
     final response =
         await _keepFreshTokenService.request(_feedProvider.getTags);

@@ -104,22 +104,11 @@ mixin _$PostStore on _PostStore, Store {
       ActionController(name: '_PostStore', context: context);
 
   @override
-  void loadPost({required String postID}) {
+  void loadPost({required String postID, bool useCached = true}) {
     final _$actionInfo =
         _$_PostStoreActionController.startAction(name: '_PostStore.loadPost');
     try {
-      return super.loadPost(postID: postID);
-    } finally {
-      _$_PostStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void retry() {
-    final _$actionInfo =
-        _$_PostStoreActionController.startAction(name: '_PostStore.retry');
-    try {
-      return super.retry();
+      return super.loadPost(postID: postID, useCached: useCached);
     } finally {
       _$_PostStoreActionController.endAction(_$actionInfo);
     }

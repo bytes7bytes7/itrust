@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 
+import '../../../../repositories/interfaces/interfaces.dart';
 import '../../../common/common.dart';
 import '../providers/feed_provider.dart';
 
@@ -8,11 +9,14 @@ class FeedService {
   const FeedService({
     required KeepFreshTokenService keepFreshTokenService,
     required FeedProvider feedProvider,
+    required PostRepository postRepository,
   })  : _keepFreshTokenService = keepFreshTokenService,
-        _feedProvider = feedProvider;
+        _feedProvider = feedProvider,
+        _postRepository = postRepository;
 
   final KeepFreshTokenService _keepFreshTokenService;
   final FeedProvider _feedProvider;
+  final PostRepository _postRepository;
 
   Future<List<Post>> loadPosts({
     String? category,
@@ -25,12 +29,16 @@ class FeedService {
       ),
     );
 
-    return response.value.fold(
+    return await response.value.fold(
       (l) {
         // TODO: implement
         throw Exception();
       },
-      (r) {
+      (r) async {
+        for (final p in r.posts) {
+          await _postRepository.addOrUpdate(post: p);
+        }
+
         return r.posts;
       },
     );

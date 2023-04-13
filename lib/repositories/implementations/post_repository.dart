@@ -11,8 +11,8 @@ class TestPostRepository implements PostRepository {
   final _storage = HashMap<PostID, Post>();
 
   @override
-  Future<Post?> getByID({required PostID postID}) async {
-    return _storage[postID];
+  Future<Post?> getByID(PostID id) async {
+    return _storage[id];
   }
 
   @override

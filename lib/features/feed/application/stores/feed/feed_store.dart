@@ -62,7 +62,7 @@ abstract class _FeedStore extends SyncStore with Store {
   }
 
   @action
-  void loadPosts(String? category) {
+  void loadPosts(String? category, {bool useCached = true}) {
     _processingCategory = category;
 
     perform(
@@ -79,7 +79,10 @@ abstract class _FeedStore extends SyncStore with Store {
           if (_processingCategory == category) {
             final newPosts = <PostVM>[];
             for (final post in data) {
-              final author = await _userService.getUserByID(id: post.authorID);
+              final author = await _userService.getUserByID(
+                id: post.authorID,
+                cached: useCached,
+              );
 
               if (author == null) {
                 // TODO: maybe create deleted user or don't show their posts
@@ -109,7 +112,7 @@ abstract class _FeedStore extends SyncStore with Store {
   @action
   void refresh() {
     final selectedCategory = _selectedCategory;
-    loadPosts(selectedCategory);
+    loadPosts(selectedCategory, useCached: false);
   }
 
   @action

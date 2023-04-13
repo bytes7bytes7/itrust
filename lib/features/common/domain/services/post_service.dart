@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 
+import '../../../../repositories/interfaces/interfaces.dart';
 import '../entities/post/post.dart';
 import '../providers/post_provider.dart';
 import '../value_objects/post_id/post_id.dart';
@@ -10,63 +11,91 @@ class PostService {
   const PostService({
     required KeepFreshTokenService keepFreshTokenService,
     required PostProvider postProvider,
+    required PostRepository postRepository,
   })  : _keepFreshTokenService = keepFreshTokenService,
-        _postProvider = postProvider;
+        _postProvider = postProvider,
+        _postRepository = postRepository;
 
   final KeepFreshTokenService _keepFreshTokenService;
   final PostProvider _postProvider;
+  final PostRepository _postRepository;
 
-  Future<Post> loadPost(PostID id) async {
-    final response = await _keepFreshTokenService.request(
-      () => _postProvider.getPost(
-        id: id.str,
-      ),
-    );
+  Future<Post> loadPost(PostID id, {bool cached = true}) async {
+    if (cached) {
+      final post = await _postRepository.getByID(id);
 
-    return response.value.fold(
-      (l) {
-        // TODO: implement
-        throw Exception();
-      },
-      (r) {
-        return r.post;
-      },
-    );
+      if (post != null) {
+        return post;
+      }
+    }
+
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _postProvider.getPost(
+          id: id.str,
+        ),
+      );
+
+      return await response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) async {
+          await _postRepository.addOrUpdate(post: r.post);
+
+          return r.post;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
   }
 
   Future<Post> likePost(PostID id) async {
-    final response = await _keepFreshTokenService.request(
-      () => _postProvider.likePost(
-        id: id.str,
-      ),
-    );
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _postProvider.likePost(
+          id: id.str,
+        ),
+      );
 
-    return response.value.fold(
-      (l) {
-        // TODO: implement
-        throw Exception();
-      },
-      (r) {
-        return r.post;
-      },
-    );
+      return response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) {
+          return r.post;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
   }
 
   Future<Post> unlikePost(PostID id) async {
-    final response = await _keepFreshTokenService.request(
-          () => _postProvider.unlikePost(
-        id: id.str,
-      ),
-    );
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _postProvider.unlikePost(
+          id: id.str,
+        ),
+      );
 
-    return response.value.fold(
-          (l) {
-        // TODO: implement
-        throw Exception();
-      },
-          (r) {
-        return r.post;
-      },
-    );
+      return response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) {
+          return r.post;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
   }
 }

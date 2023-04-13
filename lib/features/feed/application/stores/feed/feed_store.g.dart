@@ -101,11 +101,11 @@ mixin _$FeedStore on _FeedStore, Store {
   }
 
   @override
-  void loadPosts(String? category) {
+  void loadPosts(String? category, {bool useCached = true}) {
     final _$actionInfo =
         _$_FeedStoreActionController.startAction(name: '_FeedStore.loadPosts');
     try {
-      return super.loadPosts(category);
+      return super.loadPosts(category, useCached: useCached);
     } finally {
       _$_FeedStoreActionController.endAction(_$actionInfo);
     }

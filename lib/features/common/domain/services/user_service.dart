@@ -23,7 +23,24 @@ class UserService {
   final EndUserRepository _endUserRepository;
   final StaffUserRepository _staffUserRepository;
 
-  Future<User?> getUserByID({required UserID id}) async {
+  Future<User?> getUserByID({
+    required UserID id,
+    bool cached = true,
+  }) async {
+    if (cached) {
+      User? user;
+
+      if (id.isEndUserID) {
+        user = await _endUserRepository.getByID(id: id);
+      } else if (id.isStaffUserID) {
+        user = await _staffUserRepository.getByID(id: id);
+      }
+
+      if (user != null) {
+        return user;
+      }
+    }
+
     try {
       final response = await _keepFreshTokenService
           .request(() => _userProvider.getUserByID(id.str));

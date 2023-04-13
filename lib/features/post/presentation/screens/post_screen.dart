@@ -104,7 +104,7 @@ class _Body extends StatelessWidget {
 
         if (postStore.hasError) {
           return LoadingErrorContainer(
-            onRetry: postStore.retry,
+            onRetry: postStore.refresh,
           );
         }
 
