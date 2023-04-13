@@ -54,16 +54,16 @@ mixin _$FeedStore on _FeedStore, Store {
   late final _$_selectedCategoryAtom =
       Atom(name: '_FeedStore._selectedCategory', context: context);
 
-  String get selectedCategory {
+  String? get selectedCategory {
     _$_selectedCategoryAtom.reportRead();
     return super._selectedCategory;
   }
 
   @override
-  String get _selectedCategory => selectedCategory;
+  String? get _selectedCategory => selectedCategory;
 
   @override
-  set _selectedCategory(String value) {
+  set _selectedCategory(String? value) {
     _$_selectedCategoryAtom.reportWrite(value, super._selectedCategory, () {
       super._selectedCategory = value;
     });
@@ -90,7 +90,7 @@ mixin _$FeedStore on _FeedStore, Store {
       ActionController(name: '_FeedStore', context: context);
 
   @override
-  void selectCategory(String category) {
+  void selectCategory(String? category) {
     final _$actionInfo = _$_FeedStoreActionController.startAction(
         name: '_FeedStore.selectCategory');
     try {
@@ -101,7 +101,7 @@ mixin _$FeedStore on _FeedStore, Store {
   }
 
   @override
-  void loadPosts(String category) {
+  void loadPosts(String? category) {
     final _$actionInfo =
         _$_FeedStoreActionController.startAction(name: '_FeedStore.loadPosts');
     try {
@@ -112,11 +112,11 @@ mixin _$FeedStore on _FeedStore, Store {
   }
 
   @override
-  void retry() {
+  void refresh() {
     final _$actionInfo =
-        _$_FeedStoreActionController.startAction(name: '_FeedStore.retry');
+        _$_FeedStoreActionController.startAction(name: '_FeedStore.refresh');
     try {
-      return super.retry();
+      return super.refresh();
     } finally {
       _$_FeedStoreActionController.endAction(_$actionInfo);
     }

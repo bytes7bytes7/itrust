@@ -43,7 +43,7 @@ class ChatCard extends StatelessWidget {
             readBy: [],
             text: 'some text $lastMessageID',
             mediaUrls: [],
-            senderID: UserID('some id $lastMessageID'),
+            senderID: UserID.fromString('some id $lastMessageID'),
           )
         : null;
 

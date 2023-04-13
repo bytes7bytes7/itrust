@@ -96,7 +96,7 @@ class TestChatRepository implements ChatRepository {
         return Chat.dialogue(
           id: chatID,
           unreadAmount: 0,
-          partnerID: UserID('user ${_rand.nextInt(1000)}'),
+          partnerID: UserID.fromString('user ${_rand.nextInt(1000)}'),
         );
       default:
         return Chat.group(

@@ -15,13 +15,6 @@ mixin _$CategoryStore on _CategoryStore, Store {
   bool get hasError => (_$hasErrorComputed ??=
           Computed<bool>(() => super.hasError, name: '_CategoryStore.hasError'))
       .value;
-  Computed<bool>? _$isAllLoadedComputed;
-
-  @override
-  bool get isAllLoaded =>
-      (_$isAllLoadedComputed ??= Computed<bool>(() => super.isAllLoaded,
-              name: '_CategoryStore.isAllLoaded'))
-          .value;
 
   late final _$_isLoadingAtom =
       Atom(name: '_CategoryStore._isLoading', context: context);
@@ -80,16 +73,16 @@ mixin _$CategoryStore on _CategoryStore, Store {
   late final _$_selectedCategoryAtom =
       Atom(name: '_CategoryStore._selectedCategory', context: context);
 
-  String get selectedCategory {
+  String? get selectedCategory {
     _$_selectedCategoryAtom.reportRead();
     return super._selectedCategory;
   }
 
   @override
-  String get _selectedCategory => selectedCategory;
+  String? get _selectedCategory => selectedCategory;
 
   @override
-  set _selectedCategory(String value) {
+  set _selectedCategory(String? value) {
     _$_selectedCategoryAtom.reportWrite(value, super._selectedCategory, () {
       super._selectedCategory = value;
     });
@@ -110,11 +103,11 @@ mixin _$CategoryStore on _CategoryStore, Store {
   }
 
   @override
-  void selectCategory(String category) {
+  void onCategoryPressed(String category) {
     final _$actionInfo = _$_CategoryStoreActionController.startAction(
-        name: '_CategoryStore.selectCategory');
+        name: '_CategoryStore.onCategoryPressed');
     try {
-      return super.selectCategory(category);
+      return super.onCategoryPressed(category);
     } finally {
       _$_CategoryStoreActionController.endAction(_$actionInfo);
     }
@@ -132,21 +125,9 @@ mixin _$CategoryStore on _CategoryStore, Store {
   }
 
   @override
-  void retry() {
-    final _$actionInfo = _$_CategoryStoreActionController.startAction(
-        name: '_CategoryStore.retry');
-    try {
-      return super.retry();
-    } finally {
-      _$_CategoryStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
-hasError: ${hasError},
-isAllLoaded: ${isAllLoaded}
+hasError: ${hasError}
     ''';
   }
 }

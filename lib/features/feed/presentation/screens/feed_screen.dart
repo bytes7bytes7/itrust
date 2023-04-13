@@ -103,11 +103,12 @@ class _Body extends StatelessWidget {
 
         if (categoryStore.hasError) {
           return LoadingErrorContainer(
-            onRetry: categoryStore.retry,
+            onRetry: categoryStore.refresh,
           );
         }
 
-        if (!categoryStore.isAllLoaded) {
+        if (categoryStore.feedStore.hasError &&
+            categoryStore.feedStore.posts.isEmpty) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -124,7 +125,7 @@ class _Body extends StatelessWidget {
               else
                 Expanded(
                   child: LoadingErrorContainer(
-                    onRetry: categoryStore.feedStore.retry,
+                    onRetry: categoryStore.feedStore.refresh,
                   ),
                 ),
             ],
@@ -183,7 +184,7 @@ class _CategoryList extends StatelessWidget {
             height: _categoryListHeight,
             categories: categoryStore.categories,
             selectedCategory: categoryStore.selectedCategory,
-            onCategoryPressed: categoryStore.selectCategory,
+            onCategoryPressed: categoryStore.onCategoryPressed,
           );
         }
       },

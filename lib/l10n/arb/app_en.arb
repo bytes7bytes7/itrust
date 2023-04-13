@@ -78,5 +78,7 @@
   "connected_devices_screen_title": "Devices",
   "this_device_title": "This device",
   "other_devices_title": "Other devices",
-  "terminate_session_btn": "Terminate session"
+  "terminate_session_btn": "Terminate session",
+  "can_not_like_post": "Can not like post. Try again later.",
+  "can_not_unlike_post": "Can not unlike post. Try again later."
 }

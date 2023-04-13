@@ -14,8 +14,8 @@ const _appBarHeight = kToolbarHeight;
 final _getIt = GetIt.instance;
 
 // TODO: remove
-const _me = User.end(
-  id: UserID('me'),
+final _me = User.end(
+  id: UserID.fromString('me'),
   email: 'bytes7@gmail.com',
   firstName: 'first',
   lastName: 'last',

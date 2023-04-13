@@ -3,6 +3,7 @@ export 'log_in_request/log_in_request.dart';
 export 'log_in_response/log_in_response.dart';
 export 'log_out_request/log_out_request.dart';
 export 'log_out_response/log_out_response.dart';
+export 'post_response/post_response.dart';
 export 'private_device_info/private_device_info.dart';
 export 'refresh_token_request/refresh_token_request.dart';
 export 'refresh_token_response/refresh_token_response.dart';

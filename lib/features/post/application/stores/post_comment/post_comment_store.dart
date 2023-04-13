@@ -57,8 +57,8 @@ abstract class _PostCommentStore extends SyncStore with Store {
           );
 
           // TODO: implement
-          const user = User.end(
-            id: UserID('user'),
+          final user = User.end(
+            id: UserID.fromString('user'),
             avatarUrls: [],
             email: 'email@email.com',
             firstName: 'first',

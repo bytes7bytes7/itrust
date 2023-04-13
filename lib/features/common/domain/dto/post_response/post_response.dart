@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
-import '../../../../common/domain/domain.dart';
+import '../../entities/post/post.dart';
 
 part 'post_response.g.dart';
 
@@ -13,8 +13,7 @@ class PostResponse {
 
   final Post post;
 
-  factory PostResponse.fromJson(JsonMap json) =>
-      _$PostResponseFromJson(json);
+  factory PostResponse.fromJson(JsonMap json) => _$PostResponseFromJson(json);
 
   JsonMap toJson() => _$PostResponseToJson(this);
 }

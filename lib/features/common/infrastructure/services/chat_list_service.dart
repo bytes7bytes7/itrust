@@ -44,7 +44,7 @@ class TestChatListService implements ChatListService {
                 return Chat.dialogue(
                   id: ChatID('chat $index'),
                   unreadAmount: _rand.nextBool() ? _rand.nextInt(1000000) : 0,
-                  partnerID: UserID('user $index'),
+                  partnerID: UserID.fromString('user $index'),
                   lastMessageID: MessageID('msg $index'),
                 );
               default:

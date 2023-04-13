@@ -3,7 +3,6 @@ import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
-import '../../../domain/services/post_service.dart';
 import '../../coordinators/post_coordinator.dart';
 import '../../providers/post_string_provider.dart';
 import '../post_comment/post_comment_store.dart';
@@ -62,8 +61,8 @@ abstract class _PostStore extends SyncStore with Store {
           final post = await _postService.loadPost(PostID.fromString(postID));
 
           // TODO: implement
-          const user = User.end(
-            id: UserID('user'),
+          final user = User.end(
+            id: UserID.fromString('user'),
             avatarUrls: [],
             email: 'email@email.com',
             firstName: 'first',

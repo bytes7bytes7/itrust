@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'outlined_icon_button.dart';
 
-class SwitchingIconButton extends HookWidget {
+class SwitchingIconButton extends StatelessWidget {
   const SwitchingIconButton({
     super.key,
     required this.isSwitched,
@@ -25,27 +24,19 @@ class SwitchingIconButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final switched = useValueNotifier(isSwitched);
+    final child = childBuilder?.call(isSwitched);
 
-    return ValueListenableBuilder<bool>(
-      valueListenable: switched,
-      builder: (context, value, child) {
-        final child = childBuilder?.call(value);
-
-        return Row(
-          children: [
-            OutlinedIconButton(
-              iconPath: value ? switchedIconPath : notSwitchedIconPath,
-              color: value ? switchedColor : notSwitchedColor,
-              onPressed: () {
-                switched.value = !switched.value;
-                onPressed?.call();
-              },
-            ),
-            if (child != null) child,
-          ],
-        );
-      },
+    return Row(
+      children: [
+        OutlinedIconButton(
+          iconPath: isSwitched ? switchedIconPath : notSwitchedIconPath,
+          color: isSwitched ? switchedColor : notSwitchedColor,
+          onPressed: () {
+            onPressed?.call();
+          },
+        ),
+        if (child != null) child,
+      ],
     );
   }
 }

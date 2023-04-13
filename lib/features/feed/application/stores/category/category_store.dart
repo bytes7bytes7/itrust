@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
@@ -21,7 +20,6 @@ abstract class _CategoryStore extends SyncStore with Store {
         _categoryStringProvider = categoryStringProvider;
 
   final FeedStore feedStore;
-
   final CategoryService _categoryService;
   final CategoryStringProvider _categoryStringProvider;
   var _isInitialized = false;
@@ -36,18 +34,15 @@ abstract class _CategoryStore extends SyncStore with Store {
   List<String> _categories = const [];
 
   @readonly
-  String _selectedCategory = '';
+  String? _selectedCategory;
 
   @computed
   bool get hasError => _error.isNotEmpty;
 
-  @computed
-  bool get isAllLoaded =>
-      !_isLoading && !hasError && !feedStore.isLoading && !feedStore.hasError;
-
   void init() {
     if (!_isInitialized) {
       loadCategories();
+      feedStore.loadPosts(null);
       _isInitialized = true;
     }
   }
@@ -58,11 +53,6 @@ abstract class _CategoryStore extends SyncStore with Store {
       () async {
         try {
           _categories = await _categoryService.loadCategories();
-
-          final firstCategory = _categories.firstOrNull;
-          if (firstCategory != null) {
-            selectCategory(firstCategory);
-          }
         } catch (e) {
           _error = _categoryStringProvider.canNotLoadCategories;
         }
@@ -73,8 +63,11 @@ abstract class _CategoryStore extends SyncStore with Store {
   }
 
   @action
-  void selectCategory(String category) {
-    if (_selectedCategory != category) {
+  void onCategoryPressed(String category) {
+    if (_selectedCategory == category) {
+      _selectedCategory = null;
+      feedStore.selectCategory(null);
+    } else {
       _selectedCategory = category;
       feedStore.selectCategory(category);
     }
@@ -82,12 +75,7 @@ abstract class _CategoryStore extends SyncStore with Store {
 
   @action
   void refresh() {
-    // TODO: fix - posts do NOT update
     loadCategories();
-  }
-
-  @action
-  void retry() {
-    loadCategories();
+    feedStore.refresh();
   }
 }

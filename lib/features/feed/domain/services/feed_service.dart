@@ -35,8 +35,4 @@ class FeedService {
       },
     );
   }
-
-  Future<void> likePost({required PostID postID}) async {
-    // TODO: implement
-  }
 }

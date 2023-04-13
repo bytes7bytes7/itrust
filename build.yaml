@@ -6,7 +6,23 @@ targets:
         - lib/**
         - $package$
     builders:
-      json_serializable:
+      envied_generator|envied_generator:
+        generate_for:
+          - "**/env/**.dart"
+      freezed|freezed:
+        generate_for:
+          - "**/entities/**.dart"
+          - "**/value_objects/**.dart"
+          - "**/view_models/**.dart"
+      injectable_generator|injectable_generator:
+        generate_for:
+          - "**/infrastructure/**.dart"
+      json_serializable|json_serializable:
+        generate_for:
+          - "**/dto/**.dart"
+          - "**/entities/**.dart"
+          - "**/infrastructure/**.dart"
+          - "**/value_objects/**.dart"
         options:
           # Options configure how source code is generated for every
           # `@JsonSerializable`-annotated class in the package.
@@ -26,3 +42,9 @@ targets:
 
           # Not default values
           explicit_to_json: true
+      mobx_codegen|mobx_codegen:
+        generate_for:
+          - "**/stores/**.dart"
+      retrofit_generator|retrofit_generator:
+        generate_for:
+          - "**/infrastructure/**.dart"

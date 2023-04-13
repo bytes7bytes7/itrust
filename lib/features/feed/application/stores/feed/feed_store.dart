@@ -3,7 +3,9 @@ import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../common/common.dart';
+import '../../../../common/application/stores/sync_store.dart';
+import '../../../../common/application/view_models/view_models.dart';
+import '../../../../common/domain/domain.dart';
 import '../../../domain/services/feed_service.dart';
 import '../../coordinators/feed_coordinator.dart';
 import '../../providers/feed_string_repository.dart';
@@ -17,21 +19,24 @@ abstract class _FeedStore extends SyncStore with Store {
   _FeedStore({
     required FeedService feedService,
     required UserService userService,
+    required PostService postService,
     required FeedCoordinator feedCoordinator,
     required FeedStringProvider feedStringProvider,
     required Mapster mapster,
   })  : _feedService = feedService,
         _userService = userService,
+        _postService = postService,
         _feedCoordinator = feedCoordinator,
         _feedStringProvider = feedStringProvider,
         _mapster = mapster;
 
   final FeedService _feedService;
   final UserService _userService;
+  final PostService _postService;
   final FeedCoordinator _feedCoordinator;
   final FeedStringProvider _feedStringProvider;
   final Mapster _mapster;
-  var _processingCategory = '';
+  String? _processingCategory;
 
   @readonly
   bool _isLoading = false;
@@ -40,7 +45,7 @@ abstract class _FeedStore extends SyncStore with Store {
   String _error = '';
 
   @readonly
-  String _selectedCategory = '';
+  String? _selectedCategory;
 
   @readonly
   List<PostVM> _posts = const [];
@@ -49,7 +54,7 @@ abstract class _FeedStore extends SyncStore with Store {
   bool get hasError => _error.isNotEmpty;
 
   @action
-  void selectCategory(String category) {
+  void selectCategory(String? category) {
     if (_selectedCategory != category) {
       _selectedCategory = category;
       loadPosts(category);
@@ -57,7 +62,7 @@ abstract class _FeedStore extends SyncStore with Store {
   }
 
   @action
-  void loadPosts(String category) {
+  void loadPosts(String? category) {
     _processingCategory = category;
 
     perform(
@@ -102,17 +107,93 @@ abstract class _FeedStore extends SyncStore with Store {
   }
 
   @action
-  void retry() {
+  void refresh() {
     final selectedCategory = _selectedCategory;
-
-    if (selectedCategory.isNotEmpty) {
-      loadPosts(selectedCategory);
-    }
+    loadPosts(selectedCategory);
   }
 
   @action
   void onLikeButtonPressed({required String postID}) {
-    _feedService.likePost(postID: PostID.fromString(postID));
+    final post = _posts.firstWhereOrNull((e) => e.id == postID);
+
+    if (post == null) {
+      return;
+    }
+
+    perform(
+      () async {
+        if (post.likedByMe) {
+          try {
+            _updatePost(id: postID, likedByMe: false);
+
+            final updatedPost =
+                await _postService.unlikePost(PostID.fromString(postID));
+
+            final posts = List.of(_posts);
+            final index = posts.indexWhere((e) => e.id == updatedPost.id.str);
+
+            if (index == -1) {
+              return;
+            }
+
+            final author =
+                await _userService.getUserByID(id: updatedPost.authorID);
+
+            if (author == null) {
+              // TODO: maybe create deleted user or don't show their posts
+              return;
+            }
+
+            posts[index] = _mapster.map2(updatedPost, author, To<PostVM>());
+
+            _posts = posts;
+          } catch (e) {
+            _error = _feedStringProvider.canNotUnlikePost;
+            doAfterDelay(() {
+              _error = '';
+            });
+
+            _updatePost(id: postID, likedByMe: true);
+          }
+        } else {
+          try {
+            _updatePost(id: postID, likedByMe: true);
+
+            final updatedPost =
+                await _postService.likePost(PostID.fromString(postID));
+
+            final posts = List.of(_posts);
+            final index = posts.indexWhere((e) => e.id == updatedPost.id.str);
+
+            if (index == -1) {
+              return;
+            }
+
+            final author =
+                await _userService.getUserByID(id: updatedPost.authorID);
+
+            if (author == null) {
+              // TODO: maybe create deleted user or don't show their posts
+              return;
+            }
+
+            posts[index] = _mapster.map2(updatedPost, author, To<PostVM>());
+
+            _posts = posts;
+          } catch (e) {
+            _error = _feedStringProvider.canNotLikePost;
+            doAfterDelay(() {
+              _error = '';
+            });
+
+            _updatePost(id: postID, likedByMe: false);
+          }
+        }
+      },
+      startLoading: false,
+      setIsLoading: (v) => _isLoading = v,
+      removeError: () => _error = '',
+    );
   }
 
   void onPostPressed({required String postID}) {
@@ -121,5 +202,25 @@ abstract class _FeedStore extends SyncStore with Store {
 
   void onCommentButtonPressed({required String postID}) {
     _feedCoordinator.onPostButtonPressed(postID);
+  }
+
+  void _updatePost({
+    required String id,
+    required bool likedByMe,
+  }) {
+    final posts = List.of(_posts);
+    final index = posts.indexWhere((e) => e.id == id);
+
+    if (index == -1) {
+      return;
+    }
+
+    final post = posts[index];
+
+    posts[index] = post.copyWith(
+      likedByMe: likedByMe,
+    );
+
+    _posts = posts;
   }
 }

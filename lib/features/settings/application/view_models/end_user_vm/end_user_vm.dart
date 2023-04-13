@@ -2,7 +2,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'end_user_vm.freezed.dart';
 
-@freezed
+@Freezed(
+  toJson: false,
+  fromJson: false,
+)
 class EndUserVM with _$EndUserVM {
   const factory EndUserVM({
     required String id,

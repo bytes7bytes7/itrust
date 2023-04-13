@@ -7,4 +7,12 @@ abstract class PostProvider {
   Future<JsonEitherWrapper<ProblemDetails, PostResponse>> getPost({
     required String id,
   });
+
+  Future<JsonEitherWrapper<ProblemDetails, PostResponse>> likePost({
+    required String id,
+  });
+
+  Future<JsonEitherWrapper<ProblemDetails, PostResponse>> unlikePost({
+    required String id,
+  });
 }

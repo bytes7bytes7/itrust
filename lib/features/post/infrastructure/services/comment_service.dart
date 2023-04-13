@@ -24,7 +24,7 @@ class TestCommentService implements CommentService {
 
             return Comment(
               id: CommentID('comment ${_rand.nextInt(1000)}'),
-              authorID: UserID('user ${_rand.nextInt(1000)}'),
+              authorID: UserID.fromString('user ${_rand.nextInt(1000)}'),
               postID: PostID.fromString('post ${_rand.nextInt(1000)}'),
               text: _randString(_rand.nextInt(50) + 10),
               createdAt: _randDateTime(),
@@ -57,7 +57,7 @@ class TestCommentService implements CommentService {
 
         return Comment(
           id: CommentID('comment ${_rand.nextInt(1000)}'),
-          authorID: UserID('user ${_rand.nextInt(1000)}'),
+          authorID: UserID.fromString('user ${_rand.nextInt(1000)}'),
           postID: PostID.fromString('post ${_rand.nextInt(1000)}'),
           text: _randString(_rand.nextInt(50) + 10),
           createdAt: _randDateTime(),
@@ -93,7 +93,7 @@ class TestCommentService implements CommentService {
 
             return Comment(
               id: CommentID('comment ${_rand.nextInt(1000)}'),
-              authorID: UserID('user ${_rand.nextInt(1000)}'),
+              authorID: UserID.fromString('user ${_rand.nextInt(1000)}'),
               postID: PostID.fromString('post ${_rand.nextInt(1000)}'),
               text: _randString(_rand.nextInt(50) + 10),
               createdAt: _randDateTime(),

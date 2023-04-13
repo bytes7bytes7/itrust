@@ -33,4 +33,16 @@ abstract class ProdPostProvider implements PostProvider {
   Future<JsonEitherWrapper<ProblemDetails, PostResponse>> getPost({
     @Path() required String id,
   });
+
+  @override
+  @POST('/{id}/like')
+  Future<JsonEitherWrapper<ProblemDetails, PostResponse>> likePost({
+    @Path() required String id,
+  });
+
+  @override
+  @POST('/{id}/unlike')
+  Future<JsonEitherWrapper<ProblemDetails, PostResponse>> unlikePost({
+    @Path() required String id,
+  });
 }
