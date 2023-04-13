@@ -27,7 +27,6 @@ abstract class _CommentStore extends SyncStore with Store {
         _mapster = mapster;
 
   final CommentReplyStore commentReplyStore;
-
   final CommentService _commentService;
   final CommentCoordinator _commentCoordinator;
   final CommentStringProvider _commentStringProvider;
@@ -59,7 +58,11 @@ abstract class _CommentStore extends SyncStore with Store {
       !commentReplyStore.hasError;
 
   @action
-  void loadComment({required String postID, required String commentID}) {
+  void loadComment({
+    required String postID,
+    required String commentID,
+    bool useCached = true,
+  }) {
     perform(
       () async {
         try {
@@ -69,6 +72,7 @@ abstract class _CommentStore extends SyncStore with Store {
           final comment = await _commentService.loadComment(
             postID: PostID.fromString(postID),
             commentID: CommentID.fromString(commentID),
+            cached: useCached,
           );
 
           // TODO: implement
@@ -101,17 +105,7 @@ abstract class _CommentStore extends SyncStore with Store {
     final commentID = _commentID;
 
     if (postID != null && commentID != null) {
-      loadComment(postID: postID, commentID: commentID);
-    }
-  }
-
-  @action
-  void retry() {
-    final postID = _postID;
-    final commentID = _commentID;
-
-    if (postID != null && commentID != null) {
-      loadComment(postID: postID, commentID: commentID);
+      loadComment(postID: postID, commentID: commentID, useCached: false);
     }
   }
 

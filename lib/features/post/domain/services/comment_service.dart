@@ -27,7 +27,7 @@ class CommentService {
     try {
       final response = await _keepFreshTokenService.request(
         () => _commentProvider.getComments(
-          id: postID.str,
+          postID: postID.str,
           lastCommentID: lastCommentID?.str,
         ),
       );
@@ -54,9 +54,39 @@ class CommentService {
   Future<Comment> loadComment({
     required PostID postID,
     required CommentID commentID,
+    bool cached = true,
   }) async {
-    // TODO: implement
-    throw Exception();
+    if (cached) {
+      final comment = await _commentRepository.getByID(commentID);
+
+      if (comment != null) {
+        return comment;
+      }
+    }
+
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _commentProvider.getComment(
+          postID: postID.str,
+          commentID: commentID.str,
+        ),
+      );
+
+      return await response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) async {
+          await _commentRepository.addOrUpdate(comment: r.comment);
+
+          return r.comment;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
   }
 
   Future<List<Comment>> loadCommentReplies({
@@ -67,7 +97,7 @@ class CommentService {
     try {
       final response = await _keepFreshTokenService.request(
         () => _commentProvider.getComments(
-          id: postID.str,
+          postID: postID.str,
           lastCommentID: lastCommentID?.str,
           repliedToCommentID: commentID.str,
         ),

@@ -6,11 +6,13 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../utils/hooks/reaction.dart';
 import '../../../common/common.dart';
 import '../../application/stores/comment/comment_store.dart';
 import '../widgets/widgets.dart';
 
 const _appBarHeight = kToolbarHeight;
+const _loadCommentKey = 'load comment';
 const _listScrollKey = PageStorageKey('comment screen scroll key');
 
 final _getIt = GetIt.instance;
@@ -33,10 +35,32 @@ class CommentScreen extends HookWidget {
 
     useEffect(
       () {
-        commentStore.loadComment(postID: postID ,commentID: commentID);
+        commentStore.loadComment(postID: postID, commentID: commentID);
         return null;
       },
-      const [],
+      const [_loadCommentKey],
+    );
+
+    useReaction<String>(
+      (_) => commentStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
+    );
+
+    useReaction<String>(
+      (_) => commentStore.commentReplyStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
     );
 
     return Scaffold(
@@ -106,7 +130,7 @@ class _Body extends StatelessWidget {
 
         if (commentStore.hasError) {
           return LoadingErrorContainer(
-            onRetry: commentStore.retry,
+            onRetry: commentStore.refresh,
           );
         }
 

@@ -6,11 +6,13 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../utils/hooks/reaction.dart';
 import '../../../common/common.dart';
 import '../../application/stores/post/post_store.dart';
 import '../widgets/widgets.dart';
 
 const _appBarHeight = kToolbarHeight;
+const _loadPostKey = 'load post';
 const _pageScrollKey = PageStorageKey('post screen scroll key');
 
 final _getIt = GetIt.instance;
@@ -34,7 +36,29 @@ class PostScreen extends HookWidget {
         postStore.loadPost(postID: postID);
         return null;
       },
-      const [],
+      const [_loadPostKey],
+    );
+
+    useReaction<String>(
+      (_) => postStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
+    );
+
+    useReaction<String>(
+      (_) => postStore.postCommentStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
     );
 
     return Scaffold(

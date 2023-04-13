@@ -20,7 +20,7 @@ class _ProdCommentProvider implements ProdCommentProvider {
 
   @override
   Future<JsonEitherWrapper<ProblemDetails, PostCommentsResponse>> getComments({
-    required id,
+    required postID,
     lastCommentID,
     repliedToCommentID,
   }) async {
@@ -41,7 +41,7 @@ class _ProdCommentProvider implements ProdCommentProvider {
     )
                 .compose(
                   _dio.options,
-                  '/${id}/comments',
+                  '/${postID}/comments',
                   queryParameters: queryParameters,
                   data: _data,
                 )
@@ -53,9 +53,38 @@ class _ProdCommentProvider implements ProdCommentProvider {
   }
 
   @override
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> getComment({
+    required postID,
+    required commentID,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<JsonEitherWrapper<ProblemDetails, PostCommentResponse>>(
+            Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+                .compose(
+                  _dio.options,
+                  '/${postID}/comment/${commentID}',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value =
+        JsonEitherWrapper<ProblemDetails, PostCommentResponse>.fromJson(
+            _result.data!);
+    return value;
+  }
+
+  @override
   Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> comment({
     required request,
-    required id,
+    required postID,
     repliedToCommentID,
   }) async {
     const _extra = <String, dynamic>{};
@@ -75,7 +104,7 @@ class _ProdCommentProvider implements ProdCommentProvider {
     )
                 .compose(
                   _dio.options,
-                  '/${id}/comment',
+                  '/${postID}/comment',
                   queryParameters: queryParameters,
                   data: _data,
                 )

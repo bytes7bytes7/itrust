@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../utils/hooks/reaction.dart';
 import '../../../common/common.dart';
 import '../../application/application.dart';
 
@@ -14,6 +15,7 @@ const _paddingH = 20.0;
 const _paddingV = 20.0;
 const _aboveLogoPadding = 10.0;
 const _underTitlePadding = 30.0;
+const _loadRulesKey = 'load rules';
 
 final _getIt = GetIt.instance;
 
@@ -24,6 +26,25 @@ class RulesScreen extends HookWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final rulesStore = useMemoized(() => _getIt.get<RulesStore>());
+
+    useEffect(
+      () {
+        rulesStore.getRules();
+        return;
+      },
+      const [_loadRulesKey],
+    );
+
+    useReaction<String>(
+      (_) => rulesStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -57,14 +78,6 @@ class _Body extends HookWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    useEffect(
-      () {
-        rulesStore.getRules();
-        return;
-      },
-      const [],
-    );
-
     return Observer(
       builder: (context) {
         final rules = rulesStore.rules;
@@ -86,33 +99,37 @@ class _Body extends HookWidget {
         }
 
         return SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: _paddingH,
               vertical: _paddingV,
             ),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: _aboveLogoPadding,
-                ),
-                FractionallySizedBox(
-                  widthFactor: _logoWidthFactor,
-                  child: Assets.image.png.logo.image(),
-                ),
-                Text(
-                  l10n.app_name,
-                  style: theme.textTheme.headline1,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: _underTitlePadding,
-                ),
-                Text(
-                  rules,
-                  style: theme.textTheme.bodyText1,
-                ),
-              ],
+            child: Align(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: _aboveLogoPadding,
+                  ),
+                  FractionallySizedBox(
+                    widthFactor: _logoWidthFactor,
+                    child: Assets.image.png.logo.image(),
+                  ),
+                  Text(
+                    l10n.app_name,
+                    style: theme.textTheme.headline1,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: _underTitlePadding,
+                  ),
+                  Text(
+                    rules,
+                    style: theme.textTheme.bodyText1,
+                  ),
+                ],
+              ),
             ),
           ),
         );

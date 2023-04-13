@@ -125,22 +125,15 @@ mixin _$CommentStore on _CommentStore, Store {
       ActionController(name: '_CommentStore', context: context);
 
   @override
-  void loadComment({required String postID, required String commentID}) {
+  void loadComment(
+      {required String postID,
+      required String commentID,
+      bool useCached = true}) {
     final _$actionInfo = _$_CommentStoreActionController.startAction(
         name: '_CommentStore.loadComment');
     try {
-      return super.loadComment(postID: postID, commentID: commentID);
-    } finally {
-      _$_CommentStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void retry() {
-    final _$actionInfo = _$_CommentStoreActionController.startAction(
-        name: '_CommentStore.retry');
-    try {
-      return super.retry();
+      return super.loadComment(
+          postID: postID, commentID: commentID, useCached: useCached);
     } finally {
       _$_CommentStoreActionController.endAction(_$actionInfo);
     }

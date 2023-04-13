@@ -29,18 +29,25 @@ abstract class ProdCommentProvider implements CommentProvider {
   }) = _ProdCommentProvider;
 
   @override
-  @GET('/{id}/comments')
+  @GET('/{postID}/comments')
   Future<JsonEitherWrapper<ProblemDetails, PostCommentsResponse>> getComments({
-    @Path() required String id,
+    @Path() required String postID,
     @Query('lastCommentID') String? lastCommentID,
     @Query('repliedToCommentID') String? repliedToCommentID,
   });
 
   @override
-  @POST('/{id}/comment')
+  @GET('/{postID}/comment/{commentID}')
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> getComment({
+    @Path() required String postID,
+    @Path() required String commentID,
+  });
+
+  @override
+  @POST('/{postID}/comment')
   Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> comment({
     @Body() required CommentPostRequest request,
-    @Path() required String id,
+    @Path() required String postID,
     @Query('repliedToCommentID') String? repliedToCommentID,
   });
 }
