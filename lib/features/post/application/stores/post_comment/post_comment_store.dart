@@ -152,6 +152,7 @@ abstract class _PostCommentStore extends SyncStore with Store {
           _error = _postCommentStringProvider.canNotLoadComments;
         }
       },
+      startLoading: false,
       setIsLoading: (v) => _isLoadingMore = v,
       removeError: () => _error = '',
     );
@@ -159,17 +160,95 @@ abstract class _PostCommentStore extends SyncStore with Store {
 
   @action
   void onLikeCommentPressed({required String commentID}) {
-    // TODO: implement
-    final index = _comments.indexWhere((e) => e.id == commentID);
+    final comment = _comments.firstWhereOrNull((e) => e.id == commentID);
+    final postID = _postID;
 
-    if (index != -1) {
-      final comment = _comments[index];
-
-      _comments = List.from(_comments)
-        ..[index] = comment.copyWith(
-          likedByMe: !comment.likedByMe,
-        );
+    if (comment == null || postID == null) {
+      return;
     }
+
+    perform(
+      () async {
+        if (comment.likedByMe) {
+          try {
+            _updateComment(id: commentID, likedByMe: false);
+
+            final updatedComment = await _commentService.unlikeComment(
+              postID: PostID.fromString(postID),
+              commentID: CommentID.fromString(commentID),
+            );
+
+            final comments = List.of(_comments);
+            final index =
+                comments.indexWhere((e) => e.id == updatedComment.id.str);
+
+            if (index == -1) {
+              return;
+            }
+
+            final author =
+                await _userService.getUserByID(id: updatedComment.authorID);
+
+            if (author == null) {
+              // TODO: maybe create deleted user or don't show their posts
+              return;
+            }
+
+            comments[index] =
+                _mapster.map2(updatedComment, author, To<CommentVM>());
+
+            _comments = comments;
+          } catch (e) {
+            _error = _postCommentStringProvider.canNotUnlikeComment;
+            doAfterDelay(() {
+              _error = '';
+            });
+
+            _updateComment(id: commentID, likedByMe: true);
+          }
+        } else {
+          try {
+            _updateComment(id: commentID, likedByMe: true);
+
+            final updatedComment = await _commentService.likeComment(
+              postID: PostID.fromString(postID),
+              commentID: CommentID.fromString(commentID),
+            );
+
+            final comments = List.of(_comments);
+            final index =
+                comments.indexWhere((e) => e.id == updatedComment.id.str);
+
+            if (index == -1) {
+              return;
+            }
+
+            final author =
+                await _userService.getUserByID(id: updatedComment.authorID);
+
+            if (author == null) {
+              // TODO: maybe create deleted user or don't show their posts
+              return;
+            }
+
+            comments[index] =
+                _mapster.map2(updatedComment, author, To<CommentVM>());
+
+            _comments = comments;
+          } catch (e) {
+            _error = _postCommentStringProvider.canNotLikeComment;
+            doAfterDelay(() {
+              _error = '';
+            });
+
+            _updateComment(id: commentID, likedByMe: false);
+          }
+        }
+      },
+      startLoading: false,
+      setIsLoading: (v) => _isLoading = v,
+      removeError: () => _error = '',
+    );
   }
 
   @action
@@ -219,5 +298,25 @@ abstract class _PostCommentStore extends SyncStore with Store {
         postID: postID,
       );
     }
+  }
+
+  void _updateComment({
+    required String id,
+    required bool likedByMe,
+  }) {
+    final comments = List.of(_comments);
+    final index = comments.indexWhere((e) => e.id == id);
+
+    if (index == -1) {
+      return;
+    }
+
+    final comment = comments[index];
+
+    comments[index] = comment.copyWith(
+      likedByMe: likedByMe,
+    );
+
+    _comments = comments;
   }
 }

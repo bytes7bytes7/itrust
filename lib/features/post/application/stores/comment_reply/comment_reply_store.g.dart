@@ -162,11 +162,11 @@ mixin _$CommentReplyStore on _CommentReplyStore, Store {
   }
 
   @override
-  void retry() {
+  void refresh() {
     final _$actionInfo = _$_CommentReplyStoreActionController.startAction(
-        name: '_CommentReplyStore.retry');
+        name: '_CommentReplyStore.refresh');
     try {
-      return super.retry();
+      return super.refresh();
     } finally {
       _$_CommentReplyStoreActionController.endAction(_$actionInfo);
     }
@@ -184,11 +184,11 @@ mixin _$CommentReplyStore on _CommentReplyStore, Store {
   }
 
   @override
-  void onLikeReplyPressed({required String commentID}) {
+  void onLikeReplyPressed({required String replyID}) {
     final _$actionInfo = _$_CommentReplyStoreActionController.startAction(
         name: '_CommentReplyStore.onLikeReplyPressed');
     try {
-      return super.onLikeReplyPressed(commentID: commentID);
+      return super.onLikeReplyPressed(replyID: replyID);
     } finally {
       _$_CommentReplyStoreActionController.endAction(_$actionInfo);
     }

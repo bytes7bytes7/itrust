@@ -19,4 +19,14 @@ abstract class CommentProvider {
     required PostCommentRequest request,
     required String postID,
   });
+
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> likeComment({
+    required String postID,
+    required String commentID,
+  });
+
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> unlikeComment({
+    required String postID,
+    required String commentID,
+  });
 }

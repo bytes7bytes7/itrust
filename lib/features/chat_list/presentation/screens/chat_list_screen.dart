@@ -127,7 +127,6 @@ class _Body extends StatelessWidget {
                   return true;
                 },
                 child: RefreshIndicator(
-                  // TODO: fix
                   onRefresh: () async => chatListStore.refresh(),
                   child: ListView.builder(
                     shrinkWrap: true,

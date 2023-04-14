@@ -131,14 +131,6 @@ mixin _$CommentStore on _CommentStore, Store {
     });
   }
 
-  late final _$refreshAsyncAction =
-      AsyncAction('_CommentStore.refresh', context: context);
-
-  @override
-  Future<void> refresh() {
-    return _$refreshAsyncAction.run(() => super.refresh());
-  }
-
   late final _$_CommentStoreActionController =
       ActionController(name: '_CommentStore', context: context);
 
@@ -152,6 +144,17 @@ mixin _$CommentStore on _CommentStore, Store {
     try {
       return super
           .loadComment(postID: postID, commentID: commentID, refresh: refresh);
+    } finally {
+      _$_CommentStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void refresh() {
+    final _$actionInfo = _$_CommentStoreActionController.startAction(
+        name: '_CommentStore.refresh');
+    try {
+      return super.refresh();
     } finally {
       _$_CommentStoreActionController.endAction(_$actionInfo);
     }

@@ -156,4 +156,58 @@ class CommentService {
       rethrow;
     }
   }
+
+  Future<Comment> likeComment({
+    required PostID postID,
+    required CommentID commentID,
+  }) async {
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _commentProvider.likeComment(
+          postID: postID.str,
+          commentID: commentID.str,
+        ),
+      );
+
+      return response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) {
+          return r.comment;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
+  }
+
+  Future<Comment> unlikeComment({
+    required PostID postID,
+    required CommentID commentID,
+  }) async {
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _commentProvider.unlikeComment(
+          postID: postID.str,
+          commentID: commentID.str,
+        ),
+      );
+
+      return response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) {
+          return r.comment;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
+  }
 }

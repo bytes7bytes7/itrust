@@ -109,14 +109,6 @@ mixin _$PostStore on _PostStore, Store {
     });
   }
 
-  late final _$refreshAsyncAction =
-      AsyncAction('_PostStore.refresh', context: context);
-
-  @override
-  Future<void> refresh() {
-    return _$refreshAsyncAction.run(() => super.refresh());
-  }
-
   late final _$_PostStoreActionController =
       ActionController(name: '_PostStore', context: context);
 
@@ -126,6 +118,17 @@ mixin _$PostStore on _PostStore, Store {
         _$_PostStoreActionController.startAction(name: '_PostStore.loadPost');
     try {
       return super.loadPost(postID: postID, refresh: refresh);
+    } finally {
+      _$_PostStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void refresh() {
+    final _$actionInfo =
+        _$_PostStoreActionController.startAction(name: '_PostStore.refresh');
+    try {
+      return super.refresh();
     } finally {
       _$_PostStoreActionController.endAction(_$actionInfo);
     }

@@ -96,7 +96,7 @@ abstract class _PostStore extends SyncStore with Store {
   }
 
   @action
-  Future<void> refresh() async {
+  void refresh() {
     final postID = _postID;
 
     if (postID != null) {

@@ -48,7 +48,6 @@ app.*.map.json
 /android/keystore.properties
 /android/app/google-services.json
 /ios/Runner/GoogleService-Info.plist
-/lib/secure
 .env.*
 **/env.dart
 **/env.g.dart

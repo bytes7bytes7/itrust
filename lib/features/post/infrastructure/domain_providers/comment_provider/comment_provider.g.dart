@@ -115,6 +115,64 @@ class _ProdCommentProvider implements ProdCommentProvider {
     return value;
   }
 
+  @override
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> likeComment({
+    required postID,
+    required commentID,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<JsonEitherWrapper<ProblemDetails, PostCommentResponse>>(
+            Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+                .compose(
+                  _dio.options,
+                  '/${postID}/comment/${commentID}/like',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value =
+        JsonEitherWrapper<ProblemDetails, PostCommentResponse>.fromJson(
+            _result.data!);
+    return value;
+  }
+
+  @override
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> unlikeComment({
+    required postID,
+    required commentID,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<JsonEitherWrapper<ProblemDetails, PostCommentResponse>>(
+            Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+                .compose(
+                  _dio.options,
+                  '/${postID}/comment/${commentID}/unlike',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value =
+        JsonEitherWrapper<ProblemDetails, PostCommentResponse>.fromJson(
+            _result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

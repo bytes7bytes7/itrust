@@ -149,7 +149,7 @@ class _Body extends HookWidget {
 
         if (!postStore.isAllLoaded) {
           return RefreshIndicator(
-            onRefresh: postStore.refresh,
+            onRefresh: () async => postStore.refresh(),
             child: Column(
               children: [
                 Expanded(
@@ -186,7 +186,7 @@ class _Body extends HookWidget {
         final length = postStore.postCommentStore.comments.length + 3;
 
         return RefreshIndicator(
-          onRefresh: () async => postStore.refresh,
+          onRefresh: () async => postStore.refresh(),
           child: Column(
             children: [
               Expanded(

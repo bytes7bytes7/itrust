@@ -10,4 +10,10 @@ class ProdCommentReplyStringProvider extends L10nProvider
 
   @override
   String get canNotLoadCommentReplies => l10n.load_comment_replies_error;
+
+  @override
+  String get canNotLikeReply => l10n.can_not_like_comment;
+
+  @override
+  String get canNotUnlikeReply => l10n.can_not_unlike_comment;
 }

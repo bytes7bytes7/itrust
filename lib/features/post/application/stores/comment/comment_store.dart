@@ -108,7 +108,7 @@ abstract class _CommentStore extends SyncStore with Store {
   }
 
   @action
-  Future<void> refresh() async {
+  void refresh() {
     final postID = _postID;
     final commentID = _commentID;
 
@@ -119,14 +119,73 @@ abstract class _CommentStore extends SyncStore with Store {
 
   @action
   void onLikeCommentPressed() {
-    // TODO: implement
     final comment = _comment;
+    final postID = _postID;
 
-    if (comment != null) {
-      _comment = comment.copyWith(
-        likedByMe: !comment.likedByMe,
-      );
+    if (comment == null || postID == null) {
+      return;
     }
+
+    perform(
+      () async {
+        if (comment.likedByMe) {
+          try {
+            _updateComment(likedByMe: false);
+
+            final updatedComment = await _commentService.unlikeComment(
+              postID: PostID.fromString(postID),
+              commentID: CommentID.fromString(comment.id),
+            );
+
+            final author =
+                await _userService.getUserByID(id: updatedComment.authorID);
+
+            if (author == null) {
+              // TODO: maybe create deleted user or don't show their posts
+              return;
+            }
+
+            _comment = _mapster.map2(updatedComment, author, To<CommentVM>());
+          } catch (e) {
+            _error = _commentStringProvider.canNotUnlikeComment;
+            doAfterDelay(() {
+              _error = '';
+            });
+
+            _updateComment(likedByMe: true);
+          }
+        } else {
+          try {
+            _updateComment(likedByMe: true);
+
+            final updatedComment = await _commentService.likeComment(
+              postID: PostID.fromString(postID),
+              commentID: CommentID.fromString(comment.id),
+            );
+
+            final author =
+                await _userService.getUserByID(id: updatedComment.authorID);
+
+            if (author == null) {
+              // TODO: maybe create deleted user or don't show their posts
+              return;
+            }
+
+            _comment = _mapster.map2(updatedComment, author, To<CommentVM>());
+          } catch (e) {
+            _error = _commentStringProvider.canNotLikeComment;
+            doAfterDelay(() {
+              _error = '';
+            });
+
+            _updateComment(likedByMe: false);
+          }
+        }
+      },
+      startLoading: false,
+      setIsLoading: (v) => _isLoading = v,
+      removeError: () => _error = '',
+    );
   }
 
   @action
@@ -164,5 +223,19 @@ abstract class _CommentStore extends SyncStore with Store {
 
   void onBackButtonPressed() {
     _commentCoordinator.onBackButtonPressed();
+  }
+
+  void _updateComment({
+    required bool likedByMe,
+  }) {
+    final comment = _comment;
+
+    if (comment == null) {
+      return;
+    }
+
+    _comment = comment.copyWith(
+      likedByMe: likedByMe,
+    );
   }
 }

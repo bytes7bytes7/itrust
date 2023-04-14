@@ -151,7 +151,7 @@ class _Body extends HookWidget {
 
         if (!commentStore.isAllLoaded) {
           return RefreshIndicator(
-            onRefresh: commentStore.refresh,
+            onRefresh: () async => commentStore.refresh(),
             child: Column(
               children: [
                 Expanded(
@@ -170,7 +170,7 @@ class _Body extends HookWidget {
                         )
                       else
                         SmallLoadingErrorContainer(
-                          onRetry: commentStore.commentReplyStore.retry,
+                          onRetry: commentStore.commentReplyStore.refresh,
                         ),
                     ],
                   ),
@@ -188,7 +188,7 @@ class _Body extends HookWidget {
         final length = commentStore.commentReplyStore.replies.length + 3;
 
         return RefreshIndicator(
-          onRefresh: () async => commentStore.refresh,
+          onRefresh: () async => commentStore.refresh(),
           child: Column(
             children: [
               Expanded(
@@ -239,7 +239,7 @@ class _Body extends HookWidget {
                         commentID: reply.id,
                       ),
                       onLikePressed: () => commentStore.commentReplyStore
-                          .onLikeReplyPressed(commentID: reply.id),
+                          .onLikeReplyPressed(replyID: reply.id),
                       onCommentPressed: () => commentStore.commentReplyStore
                           .onCommentReplyButtonPressed(commentID: reply.id),
                     );

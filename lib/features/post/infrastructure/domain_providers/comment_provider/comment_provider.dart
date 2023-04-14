@@ -50,4 +50,18 @@ abstract class ProdCommentProvider implements CommentProvider {
     @Path() required String postID,
     @Query('repliedToCommentID') String? repliedToCommentID,
   });
+
+  @override
+  @POST('/{postID}/comment/{commentID}/like')
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> likeComment({
+    @Path() required String postID,
+    @Path() required String commentID,
+  });
+
+  @override
+  @POST('/{postID}/comment/{commentID}/unlike')
+  Future<JsonEitherWrapper<ProblemDetails, PostCommentResponse>> unlikeComment({
+    @Path() required String postID,
+    @Path() required String commentID,
+  });
 }
