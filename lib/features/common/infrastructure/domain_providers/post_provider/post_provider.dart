@@ -35,6 +35,13 @@ abstract class ProdPostProvider implements PostProvider {
   });
 
   @override
+  @GET('/')
+  Future<JsonEitherWrapper<ProblemDetails, PostsResponse>> getUserPosts({
+    @Query('byUserID') required String byUserID,
+    @Query('lastPostID') String? lastPostID,
+  });
+
+  @override
   @POST('/{id}/like')
   Future<JsonEitherWrapper<ProblemDetails, PostResponse>> likePost({
     @Path() required String id,

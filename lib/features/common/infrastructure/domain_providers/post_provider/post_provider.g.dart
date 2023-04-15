@@ -44,6 +44,38 @@ class _ProdPostProvider implements ProdPostProvider {
   }
 
   @override
+  Future<JsonEitherWrapper<ProblemDetails, PostsResponse>> getUserPosts({
+    required byUserID,
+    lastPostID,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'byUserID': byUserID,
+      r'lastPostID': lastPostID,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<JsonEitherWrapper<ProblemDetails, PostsResponse>>(
+            Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+                .compose(
+                  _dio.options,
+                  '/',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = JsonEitherWrapper<ProblemDetails, PostsResponse>.fromJson(
+        _result.data!);
+    return value;
+  }
+
+  @override
   Future<JsonEitherWrapper<ProblemDetails, PostResponse>> likePost(
       {required id}) async {
     const _extra = <String, dynamic>{};

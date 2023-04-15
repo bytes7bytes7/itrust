@@ -21,9 +21,35 @@ class CommonMapsterRegistrar {
         MapperMeta.two(
           (input) => PostUserToPostVMMapper(
             input,
+            mapster: _mapster,
+          ),
+        ),
+      )
+      ..register(
+        MapperMeta.one(
+          (input) => MediaToMediaVMMapper(
+            input,
+            mediaUrlCreator: _getIt.get<MediaUrlCreator>(),
+          ),
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          (input) => PostEndUserToPostVMMapper(
+            input,
             formattedDateProvider: _getIt.get<FormattedDateProvider>(),
             beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
-            mediaUrlCreator: _getIt.get<MediaUrlCreator>(),
+            mapster: _mapster,
+          ),
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          (input) => PostStaffUserToPostVM(
+            input,
+            formattedDateProvider: _getIt.get<FormattedDateProvider>(),
+            beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
+            mapster: _mapster,
           ),
         ),
       )
@@ -35,6 +61,14 @@ class CommonMapsterRegistrar {
           ),
         ),
       )
-      ..register(MapperMeta.one(StaffUserToStaffUserVMMapper.new));
+      ..register(MapperMeta.one(StaffUserToStaffUserVMMapper.new))
+      ..register(
+        MapperMeta.one(
+          (input) => UserToUserVMMapper(
+            input,
+            mapster: _mapster,
+          ),
+        ),
+      );
   }
 }

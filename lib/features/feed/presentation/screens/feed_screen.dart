@@ -113,18 +113,15 @@ class _Body extends StatelessWidget {
           );
         }
 
-        if (!categoryStore.hasError && categoryStore.feedStore.isLoading) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        if (categoryStore.feedStore.isLoading) {
+          return ListView(
             children: [
               _CategoryList(
                 key: _categoryListKey,
                 categoryStore: categoryStore,
               ),
-              const Expanded(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
+              const Center(
+                child: CircularProgressIndicator(),
               )
             ],
           );
@@ -132,24 +129,19 @@ class _Body extends StatelessWidget {
 
         if (categoryStore.feedStore.hasError &&
             categoryStore.feedStore.posts.isEmpty) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          return ListView(
             children: [
               _CategoryList(
                 key: _categoryListKey,
                 categoryStore: categoryStore,
               ),
               if (categoryStore.feedStore.isLoading)
-                const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                const Center(
+                  child: CircularProgressIndicator(),
                 )
               else
-                Expanded(
-                  child: LoadingErrorContainer(
-                    onRetry: categoryStore.feedStore.refresh,
-                  ),
+                LoadingErrorContainer(
+                  onRetry: categoryStore.feedStore.refresh,
                 ),
             ],
           );

@@ -25,7 +25,7 @@ class FeedService {
     try {
       final response = await _keepFreshTokenService.request(
         () => _feedProvider.getFeed(
-          category: category,
+          tag: category,
           lastPostID: lastPostID?.str,
         ),
       );

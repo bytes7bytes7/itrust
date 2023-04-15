@@ -8,6 +8,11 @@ abstract class PostProvider {
     required String id,
   });
 
+  Future<JsonEitherWrapper<ProblemDetails, PostsResponse>> getUserPosts({
+    required String byUserID,
+    String? lastPostID,
+  });
+
   Future<JsonEitherWrapper<ProblemDetails, PostResponse>> likePost({
     required String id,
   });

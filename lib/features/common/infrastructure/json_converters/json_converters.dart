@@ -5,6 +5,7 @@ export 'log_out_response_json_converter.dart';
 export 'post_comment_response_json_converter.dart';
 export 'post_comments_response_json_converter.dart';
 export 'post_response_json_converter.dart';
+export 'posts_response_json_converter.dart';
 export 'refresh_token_response_json_converter.dart';
 export 'register_response_json_converter.dart';
 export 'users_response_json_converter.dart';

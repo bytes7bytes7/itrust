@@ -5,6 +5,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../../../utils/json_either_wrapper.dart';
 import '../../../../../utils/server_settings.dart';
+import '../../../../common/domain/dto/posts_response/posts_response.dart';
 import '../../../domain/dto/dto.dart';
 import '../../../domain/providers/feed_provider.dart';
 
@@ -30,8 +31,8 @@ abstract class ProdFeedProvider implements FeedProvider {
 
   @override
   @GET('/')
-  Future<JsonEitherWrapper<ProblemDetails, GetFeedResponse>> getFeed({
-    @Query('category') String? category,
+  Future<JsonEitherWrapper<ProblemDetails, PostsResponse>> getFeed({
+    @Query('tag') String? tag,
     @Query('lastPostID') String? lastPostID,
   });
 

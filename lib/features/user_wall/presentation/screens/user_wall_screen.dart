@@ -28,8 +28,11 @@ class UserWallScreen extends HookWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final userInfoStore =
-        useMemoized(() => _getIt.get<UserInfoStore>()..init(userID));
+    final userInfoStore = useMemoized(
+      () => _getIt.get<UserInfoStore>()
+        ..init(userID)
+        ..userPostsStore.init(userID),
+    );
 
     useEffect(
       () {
@@ -120,46 +123,153 @@ class _Body extends StatelessWidget {
 
         final userInfo = userInfoStore.userInfo;
 
-        if (userInfo == null) {
-          // TODO: implement
-          return const SizedBox.shrink();
+        if (userInfoStore.hasError || userInfo == null) {
+          return LoadingErrorContainer(
+            onRetry: userInfoStore.refresh,
+          );
         }
+
+        final mediaQuery = MediaQuery.of(context);
+        final size = mediaQuery.size;
+        final viewPadding = mediaQuery.viewPadding;
+        final availableHeight =
+            size.height - viewPadding.top - viewPadding.bottom;
+
+        if (userInfoStore.userPostsStore.isLoading) {
+          return SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: availableHeight,
+                maxHeight: availableHeight * 2,
+              ),
+              child: Column(
+                children: [
+                  _UserInfoContainer(
+                    l10n: l10n,
+                    userInfo: userInfo,
+                    userInfoStore: userInfoStore,
+                  ),
+                  const Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        }
+
+        if (userInfoStore.userPostsStore.hasError &&
+            userInfoStore.userPostsStore.posts.isEmpty) {
+          return SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: availableHeight,
+                maxHeight: availableHeight * 2,
+              ),
+              child: Column(
+                children: [
+                  _UserInfoContainer(
+                    l10n: l10n,
+                    userInfo: userInfo,
+                    userInfoStore: userInfoStore,
+                  ),
+                  if (userInfoStore.userPostsStore.isLoading)
+                    const Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  else
+                    Expanded(
+                      child: LoadingErrorContainer(
+                        onRetry: userInfoStore.userPostsStore.refresh,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        if (userInfoStore.userPostsStore.posts.isEmpty) {
+          return RefreshIndicator(
+            onRefresh: () async => userInfoStore.refresh(),
+            child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [
+                _UserInfoContainer(
+                  l10n: l10n,
+                  userInfo: userInfo,
+                  userInfoStore: userInfoStore,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 30,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        l10n.user_does_not_have_posts,
+                        style: theme.textTheme.bodyText1,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        // user info, loading indicator
+        final itemCount = userInfoStore.userPostsStore.posts.length + 2;
 
         return RefreshIndicator(
           onRefresh: () async => userInfoStore.refresh(),
           child: ListView.builder(
-            itemCount: 1,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: itemCount,
             itemBuilder: (context, index) {
-              // if (index == itemCount - 1) {
-              //   if (userInfoStore.canLoadMore) {
-              //     userInfoStore.loadMoreFriends();
-              //   }
-              //
-              //   if (userInfoStore.isLoadingMore) {
-              //     return const Center(
-              //       child: CircularProgressIndicator(),
-              //     );
-              //   }
-              //
-              //   return const SizedBox.shrink();
-              // }
+              if (index == itemCount - 1) {
+                if (userInfoStore.userPostsStore.canLoadMore) {
+                  userInfoStore.userPostsStore.loadMorePosts();
+                }
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: _paddingH,
-                ),
-                child: _UserInfoContainer(
+                if (userInfoStore.userPostsStore.isLoadingMore) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return const SizedBox.shrink();
+              }
+
+              if (index == 0) {
+                return _UserInfoContainer(
                   l10n: l10n,
                   userInfo: userInfo,
-                ),
-              );
+                  userInfoStore: userInfoStore,
+                );
+              }
 
-              // final friend = userInfoStore.friends[index];
-              //
-              // return UserListTile(
-              //   user: friend,
-              //   onPressed: () => userInfoStore.onUserPressed(friend.id),
-              // );
+              final post = userInfoStore.userPostsStore.posts[index - 1];
+
+              return PostListTile(
+                post: post,
+                isPreview: true,
+                onPressed: () =>
+                    userInfoStore.userPostsStore.onPostPressed(postID: post.id),
+                onLikePressed: () => userInfoStore.userPostsStore
+                    .onLikeButtonPressed(postID: post.id),
+                onCommentPressed: () =>
+                    userInfoStore.userPostsStore.onPostPressed(postID: post.id),
+              );
             },
           ),
         );
@@ -172,32 +282,40 @@ class _UserInfoContainer extends StatelessWidget {
   const _UserInfoContainer({
     required this.l10n,
     required this.userInfo,
+    required this.userInfoStore,
   });
 
   final AppLocalizations l10n;
   final UserInfoVM userInfo;
+  final UserInfoStore userInfoStore;
 
   @override
   Widget build(BuildContext context) {
     final endUserInfo = userInfo;
 
-    return Column(
-      children: [
-        UserInfoCard(
-          id: userInfo.user.id,
-          nick: userInfo.user.nick,
-          name: userInfo.user.name,
-          avatarUrl: userInfo.user.avatarUrl,
-        ),
-        _Actions(
-          l10n: l10n,
-        ),
-        if (endUserInfo is EndUserInfoVM)
-          _EndUserStatistics(
-            l10n: l10n,
-            userInfo: endUserInfo,
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: _paddingH,
+      ),
+      child: Column(
+        children: [
+          UserInfoCard(
+            id: userInfo.user.id,
+            nick: userInfo.user.nick,
+            name: userInfo.user.name,
+            avatarUrl: userInfo.user.avatarUrl,
           ),
-      ],
+          _Actions(
+            l10n: l10n,
+          ),
+          if (endUserInfo is EndUserInfoVM)
+            _EndUserStatistics(
+              l10n: l10n,
+              userInfo: endUserInfo,
+              userInfoStore: userInfoStore,
+            ),
+        ],
+      ),
     );
   }
 }
@@ -242,10 +360,12 @@ class _EndUserStatistics extends StatelessWidget {
   const _EndUserStatistics({
     required this.l10n,
     required this.userInfo,
+    required this.userInfoStore,
   });
 
   final AppLocalizations l10n;
   final EndUserInfoVM userInfo;
+  final UserInfoStore userInfoStore;
 
   @override
   Widget build(BuildContext context) {
@@ -260,27 +380,29 @@ class _EndUserStatistics extends StatelessWidget {
         children: [
           Expanded(
             child: _AmountContainer(
+              theme: theme,
               title: l10n.friends_amount,
               amount: userInfo.amIFriend
                   ? userInfo.friendsAmountWithMe
                   : userInfo.friendsAmountWithoutMe,
-              theme: theme,
+              onPressed: userInfoStore.onFriendsPressed,
             ),
           ),
           Expanded(
             child: _AmountContainer(
+              theme: theme,
               title: l10n.posts_amount,
               amount: userInfo.postsAmount,
-              theme: theme,
             ),
           ),
           Expanded(
             child: _AmountContainer(
+              theme: theme,
               title: l10n.subscribers_amount,
               amount: userInfo.amISubscriber
                   ? userInfo.subscribersAmountWithMe
                   : userInfo.subscribersAmountWithoutMe,
-              theme: theme,
+              onPressed: userInfoStore.onSubscribersPressed,
             ),
           ),
         ],
@@ -291,33 +413,38 @@ class _EndUserStatistics extends StatelessWidget {
 
 class _AmountContainer extends StatelessWidget {
   const _AmountContainer({
+    required this.theme,
     required this.title,
     required this.amount,
-    required this.theme,
+    this.onPressed,
   });
 
+  final ThemeData theme;
   final String title;
   final String amount;
-  final ThemeData theme;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          title,
-          style: theme.textTheme.bodyText1?.copyWith(
-            color: theme.hintColor,
+    return InkWell(
+      onTap: onPressed,
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: theme.textTheme.bodyText1?.copyWith(
+              color: theme.hintColor,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        Text(
-          amount,
-          style: theme.textTheme.subtitle2,
-        ),
-      ],
+          const SizedBox(
+            height: 4,
+          ),
+          Text(
+            amount,
+            style: theme.textTheme.subtitle2,
+          ),
+        ],
+      ),
     );
   }
 }

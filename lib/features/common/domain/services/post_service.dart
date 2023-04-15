@@ -57,6 +57,37 @@ class PostService {
     }
   }
 
+  Future<List<Post>> loadUserPosts({
+    required UserID userID,
+    PostID? lastPostID,
+  }) async {
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _postProvider.getUserPosts(
+          byUserID: userID.str,
+          lastPostID: lastPostID?.str,
+        ),
+      );
+
+      return await response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) async {
+          for (final p in r.posts) {
+            await _postRepository.addOrUpdate(post: p);
+          }
+
+          return r.posts;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
+  }
+
   Future<Post> likePost(PostID id) async {
     try {
       final response = await _keepFreshTokenService.request(
@@ -137,5 +168,4 @@ class PostService {
       rethrow;
     }
   }
-
 }

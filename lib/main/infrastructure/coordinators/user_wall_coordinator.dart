@@ -17,4 +17,24 @@ class ProdUserWallCoordinator extends Coordinator
       const FeedRoute().go(goRouter);
     }
   }
+
+  @override
+  void onFriendsPressed(String userID) {
+    FriendsRoute(userID: userID).push(goRouter);
+  }
+
+  @override
+  void onSubscribersPressed(String userID) {
+    // TODO: implement onSubscribersPressed
+  }
+
+  @override
+  void onPostPressed(String postID) {
+    PostRoute(id: postID).go(goRouter);
+  }
+
+  @override
+  void onCommentButtonPressed(String postID) {
+    PostRoute(id: postID).go(goRouter);
+  }
 }

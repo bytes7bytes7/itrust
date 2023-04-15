@@ -19,20 +19,20 @@ class _ProdFeedProvider implements ProdFeedProvider {
   String? baseUrl;
 
   @override
-  Future<JsonEitherWrapper<ProblemDetails, GetFeedResponse>> getFeed({
-    category,
+  Future<JsonEitherWrapper<ProblemDetails, PostsResponse>> getFeed({
+    tag,
     lastPostID,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'category': category,
+      r'tag': tag,
       r'lastPostID': lastPostID,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<JsonEitherWrapper<ProblemDetails, GetFeedResponse>>(
+        _setStreamType<JsonEitherWrapper<ProblemDetails, PostsResponse>>(
             Options(
       method: 'GET',
       headers: _headers,
@@ -45,7 +45,7 @@ class _ProdFeedProvider implements ProdFeedProvider {
                   data: _data,
                 )
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = JsonEitherWrapper<ProblemDetails, GetFeedResponse>.fromJson(
+    final value = JsonEitherWrapper<ProblemDetails, PostsResponse>.fromJson(
         _result.data!);
     return value;
   }

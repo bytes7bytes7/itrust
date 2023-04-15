@@ -8,6 +8,7 @@ export 'post_comment_request/post_comment_request.dart';
 export 'post_comment_response/post_comment_response.dart';
 export 'post_comments_response/post_comments_response.dart';
 export 'post_response/post_response.dart';
+export 'posts_response/posts_response.dart';
 export 'private_device_info/private_device_info.dart';
 export 'refresh_token_request/refresh_token_request.dart';
 export 'refresh_token_response/refresh_token_response.dart';

@@ -3,18 +3,17 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../../utils/typedef.dart';
 import '../../../../common/domain/domain.dart';
 
-part 'get_feed_response.g.dart';
+part 'posts_response.g.dart';
 
 @JsonSerializable()
-class GetFeedResponse {
-  const GetFeedResponse({
+class PostsResponse {
+  const PostsResponse({
     required this.posts,
   });
 
   final List<Post> posts;
 
-  factory GetFeedResponse.fromJson(JsonMap json) =>
-      _$GetFeedResponseFromJson(json);
+  factory PostsResponse.fromJson(JsonMap json) => _$PostsResponseFromJson(json);
 
-  JsonMap toJson() => _$GetFeedResponseToJson(this);
+  JsonMap toJson() => _$PostsResponseToJson(this);
 }
