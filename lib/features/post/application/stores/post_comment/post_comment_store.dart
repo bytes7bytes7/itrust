@@ -303,6 +303,10 @@ abstract class _PostCommentStore extends SyncStore with Store {
     }
   }
 
+  void onAuthorPressed({required String userID}) {
+    _commentCoordinator.onAuthorPressed(userID: userID);
+  }
+
   void _updateComment({
     required String id,
     required bool likedByMe,

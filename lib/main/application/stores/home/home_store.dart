@@ -36,14 +36,14 @@ abstract class _HomeStore extends SyncStore with Store {
   @action
   void onTabSelect(int index) {
     if (_currentTabIndex != index) {
-      _homeCoordinator.onTabSelected(index);
+      _homeCoordinator.onTabSelected(index: index);
     }
   }
 
   @action
   void reset() {
     if (_currentTabIndex != _defaultTabIndex) {
-      _homeCoordinator.onTabSelected(_defaultTabIndex);
+      _homeCoordinator.onTabSelected(index: _defaultTabIndex);
     }
   }
 }

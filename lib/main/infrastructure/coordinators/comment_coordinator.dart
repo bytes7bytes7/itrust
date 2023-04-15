@@ -22,10 +22,7 @@ class ProdCommentCoordinator extends Coordinator implements CommentCoordinator {
     required String postID,
     required String commentID,
   }) {
-    CommentRoute(
-      postID: postID,
-      id: commentID,
-    ).push(goRouter);
+    CommentRoute(postID: postID, id: commentID).push(goRouter);
   }
 
   @override
@@ -33,9 +30,11 @@ class ProdCommentCoordinator extends Coordinator implements CommentCoordinator {
     required String postID,
     required String commentID,
   }) {
-    CommentRoute(
-      postID: postID,
-      id: commentID,
-    ).push(goRouter);
+    CommentRoute(postID: postID, id: commentID).push(goRouter);
+  }
+
+  @override
+  void onAuthorPressed({required String userID}) {
+    UserWallRoute(userID: userID).push(goRouter);
   }
 }

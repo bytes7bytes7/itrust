@@ -129,69 +129,53 @@ class _Body extends StatelessWidget {
           );
         }
 
-        final mediaQuery = MediaQuery.of(context);
-        final size = mediaQuery.size;
-        final viewPadding = mediaQuery.viewPadding;
-        final availableHeight =
-            size.height - viewPadding.top - viewPadding.bottom;
-
         if (userInfoStore.userPostsStore.isLoading) {
           return SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: availableHeight,
-                maxHeight: availableHeight * 2,
-              ),
-              child: Column(
-                children: [
-                  _UserInfoContainer(
-                    l10n: l10n,
-                    userInfo: userInfo,
-                    userInfoStore: userInfoStore,
+            child: Column(
+              children: [
+                _UserInfoContainer(
+                  l10n: l10n,
+                  userInfo: userInfo,
+                  userInfoStore: userInfoStore,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 14,
                   ),
-                  const Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                ],
-              ),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ],
             ),
           );
         }
 
         if (userInfoStore.userPostsStore.hasError &&
             userInfoStore.userPostsStore.posts.isEmpty) {
-          return SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: availableHeight,
-                maxHeight: availableHeight * 2,
+          // TODO: add scroll for horizontal phone position
+          return Column(
+            children: [
+              _UserInfoContainer(
+                l10n: l10n,
+                userInfo: userInfo,
+                userInfoStore: userInfoStore,
               ),
-              child: Column(
-                children: [
-                  _UserInfoContainer(
-                    l10n: l10n,
-                    userInfo: userInfo,
-                    userInfoStore: userInfoStore,
+              if (userInfoStore.userPostsStore.isLoading)
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 14,
                   ),
-                  if (userInfoStore.userPostsStore.isLoading)
-                    const Expanded(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  else
-                    Expanded(
-                      child: LoadingErrorContainer(
-                        onRetry: userInfoStore.userPostsStore.refresh,
-                      ),
-                    ),
-                ],
-              ),
-            ),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else
+                LoadingErrorContainer(
+                  onRetry: userInfoStore.userPostsStore.refresh,
+                ),
+            ],
           );
         }
 

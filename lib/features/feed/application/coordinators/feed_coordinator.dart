@@ -1,5 +1,7 @@
 abstract class FeedCoordinator {
-  void onPostPressed(String id);
+  void onPostPressed({required String postID});
 
-  void onCommentButtonPressed(String id);
+  void onCommentButtonPressed({required String postID});
+
+  void onAuthorPressed({required String userID});
 }

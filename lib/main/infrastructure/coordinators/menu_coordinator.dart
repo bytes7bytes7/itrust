@@ -16,7 +16,7 @@ class ProdMenuCoordinator extends Coordinator implements MenuCoordinator {
   }
 
   @override
-  void onFriendsButtonPressed(String userID) {
+  void onFriendsButtonPressed({required String userID}) {
     FriendsRoute(userID: userID).push(goRouter);
   }
 }

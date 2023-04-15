@@ -5,5 +5,5 @@ abstract class HomeCoordinator {
 
   void dispose();
 
-  void onTabSelected(int index);
+  void onTabSelected({required int index});
 }

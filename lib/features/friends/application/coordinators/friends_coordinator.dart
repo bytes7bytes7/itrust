@@ -1,5 +1,5 @@
 abstract class FriendsCoordinator {
   void onBackButtonPressed();
 
-  void onUserPressed(String userID);
+  void onUserPressed({required String userID});
 }

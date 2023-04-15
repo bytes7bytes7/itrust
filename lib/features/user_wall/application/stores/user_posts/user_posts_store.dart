@@ -263,11 +263,11 @@ abstract class _UserPostsStore extends SyncStore with Store {
   }
 
   void onPostPressed({required String postID}) {
-    _coordinator.onPostPressed(postID);
+    _coordinator.onPostPressed(postID: postID);
   }
 
   void onCommentButtonPressed({required String postID}) {
-    _coordinator.onCommentButtonPressed(postID);
+    _coordinator.onCommentButtonPressed(postID: postID);
   }
 
   void _updatePost({

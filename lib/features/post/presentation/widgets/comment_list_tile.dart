@@ -24,6 +24,7 @@ class CommentListTile extends StatelessWidget {
     required this.onLikePressed,
     this.onPressed,
     this.onCommentPressed,
+    this.onAuthorPressed,
   });
 
   final CommentVM comment;
@@ -31,6 +32,7 @@ class CommentListTile extends StatelessWidget {
   final VoidCallback? onPressed;
   final VoidCallback onLikePressed;
   final VoidCallback? onCommentPressed;
+  final VoidCallback? onAuthorPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +66,7 @@ class CommentListTile extends StatelessWidget {
                   name: comment.authorName,
                   dateTime: dateTime,
                   avatarUrl: comment.avatarUrl,
+                  onPressed: onAuthorPressed,
                 ),
                 const SizedBox(
                   height: _underAuthorHeaderPadding,

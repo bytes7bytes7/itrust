@@ -313,6 +313,10 @@ abstract class _CommentReplyStore extends SyncStore with Store {
     }
   }
 
+  void onAuthorPressed({required String userID}) {
+    _commentCoordinator.onAuthorPressed(userID: userID);
+  }
+
   void _updateReply({
     required String id,
     required bool likedByMe,

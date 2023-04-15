@@ -100,7 +100,7 @@ abstract class _UserInfoStore extends SyncStore with Store {
       return;
     }
 
-    _coordinator.onFriendsPressed(userID);
+    _coordinator.onFriendsPressed(userID: userID);
   }
 
   void onSubscribersPressed() {
@@ -110,6 +110,6 @@ abstract class _UserInfoStore extends SyncStore with Store {
       return;
     }
 
-    _coordinator.onSubscribersPressed(userID);
+    _coordinator.onSubscribersPressed(userID: userID);
   }
 }

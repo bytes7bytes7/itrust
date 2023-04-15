@@ -26,6 +26,7 @@ class PostListTile extends StatelessWidget {
     required this.isPreview,
     required this.onLikePressed,
     this.onCommentPressed,
+    this.onAuthorPressed,
     this.onPressed,
   });
 
@@ -33,6 +34,7 @@ class PostListTile extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isPreview;
   final VoidCallback onLikePressed;
+  final VoidCallback? onAuthorPressed;
   final VoidCallback? onCommentPressed;
 
   @override
@@ -57,6 +59,7 @@ class PostListTile extends StatelessWidget {
                   name: post.authorName,
                   dateTime: post.createdAt,
                   avatarUrl: post.avatarUrl,
+                  onPressed: onAuthorPressed,
                 ),
                 const SizedBox(
                   height: _underAuthorHeaderPadding,

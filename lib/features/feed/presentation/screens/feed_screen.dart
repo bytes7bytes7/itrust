@@ -291,6 +291,8 @@ class _PostList extends StatelessWidget {
                     feedStore.onLikeButtonPressed(postID: post.id),
                 onCommentPressed: () =>
                     feedStore.onPostPressed(postID: post.id),
+                onAuthorPressed: () =>
+                    feedStore.onAuthorPressed(userID: post.authorID),
               );
             },
           ),

@@ -144,6 +144,6 @@ abstract class _FriendsStore extends SyncStore with Store {
   }
 
   void onUserPressed(String userID) {
-    _coordinator.onUserPressed(userID);
+    _coordinator.onUserPressed(userID: userID);
   }
 }

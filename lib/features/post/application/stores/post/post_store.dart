@@ -205,6 +205,17 @@ abstract class _PostStore extends SyncStore with Store {
     _postCoordinator.onBackButtonPressed();
   }
 
+  void onAuthorPressed() {
+    final post = _post;
+
+    if (post == null) {
+      return;
+    }
+
+    _postCoordinator.onAuthorPressed(userID: post.authorID);
+  }
+
+
   void _updatePost({
     required bool likedByMe,
   }) {

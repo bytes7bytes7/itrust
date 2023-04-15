@@ -225,6 +225,16 @@ abstract class _CommentStore extends SyncStore with Store {
     _commentCoordinator.onBackButtonPressed();
   }
 
+  void onAuthorPressed() {
+    final comment = _comment;
+
+    if (comment == null) {
+      return ;
+    }
+
+    _commentCoordinator.onAuthorPressed(userID: comment.authorID);
+  }
+
   void _updateComment({
     required bool likedByMe,
   }) {

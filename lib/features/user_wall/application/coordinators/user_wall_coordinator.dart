@@ -1,11 +1,11 @@
 abstract class UserWallCoordinator {
   void onBackButtonPressed();
 
-  void onFriendsPressed(String userID);
+  void onFriendsPressed({required String userID});
 
-  void onSubscribersPressed(String userID);
+  void onSubscribersPressed({required String userID});
 
-  void onPostPressed(String postID);
+  void onPostPressed({required String postID});
 
-  void onCommentButtonPressed(String postID);
+  void onCommentButtonPressed({required String postID});
 }

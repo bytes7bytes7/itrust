@@ -19,22 +19,22 @@ class ProdUserWallCoordinator extends Coordinator
   }
 
   @override
-  void onFriendsPressed(String userID) {
+  void onFriendsPressed({required String userID}) {
     FriendsRoute(userID: userID).push(goRouter);
   }
 
   @override
-  void onSubscribersPressed(String userID) {
+  void onSubscribersPressed({required String userID}) {
     // TODO: implement onSubscribersPressed
   }
 
   @override
-  void onPostPressed(String postID) {
+  void onPostPressed({required String postID}) {
     PostRoute(id: postID).push(goRouter);
   }
 
   @override
-  void onCommentButtonPressed(String postID) {
+  void onCommentButtonPressed({required String postID}) {
     PostRoute(id: postID).push(goRouter);
   }
 }

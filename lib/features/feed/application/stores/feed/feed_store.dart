@@ -264,11 +264,15 @@ abstract class _FeedStore extends SyncStore with Store {
   }
 
   void onPostPressed({required String postID}) {
-    _feedCoordinator.onPostPressed(postID);
+    _feedCoordinator.onPostPressed(postID: postID);
   }
 
   void onCommentButtonPressed({required String postID}) {
-    _feedCoordinator.onCommentButtonPressed(postID);
+    _feedCoordinator.onCommentButtonPressed(postID: postID);
+  }
+
+  void onAuthorPressed({required String userID}) {
+    _feedCoordinator.onAuthorPressed(userID: userID);
   }
 
   void _updatePost({

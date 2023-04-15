@@ -18,7 +18,7 @@ class ProdFriendsCoordinator extends Coordinator implements FriendsCoordinator {
   }
 
   @override
-  void onUserPressed(String userID) {
+  void onUserPressed({required String userID}) {
     UserWallRoute(userID: userID).push(goRouter);
   }
 }

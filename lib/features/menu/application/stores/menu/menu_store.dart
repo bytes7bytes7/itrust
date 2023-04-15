@@ -55,6 +55,6 @@ abstract class _MenuStore extends SyncStore with Store {
   }
 
   void onFriendsButtonPressed(String userID) {
-    _menuCoordinator.onFriendsButtonPressed(userID);
+    _menuCoordinator.onFriendsButtonPressed(userID: userID);
   }
 }

@@ -37,7 +37,7 @@ class ProdHomeCoordinator extends Coordinator implements HomeCoordinator {
   }
 
   @override
-  void onTabSelected(int index) {
+  void onTabSelected({required int index}) {
     _routes[index].go(goRouter);
 
     _changeCurrentIndex(index);

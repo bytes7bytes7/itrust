@@ -16,71 +16,77 @@ class AuthorCardHeader extends StatelessWidget {
     required this.name,
     required this.dateTime,
     this.avatarUrl,
+    this.onPressed,
   });
 
   final String name;
   final String dateTime;
   final String? avatarUrl;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
 
-    return Row(
-      children: [
-        Container(
-          height: _avatarSize,
-          width: _avatarSize,
-          clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              _imageBorderRadius,
+    return InkWell(
+      onTap: onPressed,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: _avatarSize,
+            width: _avatarSize,
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                _imageBorderRadius,
+              ),
+              color: colorSchemeTX.avatarBackground,
             ),
-            color: colorSchemeTX.avatarBackground,
-          ),
-          child: avatarUrl != null
-              ? CustomCachedNetworkImage(
-                  imageUrl: avatarUrl!,
-                  imageBuilder: (context, imageProvider) {
-                    return Container(
-                      height: _avatarSize,
-                      width: _avatarSize,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: imageProvider,
+            child: avatarUrl != null
+                ? CustomCachedNetworkImage(
+                    imageUrl: avatarUrl!,
+                    imageBuilder: (context, imageProvider) {
+                      return Container(
+                        height: _avatarSize,
+                        width: _avatarSize,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: imageProvider,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  errorWidget: (context, url, error) {
-                    return _AvatarIcon(
-                      colorSchemeTX: colorSchemeTX,
-                    );
-                  },
-                )
-              : _AvatarIcon(
-                  colorSchemeTX: colorSchemeTX,
-                ),
-        ),
-        const SizedBox(
-          width: _avatarAndTitleSeparator,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              name,
-              style: theme.textTheme.headline5,
-            ),
-            Text(
-              dateTime,
-              style: theme.textTheme.bodyText2,
-            ),
-          ],
-        ),
-      ],
+                      );
+                    },
+                    errorWidget: (context, url, error) {
+                      return _AvatarIcon(
+                        colorSchemeTX: colorSchemeTX,
+                      );
+                    },
+                  )
+                : _AvatarIcon(
+                    colorSchemeTX: colorSchemeTX,
+                  ),
+          ),
+          const SizedBox(
+            width: _avatarAndTitleSeparator,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: theme.textTheme.headline5,
+              ),
+              Text(
+                dateTime,
+                style: theme.textTheme.bodyText2,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

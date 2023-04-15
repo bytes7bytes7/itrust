@@ -161,6 +161,7 @@ class _Body extends HookWidget {
                         post: post,
                         isPreview: false,
                         onLikePressed: postStore.onLikePostPressed,
+                        onAuthorPressed: postStore.onAuthorPressed,
                       ),
                       if (postStore.postCommentStore.isLoading)
                         const Center(
@@ -201,6 +202,7 @@ class _Body extends HookWidget {
                         post: post,
                         isPreview: false,
                         onLikePressed: postStore.onLikePostPressed,
+                        onAuthorPressed: postStore.onAuthorPressed,
                       );
                     }
 
@@ -238,6 +240,10 @@ class _Body extends HookWidget {
                           .onLikeCommentPressed(commentID: comment.id),
                       onCommentPressed: () => postStore.postCommentStore
                           .onCommentReplyButtonPressed(commentID: comment.id),
+                      onAuthorPressed: () =>
+                          postStore.postCommentStore.onAuthorPressed(
+                        userID: comment.authorID,
+                      ),
                     );
                   },
                 ),

@@ -16,4 +16,9 @@ class ProdPostCoordinator extends Coordinator implements PostCoordinator {
       const FeedRoute().go(goRouter);
     }
   }
+
+  @override
+  void onAuthorPressed({required String userID}) {
+    UserWallRoute(userID: userID).push(goRouter);
+  }
 }

@@ -10,4 +10,6 @@ abstract class CommentCoordinator {
     required String postID,
     required String commentID,
   });
+
+  void onAuthorPressed({required String userID});
 }
