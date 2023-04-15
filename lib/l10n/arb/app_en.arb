@@ -91,5 +91,11 @@
   "friends_screen_title": "Friends",
   "can_not_load_friends": "Can not load friends. Try again later.",
   "you_have_no_friends": "You do not have friends. Go and make some!",
-  "can_not_load_myself": "Can not load information about your account."
+  "can_not_load_myself": "Can not load information about your account.",
+  "user_wall_screen_title": "User",
+  "friends_amount" : "friends",
+  "posts_amount": "posts",
+  "subscribers_amount": "followers",
+  "send_friend_bid_button": "Add friend",
+  "open_chat_button": "Message"
 }

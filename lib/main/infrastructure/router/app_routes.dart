@@ -159,6 +159,7 @@ class _AppRoutes {
     routes: [
       // TODO: make UserRoute parent to FriendsRoute
       friends,
+      userWall,
     ],
   );
 
@@ -256,6 +257,25 @@ class _AppRoutes {
         arguments: _getArgs(state),
         transitionsBuilder: _leftward,
         child: FriendsScreen(
+          userID: userID,
+        ),
+      );
+    },
+  );
+
+  static final userWall = GoRoute(
+    path: 'user:userID',
+    name: 'user_wall',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      final userID = state.params['userID']!;
+
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: UserWallScreen(
           userID: userID,
         ),
       );

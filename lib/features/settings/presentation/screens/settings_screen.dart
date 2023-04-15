@@ -95,42 +95,40 @@ class _Body extends StatelessWidget {
           );
         }
 
-        return SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              UserInfoCard(
-                id: me.id,
-                name: me.name,
-                avatarUrl: me.avatarUrl,
-              ),
-              OptionButton(
-                iconPath: Assets.image.svg.person.path,
-                title: l10n.account_btn_title,
-                onPressed: settingsStore.isLoading
-                    ? null
-                    : settingsStore.onAccountButtonPressed,
-              ),
-              OptionButton(
-                iconPath: Assets.image.svg.notificationsOff.path,
-                title: l10n.mute_notifications_btn_title,
-                onPressed: settingsStore.isLoading ? null : () {},
-              ),
-              OptionButton(
-                iconPath: Assets.image.svg.localFireDepartment.path,
-                title: l10n.burn_messages_btn_title,
-                onPressed: settingsStore.isLoading ? null : () {},
-              ),
-              OptionButton(
-                iconPath: Assets.image.svg.logout.path,
-                title: l10n.log_out_btn_title,
-                onPressed:
-                    settingsStore.isLoading ? null : settingsStore.logOut,
-                showTrailing: false,
-                isWarning: true,
-              ),
-            ],
-          ),
+        return ListView(
+          children: [
+            UserInfoCard(
+              id: me.id,
+              nick: me.nick,
+              name: me.name,
+              avatarUrl: me.avatarUrl,
+            ),
+            OptionButton(
+              iconPath: Assets.image.svg.person.path,
+              title: l10n.account_btn_title,
+              onPressed: settingsStore.isLoading
+                  ? null
+                  : settingsStore.onAccountButtonPressed,
+            ),
+            OptionButton(
+              iconPath: Assets.image.svg.notificationsOff.path,
+              title: l10n.mute_notifications_btn_title,
+              onPressed: settingsStore.isLoading ? null : () {},
+            ),
+            OptionButton(
+              iconPath: Assets.image.svg.localFireDepartment.path,
+              title: l10n.burn_messages_btn_title,
+              onPressed: settingsStore.isLoading ? null : () {},
+            ),
+            OptionButton(
+              iconPath: Assets.image.svg.logout.path,
+              title: l10n.log_out_btn_title,
+              onPressed:
+                  settingsStore.isLoading ? null : settingsStore.logOut,
+              showTrailing: false,
+              isWarning: true,
+            ),
+          ],
         );
       },
     );

@@ -134,3 +134,19 @@ class FriendsRoute extends CosyRoute {
   @override
   GoRoute get route => _AppRoutes.friends;
 }
+
+class UserWallRoute extends CosyRoute {
+  const UserWallRoute({
+    required this.userID,
+  });
+
+  final String userID;
+
+  @override
+  Map<String, String> get params => {
+        'userID': userID,
+      };
+
+  @override
+  GoRoute get route => _AppRoutes.userWall;
+}

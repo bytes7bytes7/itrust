@@ -22,6 +22,10 @@ class ProdBeautifiedNumberProvider implements BeautifiedNumberProvider {
     var str = '';
     var suffix = '';
 
+    if (n <= 0) {
+      return '0';
+    }
+
     if (n >= _million) {
       str = '${(n / _millionDivider).floor() / _toDoubleDivider}';
       suffix = _suffixNumberProvider.million;

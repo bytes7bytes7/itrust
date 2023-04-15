@@ -15,11 +15,13 @@ class UserInfoCard extends StatelessWidget {
     super.key,
     required this.id,
     required this.name,
+    this.nick,
     this.avatarUrl,
   });
 
   final String id;
   final String name;
+  final String? nick;
   final String? avatarUrl;
 
   @override
@@ -83,7 +85,7 @@ class UserInfoCard extends StatelessWidget {
               style: theme.textTheme.headline3,
             ),
             Text(
-              id,
+              nick ?? id,
               style: theme.textTheme.bodyText1,
             ),
           ],

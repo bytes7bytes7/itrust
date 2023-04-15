@@ -8,19 +8,19 @@ import '../mappers/mappers.dart';
 final _getIt = GetIt.instance;
 
 @singleton
-class PostMapsterRegistrar {
-  const PostMapsterRegistrar(this._mapster);
+class UserWallMapsterRegistrar {
+  const UserWallMapsterRegistrar(this._mapster);
 
   final Mapster _mapster;
 
   @postConstruct
   void register() {
     _mapster.register(
-      MapperMeta.two(
-        (input) => CommentUserToCommentVMMapper(
+      MapperMeta.one(
+        (input) => UserInfoToUserInfoVMMapper(
           input,
-          formattedDateProvider: _getIt.get<FormattedDateProvider>(),
           beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
+          mapster: _mapster,
         ),
       ),
     );

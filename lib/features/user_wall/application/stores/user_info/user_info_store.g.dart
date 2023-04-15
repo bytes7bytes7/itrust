@@ -48,18 +48,36 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   late final _$_userIDAtom =
       Atom(name: '_UserInfoStore._userID', context: context);
 
-  String get userID {
+  String? get userID {
     _$_userIDAtom.reportRead();
     return super._userID;
   }
 
   @override
-  String get _userID => userID;
+  String? get _userID => userID;
 
   @override
-  set _userID(String value) {
+  set _userID(String? value) {
     _$_userIDAtom.reportWrite(value, super._userID, () {
       super._userID = value;
+    });
+  }
+
+  late final _$_userInfoAtom =
+      Atom(name: '_UserInfoStore._userInfo', context: context);
+
+  UserInfoVM? get userInfo {
+    _$_userInfoAtom.reportRead();
+    return super._userInfo;
+  }
+
+  @override
+  UserInfoVM? get _userInfo => userInfo;
+
+  @override
+  set _userInfo(UserInfoVM? value) {
+    _$_userInfoAtom.reportWrite(value, super._userInfo, () {
+      super._userInfo = value;
     });
   }
 
@@ -67,11 +85,22 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
       ActionController(name: '_UserInfoStore', context: context);
 
   @override
-  void loadInfo({required String userID}) {
+  void loadInfo() {
     final _$actionInfo = _$_UserInfoStoreActionController.startAction(
         name: '_UserInfoStore.loadInfo');
     try {
-      return super.loadInfo(userID: userID);
+      return super.loadInfo();
+    } finally {
+      _$_UserInfoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void refresh() {
+    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
+        name: '_UserInfoStore.refresh');
+    try {
+      return super.refresh();
     } finally {
       _$_UserInfoStoreActionController.endAction(_$actionInfo);
     }

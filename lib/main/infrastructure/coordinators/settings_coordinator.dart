@@ -16,7 +16,7 @@ class ProdSettingsCoordinator extends Coordinator
     if (goRouter.canPop()) {
       goRouter.pop();
     } else {
-      const MenuRoute().go(goRouter);
+      const FeedRoute().go(goRouter);
     }
   }
 

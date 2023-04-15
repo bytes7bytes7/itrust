@@ -12,3 +12,4 @@ export 'post_coordinator.dart';
 export 'register_coordinator.dart';
 export 'rules_coordinator.dart';
 export 'settings_coordinator.dart';
+export 'user_wall_coordinator.dart';

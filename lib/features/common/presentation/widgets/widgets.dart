@@ -16,6 +16,7 @@ export 'retry_button.dart';
 export 'section_title.dart';
 export 'sized_icon.dart';
 export 'small_loading_error_container.dart';
+export 'small_primary_button.dart';
 export 'switching_icon_button.dart';
 export 'titled_text_field.dart';
 export 'user_circle_avatar.dart';

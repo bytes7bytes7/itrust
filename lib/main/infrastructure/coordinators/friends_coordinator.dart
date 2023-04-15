@@ -13,12 +13,12 @@ class ProdFriendsCoordinator extends Coordinator implements FriendsCoordinator {
     if (goRouter.canPop()) {
       goRouter.pop();
     } else {
-      const MenuRoute().go(goRouter);
+      const FeedRoute().go(goRouter);
     }
   }
 
   @override
   void onUserPressed(String userID) {
-    // TODO: implement onUserPressed
+    UserWallRoute(userID: userID).push(goRouter);
   }
 }

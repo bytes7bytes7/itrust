@@ -406,6 +406,34 @@ final lightTheme = ThemeData.light().copyWith(
           ),
         ),
       ),
+      smallElevated: ButtonStyle(
+        padding: const MaterialStatePropertyAll(
+          EdgeInsets.all(10),
+        ),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: BorderSide.none,
+          ),
+        ),
+        textStyle: const MaterialStatePropertyAll(
+          TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: _LightColors.cFFFFFFFF,
+          ),
+        ),
+        foregroundColor: const MaterialStatePropertyAll(_LightColors.cFFFFFFFF),
+        backgroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.disabled)) {
+              return _LightColors.c26000000;
+            }
+
+            return _LightColors.cFF000000;
+          },
+        ),
+      ),
     ),
   ],
 );

@@ -15,37 +15,61 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType']) {
+  switch (json['type']) {
     case 'end':
       return EndUserInfo.fromJson(json);
     case 'staff':
       return StaffUserInfo.fromJson(json);
 
     default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'UserInfo',
-          'Invalid union type "${json['runtimeType']}"!');
+      throw CheckedFromJsonException(
+          json, 'type', 'UserInfo', 'Invalid union type "${json['type']}"!');
   }
 }
 
 /// @nodoc
 mixin _$UserInfo {
-  UserID get id => throw _privateConstructorUsedError;
+  User get user => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserID id) end,
-    required TResult Function(UserID id) staff,
+    required TResult Function(
+            EndUser user,
+            int friendsAmount,
+            int postsAmount,
+            int subscribersAmount,
+            bool amIFriend,
+            bool amISubscriber,
+            bool didISentFriendBid)
+        end,
+    required TResult Function(StaffUser user) staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserID id)? end,
-    TResult? Function(UserID id)? staff,
+    TResult? Function(
+            EndUser user,
+            int friendsAmount,
+            int postsAmount,
+            int subscribersAmount,
+            bool amIFriend,
+            bool amISubscriber,
+            bool didISentFriendBid)?
+        end,
+    TResult? Function(StaffUser user)? staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserID id)? end,
-    TResult Function(UserID id)? staff,
+    TResult Function(
+            EndUser user,
+            int friendsAmount,
+            int postsAmount,
+            int subscribersAmount,
+            bool amIFriend,
+            bool amISubscriber,
+            bool didISentFriendBid)?
+        end,
+    TResult Function(StaffUser user)? staff,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -69,19 +93,12 @@ mixin _$UserInfo {
   }) =>
       throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $UserInfoCopyWith<UserInfo> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $UserInfoCopyWith<$Res> {
   factory $UserInfoCopyWith(UserInfo value, $Res Function(UserInfo) then) =
       _$UserInfoCopyWithImpl<$Res, UserInfo>;
-  @useResult
-  $Res call({UserID id});
-
-  $UserIDCopyWith<$Res> get id;
 }
 
 /// @nodoc
@@ -93,40 +110,22 @@ class _$UserInfoCopyWithImpl<$Res, $Val extends UserInfo>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as UserID,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserIDCopyWith<$Res> get id {
-    return $UserIDCopyWith<$Res>(_value.id, (value) {
-      return _then(_value.copyWith(id: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$EndUserInfoCopyWith<$Res> implements $UserInfoCopyWith<$Res> {
+abstract class _$$EndUserInfoCopyWith<$Res> {
   factory _$$EndUserInfoCopyWith(
           _$EndUserInfo value, $Res Function(_$EndUserInfo) then) =
       __$$EndUserInfoCopyWithImpl<$Res>;
-  @override
   @useResult
-  $Res call({UserID id});
-
-  @override
-  $UserIDCopyWith<$Res> get id;
+  $Res call(
+      {EndUser user,
+      int friendsAmount,
+      int postsAmount,
+      int subscribersAmount,
+      bool amIFriend,
+      bool amISubscriber,
+      bool didISentFriendBid});
 }
 
 /// @nodoc
@@ -140,13 +139,43 @@ class __$$EndUserInfoCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? user = null,
+    Object? friendsAmount = null,
+    Object? postsAmount = null,
+    Object? subscribersAmount = null,
+    Object? amIFriend = null,
+    Object? amISubscriber = null,
+    Object? didISentFriendBid = null,
   }) {
     return _then(_$EndUserInfo(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as UserID,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as EndUser,
+      friendsAmount: null == friendsAmount
+          ? _value.friendsAmount
+          : friendsAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      postsAmount: null == postsAmount
+          ? _value.postsAmount
+          : postsAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      subscribersAmount: null == subscribersAmount
+          ? _value.subscribersAmount
+          : subscribersAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      amIFriend: null == amIFriend
+          ? _value.amIFriend
+          : amIFriend // ignore: cast_nullable_to_non_nullable
+              as bool,
+      amISubscriber: null == amISubscriber
+          ? _value.amISubscriber
+          : amISubscriber // ignore: cast_nullable_to_non_nullable
+              as bool,
+      didISentFriendBid: null == didISentFriendBid
+          ? _value.didISentFriendBid
+          : didISentFriendBid // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -154,21 +183,41 @@ class __$$EndUserInfoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$EndUserInfo implements EndUserInfo {
-  const _$EndUserInfo({required this.id, final String? $type})
+  const _$EndUserInfo(
+      {required this.user,
+      required this.friendsAmount,
+      required this.postsAmount,
+      required this.subscribersAmount,
+      required this.amIFriend,
+      required this.amISubscriber,
+      required this.didISentFriendBid,
+      final String? $type})
       : $type = $type ?? 'end';
 
   factory _$EndUserInfo.fromJson(Map<String, dynamic> json) =>
       _$$EndUserInfoFromJson(json);
 
   @override
-  final UserID id;
+  final EndUser user;
+  @override
+  final int friendsAmount;
+  @override
+  final int postsAmount;
+  @override
+  final int subscribersAmount;
+  @override
+  final bool amIFriend;
+  @override
+  final bool amISubscriber;
+  @override
+  final bool didISentFriendBid;
 
-  @JsonKey(name: 'runtimeType')
+  @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'UserInfo.end(id: $id)';
+    return 'UserInfo.end(user: $user, friendsAmount: $friendsAmount, postsAmount: $postsAmount, subscribersAmount: $subscribersAmount, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid)';
   }
 
   @override
@@ -176,12 +225,25 @@ class _$EndUserInfo implements EndUserInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EndUserInfo &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.friendsAmount, friendsAmount) ||
+                other.friendsAmount == friendsAmount) &&
+            (identical(other.postsAmount, postsAmount) ||
+                other.postsAmount == postsAmount) &&
+            (identical(other.subscribersAmount, subscribersAmount) ||
+                other.subscribersAmount == subscribersAmount) &&
+            (identical(other.amIFriend, amIFriend) ||
+                other.amIFriend == amIFriend) &&
+            (identical(other.amISubscriber, amISubscriber) ||
+                other.amISubscriber == amISubscriber) &&
+            (identical(other.didISentFriendBid, didISentFriendBid) ||
+                other.didISentFriendBid == didISentFriendBid));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, user, friendsAmount, postsAmount,
+      subscribersAmount, amIFriend, amISubscriber, didISentFriendBid);
 
   @JsonKey(ignore: true)
   @override
@@ -192,30 +254,57 @@ class _$EndUserInfo implements EndUserInfo {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserID id) end,
-    required TResult Function(UserID id) staff,
+    required TResult Function(
+            EndUser user,
+            int friendsAmount,
+            int postsAmount,
+            int subscribersAmount,
+            bool amIFriend,
+            bool amISubscriber,
+            bool didISentFriendBid)
+        end,
+    required TResult Function(StaffUser user) staff,
   }) {
-    return end(id);
+    return end(user, friendsAmount, postsAmount, subscribersAmount, amIFriend,
+        amISubscriber, didISentFriendBid);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserID id)? end,
-    TResult? Function(UserID id)? staff,
+    TResult? Function(
+            EndUser user,
+            int friendsAmount,
+            int postsAmount,
+            int subscribersAmount,
+            bool amIFriend,
+            bool amISubscriber,
+            bool didISentFriendBid)?
+        end,
+    TResult? Function(StaffUser user)? staff,
   }) {
-    return end?.call(id);
+    return end?.call(user, friendsAmount, postsAmount, subscribersAmount,
+        amIFriend, amISubscriber, didISentFriendBid);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserID id)? end,
-    TResult Function(UserID id)? staff,
+    TResult Function(
+            EndUser user,
+            int friendsAmount,
+            int postsAmount,
+            int subscribersAmount,
+            bool amIFriend,
+            bool amISubscriber,
+            bool didISentFriendBid)?
+        end,
+    TResult Function(StaffUser user)? staff,
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id);
+      return end(user, friendsAmount, postsAmount, subscribersAmount, amIFriend,
+          amISubscriber, didISentFriendBid);
     }
     return orElse();
   }
@@ -260,31 +349,38 @@ class _$EndUserInfo implements EndUserInfo {
 }
 
 abstract class EndUserInfo implements UserInfo {
-  const factory EndUserInfo({required final UserID id}) = _$EndUserInfo;
+  const factory EndUserInfo(
+      {required final EndUser user,
+      required final int friendsAmount,
+      required final int postsAmount,
+      required final int subscribersAmount,
+      required final bool amIFriend,
+      required final bool amISubscriber,
+      required final bool didISentFriendBid}) = _$EndUserInfo;
 
   factory EndUserInfo.fromJson(Map<String, dynamic> json) =
       _$EndUserInfo.fromJson;
 
   @override
-  UserID get id;
-  @override
+  EndUser get user;
+  int get friendsAmount;
+  int get postsAmount;
+  int get subscribersAmount;
+  bool get amIFriend;
+  bool get amISubscriber;
+  bool get didISentFriendBid;
   @JsonKey(ignore: true)
   _$$EndUserInfoCopyWith<_$EndUserInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$StaffUserInfoCopyWith<$Res>
-    implements $UserInfoCopyWith<$Res> {
+abstract class _$$StaffUserInfoCopyWith<$Res> {
   factory _$$StaffUserInfoCopyWith(
           _$StaffUserInfo value, $Res Function(_$StaffUserInfo) then) =
       __$$StaffUserInfoCopyWithImpl<$Res>;
-  @override
   @useResult
-  $Res call({UserID id});
-
-  @override
-  $UserIDCopyWith<$Res> get id;
+  $Res call({StaffUser user});
 }
 
 /// @nodoc
@@ -298,13 +394,13 @@ class __$$StaffUserInfoCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? user = null,
   }) {
     return _then(_$StaffUserInfo(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as UserID,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as StaffUser,
     ));
   }
 }
@@ -312,21 +408,21 @@ class __$$StaffUserInfoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$StaffUserInfo implements StaffUserInfo {
-  const _$StaffUserInfo({required this.id, final String? $type})
+  const _$StaffUserInfo({required this.user, final String? $type})
       : $type = $type ?? 'staff';
 
   factory _$StaffUserInfo.fromJson(Map<String, dynamic> json) =>
       _$$StaffUserInfoFromJson(json);
 
   @override
-  final UserID id;
+  final StaffUser user;
 
-  @JsonKey(name: 'runtimeType')
+  @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'UserInfo.staff(id: $id)';
+    return 'UserInfo.staff(user: $user)';
   }
 
   @override
@@ -334,12 +430,12 @@ class _$StaffUserInfo implements StaffUserInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StaffUserInfo &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.user, user) || other.user == user));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, user);
 
   @JsonKey(ignore: true)
   @override
@@ -350,30 +446,54 @@ class _$StaffUserInfo implements StaffUserInfo {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(UserID id) end,
-    required TResult Function(UserID id) staff,
+    required TResult Function(
+            EndUser user,
+            int friendsAmount,
+            int postsAmount,
+            int subscribersAmount,
+            bool amIFriend,
+            bool amISubscriber,
+            bool didISentFriendBid)
+        end,
+    required TResult Function(StaffUser user) staff,
   }) {
-    return staff(id);
+    return staff(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(UserID id)? end,
-    TResult? Function(UserID id)? staff,
+    TResult? Function(
+            EndUser user,
+            int friendsAmount,
+            int postsAmount,
+            int subscribersAmount,
+            bool amIFriend,
+            bool amISubscriber,
+            bool didISentFriendBid)?
+        end,
+    TResult? Function(StaffUser user)? staff,
   }) {
-    return staff?.call(id);
+    return staff?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(UserID id)? end,
-    TResult Function(UserID id)? staff,
+    TResult Function(
+            EndUser user,
+            int friendsAmount,
+            int postsAmount,
+            int subscribersAmount,
+            bool amIFriend,
+            bool amISubscriber,
+            bool didISentFriendBid)?
+        end,
+    TResult Function(StaffUser user)? staff,
     required TResult orElse(),
   }) {
     if (staff != null) {
-      return staff(id);
+      return staff(user);
     }
     return orElse();
   }
@@ -418,14 +538,14 @@ class _$StaffUserInfo implements StaffUserInfo {
 }
 
 abstract class StaffUserInfo implements UserInfo {
-  const factory StaffUserInfo({required final UserID id}) = _$StaffUserInfo;
+  const factory StaffUserInfo({required final StaffUser user}) =
+      _$StaffUserInfo;
 
   factory StaffUserInfo.fromJson(Map<String, dynamic> json) =
       _$StaffUserInfo.fromJson;
 
   @override
-  UserID get id;
-  @override
+  StaffUser get user;
   @JsonKey(ignore: true)
   _$$StaffUserInfoCopyWith<_$StaffUserInfo> get copyWith =>
       throw _privateConstructorUsedError;
