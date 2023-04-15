@@ -10,11 +10,11 @@ class ProdFeedCoordinator extends Coordinator implements FeedCoordinator {
 
   @override
   void onPostPressed(String id) {
-    PostRoute(id: id).go(goRouter);
+    PostRoute(id: id).push(goRouter);
   }
 
   @override
   void onCommentButtonPressed(String id) {
-    PostRoute(id: id).go(goRouter);
+    PostRoute(id: id).push(goRouter);
   }
 }

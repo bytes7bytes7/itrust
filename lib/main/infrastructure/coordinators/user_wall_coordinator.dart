@@ -30,11 +30,11 @@ class ProdUserWallCoordinator extends Coordinator
 
   @override
   void onPostPressed(String postID) {
-    PostRoute(id: postID).go(goRouter);
+    PostRoute(id: postID).push(goRouter);
   }
 
   @override
   void onCommentButtonPressed(String postID) {
-    PostRoute(id: postID).go(goRouter);
+    PostRoute(id: postID).push(goRouter);
   }
 }
