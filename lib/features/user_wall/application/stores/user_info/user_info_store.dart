@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/common.dart';
-import '../../providers/user_info_string_provider.dart';
+import '../../../../user_wall/application/providers/user_info_string_provider.dart';
 
 part 'user_info_store.g.dart';
 
