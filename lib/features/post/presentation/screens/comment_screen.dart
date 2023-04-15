@@ -159,7 +159,7 @@ class _Body extends HookWidget {
                     key: _listScrollKey,
                     controller: scrollController,
                     children: [
-                      CommentCard(
+                      CommentListTile(
                         isPreview: false,
                         comment: comment,
                         onLikePressed: commentStore.onLikeCommentPressed,
@@ -185,7 +185,7 @@ class _Body extends HookWidget {
           );
         }
 
-        final length = commentStore.commentReplyStore.replies.length + 3;
+        final itemCount = commentStore.commentReplyStore.replies.length + 3;
 
         return RefreshIndicator(
           onRefresh: () async => commentStore.refresh(),
@@ -196,10 +196,10 @@ class _Body extends HookWidget {
                   key: _listScrollKey,
                   physics: const AlwaysScrollableScrollPhysics(),
                   controller: scrollController,
-                  itemCount: length,
+                  itemCount: itemCount,
                   itemBuilder: (context, index) {
                     if (index == 0) {
-                      return CommentCard(
+                      return CommentListTile(
                         isPreview: false,
                         comment: comment,
                         onLikePressed: commentStore.onLikeCommentPressed,
@@ -214,7 +214,7 @@ class _Body extends HookWidget {
                       );
                     }
 
-                    if (index == length - 1) {
+                    if (index == itemCount - 1) {
                       if (commentStore.commentReplyStore.canLoadMore) {
                         commentStore.commentReplyStore.loadMoreReplies();
                       }
@@ -231,7 +231,7 @@ class _Body extends HookWidget {
                     final reply =
                         commentStore.commentReplyStore.replies[index - 2];
 
-                    return CommentCard(
+                    return CommentListTile(
                       comment: reply,
                       isPreview: true,
                       onPressed: () =>

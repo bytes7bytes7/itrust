@@ -13,6 +13,8 @@ _$EndUser _$$EndUserFromJson(Map<String, dynamic> json) => _$EndUser(
       avatarUrls: (json['avatarUrls'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      isOnline: json['isOnline'] as bool,
+      lastSeenAtMSSinceEpoch: json['lastSeenAtMSSinceEpoch'] as int?,
       lastName: json['lastName'] as String?,
       nick: json['nick'] as String?,
       $type: json['type'] as String?,
@@ -23,6 +25,8 @@ Map<String, dynamic> _$$EndUserToJson(_$EndUser instance) => <String, dynamic>{
       'email': instance.email,
       'firstName': instance.firstName,
       'avatarUrls': instance.avatarUrls,
+      'isOnline': instance.isOnline,
+      'lastSeenAtMSSinceEpoch': instance.lastSeenAtMSSinceEpoch,
       'lastName': instance.lastName,
       'nick': instance.nick,
       'type': instance.$type,

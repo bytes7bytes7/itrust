@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../common/application/application.dart';
-import '../../application/providers/feed_string_repository.dart';
+import '../../application/providers/feed_string_provider.dart';
 
 @Singleton(as: FeedStringProvider)
 class ProdFeedStringProvider extends L10nProvider

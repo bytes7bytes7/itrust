@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 
 import '../../application/application.dart';
-import '../mappers/post_user_to_post_vm_mapper.dart';
+import '../mappers/mappers.dart';
 import '../other/media_url_creator.dart';
 
 final _getIt = GetIt.instance;
@@ -16,15 +16,25 @@ class CommonMapsterRegistrar {
 
   @postConstruct
   void register() {
-    _mapster.register(
-      MapperMeta.two(
-        (input) => PostUserToPostVMMapper(
-          input,
-          formattedDateProvider: _getIt.get<FormattedDateProvider>(),
-          beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
-          mediaUrlCreator: _getIt.get<MediaUrlCreator>(),
+    _mapster
+      ..register(
+        MapperMeta.two(
+          (input) => PostUserToPostVMMapper(
+            input,
+            formattedDateProvider: _getIt.get<FormattedDateProvider>(),
+            beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
+            mediaUrlCreator: _getIt.get<MediaUrlCreator>(),
+          ),
         ),
-      ),
-    );
+      )
+      ..register(
+        MapperMeta.one(
+          (input) => EndUserToEndUserVMMapper(
+            input,
+            formattedDateProvider: _getIt.get<FormattedDateProvider>(),
+          ),
+        ),
+      )
+      ..register(MapperMeta.one(StaffUserToStaffUserVMMapper.new));
   }
 }

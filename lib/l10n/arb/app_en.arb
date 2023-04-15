@@ -86,5 +86,9 @@
   "can_not_reply_to_comment": "Can not reply. Try again later.",
   "feed_has_no_posts": "There will be posts when you have at least one friend. Go and make some!",
   "can_not_like_comment": "Can not like comment. Try again later.",
-  "can_not_unlike_comment": "Can not unlike comment. Try again later."
+  "can_not_unlike_comment": "Can not unlike comment. Try again later.",
+  "friends_btn": "Friends",
+  "friends_screen_title": "Friends",
+  "can_not_load_friends": "Can not load friends. Try again later.",
+  "you_have_no_friends": "You do not have friends. Go and make some!"
 }

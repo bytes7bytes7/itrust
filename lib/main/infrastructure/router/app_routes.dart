@@ -156,6 +156,10 @@ class _AppRoutes {
         child: const MenuScreen(),
       );
     },
+    routes: [
+      // TODO: make UserRoute parent to FriendsRoute
+      friends,
+    ],
   );
 
   static final home = ShellRoute(
@@ -235,6 +239,25 @@ class _AppRoutes {
         arguments: _getArgs(state),
         transitionsBuilder: _leftward,
         child: const DevicesScreen(),
+      );
+    },
+  );
+
+  static final friends = GoRoute(
+    path: 'friends:userID',
+    name: 'friends',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      final userID = state.params['userID']!;
+
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: FriendsScreen(
+          userID: userID,
+        ),
       );
     },
   );

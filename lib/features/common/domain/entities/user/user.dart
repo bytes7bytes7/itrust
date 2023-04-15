@@ -11,14 +11,13 @@ part 'user.g.dart';
   unionKey: 'type',
 )
 class User with _$User {
-  // Can be added later:
-  //  bool online
-  //  DateTime lastSeenAt
   const factory User.end({
     required UserID id,
     required String email,
     required String firstName,
     required List<String> avatarUrls,
+    required bool isOnline,
+    int? lastSeenAtMSSinceEpoch,
     String? lastName,
     String? nick,
   }) = EndUser;

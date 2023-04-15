@@ -34,7 +34,7 @@ class _ProdUserProvider implements ProdUserProvider {
     )
                 .compose(
                   _dio.options,
-                  '/id${id}',
+                  '/id/${id}',
                   queryParameters: queryParameters,
                   data: _data,
                 )

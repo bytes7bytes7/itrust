@@ -8,7 +8,6 @@ import '../../../../common/common.dart';
 import '../../../domain/services/account_service.dart';
 import '../../coordinators/settings_coordinator.dart';
 import '../../providers/settings_string_provider.dart';
-import '../../view_models/end_user_vm/end_user_vm.dart';
 
 part 'settings_store.g.dart';
 

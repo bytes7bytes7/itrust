@@ -1,2 +1,2 @@
-export 'chat_card.dart';
+export 'chat_list_tile.dart';
 export 'unread_indicator.dart';

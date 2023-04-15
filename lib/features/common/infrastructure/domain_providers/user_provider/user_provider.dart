@@ -31,7 +31,7 @@ abstract class ProdUserProvider implements UserProvider {
   }) = _ProdUserProvider;
 
   @override
-  @GET('/id{$_idParam}')
+  @GET('/id/{$_idParam}')
   Future<JsonEitherWrapper<ProblemDetails, GetUserByIDResponse>> getUserByID(
     @Path(_idParam) String id,
   );

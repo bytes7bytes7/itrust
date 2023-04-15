@@ -144,7 +144,7 @@ class _Body extends StatelessWidget {
 
                       final chat = chatListStore.chats[index];
 
-                      return ChatCard(
+                      return ChatListTile(
                         chat: chat,
                         onPressed: () {
                           chatListStore.onChatCardPressed(chat);

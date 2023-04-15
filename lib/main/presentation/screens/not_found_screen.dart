@@ -36,7 +36,7 @@ class NotFoundScreen extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Spacer(),
-              Assets.lottie.routeError.lottie(),
+              Assets.lottie.notFound.lottie(),
               Text(
                 l10n.navi_not_found_body,
                 style: theme.textTheme.bodyText1,

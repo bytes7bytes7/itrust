@@ -16,17 +16,22 @@ class CategoryService {
 
   // TODO: add tag repo and cached param
   Future<List<String>> loadCategories() async {
-    final response =
-        await _keepFreshTokenService.request(_feedProvider.getTags);
+    try {
+      final response =
+          await _keepFreshTokenService.request(_feedProvider.getTags);
 
-    return response.value.fold(
-      (l) {
-        // TODO: implement
-        throw Exception();
-      },
-      (r) {
-        return r.tags;
-      },
-    );
+      return response.value.fold(
+        (l) {
+          // TODO: implement
+          throw Exception();
+        },
+        (r) {
+          return r.tags;
+        },
+      );
+    } catch (e) {
+      // TODO: implement
+      rethrow;
+    }
   }
 }

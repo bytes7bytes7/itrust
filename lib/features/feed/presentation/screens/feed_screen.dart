@@ -157,7 +157,6 @@ class _Body extends StatelessWidget {
 
         if (categoryStore.feedStore.posts.isEmpty) {
           // TODO: add refresh indicator
-
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -174,7 +173,7 @@ class _Body extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Assets.lottie.noFeed.lottie(),
+                      Assets.lottie.makeFriends.lottie(),
                       Text(
                         l10n.feed_has_no_posts,
                         style: theme.textTheme.bodyText1,
@@ -270,13 +269,13 @@ class _PostList extends StatelessWidget {
           );
         }
 
-        final length = feedStore.posts.length + 1;
+        final itemCount = feedStore.posts.length + 1;
 
         return SliverList(
           delegate: SliverChildBuilderDelegate(
-            childCount: length,
+            childCount: itemCount,
             (context, index) {
-              if (index == length - 1) {
+              if (index == itemCount - 1) {
                 if (feedStore.canLoadMore) {
                   feedStore.loadMorePosts();
                 }
@@ -292,7 +291,7 @@ class _PostList extends StatelessWidget {
 
               final post = feedStore.posts[index];
 
-              return PostCard(
+              return PostListTile(
                 post: post,
                 isPreview: true,
                 onPressed: () => feedStore.onPostPressed(postID: post.id),

@@ -137,7 +137,7 @@ class _Body extends StatelessWidget {
                           SectionTitle(
                             title: l10n.this_device_title,
                           ),
-                          DeviceSessionCard(
+                          DeviceSessionListTile(
                             session: thisSession,
                             canBeTerminated: false,
                           ),
@@ -151,7 +151,7 @@ class _Body extends StatelessWidget {
                         SectionTitle(
                           title: l10n.other_devices_title,
                         ),
-                        DeviceSessionCard(
+                        DeviceSessionListTile(
                           session: session,
                           canBeTerminated: true,
                           onTerminatePressed: () =>

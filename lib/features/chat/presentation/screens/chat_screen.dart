@@ -20,6 +20,7 @@ final _me = User.end(
   firstName: 'first',
   lastName: 'last',
   avatarUrls: [],
+  isOnline: true,
 );
 
 class ChatScreen extends StatelessWidget {
@@ -159,7 +160,7 @@ class _MessageList extends HookWidget {
               return message.map(
                 info: (message) {
                   // TODO: use markUp and markUpData
-                  return InfoMessageCard(
+                  return InfoMessageListTile(
                     key: ValueKey(message.id),
                     text: message.markUp,
                     // TODO: beautify datetime
@@ -168,7 +169,7 @@ class _MessageList extends HookWidget {
                 },
                 user: (message) {
                   if (message.senderID == _me.id) {
-                    return MyMessageCard(
+                    return MyMessageListTile(
                       key: ValueKey(message.id),
                       text: message.text,
                       // TODO: calculate in MobX
@@ -178,7 +179,7 @@ class _MessageList extends HookWidget {
                     );
                   }
 
-                  return OthersMessageCard(
+                  return OthersMessageListTile(
                     key: ValueKey(message.id),
                     showSender: chatStore.chat is GroupChat,
                     // TODO: beautify datetime

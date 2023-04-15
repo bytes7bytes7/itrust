@@ -1,1 +1,1 @@
-export 'comment_card.dart';
+export 'comment_list_tile.dart';

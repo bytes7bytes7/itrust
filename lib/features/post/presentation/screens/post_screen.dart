@@ -157,7 +157,7 @@ class _Body extends HookWidget {
                     key: _pageScrollKey,
                     controller: scrollController,
                     children: [
-                      PostCard(
+                      PostListTile(
                         post: post,
                         isPreview: false,
                         onLikePressed: postStore.onLikePostPressed,
@@ -183,7 +183,7 @@ class _Body extends HookWidget {
           );
         }
 
-        final length = postStore.postCommentStore.comments.length + 3;
+        final itemCount = postStore.postCommentStore.comments.length + 3;
 
         return RefreshIndicator(
           onRefresh: () async => postStore.refresh(),
@@ -194,10 +194,10 @@ class _Body extends HookWidget {
                   key: _pageScrollKey,
                   physics: const AlwaysScrollableScrollPhysics(),
                   controller: scrollController,
-                  itemCount: length,
+                  itemCount: itemCount,
                   itemBuilder: (context, index) {
                     if (index == 0) {
-                      return PostCard(
+                      return PostListTile(
                         post: post,
                         isPreview: false,
                         onLikePressed: postStore.onLikePostPressed,
@@ -212,7 +212,7 @@ class _Body extends HookWidget {
                       );
                     }
 
-                    if (index == length - 1) {
+                    if (index == itemCount - 1) {
                       if (postStore.postCommentStore.canLoadMore) {
                         postStore.postCommentStore.loadMoreComments();
                       }
@@ -229,7 +229,7 @@ class _Body extends HookWidget {
                     final comment =
                         postStore.postCommentStore.comments[index - 2];
 
-                    return CommentCard(
+                    return CommentListTile(
                       comment: comment,
                       isPreview: true,
                       onPressed: () => postStore.postCommentStore

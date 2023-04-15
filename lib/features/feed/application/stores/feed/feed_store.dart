@@ -8,7 +8,7 @@ import '../../../../common/application/view_models/view_models.dart';
 import '../../../../common/domain/domain.dart';
 import '../../../domain/services/feed_service.dart';
 import '../../coordinators/feed_coordinator.dart';
-import '../../providers/feed_string_repository.dart';
+import '../../providers/feed_string_provider.dart';
 
 part 'feed_store.g.dart';
 
