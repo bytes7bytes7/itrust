@@ -116,6 +116,11 @@ class _Body extends StatelessWidget {
             children: [
               OptionButton(
                 iconPath: Assets.image.svg.person.path,
+                title: l10n.my_profile_btn,
+                onPressed: menuStore.onMyProfileButtonPressed,
+              ),
+              OptionButton(
+                iconPath: Assets.image.svg.group.path,
                 title: l10n.friends_btn,
                 onPressed: () => menuStore.onFriendsButtonPressed(myID),
               ),

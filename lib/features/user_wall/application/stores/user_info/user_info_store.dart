@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../../repositories/interfaces/end_user_repository.dart';
 import '../../../../common/common.dart';
 import '../../../domain/services/user_info_service.dart';
 import '../../coordinators/coordinators.dart';
@@ -20,16 +21,19 @@ abstract class _UserInfoStore extends SyncStore with Store {
     required UserInfoService userInfoService,
     required UserInfoStringProvider userInfoStringProvider,
     required UserWallCoordinator coordinator,
+    required EndUserRepository endUserRepository,
     required Mapster mapster,
   })  : _userInfoService = userInfoService,
         _userInfoStringProvider = userInfoStringProvider,
         _coordinator = coordinator,
+        _endUserRepository = endUserRepository,
         _mapster = mapster;
 
   final UserPostsStore userPostsStore;
   final UserInfoService _userInfoService;
   final UserInfoStringProvider _userInfoStringProvider;
   final UserWallCoordinator _coordinator;
+  final EndUserRepository _endUserRepository;
   final Mapster _mapster;
   var _isInitialized = false;
 
@@ -40,6 +44,9 @@ abstract class _UserInfoStore extends SyncStore with Store {
   String _error = '';
 
   @readonly
+  String? _myID;
+
+  @readonly
   String? _userID;
 
   @readonly
@@ -48,9 +55,13 @@ abstract class _UserInfoStore extends SyncStore with Store {
   @computed
   bool get hasError => _error.isNotEmpty;
 
+  @computed
+  bool get showActions => _myID != _userID;
+
   void init(String userID) {
     if (!_isInitialized) {
       _userID = userID;
+      _myID = _endUserRepository.me?.id.str;
       _isInitialized = true;
     }
   }

@@ -289,9 +289,10 @@ class _UserInfoContainer extends StatelessWidget {
             name: userInfo.user.name,
             avatarUrl: userInfo.user.avatarUrl,
           ),
-          _Actions(
-            l10n: l10n,
-          ),
+          if (userInfoStore.showActions)
+            _Actions(
+              l10n: l10n,
+            ),
           if (endUserInfo is EndUserInfoVM)
             _EndUserStatistics(
               l10n: l10n,

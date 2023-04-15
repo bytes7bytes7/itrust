@@ -15,6 +15,13 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   bool get hasError => (_$hasErrorComputed ??=
           Computed<bool>(() => super.hasError, name: '_UserInfoStore.hasError'))
       .value;
+  Computed<bool>? _$showActionsComputed;
+
+  @override
+  bool get showActions =>
+      (_$showActionsComputed ??= Computed<bool>(() => super.showActions,
+              name: '_UserInfoStore.showActions'))
+          .value;
 
   late final _$_isLoadingAtom =
       Atom(name: '_UserInfoStore._isLoading', context: context);
@@ -49,6 +56,23 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   set _error(String value) {
     _$_errorAtom.reportWrite(value, super._error, () {
       super._error = value;
+    });
+  }
+
+  late final _$_myIDAtom = Atom(name: '_UserInfoStore._myID', context: context);
+
+  String? get myID {
+    _$_myIDAtom.reportRead();
+    return super._myID;
+  }
+
+  @override
+  String? get _myID => myID;
+
+  @override
+  set _myID(String? value) {
+    _$_myIDAtom.reportWrite(value, super._myID, () {
+      super._myID = value;
     });
   }
 
@@ -116,7 +140,8 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   @override
   String toString() {
     return '''
-hasError: ${hasError}
+hasError: ${hasError},
+showActions: ${showActions}
     ''';
   }
 }

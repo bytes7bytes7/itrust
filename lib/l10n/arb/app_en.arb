@@ -99,5 +99,6 @@
   "send_friend_bid_button": "Add friend",
   "open_chat_button": "Message",
   "can_not_load_user": "Can not load user. Try again later.",
-  "user_does_not_have_posts": "No posts here"
+  "user_does_not_have_posts": "No posts here",
+  "my_profile_btn": "My profile"
 }

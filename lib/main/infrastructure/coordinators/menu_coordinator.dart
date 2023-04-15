@@ -16,6 +16,11 @@ class ProdMenuCoordinator extends Coordinator implements MenuCoordinator {
   }
 
   @override
+  void onMyProfileButtonPressed({required String userID}) {
+    UserWallRoute(userID: userID).push(goRouter);
+  }
+
+  @override
   void onFriendsButtonPressed({required String userID}) {
     FriendsRoute(userID: userID).push(goRouter);
   }

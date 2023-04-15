@@ -54,6 +54,16 @@ abstract class _MenuStore extends SyncStore with Store {
     _menuCoordinator.onSettingsButtonPressed();
   }
 
+  void onMyProfileButtonPressed() {
+    final id = _myID;
+
+    if (id == null) {
+      return;
+    }
+
+    _menuCoordinator.onMyProfileButtonPressed(userID: id);
+  }
+
   void onFriendsButtonPressed(String userID) {
     _menuCoordinator.onFriendsButtonPressed(userID: userID);
   }
