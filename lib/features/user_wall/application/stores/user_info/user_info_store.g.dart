@@ -22,6 +22,55 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
       (_$showActionsComputed ??= Computed<bool>(() => super.showActions,
               name: '_UserInfoStore.showActions'))
           .value;
+  Computed<bool>? _$showAddFriendComputed;
+
+  @override
+  bool get showAddFriend =>
+      (_$showAddFriendComputed ??= Computed<bool>(() => super.showAddFriend,
+              name: '_UserInfoStore.showAddFriend'))
+          .value;
+  Computed<bool>? _$showCancelRequestComputed;
+
+  @override
+  bool get showCancelRequest => (_$showCancelRequestComputed ??= Computed<bool>(
+          () => super.showCancelRequest,
+          name: '_UserInfoStore.showCancelRequest'))
+      .value;
+  Computed<bool>? _$showRemoveFriendComputed;
+
+  @override
+  bool get showRemoveFriend => (_$showRemoveFriendComputed ??= Computed<bool>(
+          () => super.showRemoveFriend,
+          name: '_UserInfoStore.showRemoveFriend'))
+      .value;
+  Computed<bool>? _$showAcceptRequestComputed;
+
+  @override
+  bool get showAcceptRequest => (_$showAcceptRequestComputed ??= Computed<bool>(
+          () => super.showAcceptRequest,
+          name: '_UserInfoStore.showAcceptRequest'))
+      .value;
+  Computed<bool>? _$showOpenChatComputed;
+
+  @override
+  bool get showOpenChat =>
+      (_$showOpenChatComputed ??= Computed<bool>(() => super.showOpenChat,
+              name: '_UserInfoStore.showOpenChat'))
+          .value;
+  Computed<bool>? _$showDeclineRequestComputed;
+
+  @override
+  bool get showDeclineRequest => (_$showDeclineRequestComputed ??=
+          Computed<bool>(() => super.showDeclineRequest,
+              name: '_UserInfoStore.showDeclineRequest'))
+      .value;
+  Computed<bool>? _$canIOpenChatComputed;
+
+  @override
+  bool get canIOpenChat =>
+      (_$canIOpenChatComputed ??= Computed<bool>(() => super.canIOpenChat,
+              name: '_UserInfoStore.canIOpenChat'))
+          .value;
 
   late final _$_isLoadingAtom =
       Atom(name: '_UserInfoStore._isLoading', context: context);
@@ -141,7 +190,14 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   String toString() {
     return '''
 hasError: ${hasError},
-showActions: ${showActions}
+showActions: ${showActions},
+showAddFriend: ${showAddFriend},
+showCancelRequest: ${showCancelRequest},
+showRemoveFriend: ${showRemoveFriend},
+showAcceptRequest: ${showAcceptRequest},
+showOpenChat: ${showOpenChat},
+showDeclineRequest: ${showDeclineRequest},
+canIOpenChat: ${canIOpenChat}
     ''';
   }
 }

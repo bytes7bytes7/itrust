@@ -19,6 +19,7 @@ class UserInfoVM with _$UserInfoVM {
     required bool amIFriend,
     required bool amISubscriber,
     required bool didISentFriendBid,
+    required bool haveIFriendBidFromThisUser,
   }) = EndUserInfoVM;
 
   const factory UserInfoVM.staff({

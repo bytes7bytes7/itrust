@@ -39,7 +39,8 @@ mixin _$UserInfo {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)
         end,
     required TResult Function(StaffUser user) staff,
   }) =>
@@ -53,7 +54,8 @@ mixin _$UserInfo {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult? Function(StaffUser user)? staff,
   }) =>
@@ -67,7 +69,8 @@ mixin _$UserInfo {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult Function(StaffUser user)? staff,
     required TResult orElse(),
@@ -125,7 +128,8 @@ abstract class _$$EndUserInfoCopyWith<$Res> {
       int subscribersAmount,
       bool amIFriend,
       bool amISubscriber,
-      bool didISentFriendBid});
+      bool didISentFriendBid,
+      bool haveIFriendBidFromThisUser});
 }
 
 /// @nodoc
@@ -146,6 +150,7 @@ class __$$EndUserInfoCopyWithImpl<$Res>
     Object? amIFriend = null,
     Object? amISubscriber = null,
     Object? didISentFriendBid = null,
+    Object? haveIFriendBidFromThisUser = null,
   }) {
     return _then(_$EndUserInfo(
       user: null == user
@@ -176,6 +181,10 @@ class __$$EndUserInfoCopyWithImpl<$Res>
           ? _value.didISentFriendBid
           : didISentFriendBid // ignore: cast_nullable_to_non_nullable
               as bool,
+      haveIFriendBidFromThisUser: null == haveIFriendBidFromThisUser
+          ? _value.haveIFriendBidFromThisUser
+          : haveIFriendBidFromThisUser // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -191,6 +200,7 @@ class _$EndUserInfo implements EndUserInfo {
       required this.amIFriend,
       required this.amISubscriber,
       required this.didISentFriendBid,
+      required this.haveIFriendBidFromThisUser,
       final String? $type})
       : $type = $type ?? 'end';
 
@@ -211,13 +221,15 @@ class _$EndUserInfo implements EndUserInfo {
   final bool amISubscriber;
   @override
   final bool didISentFriendBid;
+  @override
+  final bool haveIFriendBidFromThisUser;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'UserInfo.end(user: $user, friendsAmount: $friendsAmount, postsAmount: $postsAmount, subscribersAmount: $subscribersAmount, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid)';
+    return 'UserInfo.end(user: $user, friendsAmount: $friendsAmount, postsAmount: $postsAmount, subscribersAmount: $subscribersAmount, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid, haveIFriendBidFromThisUser: $haveIFriendBidFromThisUser)';
   }
 
   @override
@@ -237,13 +249,25 @@ class _$EndUserInfo implements EndUserInfo {
             (identical(other.amISubscriber, amISubscriber) ||
                 other.amISubscriber == amISubscriber) &&
             (identical(other.didISentFriendBid, didISentFriendBid) ||
-                other.didISentFriendBid == didISentFriendBid));
+                other.didISentFriendBid == didISentFriendBid) &&
+            (identical(other.haveIFriendBidFromThisUser,
+                    haveIFriendBidFromThisUser) ||
+                other.haveIFriendBidFromThisUser ==
+                    haveIFriendBidFromThisUser));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, user, friendsAmount, postsAmount,
-      subscribersAmount, amIFriend, amISubscriber, didISentFriendBid);
+  int get hashCode => Object.hash(
+      runtimeType,
+      user,
+      friendsAmount,
+      postsAmount,
+      subscribersAmount,
+      amIFriend,
+      amISubscriber,
+      didISentFriendBid,
+      haveIFriendBidFromThisUser);
 
   @JsonKey(ignore: true)
   @override
@@ -261,12 +285,13 @@ class _$EndUserInfo implements EndUserInfo {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)
         end,
     required TResult Function(StaffUser user) staff,
   }) {
     return end(user, friendsAmount, postsAmount, subscribersAmount, amIFriend,
-        amISubscriber, didISentFriendBid);
+        amISubscriber, didISentFriendBid, haveIFriendBidFromThisUser);
   }
 
   @override
@@ -279,12 +304,20 @@ class _$EndUserInfo implements EndUserInfo {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult? Function(StaffUser user)? staff,
   }) {
-    return end?.call(user, friendsAmount, postsAmount, subscribersAmount,
-        amIFriend, amISubscriber, didISentFriendBid);
+    return end?.call(
+        user,
+        friendsAmount,
+        postsAmount,
+        subscribersAmount,
+        amIFriend,
+        amISubscriber,
+        didISentFriendBid,
+        haveIFriendBidFromThisUser);
   }
 
   @override
@@ -297,14 +330,15 @@ class _$EndUserInfo implements EndUserInfo {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult Function(StaffUser user)? staff,
     required TResult orElse(),
   }) {
     if (end != null) {
       return end(user, friendsAmount, postsAmount, subscribersAmount, amIFriend,
-          amISubscriber, didISentFriendBid);
+          amISubscriber, didISentFriendBid, haveIFriendBidFromThisUser);
     }
     return orElse();
   }
@@ -356,7 +390,8 @@ abstract class EndUserInfo implements UserInfo {
       required final int subscribersAmount,
       required final bool amIFriend,
       required final bool amISubscriber,
-      required final bool didISentFriendBid}) = _$EndUserInfo;
+      required final bool didISentFriendBid,
+      required final bool haveIFriendBidFromThisUser}) = _$EndUserInfo;
 
   factory EndUserInfo.fromJson(Map<String, dynamic> json) =
       _$EndUserInfo.fromJson;
@@ -369,6 +404,7 @@ abstract class EndUserInfo implements UserInfo {
   bool get amIFriend;
   bool get amISubscriber;
   bool get didISentFriendBid;
+  bool get haveIFriendBidFromThisUser;
   @JsonKey(ignore: true)
   _$$EndUserInfoCopyWith<_$EndUserInfo> get copyWith =>
       throw _privateConstructorUsedError;
@@ -453,7 +489,8 @@ class _$StaffUserInfo implements StaffUserInfo {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)
         end,
     required TResult Function(StaffUser user) staff,
   }) {
@@ -470,7 +507,8 @@ class _$StaffUserInfo implements StaffUserInfo {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult? Function(StaffUser user)? staff,
   }) {
@@ -487,7 +525,8 @@ class _$StaffUserInfo implements StaffUserInfo {
             int subscribersAmount,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult Function(StaffUser user)? staff,
     required TResult orElse(),

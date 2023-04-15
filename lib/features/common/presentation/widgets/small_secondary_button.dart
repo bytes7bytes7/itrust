@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../themes/extensions/button_style_tx.dart';
 
-class SmallPrimaryButton extends StatelessWidget {
-  const SmallPrimaryButton({
+class SmallSecondaryButton extends StatelessWidget {
+  const SmallSecondaryButton({
     super.key,
     required this.text,
     this.onPressed,
@@ -17,9 +17,9 @@ class SmallPrimaryButton extends StatelessWidget {
     final theme = Theme.of(context);
     final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
 
-    return ElevatedButton(
+    return OutlinedButton(
       onPressed: onPressed,
-      style: buttonStyleTX.smallPrimary,
+      style: buttonStyleTX.smallSecondary,
       child: Text(
         text,
       ),

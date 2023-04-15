@@ -58,6 +58,151 @@ abstract class _UserInfoStore extends SyncStore with Store {
   @computed
   bool get showActions => _myID != _userID;
 
+  @computed
+  bool get showAddFriend {
+    if (!showActions) {
+      return false;
+    }
+
+    final userInfo = _userInfo;
+
+    if (userInfo == null) {
+      return false;
+    }
+
+    if (userInfo is! EndUserInfoVM) {
+      return false;
+    }
+
+    if (userInfo.amIFriend) {
+      return false;
+    }
+
+    if (userInfo.didISentFriendBid) {
+      return false;
+    }
+
+    if (userInfo.amISubscriber) {
+      return false;
+    }
+
+    return true;
+  }
+
+  @computed
+  bool get showCancelRequest {
+    if (!showActions) {
+      return false;
+    }
+
+    final userInfo = _userInfo;
+
+    if (userInfo == null) {
+      return false;
+    }
+
+    if (userInfo is! EndUserInfoVM) {
+      return false;
+    }
+
+    return userInfo.didISentFriendBid;
+  }
+
+  @computed
+  bool get showRemoveFriend {
+    if (!showActions) {
+      return false;
+    }
+
+    final userInfo = _userInfo;
+
+    if (userInfo == null) {
+      return false;
+    }
+
+    if (userInfo is! EndUserInfoVM) {
+      return false;
+    }
+
+    return userInfo.amIFriend;
+  }
+
+  @computed
+  bool get showAcceptRequest {
+    if (!showActions) {
+      return false;
+    }
+
+    final userInfo = _userInfo;
+
+    if (userInfo == null) {
+      return false;
+    }
+
+    if (userInfo is! EndUserInfoVM) {
+      return false;
+    }
+
+    return userInfo.haveIFriendBidFromThisUser;
+  }
+
+  @computed
+  bool get showOpenChat {
+    if (!showActions) {
+      return false;
+    }
+
+    final userInfo = _userInfo;
+
+    if (userInfo == null) {
+      return false;
+    }
+
+    if (userInfo is! EndUserInfoVM) {
+      return true;
+    }
+
+    return !userInfo.haveIFriendBidFromThisUser;
+  }
+
+  @computed
+  bool get showDeclineRequest {
+    if (!showActions) {
+      return false;
+    }
+
+    final userInfo = _userInfo;
+
+    if (userInfo == null) {
+      return false;
+    }
+
+    if (userInfo is! EndUserInfoVM) {
+      return false;
+    }
+
+    return userInfo.haveIFriendBidFromThisUser;
+  }
+
+  @computed
+  bool get canIOpenChat {
+    if (!showOpenChat) {
+      return false;
+    }
+
+    final userInfo = _userInfo;
+
+    if (userInfo == null) {
+      return false;
+    }
+
+    if (userInfo is! EndUserInfoVM) {
+      return true;
+    }
+
+    return userInfo.amIFriend;
+  }
+
   void init(String userID) {
     if (!_isInitialized) {
       _userID = userID;

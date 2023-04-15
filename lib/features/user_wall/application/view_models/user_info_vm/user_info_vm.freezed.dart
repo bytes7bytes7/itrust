@@ -28,7 +28,8 @@ mixin _$UserInfoVM {
             String subscribersAmountWithMe,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)
         end,
     required TResult Function(StaffUserVM user) staff,
   }) =>
@@ -44,7 +45,8 @@ mixin _$UserInfoVM {
             String subscribersAmountWithMe,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult? Function(StaffUserVM user)? staff,
   }) =>
@@ -60,7 +62,8 @@ mixin _$UserInfoVM {
             String subscribersAmountWithMe,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult Function(StaffUserVM user)? staff,
     required TResult orElse(),
@@ -120,7 +123,8 @@ abstract class _$$EndUserInfoVMCopyWith<$Res> {
       String subscribersAmountWithMe,
       bool amIFriend,
       bool amISubscriber,
-      bool didISentFriendBid});
+      bool didISentFriendBid,
+      bool haveIFriendBidFromThisUser});
 }
 
 /// @nodoc
@@ -143,6 +147,7 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
     Object? amIFriend = null,
     Object? amISubscriber = null,
     Object? didISentFriendBid = null,
+    Object? haveIFriendBidFromThisUser = null,
   }) {
     return _then(_$EndUserInfoVM(
       user: null == user
@@ -181,6 +186,10 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
           ? _value.didISentFriendBid
           : didISentFriendBid // ignore: cast_nullable_to_non_nullable
               as bool,
+      haveIFriendBidFromThisUser: null == haveIFriendBidFromThisUser
+          ? _value.haveIFriendBidFromThisUser
+          : haveIFriendBidFromThisUser // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -197,7 +206,8 @@ class _$EndUserInfoVM implements EndUserInfoVM {
       required this.subscribersAmountWithMe,
       required this.amIFriend,
       required this.amISubscriber,
-      required this.didISentFriendBid});
+      required this.didISentFriendBid,
+      required this.haveIFriendBidFromThisUser});
 
   @override
   final EndUserVM user;
@@ -217,10 +227,12 @@ class _$EndUserInfoVM implements EndUserInfoVM {
   final bool amISubscriber;
   @override
   final bool didISentFriendBid;
+  @override
+  final bool haveIFriendBidFromThisUser;
 
   @override
   String toString() {
-    return 'UserInfoVM.end(user: $user, friendsAmountWithoutMe: $friendsAmountWithoutMe, friendsAmountWithMe: $friendsAmountWithMe, postsAmount: $postsAmount, subscribersAmountWithoutMe: $subscribersAmountWithoutMe, subscribersAmountWithMe: $subscribersAmountWithMe, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid)';
+    return 'UserInfoVM.end(user: $user, friendsAmountWithoutMe: $friendsAmountWithoutMe, friendsAmountWithMe: $friendsAmountWithMe, postsAmount: $postsAmount, subscribersAmountWithoutMe: $subscribersAmountWithoutMe, subscribersAmountWithMe: $subscribersAmountWithMe, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid, haveIFriendBidFromThisUser: $haveIFriendBidFromThisUser)';
   }
 
   @override
@@ -247,7 +259,11 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             (identical(other.amISubscriber, amISubscriber) ||
                 other.amISubscriber == amISubscriber) &&
             (identical(other.didISentFriendBid, didISentFriendBid) ||
-                other.didISentFriendBid == didISentFriendBid));
+                other.didISentFriendBid == didISentFriendBid) &&
+            (identical(other.haveIFriendBidFromThisUser,
+                    haveIFriendBidFromThisUser) ||
+                other.haveIFriendBidFromThisUser ==
+                    haveIFriendBidFromThisUser));
   }
 
   @override
@@ -261,7 +277,8 @@ class _$EndUserInfoVM implements EndUserInfoVM {
       subscribersAmountWithMe,
       amIFriend,
       amISubscriber,
-      didISentFriendBid);
+      didISentFriendBid,
+      haveIFriendBidFromThisUser);
 
   @JsonKey(ignore: true)
   @override
@@ -281,7 +298,8 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             String subscribersAmountWithMe,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)
         end,
     required TResult Function(StaffUserVM user) staff,
   }) {
@@ -294,7 +312,8 @@ class _$EndUserInfoVM implements EndUserInfoVM {
         subscribersAmountWithMe,
         amIFriend,
         amISubscriber,
-        didISentFriendBid);
+        didISentFriendBid,
+        haveIFriendBidFromThisUser);
   }
 
   @override
@@ -309,7 +328,8 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             String subscribersAmountWithMe,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult? Function(StaffUserVM user)? staff,
   }) {
@@ -322,7 +342,8 @@ class _$EndUserInfoVM implements EndUserInfoVM {
         subscribersAmountWithMe,
         amIFriend,
         amISubscriber,
-        didISentFriendBid);
+        didISentFriendBid,
+        haveIFriendBidFromThisUser);
   }
 
   @override
@@ -337,7 +358,8 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             String subscribersAmountWithMe,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult Function(StaffUserVM user)? staff,
     required TResult orElse(),
@@ -352,7 +374,8 @@ class _$EndUserInfoVM implements EndUserInfoVM {
           subscribersAmountWithMe,
           amIFriend,
           amISubscriber,
-          didISentFriendBid);
+          didISentFriendBid,
+          haveIFriendBidFromThisUser);
     }
     return orElse();
   }
@@ -399,7 +422,8 @@ abstract class EndUserInfoVM implements UserInfoVM {
       required final String subscribersAmountWithMe,
       required final bool amIFriend,
       required final bool amISubscriber,
-      required final bool didISentFriendBid}) = _$EndUserInfoVM;
+      required final bool didISentFriendBid,
+      required final bool haveIFriendBidFromThisUser}) = _$EndUserInfoVM;
 
   @override
   EndUserVM get user;
@@ -411,6 +435,7 @@ abstract class EndUserInfoVM implements UserInfoVM {
   bool get amIFriend;
   bool get amISubscriber;
   bool get didISentFriendBid;
+  bool get haveIFriendBidFromThisUser;
   @JsonKey(ignore: true)
   _$$EndUserInfoVMCopyWith<_$EndUserInfoVM> get copyWith =>
       throw _privateConstructorUsedError;
@@ -489,7 +514,8 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
             String subscribersAmountWithMe,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)
         end,
     required TResult Function(StaffUserVM user) staff,
   }) {
@@ -508,7 +534,8 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
             String subscribersAmountWithMe,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult? Function(StaffUserVM user)? staff,
   }) {
@@ -527,7 +554,8 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
             String subscribersAmountWithMe,
             bool amIFriend,
             bool amISubscriber,
-            bool didISentFriendBid)?
+            bool didISentFriendBid,
+            bool haveIFriendBidFromThisUser)?
         end,
     TResult Function(StaffUserVM user)? staff,
     required TResult orElse(),

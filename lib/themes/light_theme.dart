@@ -18,7 +18,7 @@ final lightTheme = ThemeData.light().copyWith(
       color: _LightColors.cFFFFFFFF,
       size: 24,
     ),
-    shadowColor: _LightColors.c26000000,
+    shadowColor: _LightColors.c38000000,
     titleTextStyle: TextStyle(
       fontFamily: FontFamily.roboto,
       fontSize: 24,
@@ -86,7 +86,7 @@ final lightTheme = ThemeData.light().copyWith(
       backgroundColor: MaterialStateProperty.resolveWith(
         (states) {
           if (states.contains(MaterialState.disabled)) {
-            return _LightColors.c26000000;
+            return _LightColors.c38000000;
           }
 
           return _LightColors.cFF000000;
@@ -124,7 +124,7 @@ final lightTheme = ThemeData.light().copyWith(
             return RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14),
               side: const BorderSide(
-                color: _LightColors.c14000000,
+                color: _LightColors.c51000000,
               ),
             );
           }
@@ -143,7 +143,7 @@ final lightTheme = ThemeData.light().copyWith(
             return const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.normal,
-              color: _LightColors.c14000000,
+              color: _LightColors.c51000000,
             );
           }
 
@@ -251,7 +251,7 @@ final lightTheme = ThemeData.light().copyWith(
       infoMsgForeground: _LightColors.cFF000000,
       infoMsgBackground: _LightColors.cFFF0EFEF,
       textFieldIcon: _LightColors.cFF000000,
-      textFieldIconSplash: _LightColors.c26000000,
+      textFieldIconSplash: _LightColors.c38000000,
       textFieldBackground: _LightColors.cFFF0EFEF,
       simpleIcon: _LightColors.cFF000000,
       infoMsgPreviewColor: _LightColors.cFFEC2885,
@@ -269,7 +269,7 @@ final lightTheme = ThemeData.light().copyWith(
       commentBackground: _LightColors.cFFFFFFFF,
       sectionTitleBackground: _LightColors.cFFFFFFFF,
       moreImagesForeground: _LightColors.cFFFFFFFF,
-      moreImagesBackground: _LightColors.c26000000,
+      moreImagesBackground: _LightColors.c38000000,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(
@@ -351,7 +351,7 @@ final lightTheme = ThemeData.light().copyWith(
         backgroundColor: MaterialStateProperty.resolveWith(
           (states) {
             if (states.contains(MaterialState.disabled)) {
-              return _LightColors.c14000000;
+              return _LightColors.c51000000;
             }
 
             return _LightColors.cFF000000;
@@ -381,7 +381,7 @@ final lightTheme = ThemeData.light().copyWith(
           (states) {
             if (states.contains(MaterialState.disabled)) {
               return const BorderSide(
-                color: _LightColors.c14000000,
+                color: _LightColors.c51000000,
               );
             }
 
@@ -393,12 +393,13 @@ final lightTheme = ThemeData.light().copyWith(
         foregroundColor: MaterialStateProperty.resolveWith(
           (states) {
             if (states.contains(MaterialState.disabled)) {
-              return _LightColors.c14000000;
+              return _LightColors.c51000000;
             }
 
             return _LightColors.cFF000000;
           },
         ),
+        backgroundColor: MaterialStateProperty.all(Colors.transparent),
         textStyle: const MaterialStatePropertyAll(
           TextStyle(
             fontSize: 20,
@@ -406,7 +407,7 @@ final lightTheme = ThemeData.light().copyWith(
           ),
         ),
       ),
-      smallElevated: ButtonStyle(
+      smallPrimary: ButtonStyle(
         padding: const MaterialStatePropertyAll(
           EdgeInsets.all(10),
         ),
@@ -418,21 +419,60 @@ final lightTheme = ThemeData.light().copyWith(
         ),
         textStyle: const MaterialStatePropertyAll(
           TextStyle(
-            fontSize: 20,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
-            color: _LightColors.cFFFFFFFF,
           ),
         ),
         foregroundColor: const MaterialStatePropertyAll(_LightColors.cFFFFFFFF),
         backgroundColor: MaterialStateProperty.resolveWith(
           (states) {
             if (states.contains(MaterialState.disabled)) {
-              return _LightColors.c26000000;
+              return _LightColors.c38000000;
             }
 
             return _LightColors.cFF000000;
           },
         ),
+      ),
+      smallSecondary: ButtonStyle(
+        padding: const MaterialStatePropertyAll(
+          EdgeInsets.all(10),
+        ),
+        shape: MaterialStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: BorderSide.none,
+          ),
+        ),
+        side: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.disabled)) {
+              return const BorderSide(
+                color: _LightColors.c51000000,
+              );
+            }
+
+            return const BorderSide(
+              color: _LightColors.cFF000000,
+            );
+          },
+        ),
+        textStyle: const MaterialStatePropertyAll(
+          TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        foregroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.disabled)) {
+              return _LightColors.c51000000;
+            }
+
+            return _LightColors.cFF000000;
+          },
+        ),
+        backgroundColor: const MaterialStatePropertyAll(_LightColors.cFFFFFFFF),
       ),
     ),
   ],

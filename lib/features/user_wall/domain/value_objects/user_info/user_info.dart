@@ -19,6 +19,7 @@ class UserInfo with _$UserInfo {
     required bool amIFriend,
     required bool amISubscriber,
     required bool didISentFriendBid,
+    required bool haveIFriendBidFromThisUser,
   }) = EndUserInfo;
 
   const factory UserInfo.staff({

@@ -292,6 +292,7 @@ class _UserInfoContainer extends StatelessWidget {
           if (userInfoStore.showActions)
             _Actions(
               l10n: l10n,
+              userInfoStore: userInfoStore,
             ),
           if (endUserInfo is EndUserInfoVM)
             _EndUserStatistics(
@@ -308,9 +309,11 @@ class _UserInfoContainer extends StatelessWidget {
 class _Actions extends StatelessWidget {
   const _Actions({
     required this.l10n,
+    required this.userInfoStore,
   });
 
   final AppLocalizations l10n;
+  final UserInfoStore userInfoStore;
 
   @override
   Widget build(BuildContext context) {
@@ -320,21 +323,51 @@ class _Actions extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: SmallPrimaryButton(
-              onPressed: () {},
-              text: l10n.send_friend_bid_button,
+          if (userInfoStore.showAddFriend)
+            Expanded(
+              child: SmallPrimaryButton(
+                text: l10n.send_friend_bid_btn,
+                onPressed: () {},
+              ),
             ),
-          ),
+          if (userInfoStore.showCancelRequest)
+            Expanded(
+              child: SmallSecondaryButton(
+                text: l10n.cancel_friend_bid_btn,
+                onPressed: () {},
+              ),
+            ),
+          if (userInfoStore.showRemoveFriend)
+            Expanded(
+              child: SmallSecondaryButton(
+                text: l10n.remove_friend_btn,
+                onPressed: () {},
+              ),
+            ),
+          if (userInfoStore.showAcceptRequest)
+            Expanded(
+              child: SmallSecondaryButton(
+                text: l10n.accept_friend_bid_btn,
+                onPressed: () {},
+              ),
+            ),
           const SizedBox(
             width: 20,
           ),
-          Expanded(
-            child: SmallPrimaryButton(
-              onPressed: () {},
-              text: l10n.open_chat_button,
+          if (userInfoStore.showOpenChat)
+            Expanded(
+              child: SmallPrimaryButton(
+                text: l10n.open_chat_btn,
+                onPressed: userInfoStore.canIOpenChat ? () {} : null,
+              ),
             ),
-          ),
+          if (userInfoStore.showDeclineRequest)
+            Expanded(
+              child: SmallSecondaryButton(
+                text: l10n.decline_friend_bid_btn,
+                onPressed: () {},
+              ),
+            ),
         ],
       ),
     );
