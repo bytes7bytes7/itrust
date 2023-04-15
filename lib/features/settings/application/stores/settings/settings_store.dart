@@ -25,13 +25,7 @@ abstract class _SettingsStore extends SyncStore with Store {
         _settingsCoordinator = settingsCoordinator,
         _settingsStringProvider = settingsStringProvider,
         _accountService = accountService,
-        _mapster = mapster {
-    _meSub = _accountService.onMeChanged.listen((meOrNull) {
-      if (meOrNull != null) {
-        _me = _mapster.map1(meOrNull, To<EndUserVM>());
-      }
-    });
-  }
+        _mapster = mapster;
 
   final AuthService _authService;
   final AccountService _accountService;
@@ -39,6 +33,7 @@ abstract class _SettingsStore extends SyncStore with Store {
   final SettingsStringProvider _settingsStringProvider;
   final Mapster _mapster;
   StreamSubscription? _meSub;
+  var _isInitialized = false;
 
   void dispose() {
     _meSub?.cancel();
@@ -52,6 +47,23 @@ abstract class _SettingsStore extends SyncStore with Store {
 
   @readonly
   EndUserVM? _me;
+
+  @action
+  void init() {
+    if (!_isInitialized) {
+      if (_accountService.me == null) {
+        _error = _settingsStringProvider.canNotLoadMyself;
+      }
+
+      _meSub = _accountService.onMeChanged.listen((meOrNull) {
+        if (meOrNull != null) {
+          _me = _mapster.map1(meOrNull, To<EndUserVM>());
+        }
+      });
+
+      _isInitialized = true;
+    }
+  }
 
   @action
   void logOut() {

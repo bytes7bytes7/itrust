@@ -149,9 +149,12 @@ abstract class _CommentReplyStore extends SyncStore with Store {
           }
 
           _canLoadMore = false;
-          doAfterDelay(() {
-            _canLoadMore = true;
-          });
+
+          if (newReplies.isNotEmpty) {
+            doAfterDelay(() {
+              _canLoadMore = true;
+            });
+          }
 
           _replies = List.of(_replies)..addAll(newReplies);
         } catch (e) {

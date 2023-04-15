@@ -138,9 +138,12 @@ abstract class _PostCommentStore extends SyncStore with Store {
           }
 
           _canLoadMore = false;
-          doAfterDelay(() {
-            _canLoadMore = true;
-          });
+
+          if (newComments.isNotEmpty) {
+            doAfterDelay(() {
+              _canLoadMore = true;
+            });
+          }
 
           _comments = List.of(_comments)..addAll(newComments);
         } catch (e) {

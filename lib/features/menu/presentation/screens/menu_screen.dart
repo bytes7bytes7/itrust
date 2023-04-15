@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../utils/hooks/reaction.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/menu/menu_store.dart';
 
@@ -28,6 +29,17 @@ class MenuScreen extends HookWidget {
         return null;
       },
       [_loadMeKey],
+    );
+
+    useReaction<String>(
+      (_) => menuStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
     );
 
     return Scaffold(
@@ -85,15 +97,27 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
+        if (menuStore.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        final myID = menuStore.myID;
+
+        if (myID == null) {
+          return const LoadingErrorContainer(
+            onRetry: null,
+          );
+        }
+
         return SingleChildScrollView(
           child: Column(
             children: [
               OptionButton(
                 iconPath: Assets.image.svg.person.path,
                 title: l10n.friends_btn,
-                onPressed: () =>
-                    // TODO: refactor
-                    menuStore.onFriendsButtonPressed(menuStore.myID ?? ''),
+                onPressed: () => menuStore.onFriendsButtonPressed(myID),
               ),
             ],
           ),

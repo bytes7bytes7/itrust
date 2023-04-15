@@ -90,5 +90,6 @@
   "friends_btn": "Friends",
   "friends_screen_title": "Friends",
   "can_not_load_friends": "Can not load friends. Try again later.",
-  "you_have_no_friends": "You do not have friends. Go and make some!"
+  "you_have_no_friends": "You do not have friends. Go and make some!",
+  "can_not_load_myself": "Can not load information about your account."
 }

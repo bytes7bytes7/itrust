@@ -13,3 +13,4 @@ export 'new_chat/new_chat.dart';
 export 'notifications/notifications.dart';
 export 'post/post.dart';
 export 'settings/settings.dart';
+export 'user_wall/user_wall.dart';

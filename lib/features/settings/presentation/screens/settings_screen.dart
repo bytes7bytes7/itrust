@@ -20,7 +20,8 @@ class SettingsScreen extends HookWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final settingsStore = useMemoized(() => _getIt.get<SettingsStore>());
+    final settingsStore =
+        useMemoized(() => _getIt.get<SettingsStore>()..init());
 
     useReaction<String>(
       (_) => settingsStore.error,
@@ -88,16 +89,21 @@ class _Body extends StatelessWidget {
       builder: (context) {
         final me = settingsStore.me;
 
+        if (me == null) {
+          return const LoadingErrorContainer(
+            onRetry: null,
+          );
+        }
+
         return SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (me != null)
-                UserInfoCard(
-                  id: me.id,
-                  name: me.name,
-                  avatarUrl: me.avatarUrl,
-                ),
+              UserInfoCard(
+                id: me.id,
+                name: me.name,
+                avatarUrl: me.avatarUrl,
+              ),
               OptionButton(
                 iconPath: Assets.image.svg.person.path,
                 title: l10n.account_btn_title,

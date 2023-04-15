@@ -51,6 +51,7 @@ class FriendsScreen extends HookWidget {
     return Scaffold(
       appBar: _AppBar(
         l10n: l10n,
+        friendsStore: friendsStore,
       ),
       body: _Body(
         l10n: l10n,
@@ -64,9 +65,11 @@ class FriendsScreen extends HookWidget {
 class _AppBar extends StatelessWidget with PreferredSizeWidget {
   const _AppBar({
     required this.l10n,
+    required this.friendsStore,
   });
 
   final AppLocalizations l10n;
+  final FriendsStore friendsStore;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -80,7 +83,7 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
       ),
       leading: FilledIconButton(
         iconPath: Assets.image.svg.arrowBack.path,
-        onPressed: () {},
+        onPressed: friendsStore.onBackButtonPressed,
       ),
       actions: [
         FilledIconButton(
@@ -159,6 +162,7 @@ class _Body extends StatelessWidget {
 
               return UserListTile(
                 user: friend,
+                onPressed: () => friendsStore.onUserPressed(friend.id),
               );
             },
           ),

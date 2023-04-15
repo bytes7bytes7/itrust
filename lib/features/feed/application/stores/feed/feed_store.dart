@@ -150,9 +150,12 @@ abstract class _FeedStore extends SyncStore with Store {
             }
 
             _canLoadMore = false;
-            doAfterDelay(() {
-              _canLoadMore = true;
-            });
+
+            if (newPosts.isNotEmpty) {
+              doAfterDelay(() {
+                _canLoadMore = true;
+              });
+            }
 
             _posts = List.of(_posts)..addAll(newPosts);
           }

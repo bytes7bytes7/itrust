@@ -12,7 +12,7 @@ class LoadingErrorContainer extends StatelessWidget {
     required this.onRetry,
   });
 
-  final VoidCallback onRetry;
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,10 @@ class LoadingErrorContainer extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const Spacer(),
-          RetryButton(
-            onPressed: onRetry,
-          ),
+          if (onRetry != null)
+            RetryButton(
+              onPressed: onRetry,
+            ),
         ],
       ),
     );

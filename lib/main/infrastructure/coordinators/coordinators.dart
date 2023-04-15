@@ -4,6 +4,7 @@ export 'comment_coordinator.dart';
 export 'coordinator.dart';
 export 'devices_coordinator.dart';
 export 'feed_coordinator.dart';
+export 'friends_coordinator.dart';
 export 'home_coordinator.dart';
 export 'log_in_coordinator.dart';
 export 'menu_coordinator.dart';

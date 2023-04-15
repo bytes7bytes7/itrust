@@ -65,6 +65,7 @@ class ChatListTile extends StatelessWidget {
     // TODO: implement
     final unreadAmount = '${chat.unreadAmount}';
 
+    // TODO: use ListTile instead
     return Material(
       color: colorSchemeTX.chatCard,
       child: InkWell(

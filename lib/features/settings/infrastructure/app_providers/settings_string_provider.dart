@@ -12,5 +12,8 @@ class ProdSettingsStringProvider extends L10nProvider
   String get serverNotAvailable => l10n.server_not_available;
 
   @override
+  String get canNotLoadMyself => l10n.can_not_load_myself;
+
+  @override
   String get unknownError => l10n.unknown_error;
 }

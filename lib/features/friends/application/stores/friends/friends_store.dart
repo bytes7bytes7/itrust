@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../common/application/application.dart';
 import '../../../../common/domain/value_objects/value_objects.dart';
 import '../../../domain/services/friends_service.dart';
+import '../../coordinators/friends_coordinator.dart';
 import '../../providers/friends_string_provider.dart';
 
 part 'friends_store.g.dart';
@@ -17,13 +18,16 @@ abstract class _FriendsStore extends SyncStore with Store {
   _FriendsStore({
     required FriendsService friendsService,
     required FriendsStringProvider friendsStringProvider,
+    required FriendsCoordinator coordinator,
     required Mapster mapster,
   })  : _friendsService = friendsService,
         _friendsStringProvider = friendsStringProvider,
+        _coordinator = coordinator,
         _mapster = mapster;
 
   final FriendsService _friendsService;
   final FriendsStringProvider _friendsStringProvider;
+  final FriendsCoordinator _coordinator;
   final Mapster _mapster;
   var _isInitialized = false;
 
@@ -113,9 +117,12 @@ abstract class _FriendsStore extends SyncStore with Store {
           }
 
           _canLoadMore = false;
-          doAfterDelay(() {
-            _canLoadMore = true;
-          });
+
+          if (newFriends.isNotEmpty) {
+            doAfterDelay(() {
+              _canLoadMore = true;
+            });
+          }
 
           _friends = List.of(_friends)..addAll(newFriends);
         } catch (e) {
@@ -130,5 +137,13 @@ abstract class _FriendsStore extends SyncStore with Store {
       setIsLoading: (v) => _isLoadingMore = v,
       removeError: () => _error = '',
     );
+  }
+
+  void onBackButtonPressed() {
+    _coordinator.onBackButtonPressed();
+  }
+
+  void onUserPressed(String userID) {
+    _coordinator.onUserPressed(userID);
   }
 }

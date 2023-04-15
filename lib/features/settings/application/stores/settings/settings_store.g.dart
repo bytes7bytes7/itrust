@@ -66,6 +66,17 @@ mixin _$SettingsStore on _SettingsStore, Store {
       ActionController(name: '_SettingsStore', context: context);
 
   @override
+  void init() {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(
+        name: '_SettingsStore.init');
+    try {
+      return super.init();
+    } finally {
+      _$_SettingsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void logOut() {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(
         name: '_SettingsStore.logOut');

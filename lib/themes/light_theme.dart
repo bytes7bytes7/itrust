@@ -58,6 +58,12 @@ final lightTheme = ThemeData.light().copyWith(
       },
     ),
   ),
+  listTileTheme: const ListTileThemeData(
+    contentPadding: EdgeInsets.symmetric(
+      horizontal: 20,
+      vertical: 10,
+    ),
+  ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       padding: const MaterialStatePropertyAll(
