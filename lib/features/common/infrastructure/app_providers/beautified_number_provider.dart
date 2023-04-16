@@ -18,12 +18,16 @@ class ProdBeautifiedNumberProvider implements BeautifiedNumberProvider {
   final SuffixNumberProvider _suffixNumberProvider;
 
   @override
-  String beautify(int n) {
+  String beautify(int n, {bool showZero = true}) {
     var str = '';
     var suffix = '';
 
     if (n <= 0) {
-      return '0';
+      if (showZero) {
+        return '0';
+      }
+
+      return '';
     }
 
     if (n >= _million) {

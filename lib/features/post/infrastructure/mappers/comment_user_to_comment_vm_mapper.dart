@@ -52,11 +52,14 @@ class CommentUserToCommentVMMapper
       ),
       avatarUrl: _user.avatarUrls.firstOrNull,
       likedByMe: _comment.likedByMe,
-      likesAmountWithoutMyLike:
-          _beautifiedNumberProvider.beautify(likesAmountWithoutMyLike),
-      likesAmountWithMyLike:
-          _beautifiedNumberProvider.beautify(likesAmountWithMyLike),
-      repliesAmount: _beautifiedNumberProvider.beautify(_comment.repliesAmount),
+      likesAmountWithoutMyLike: _beautifiedNumberProvider
+          .beautify(likesAmountWithoutMyLike, showZero: false),
+      likesAmountWithMyLike: _beautifiedNumberProvider
+          .beautify(likesAmountWithMyLike, showZero: false),
+      repliesAmount: _beautifiedNumberProvider.beautify(
+        _comment.repliesAmount,
+        showZero: false,
+      ),
       replyTo: _comment.replyTo?.str,
     );
   }

@@ -39,11 +39,14 @@ class PostEndUserToPostVMMapper
       createdAt: _formattedDateProvider.inRelationToNow(_post.createdAt),
       media: _post.media.map((e) => _mapster.map1(e, To<MediaVM>())).toList(),
       likedByMe: _post.likedByMe,
-      likesAmountWithoutMyLike:
-          _beautifiedNumberProvider.beautify(likesAmountWithoutMyLike),
-      likesAmountWithMyLike:
-          _beautifiedNumberProvider.beautify(likesAmountWithMyLike),
-      commentsAmount: _beautifiedNumberProvider.beautify(_post.commentsAmount),
+      likesAmountWithoutMyLike: _beautifiedNumberProvider
+          .beautify(likesAmountWithoutMyLike, showZero: false),
+      likesAmountWithMyLike: _beautifiedNumberProvider
+          .beautify(likesAmountWithMyLike, showZero: false),
+      commentsAmount: _beautifiedNumberProvider.beautify(
+        _post.commentsAmount,
+        showZero: false,
+      ),
       tags: _post.tags,
     );
   }
