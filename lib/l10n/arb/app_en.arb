@@ -102,8 +102,16 @@
   "remove_friend_btn": "Remove friend",
   "remove_subscriber_btn": "Remove subscriber",
   "accept_friend_bid_btn": "Accept request",
+  "unsubscribe_btn": "Unsubscribe",
   "decline_friend_bid_btn": "Decline request",
   "can_not_load_user": "Can not load user. Try again later.",
   "user_does_not_have_posts": "No posts here",
-  "my_profile_btn": "My profile"
+  "my_profile_btn": "My profile",
+  "can_not_send_friend_bid": "Can not send friend request.",
+  "can_not_cancel_friend_bid": "Can not cancel friend request.",
+  "can_not_remove_friend": "Can not remove friend.",
+  "can_not_remove_subscriber": "Can not remove subscriber.",
+  "can_not_accept_friend_bid": "Can not accept friend request.",
+  "can_not_unsubscribe": "Can not unsubscribe.",
+  "can_not_decline_friend_bid": "Can not decline friend request."
 }

@@ -15,69 +15,76 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   bool get hasError => (_$hasErrorComputed ??=
           Computed<bool>(() => super.hasError, name: '_UserInfoStore.hasError'))
       .value;
-  Computed<bool>? _$showActionsComputed;
+  Computed<bool>? _$showActionBtnsComputed;
 
   @override
-  bool get showActions =>
-      (_$showActionsComputed ??= Computed<bool>(() => super.showActions,
-              name: '_UserInfoStore.showActions'))
+  bool get showActionBtns =>
+      (_$showActionBtnsComputed ??= Computed<bool>(() => super.showActionBtns,
+              name: '_UserInfoStore.showActionBtns'))
           .value;
-  Computed<bool>? _$showAddFriendComputed;
+  Computed<bool>? _$showAddFriendBtnComputed;
 
   @override
-  bool get showAddFriend =>
-      (_$showAddFriendComputed ??= Computed<bool>(() => super.showAddFriend,
-              name: '_UserInfoStore.showAddFriend'))
+  bool get showAddFriendBtn => (_$showAddFriendBtnComputed ??= Computed<bool>(
+          () => super.showAddFriendBtn,
+          name: '_UserInfoStore.showAddFriendBtn'))
+      .value;
+  Computed<bool>? _$showCancelRequestBtnComputed;
+
+  @override
+  bool get showCancelRequestBtn => (_$showCancelRequestBtnComputed ??=
+          Computed<bool>(() => super.showCancelRequestBtn,
+              name: '_UserInfoStore.showCancelRequestBtn'))
+      .value;
+  Computed<bool>? _$showRemoveFriendBtnComputed;
+
+  @override
+  bool get showRemoveFriendBtn => (_$showRemoveFriendBtnComputed ??=
+          Computed<bool>(() => super.showRemoveFriendBtn,
+              name: '_UserInfoStore.showRemoveFriendBtn'))
+      .value;
+  Computed<bool>? _$showRemoveSubscriberBtnComputed;
+
+  @override
+  bool get showRemoveSubscriberBtn => (_$showRemoveSubscriberBtnComputed ??=
+          Computed<bool>(() => super.showRemoveSubscriberBtn,
+              name: '_UserInfoStore.showRemoveSubscriberBtn'))
+      .value;
+  Computed<bool>? _$showAcceptRequestBtnComputed;
+
+  @override
+  bool get showAcceptRequestBtn => (_$showAcceptRequestBtnComputed ??=
+          Computed<bool>(() => super.showAcceptRequestBtn,
+              name: '_UserInfoStore.showAcceptRequestBtn'))
+      .value;
+  Computed<bool>? _$showUnsubscribeBtnComputed;
+
+  @override
+  bool get showUnsubscribeBtn => (_$showUnsubscribeBtnComputed ??=
+          Computed<bool>(() => super.showUnsubscribeBtn,
+              name: '_UserInfoStore.showUnsubscribeBtn'))
+      .value;
+  Computed<bool>? _$showMessageBtnComputed;
+
+  @override
+  bool get showMessageBtn =>
+      (_$showMessageBtnComputed ??= Computed<bool>(() => super.showMessageBtn,
+              name: '_UserInfoStore.showMessageBtn'))
           .value;
-  Computed<bool>? _$showCancelRequestComputed;
+  Computed<bool>? _$showDeclineRequestBtnComputed;
 
   @override
-  bool get showCancelRequest => (_$showCancelRequestComputed ??= Computed<bool>(
-          () => super.showCancelRequest,
-          name: '_UserInfoStore.showCancelRequest'))
+  bool get showDeclineRequestBtn => (_$showDeclineRequestBtnComputed ??=
+          Computed<bool>(() => super.showDeclineRequestBtn,
+              name: '_UserInfoStore.showDeclineRequestBtn'))
       .value;
-  Computed<bool>? _$showRemoveFriendComputed;
+  Computed<bool>? _$canMessageBtnBePressedComputed;
 
   @override
-  bool get showRemoveFriend => (_$showRemoveFriendComputed ??= Computed<bool>(
-          () => super.showRemoveFriend,
-          name: '_UserInfoStore.showRemoveFriend'))
+  bool get canMessageBtnBePressed => (_$canMessageBtnBePressedComputed ??=
+          Computed<bool>(() => super.canMessageBtnBePressed,
+              name: '_UserInfoStore.canMessageBtnBePressed'))
       .value;
-  Computed<bool>? _$showRemoveSubscriberComputed;
-
-  @override
-  bool get showRemoveSubscriber => (_$showRemoveSubscriberComputed ??=
-          Computed<bool>(() => super.showRemoveSubscriber,
-              name: '_UserInfoStore.showRemoveSubscriber'))
-      .value;
-  Computed<bool>? _$showAcceptRequestComputed;
-
-  @override
-  bool get showAcceptRequest => (_$showAcceptRequestComputed ??= Computed<bool>(
-          () => super.showAcceptRequest,
-          name: '_UserInfoStore.showAcceptRequest'))
-      .value;
-  Computed<bool>? _$showOpenChatComputed;
-
-  @override
-  bool get showOpenChat =>
-      (_$showOpenChatComputed ??= Computed<bool>(() => super.showOpenChat,
-              name: '_UserInfoStore.showOpenChat'))
-          .value;
-  Computed<bool>? _$showDeclineRequestComputed;
-
-  @override
-  bool get showDeclineRequest => (_$showDeclineRequestComputed ??=
-          Computed<bool>(() => super.showDeclineRequest,
-              name: '_UserInfoStore.showDeclineRequest'))
-      .value;
-  Computed<bool>? _$canIOpenChatComputed;
-
-  @override
-  bool get canIOpenChat =>
-      (_$canIOpenChatComputed ??= Computed<bool>(() => super.canIOpenChat,
-              name: '_UserInfoStore.canIOpenChat'))
-          .value;
 
   late final _$_isLoadingAtom =
       Atom(name: '_UserInfoStore._isLoading', context: context);
@@ -168,6 +175,24 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
     });
   }
 
+  late final _$_isActionLoadingAtom =
+      Atom(name: '_UserInfoStore._isActionLoading', context: context);
+
+  bool get isActionLoading {
+    _$_isActionLoadingAtom.reportRead();
+    return super._isActionLoading;
+  }
+
+  @override
+  bool get _isActionLoading => isActionLoading;
+
+  @override
+  set _isActionLoading(bool value) {
+    _$_isActionLoadingAtom.reportWrite(value, super._isActionLoading, () {
+      super._isActionLoading = value;
+    });
+  }
+
   late final _$_UserInfoStoreActionController =
       ActionController(name: '_UserInfoStore', context: context);
 
@@ -194,18 +219,96 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
   }
 
   @override
+  void sendFriendBid() {
+    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
+        name: '_UserInfoStore.sendFriendBid');
+    try {
+      return super.sendFriendBid();
+    } finally {
+      _$_UserInfoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void cancelFriendBid() {
+    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
+        name: '_UserInfoStore.cancelFriendBid');
+    try {
+      return super.cancelFriendBid();
+    } finally {
+      _$_UserInfoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeFriend() {
+    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
+        name: '_UserInfoStore.removeFriend');
+    try {
+      return super.removeFriend();
+    } finally {
+      _$_UserInfoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeSubscriber() {
+    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
+        name: '_UserInfoStore.removeSubscriber');
+    try {
+      return super.removeSubscriber();
+    } finally {
+      _$_UserInfoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void acceptFriendBid() {
+    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
+        name: '_UserInfoStore.acceptFriendBid');
+    try {
+      return super.acceptFriendBid();
+    } finally {
+      _$_UserInfoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void declineFriendBid() {
+    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
+        name: '_UserInfoStore.declineFriendBid');
+    try {
+      return super.declineFriendBid();
+    } finally {
+      _$_UserInfoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void unsubscribe() {
+    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
+        name: '_UserInfoStore.unsubscribe');
+    try {
+      return super.unsubscribe();
+    } finally {
+      _$_UserInfoStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 hasError: ${hasError},
-showActions: ${showActions},
-showAddFriend: ${showAddFriend},
-showCancelRequest: ${showCancelRequest},
-showRemoveFriend: ${showRemoveFriend},
-showRemoveSubscriber: ${showRemoveSubscriber},
-showAcceptRequest: ${showAcceptRequest},
-showOpenChat: ${showOpenChat},
-showDeclineRequest: ${showDeclineRequest},
-canIOpenChat: ${canIOpenChat}
+showActionBtns: ${showActionBtns},
+showAddFriendBtn: ${showAddFriendBtn},
+showCancelRequestBtn: ${showCancelRequestBtn},
+showRemoveFriendBtn: ${showRemoveFriendBtn},
+showRemoveSubscriberBtn: ${showRemoveSubscriberBtn},
+showAcceptRequestBtn: ${showAcceptRequestBtn},
+showUnsubscribeBtn: ${showUnsubscribeBtn},
+showMessageBtn: ${showMessageBtn},
+showDeclineRequestBtn: ${showDeclineRequestBtn},
+canMessageBtnBePressed: ${canMessageBtnBePressed}
     ''';
   }
 }

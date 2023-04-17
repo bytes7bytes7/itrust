@@ -31,6 +31,43 @@ abstract class ProdUserInfoProvider implements UserInfoProvider {
   @override
   @GET('/info')
   Future<JsonEitherWrapper<ProblemDetails, UserInfoResponse>> getInfo({
-    @Query('aboutUserID') required String aboutUserID,
+    @Query('userID') required String userID,
+  });
+
+  @override
+  @POST('/friend_bid')
+  Future<JsonEitherWrapper<ProblemDetails, UserInfoResponse>> sendFriendBid({
+    @Body() required UserActionRequest request,
+  });
+
+  @override
+  @POST('/cancel_friend_bid')
+  Future<JsonEitherWrapper<ProblemDetails, UserInfoResponse>> cancelFriendBid({
+    @Body() required UserActionRequest request,
+  });
+
+  @override
+  @POST('/remove_friend')
+  Future<JsonEitherWrapper<ProblemDetails, UserInfoResponse>> removeFriend({
+    @Body() required UserActionRequest request,
+  });
+
+  @override
+  @POST('/remove_subscriber')
+  Future<JsonEitherWrapper<ProblemDetails, UserInfoResponse>> removeSubscriber({
+    @Body() required UserActionRequest request,
+  });
+
+  @override
+  @POST('/respond_friend_bid')
+  Future<JsonEitherWrapper<ProblemDetails, UserInfoResponse>>
+      responseFriendBid({
+    @Body() required RespondFriendBidRequest request,
+  });
+
+  @override
+  @POST('/unsubscribe')
+  Future<JsonEitherWrapper<ProblemDetails, UserInfoResponse>> unsubscribe({
+    @Body() required UserActionRequest request,
   });
 }

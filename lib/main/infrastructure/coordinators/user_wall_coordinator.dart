@@ -37,4 +37,9 @@ class ProdUserWallCoordinator extends Coordinator
   void onCommentButtonPressed({required String postID}) {
     PostRoute(id: postID).push(goRouter);
   }
+
+  @override
+  void onMessageButtonPressed({required String userID}) {
+    // TODO: implement onMessageButtonPressed
+  }
 }

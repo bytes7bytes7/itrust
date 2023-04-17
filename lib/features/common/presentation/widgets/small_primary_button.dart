@@ -5,11 +5,11 @@ import '../../../../themes/extensions/button_style_tx.dart';
 class SmallPrimaryButton extends StatelessWidget {
   const SmallPrimaryButton({
     super.key,
-    required this.text,
+    required this.child,
     this.onPressed,
   });
 
-  final String text;
+  final Widget child;
   final VoidCallback? onPressed;
 
   @override
@@ -20,9 +20,7 @@ class SmallPrimaryButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: buttonStyleTX.smallPrimary,
-      child: Text(
-        text,
-      ),
+      child: child,
     );
   }
 }

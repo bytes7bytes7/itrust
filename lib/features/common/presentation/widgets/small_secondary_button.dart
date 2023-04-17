@@ -5,11 +5,11 @@ import '../../../../themes/extensions/button_style_tx.dart';
 class SmallSecondaryButton extends StatelessWidget {
   const SmallSecondaryButton({
     super.key,
-    required this.text,
+    required this.child,
     this.onPressed,
   });
 
-  final String text;
+  final Widget child;
   final VoidCallback? onPressed;
 
   @override
@@ -20,9 +20,7 @@ class SmallSecondaryButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: onPressed,
       style: buttonStyleTX.smallSecondary,
-      child: Text(
-        text,
-      ),
+      child: child,
     );
   }
 }

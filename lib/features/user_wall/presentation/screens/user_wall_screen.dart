@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../themes/themes.dart';
 import '../../../../utils/hooks/reaction.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/user_info/user_info_store.dart';
@@ -289,7 +290,7 @@ class _UserInfoContainer extends StatelessWidget {
             name: userInfo.user.name,
             avatarUrl: userInfo.user.avatarUrl,
           ),
-          if (userInfoStore.showActions)
+          if (userInfoStore.showActionBtns)
             _Actions(
               l10n: l10n,
               userInfoStore: userInfoStore,
@@ -317,65 +318,146 @@ class _Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10,
-      ),
-      child: Row(
-        children: [
-          if (userInfoStore.showAddFriend)
-            Expanded(
-              child: SmallPrimaryButton(
-                text: l10n.send_friend_bid_btn,
-                onPressed: () {},
-              ),
-            ),
-          if (userInfoStore.showCancelRequest)
-            Expanded(
-              child: SmallSecondaryButton(
-                text: l10n.cancel_friend_bid_btn,
-                onPressed: () {},
-              ),
-            ),
-          if (userInfoStore.showRemoveFriend)
-            Expanded(
-              child: SmallSecondaryButton(
-                text: l10n.remove_friend_btn,
-                onPressed: () {},
-              ),
-            ),
-          if (userInfoStore.showRemoveSubscriber)
-            Expanded(
-              child: SmallSecondaryButton(
-                text: l10n.remove_subscriber_btn,
-                onPressed: () {},
-              ),
-            ),
-          if (userInfoStore.showAcceptRequest)
-            Expanded(
-              child: SmallSecondaryButton(
-                text: l10n.accept_friend_bid_btn,
-                onPressed: () {},
-              ),
-            ),
-          const SizedBox(
-            width: 20,
+    final theme = Theme.of(context);
+
+    return Observer(
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
           ),
-          if (userInfoStore.showOpenChat)
-            Expanded(
-              child: SmallPrimaryButton(
-                text: l10n.open_chat_btn,
-                onPressed: userInfoStore.canIOpenChat ? () {} : null,
+          child: Row(
+            children: [
+              if (userInfoStore.showAddFriendBtn)
+                Expanded(
+                  child: SmallPrimaryButton(
+                    onPressed: userInfoStore.sendFriendBid,
+                    child: userInfoStore.isActionLoading
+                        ? _ActionPrimaryLoadingIndicator(theme: theme)
+                        : Text(l10n.send_friend_bid_btn),
+                  ),
+                ),
+              if (userInfoStore.showCancelRequestBtn)
+                Expanded(
+                  child: SmallSecondaryButton(
+                    onPressed: userInfoStore.cancelFriendBid,
+                    child: userInfoStore.isActionLoading
+                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        : Text(l10n.cancel_friend_bid_btn),
+                  ),
+                ),
+              if (userInfoStore.showRemoveFriendBtn)
+                Expanded(
+                  child: SmallSecondaryButton(
+                    onPressed: userInfoStore.removeFriend,
+                    child: userInfoStore.isActionLoading
+                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        : Text(l10n.remove_friend_btn),
+                  ),
+                ),
+              if (userInfoStore.showRemoveSubscriberBtn)
+                Expanded(
+                  child: SmallSecondaryButton(
+                    onPressed: userInfoStore.removeSubscriber,
+                    child: userInfoStore.isActionLoading
+                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        : Text(l10n.remove_subscriber_btn),
+                  ),
+                ),
+              if (userInfoStore.showAcceptRequestBtn)
+                Expanded(
+                  child: SmallSecondaryButton(
+                    onPressed: userInfoStore.acceptFriendBid,
+                    child: userInfoStore.isActionLoading
+                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        : Text(l10n.accept_friend_bid_btn),
+                  ),
+                ),
+              if (userInfoStore.showUnsubscribeBtn)
+                Expanded(
+                  child: SmallSecondaryButton(
+                    onPressed: userInfoStore.unsubscribe,
+                    child: userInfoStore.isActionLoading
+                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        : Text(l10n.unsubscribe_btn),
+                  ),
+                ),
+              const SizedBox(
+                width: 20,
               ),
-            ),
-          if (userInfoStore.showDeclineRequest)
-            Expanded(
-              child: SmallSecondaryButton(
-                text: l10n.decline_friend_bid_btn,
-                onPressed: () {},
-              ),
-            ),
-        ],
+              if (userInfoStore.showMessageBtn)
+                Expanded(
+                  child: SmallPrimaryButton(
+                    onPressed: userInfoStore.canMessageBtnBePressed
+                        ? userInfoStore.onMessageButtonPressed
+                        : null,
+                    child: userInfoStore.isActionLoading
+                        ? _ActionPrimaryLoadingIndicator(theme: theme)
+                        : Text(l10n.open_chat_btn),
+                  ),
+                ),
+              if (userInfoStore.showDeclineRequestBtn)
+                Expanded(
+                  child: SmallSecondaryButton(
+                    onPressed: userInfoStore.declineFriendBid,
+                    child: userInfoStore.isActionLoading
+                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        : Text(l10n.decline_friend_bid_btn),
+                  ),
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _ActionPrimaryLoadingIndicator extends StatelessWidget {
+  const _ActionPrimaryLoadingIndicator({
+    required this.theme,
+  });
+
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
+    final style = buttonStyleTX.smallPrimary;
+
+    final size = style.textStyle?.resolve({MaterialState.focused})?.fontSize;
+
+    return SizedBox(
+      height: size,
+      width: size,
+      child: CircularProgressIndicator(
+        color: style.foregroundColor?.resolve({MaterialState.focused}),
+        strokeWidth: 2,
+      ),
+    );
+  }
+}
+
+class _ActionSecondaryLoadingIndicator extends StatelessWidget {
+  const _ActionSecondaryLoadingIndicator({
+    required this.theme,
+  });
+
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
+    final style = buttonStyleTX.smallSecondary;
+
+    final size = style.textStyle?.resolve({MaterialState.focused})?.fontSize;
+
+    return SizedBox(
+      height: size,
+      width: size,
+      child: CircularProgressIndicator(
+        color: style.foregroundColor?.resolve({MaterialState.focused}),
+        strokeWidth: 2,
       ),
     );
   }

@@ -52,15 +52,18 @@ abstract class _UserInfoStore extends SyncStore with Store {
   @readonly
   UserInfoVM? _userInfo;
 
+  @readonly
+  bool _isActionLoading = false;
+
   @computed
   bool get hasError => _error.isNotEmpty;
 
   @computed
-  bool get showActions => _myID != _userID;
+  bool get showActionBtns => _myID != _userID;
 
   @computed
-  bool get showAddFriend {
-    if (!showActions) {
+  bool get showAddFriendBtn {
+    if (!showActionBtns) {
       return false;
     }
 
@@ -90,8 +93,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @computed
-  bool get showCancelRequest {
-    if (!showActions) {
+  bool get showCancelRequestBtn {
+    if (!showActionBtns) {
       return false;
     }
 
@@ -109,8 +112,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @computed
-  bool get showRemoveFriend {
-    if (!showActions) {
+  bool get showRemoveFriendBtn {
+    if (!showActionBtns) {
       return false;
     }
 
@@ -128,8 +131,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @computed
-  bool get showRemoveSubscriber {
-    if (!showActions) {
+  bool get showRemoveSubscriberBtn {
+    if (!showActionBtns) {
       return false;
     }
 
@@ -147,8 +150,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @computed
-  bool get showAcceptRequest {
-    if (!showActions) {
+  bool get showAcceptRequestBtn {
+    if (!showActionBtns) {
       return false;
     }
 
@@ -166,8 +169,27 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @computed
-  bool get showOpenChat {
-    if (!showActions) {
+  bool get showUnsubscribeBtn {
+    if (!showActionBtns) {
+      return false;
+    }
+
+    final userInfo = _userInfo;
+
+    if (userInfo == null) {
+      return false;
+    }
+
+    if (userInfo is! EndUserInfoVM) {
+      return false;
+    }
+
+    return userInfo.amISubscriber;
+  }
+
+  @computed
+  bool get showMessageBtn {
+    if (!showActionBtns) {
       return false;
     }
 
@@ -185,8 +207,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @computed
-  bool get showDeclineRequest {
-    if (!showActions) {
+  bool get showDeclineRequestBtn {
+    if (!showActionBtns) {
       return false;
     }
 
@@ -204,8 +226,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @computed
-  bool get canIOpenChat {
-    if (!showOpenChat) {
+  bool get canMessageBtnBePressed {
+    if (!showMessageBtn) {
       return false;
     }
 
@@ -264,8 +286,186 @@ abstract class _UserInfoStore extends SyncStore with Store {
     userPostsStore.refresh();
   }
 
+  @action
+  void sendFriendBid() {
+    perform(
+      () async {
+        try {
+          final userID = _userID;
+
+          if (userID == null) {
+            return;
+          }
+
+          final userInfo =
+              await _userInfoService.sendFriendBid(UserID.fromString(userID));
+
+          _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
+        } catch (e) {
+          _error = _userInfoStringProvider.canNotSendFriendBid;
+        }
+      },
+      setIsLoading: (v) => _isActionLoading = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void cancelFriendBid() {
+    perform(
+      () async {
+        try {
+          final userID = _userID;
+
+          if (userID == null) {
+            return;
+          }
+
+          final userInfo =
+              await _userInfoService.cancelFriendBid(UserID.fromString(userID));
+
+          _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
+        } catch (e) {
+          _error = _userInfoStringProvider.canNotSendFriendBid;
+        }
+      },
+      setIsLoading: (v) => _isActionLoading = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void removeFriend() {
+    perform(
+      () async {
+        try {
+          final userID = _userID;
+
+          if (userID == null) {
+            return;
+          }
+
+          final userInfo =
+              await _userInfoService.removeFriend(UserID.fromString(userID));
+
+          _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
+        } catch (e) {
+          _error = _userInfoStringProvider.canNotSendFriendBid;
+        }
+      },
+      setIsLoading: (v) => _isActionLoading = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void removeSubscriber() {
+    perform(
+      () async {
+        try {
+          final userID = _userID;
+
+          if (userID == null) {
+            return;
+          }
+
+          final userInfo = await _userInfoService
+              .removeSubscriber(UserID.fromString(userID));
+
+          _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
+        } catch (e) {
+          _error = _userInfoStringProvider.canNotSendFriendBid;
+        }
+      },
+      setIsLoading: (v) => _isActionLoading = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void acceptFriendBid() {
+    perform(
+      () async {
+        try {
+          final userID = _userID;
+
+          if (userID == null) {
+            return;
+          }
+
+          final userInfo =
+              await _userInfoService.acceptFriendBid(UserID.fromString(userID));
+
+          _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
+        } catch (e) {
+          _error = _userInfoStringProvider.canNotSendFriendBid;
+        }
+      },
+      setIsLoading: (v) => _isActionLoading = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void declineFriendBid() {
+    perform(
+      () async {
+        try {
+          final userID = _userID;
+
+          if (userID == null) {
+            return;
+          }
+
+          final userInfo =
+              await _userInfoService.acceptFriendBid(UserID.fromString(userID));
+
+          _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
+        } catch (e) {
+          _error = _userInfoStringProvider.canNotSendFriendBid;
+        }
+      },
+      setIsLoading: (v) => _isActionLoading = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void unsubscribe() {
+    perform(
+      () async {
+        try {
+          final userID = _userID;
+
+          if (userID == null) {
+            return;
+          }
+
+          final userInfo =
+              await _userInfoService.unsubscribe(UserID.fromString(userID));
+
+          _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
+        } catch (e) {
+          _error = _userInfoStringProvider.canNotSendFriendBid;
+        }
+      },
+      setIsLoading: (v) => _isActionLoading = v,
+      removeError: () => _error = '',
+    );
+  }
+
   void onBackButtonPressed() {
     _coordinator.onBackButtonPressed();
+  }
+
+  void onMessageButtonPressed() {
+    final userID = _userID;
+
+    if (userID == null) {
+      return;
+    }
+
+    _coordinator.onMessageButtonPressed(userID: userID);
   }
 
   void onFriendsPressed() {
