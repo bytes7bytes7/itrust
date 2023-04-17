@@ -12,4 +12,6 @@ abstract class UserInfoStringProvider {
   String get canNotAcceptFriendBid;
 
   String get canNotDeclineFriendBid;
+
+  String get canNotUnsubscribe;
 }

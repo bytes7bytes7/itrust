@@ -124,7 +124,7 @@ class _Body extends StatelessWidget {
 
         final userInfo = userInfoStore.userInfo;
 
-        if (userInfoStore.hasError || userInfo == null) {
+        if (userInfo == null) {
           return LoadingErrorContainer(
             onRetry: userInfoStore.refresh,
           );

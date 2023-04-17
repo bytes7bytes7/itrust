@@ -28,4 +28,7 @@ class ProdUserInfoStringProvider extends L10nProvider
 
   @override
   String get canNotDeclineFriendBid => l10n.can_not_decline_friend_bid;
+
+  @override
+  String get canNotUnsubscribe => l10n.can_not_unsubscribe;
 }

@@ -56,9 +56,6 @@ abstract class _UserInfoStore extends SyncStore with Store {
   bool _isActionLoading = false;
 
   @computed
-  bool get hasError => _error.isNotEmpty;
-
-  @computed
   bool get showActionBtns => _myID != _userID;
 
   @computed
@@ -86,6 +83,14 @@ abstract class _UserInfoStore extends SyncStore with Store {
     }
 
     if (userInfo.amISubscriber) {
+      return false;
+    }
+
+    if (userInfo.areTheySubscribedToMe) {
+      return false;
+    }
+
+    if (userInfo.haveIFriendBidFromThisUser) {
       return false;
     }
 
@@ -326,7 +331,7 @@ abstract class _UserInfoStore extends SyncStore with Store {
 
           _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
         } catch (e) {
-          _error = _userInfoStringProvider.canNotSendFriendBid;
+          _error = _userInfoStringProvider.canNotCancelFriendBid;
         }
       },
       setIsLoading: (v) => _isActionLoading = v,
@@ -350,7 +355,7 @@ abstract class _UserInfoStore extends SyncStore with Store {
 
           _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
         } catch (e) {
-          _error = _userInfoStringProvider.canNotSendFriendBid;
+          _error = _userInfoStringProvider.canNotRemoveFriend;
         }
       },
       setIsLoading: (v) => _isActionLoading = v,
@@ -374,7 +379,7 @@ abstract class _UserInfoStore extends SyncStore with Store {
 
           _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
         } catch (e) {
-          _error = _userInfoStringProvider.canNotSendFriendBid;
+          _error = _userInfoStringProvider.canNotRemoveSubscriber;
         }
       },
       setIsLoading: (v) => _isActionLoading = v,
@@ -398,7 +403,7 @@ abstract class _UserInfoStore extends SyncStore with Store {
 
           _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
         } catch (e) {
-          _error = _userInfoStringProvider.canNotSendFriendBid;
+          _error = _userInfoStringProvider.canNotAcceptFriendBid;
         }
       },
       setIsLoading: (v) => _isActionLoading = v,
@@ -417,12 +422,12 @@ abstract class _UserInfoStore extends SyncStore with Store {
             return;
           }
 
-          final userInfo =
-              await _userInfoService.acceptFriendBid(UserID.fromString(userID));
+          final userInfo = await _userInfoService
+              .declineFriendBid(UserID.fromString(userID));
 
           _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
         } catch (e) {
-          _error = _userInfoStringProvider.canNotSendFriendBid;
+          _error = _userInfoStringProvider.canNotDeclineFriendBid;
         }
       },
       setIsLoading: (v) => _isActionLoading = v,
@@ -446,7 +451,7 @@ abstract class _UserInfoStore extends SyncStore with Store {
 
           _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
         } catch (e) {
-          _error = _userInfoStringProvider.canNotSendFriendBid;
+          _error = _userInfoStringProvider.canNotUnsubscribe;
         }
       },
       setIsLoading: (v) => _isActionLoading = v,
