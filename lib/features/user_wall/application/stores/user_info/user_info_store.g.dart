@@ -43,6 +43,13 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
           () => super.showRemoveFriend,
           name: '_UserInfoStore.showRemoveFriend'))
       .value;
+  Computed<bool>? _$showRemoveSubscriberComputed;
+
+  @override
+  bool get showRemoveSubscriber => (_$showRemoveSubscriberComputed ??=
+          Computed<bool>(() => super.showRemoveSubscriber,
+              name: '_UserInfoStore.showRemoveSubscriber'))
+      .value;
   Computed<bool>? _$showAcceptRequestComputed;
 
   @override
@@ -194,6 +201,7 @@ showActions: ${showActions},
 showAddFriend: ${showAddFriend},
 showCancelRequest: ${showCancelRequest},
 showRemoveFriend: ${showRemoveFriend},
+showRemoveSubscriber: ${showRemoveSubscriber},
 showAcceptRequest: ${showAcceptRequest},
 showOpenChat: ${showOpenChat},
 showDeclineRequest: ${showDeclineRequest},

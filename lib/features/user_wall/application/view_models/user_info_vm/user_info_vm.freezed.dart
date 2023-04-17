@@ -23,11 +23,12 @@ mixin _$UserInfoVM {
             EndUserVM user,
             String friendsAmountWithoutMe,
             String friendsAmountWithMe,
-            String postsAmount,
             String subscribersAmountWithoutMe,
             String subscribersAmountWithMe,
+            String postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)
         end,
@@ -40,11 +41,12 @@ mixin _$UserInfoVM {
             EndUserVM user,
             String friendsAmountWithoutMe,
             String friendsAmountWithMe,
-            String postsAmount,
             String subscribersAmountWithoutMe,
             String subscribersAmountWithMe,
+            String postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,
@@ -57,11 +59,12 @@ mixin _$UserInfoVM {
             EndUserVM user,
             String friendsAmountWithoutMe,
             String friendsAmountWithMe,
-            String postsAmount,
             String subscribersAmountWithoutMe,
             String subscribersAmountWithMe,
+            String postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,
@@ -118,11 +121,12 @@ abstract class _$$EndUserInfoVMCopyWith<$Res> {
       {EndUserVM user,
       String friendsAmountWithoutMe,
       String friendsAmountWithMe,
-      String postsAmount,
       String subscribersAmountWithoutMe,
       String subscribersAmountWithMe,
+      String postsAmount,
       bool amIFriend,
       bool amISubscriber,
+      bool areTheySubscribedToMe,
       bool didISentFriendBid,
       bool haveIFriendBidFromThisUser});
 }
@@ -141,11 +145,12 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
     Object? user = null,
     Object? friendsAmountWithoutMe = null,
     Object? friendsAmountWithMe = null,
-    Object? postsAmount = null,
     Object? subscribersAmountWithoutMe = null,
     Object? subscribersAmountWithMe = null,
+    Object? postsAmount = null,
     Object? amIFriend = null,
     Object? amISubscriber = null,
+    Object? areTheySubscribedToMe = null,
     Object? didISentFriendBid = null,
     Object? haveIFriendBidFromThisUser = null,
   }) {
@@ -162,10 +167,6 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
           ? _value.friendsAmountWithMe
           : friendsAmountWithMe // ignore: cast_nullable_to_non_nullable
               as String,
-      postsAmount: null == postsAmount
-          ? _value.postsAmount
-          : postsAmount // ignore: cast_nullable_to_non_nullable
-              as String,
       subscribersAmountWithoutMe: null == subscribersAmountWithoutMe
           ? _value.subscribersAmountWithoutMe
           : subscribersAmountWithoutMe // ignore: cast_nullable_to_non_nullable
@@ -174,6 +175,10 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
           ? _value.subscribersAmountWithMe
           : subscribersAmountWithMe // ignore: cast_nullable_to_non_nullable
               as String,
+      postsAmount: null == postsAmount
+          ? _value.postsAmount
+          : postsAmount // ignore: cast_nullable_to_non_nullable
+              as String,
       amIFriend: null == amIFriend
           ? _value.amIFriend
           : amIFriend // ignore: cast_nullable_to_non_nullable
@@ -181,6 +186,10 @@ class __$$EndUserInfoVMCopyWithImpl<$Res>
       amISubscriber: null == amISubscriber
           ? _value.amISubscriber
           : amISubscriber // ignore: cast_nullable_to_non_nullable
+              as bool,
+      areTheySubscribedToMe: null == areTheySubscribedToMe
+          ? _value.areTheySubscribedToMe
+          : areTheySubscribedToMe // ignore: cast_nullable_to_non_nullable
               as bool,
       didISentFriendBid: null == didISentFriendBid
           ? _value.didISentFriendBid
@@ -201,11 +210,12 @@ class _$EndUserInfoVM implements EndUserInfoVM {
       {required this.user,
       required this.friendsAmountWithoutMe,
       required this.friendsAmountWithMe,
-      required this.postsAmount,
       required this.subscribersAmountWithoutMe,
       required this.subscribersAmountWithMe,
+      required this.postsAmount,
       required this.amIFriend,
       required this.amISubscriber,
+      required this.areTheySubscribedToMe,
       required this.didISentFriendBid,
       required this.haveIFriendBidFromThisUser});
 
@@ -216,15 +226,17 @@ class _$EndUserInfoVM implements EndUserInfoVM {
   @override
   final String friendsAmountWithMe;
   @override
-  final String postsAmount;
-  @override
   final String subscribersAmountWithoutMe;
   @override
   final String subscribersAmountWithMe;
   @override
+  final String postsAmount;
+  @override
   final bool amIFriend;
   @override
   final bool amISubscriber;
+  @override
+  final bool areTheySubscribedToMe;
   @override
   final bool didISentFriendBid;
   @override
@@ -232,7 +244,7 @@ class _$EndUserInfoVM implements EndUserInfoVM {
 
   @override
   String toString() {
-    return 'UserInfoVM.end(user: $user, friendsAmountWithoutMe: $friendsAmountWithoutMe, friendsAmountWithMe: $friendsAmountWithMe, postsAmount: $postsAmount, subscribersAmountWithoutMe: $subscribersAmountWithoutMe, subscribersAmountWithMe: $subscribersAmountWithMe, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid, haveIFriendBidFromThisUser: $haveIFriendBidFromThisUser)';
+    return 'UserInfoVM.end(user: $user, friendsAmountWithoutMe: $friendsAmountWithoutMe, friendsAmountWithMe: $friendsAmountWithMe, subscribersAmountWithoutMe: $subscribersAmountWithoutMe, subscribersAmountWithMe: $subscribersAmountWithMe, postsAmount: $postsAmount, amIFriend: $amIFriend, amISubscriber: $amISubscriber, areTheySubscribedToMe: $areTheySubscribedToMe, didISentFriendBid: $didISentFriendBid, haveIFriendBidFromThisUser: $haveIFriendBidFromThisUser)';
   }
 
   @override
@@ -245,8 +257,6 @@ class _$EndUserInfoVM implements EndUserInfoVM {
                 other.friendsAmountWithoutMe == friendsAmountWithoutMe) &&
             (identical(other.friendsAmountWithMe, friendsAmountWithMe) ||
                 other.friendsAmountWithMe == friendsAmountWithMe) &&
-            (identical(other.postsAmount, postsAmount) ||
-                other.postsAmount == postsAmount) &&
             (identical(other.subscribersAmountWithoutMe,
                     subscribersAmountWithoutMe) ||
                 other.subscribersAmountWithoutMe ==
@@ -254,10 +264,14 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             (identical(
                     other.subscribersAmountWithMe, subscribersAmountWithMe) ||
                 other.subscribersAmountWithMe == subscribersAmountWithMe) &&
+            (identical(other.postsAmount, postsAmount) ||
+                other.postsAmount == postsAmount) &&
             (identical(other.amIFriend, amIFriend) ||
                 other.amIFriend == amIFriend) &&
             (identical(other.amISubscriber, amISubscriber) ||
                 other.amISubscriber == amISubscriber) &&
+            (identical(other.areTheySubscribedToMe, areTheySubscribedToMe) ||
+                other.areTheySubscribedToMe == areTheySubscribedToMe) &&
             (identical(other.didISentFriendBid, didISentFriendBid) ||
                 other.didISentFriendBid == didISentFriendBid) &&
             (identical(other.haveIFriendBidFromThisUser,
@@ -272,11 +286,12 @@ class _$EndUserInfoVM implements EndUserInfoVM {
       user,
       friendsAmountWithoutMe,
       friendsAmountWithMe,
-      postsAmount,
       subscribersAmountWithoutMe,
       subscribersAmountWithMe,
+      postsAmount,
       amIFriend,
       amISubscriber,
+      areTheySubscribedToMe,
       didISentFriendBid,
       haveIFriendBidFromThisUser);
 
@@ -293,11 +308,12 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             EndUserVM user,
             String friendsAmountWithoutMe,
             String friendsAmountWithMe,
-            String postsAmount,
             String subscribersAmountWithoutMe,
             String subscribersAmountWithMe,
+            String postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)
         end,
@@ -307,11 +323,12 @@ class _$EndUserInfoVM implements EndUserInfoVM {
         user,
         friendsAmountWithoutMe,
         friendsAmountWithMe,
-        postsAmount,
         subscribersAmountWithoutMe,
         subscribersAmountWithMe,
+        postsAmount,
         amIFriend,
         amISubscriber,
+        areTheySubscribedToMe,
         didISentFriendBid,
         haveIFriendBidFromThisUser);
   }
@@ -323,11 +340,12 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             EndUserVM user,
             String friendsAmountWithoutMe,
             String friendsAmountWithMe,
-            String postsAmount,
             String subscribersAmountWithoutMe,
             String subscribersAmountWithMe,
+            String postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,
@@ -337,11 +355,12 @@ class _$EndUserInfoVM implements EndUserInfoVM {
         user,
         friendsAmountWithoutMe,
         friendsAmountWithMe,
-        postsAmount,
         subscribersAmountWithoutMe,
         subscribersAmountWithMe,
+        postsAmount,
         amIFriend,
         amISubscriber,
+        areTheySubscribedToMe,
         didISentFriendBid,
         haveIFriendBidFromThisUser);
   }
@@ -353,11 +372,12 @@ class _$EndUserInfoVM implements EndUserInfoVM {
             EndUserVM user,
             String friendsAmountWithoutMe,
             String friendsAmountWithMe,
-            String postsAmount,
             String subscribersAmountWithoutMe,
             String subscribersAmountWithMe,
+            String postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,
@@ -369,11 +389,12 @@ class _$EndUserInfoVM implements EndUserInfoVM {
           user,
           friendsAmountWithoutMe,
           friendsAmountWithMe,
-          postsAmount,
           subscribersAmountWithoutMe,
           subscribersAmountWithMe,
+          postsAmount,
           amIFriend,
           amISubscriber,
+          areTheySubscribedToMe,
           didISentFriendBid,
           haveIFriendBidFromThisUser);
     }
@@ -417,11 +438,12 @@ abstract class EndUserInfoVM implements UserInfoVM {
       {required final EndUserVM user,
       required final String friendsAmountWithoutMe,
       required final String friendsAmountWithMe,
-      required final String postsAmount,
       required final String subscribersAmountWithoutMe,
       required final String subscribersAmountWithMe,
+      required final String postsAmount,
       required final bool amIFriend,
       required final bool amISubscriber,
+      required final bool areTheySubscribedToMe,
       required final bool didISentFriendBid,
       required final bool haveIFriendBidFromThisUser}) = _$EndUserInfoVM;
 
@@ -429,11 +451,12 @@ abstract class EndUserInfoVM implements UserInfoVM {
   EndUserVM get user;
   String get friendsAmountWithoutMe;
   String get friendsAmountWithMe;
-  String get postsAmount;
   String get subscribersAmountWithoutMe;
   String get subscribersAmountWithMe;
+  String get postsAmount;
   bool get amIFriend;
   bool get amISubscriber;
+  bool get areTheySubscribedToMe;
   bool get didISentFriendBid;
   bool get haveIFriendBidFromThisUser;
   @JsonKey(ignore: true)
@@ -509,11 +532,12 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
             EndUserVM user,
             String friendsAmountWithoutMe,
             String friendsAmountWithMe,
-            String postsAmount,
             String subscribersAmountWithoutMe,
             String subscribersAmountWithMe,
+            String postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)
         end,
@@ -529,11 +553,12 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
             EndUserVM user,
             String friendsAmountWithoutMe,
             String friendsAmountWithMe,
-            String postsAmount,
             String subscribersAmountWithoutMe,
             String subscribersAmountWithMe,
+            String postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,
@@ -549,11 +574,12 @@ class _$StaffUserInfoVM implements StaffUserInfoVM {
             EndUserVM user,
             String friendsAmountWithoutMe,
             String friendsAmountWithMe,
-            String postsAmount,
             String subscribersAmountWithoutMe,
             String subscribersAmountWithMe,
+            String postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,

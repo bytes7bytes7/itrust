@@ -14,10 +14,11 @@ class UserInfo with _$UserInfo {
   const factory UserInfo.end({
     required EndUser user,
     required int friendsAmount,
-    required int postsAmount,
     required int subscribersAmount,
+    required int postsAmount,
     required bool amIFriend,
     required bool amISubscriber,
+    required bool areTheySubscribedToMe,
     required bool didISentFriendBid,
     required bool haveIFriendBidFromThisUser,
   }) = EndUserInfo;

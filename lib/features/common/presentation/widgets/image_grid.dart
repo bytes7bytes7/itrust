@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../themes/themes.dart';
 import '../../application/view_models/media_vm/media_vm.dart';
@@ -11,6 +12,7 @@ const _itemSeparator = 2.0;
 const _maxImages = 9;
 const _sigmaX = 1.0;
 const _sigmaY = 1.0;
+const _errorOpacity = 0.2;
 
 class ImageGrid extends StatelessWidget {
   const ImageGrid({
@@ -22,6 +24,8 @@ class ImageGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     final firstRowAmount = _getItemAmountForRow(0);
     final secondRowAmount = _getItemAmountForRow(1);
     final thirdRowAmount = _getItemAmountForRow(2);
@@ -35,12 +39,14 @@ class ImageGrid extends StatelessWidget {
         children: [
           if (firstRowAmount > 0)
             _Row(
+              theme: theme,
               amount: firstRowAmount,
               mediaList: mediaList.sublist(0, firstRowAmount),
               addSeparatorAbove: false,
             ),
           if (secondRowAmount > 0)
             _Row(
+              theme: theme,
               amount: secondRowAmount,
               mediaList: mediaList.sublist(
                 firstRowAmount,
@@ -50,6 +56,7 @@ class ImageGrid extends StatelessWidget {
             ),
           if (thirdRowAmount > 0)
             _Row(
+              theme: theme,
               amount: thirdRowAmount,
               mediaList: mediaList.sublist(
                 firstRowAmount + secondRowAmount,
@@ -108,12 +115,14 @@ class ImageGrid extends StatelessWidget {
 
 class _Row extends StatelessWidget {
   const _Row({
+    required this.theme,
     required this.amount,
     required this.mediaList,
     required this.addSeparatorAbove,
     this.lastItem,
   });
 
+  final ThemeData theme;
   final int amount;
   final List<MediaVM> mediaList;
   final bool addSeparatorAbove;
@@ -143,6 +152,7 @@ class _Row extends StatelessWidget {
                           children: [
                             Positioned.fill(
                               child: _Image(
+                                theme: theme,
                                 media: mediaList[index],
                               ),
                             ),
@@ -152,6 +162,7 @@ class _Row extends StatelessWidget {
                           ],
                         )
                       : _Image(
+                          theme: theme,
                           media: mediaList[index],
                         ),
                 ),
@@ -166,19 +177,39 @@ class _Row extends StatelessWidget {
 
 class _Image extends StatelessWidget {
   const _Image({
+    required this.theme,
     required this.media,
   });
 
+  final ThemeData theme;
   final MediaVM media;
 
   @override
   Widget build(BuildContext context) {
+    final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
+
     return CustomCachedNetworkImage(
       imageUrl: media.url,
       fit: BoxFit.cover,
+      placeholder: (context, url) {
+        return Shimmer.fromColors(
+          baseColor: colorSchemeTX.shimmerBase,
+          highlightColor: colorSchemeTX.shimmerHighlight,
+          child: ColoredBox(
+            color: theme.scaffoldBackgroundColor,
+          ),
+        );
+      },
       errorWidget: (context, url, error) {
-        // TODO: implement
-        return const ColoredBox(color: Colors.grey);
+        return ColoredBox(
+          color: theme.shadowColor.withOpacity(_errorOpacity),
+          child: Center(
+            child: Icon(
+              Icons.warning_amber,
+              color: theme.scaffoldBackgroundColor,
+            ),
+          ),
+        );
       },
     );
   }

@@ -35,6 +35,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     required this.sectionTitleBackground,
     required this.moreImagesForeground,
     required this.moreImagesBackground,
+    required this.shimmerBase,
+    required this.shimmerHighlight,
   });
 
   final Color avatarBackground;
@@ -72,6 +74,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
   final Color sectionTitleBackground;
   final Color moreImagesForeground;
   final Color moreImagesBackground;
+  final Color shimmerBase;
+  final Color shimmerHighlight;
 
   @override
   ThemeExtension<ColorSchemeTX> copyWith({
@@ -108,6 +112,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
     Color? sectionTitleBackground,
     Color? moreImagesForeground,
     Color? moreImagesBackground,
+    Color? shimmerBase,
+    Color? shimmerHighlight,
   }) {
     return ColorSchemeTX(
       avatarBackground: avatarBackground ?? this.avatarBackground,
@@ -151,6 +157,8 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
           sectionTitleBackground ?? this.sectionTitleBackground,
       moreImagesForeground: moreImagesForeground ?? this.moreImagesForeground,
       moreImagesBackground: moreImagesBackground ?? this.moreImagesBackground,
+      shimmerBase: shimmerBase ?? this.shimmerBase,
+      shimmerHighlight: shimmerHighlight ?? this.shimmerHighlight,
     );
   }
 
@@ -327,6 +335,16 @@ class ColorSchemeTX extends ThemeExtension<ColorSchemeTX> {
       moreImagesBackground: Color.lerp(
         moreImagesBackground,
         other.moreImagesBackground,
+        t,
+      )!,
+      shimmerBase: Color.lerp(
+        shimmerBase,
+        other.shimmerBase,
+        t,
+      )!,
+      shimmerHighlight: Color.lerp(
+        shimmerHighlight,
+        other.shimmerHighlight,
         t,
       )!,
     );

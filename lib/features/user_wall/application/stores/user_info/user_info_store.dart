@@ -128,6 +128,25 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @computed
+  bool get showRemoveSubscriber {
+    if (!showActions) {
+      return false;
+    }
+
+    final userInfo = _userInfo;
+
+    if (userInfo == null) {
+      return false;
+    }
+
+    if (userInfo is! EndUserInfoVM) {
+      return false;
+    }
+
+    return userInfo.areTheySubscribedToMe;
+  }
+
+  @computed
   bool get showAcceptRequest {
     if (!showActions) {
       return false;

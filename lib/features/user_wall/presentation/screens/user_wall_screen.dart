@@ -344,6 +344,13 @@ class _Actions extends StatelessWidget {
                 onPressed: () {},
               ),
             ),
+          if (userInfoStore.showRemoveSubscriber)
+            Expanded(
+              child: SmallSecondaryButton(
+                text: l10n.remove_subscriber_btn,
+                onPressed: () {},
+              ),
+            ),
           if (userInfoStore.showAcceptRequest)
             Expanded(
               child: SmallSecondaryButton(

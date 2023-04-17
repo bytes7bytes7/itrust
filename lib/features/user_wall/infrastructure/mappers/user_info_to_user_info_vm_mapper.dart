@@ -36,6 +36,7 @@ class UserInfoToUserInfoVMMapper extends OneSourceMapper<UserInfo, UserInfoVM> {
         ),
         amIFriend: userInfo.amIFriend,
         amISubscriber: userInfo.amISubscriber,
+        areTheySubscribedToMe: userInfo.areTheySubscribedToMe,
         didISentFriendBid: userInfo.didISentFriendBid,
         haveIFriendBidFromThisUser: userInfo.haveIFriendBidFromThisUser,
       );

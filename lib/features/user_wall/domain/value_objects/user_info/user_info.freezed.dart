@@ -35,10 +35,11 @@ mixin _$UserInfo {
     required TResult Function(
             EndUser user,
             int friendsAmount,
-            int postsAmount,
             int subscribersAmount,
+            int postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)
         end,
@@ -50,10 +51,11 @@ mixin _$UserInfo {
     TResult? Function(
             EndUser user,
             int friendsAmount,
-            int postsAmount,
             int subscribersAmount,
+            int postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,
@@ -65,10 +67,11 @@ mixin _$UserInfo {
     TResult Function(
             EndUser user,
             int friendsAmount,
-            int postsAmount,
             int subscribersAmount,
+            int postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,
@@ -124,10 +127,11 @@ abstract class _$$EndUserInfoCopyWith<$Res> {
   $Res call(
       {EndUser user,
       int friendsAmount,
-      int postsAmount,
       int subscribersAmount,
+      int postsAmount,
       bool amIFriend,
       bool amISubscriber,
+      bool areTheySubscribedToMe,
       bool didISentFriendBid,
       bool haveIFriendBidFromThisUser});
 }
@@ -145,10 +149,11 @@ class __$$EndUserInfoCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
     Object? friendsAmount = null,
-    Object? postsAmount = null,
     Object? subscribersAmount = null,
+    Object? postsAmount = null,
     Object? amIFriend = null,
     Object? amISubscriber = null,
+    Object? areTheySubscribedToMe = null,
     Object? didISentFriendBid = null,
     Object? haveIFriendBidFromThisUser = null,
   }) {
@@ -161,13 +166,13 @@ class __$$EndUserInfoCopyWithImpl<$Res>
           ? _value.friendsAmount
           : friendsAmount // ignore: cast_nullable_to_non_nullable
               as int,
-      postsAmount: null == postsAmount
-          ? _value.postsAmount
-          : postsAmount // ignore: cast_nullable_to_non_nullable
-              as int,
       subscribersAmount: null == subscribersAmount
           ? _value.subscribersAmount
           : subscribersAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      postsAmount: null == postsAmount
+          ? _value.postsAmount
+          : postsAmount // ignore: cast_nullable_to_non_nullable
               as int,
       amIFriend: null == amIFriend
           ? _value.amIFriend
@@ -176,6 +181,10 @@ class __$$EndUserInfoCopyWithImpl<$Res>
       amISubscriber: null == amISubscriber
           ? _value.amISubscriber
           : amISubscriber // ignore: cast_nullable_to_non_nullable
+              as bool,
+      areTheySubscribedToMe: null == areTheySubscribedToMe
+          ? _value.areTheySubscribedToMe
+          : areTheySubscribedToMe // ignore: cast_nullable_to_non_nullable
               as bool,
       didISentFriendBid: null == didISentFriendBid
           ? _value.didISentFriendBid
@@ -195,10 +204,11 @@ class _$EndUserInfo implements EndUserInfo {
   const _$EndUserInfo(
       {required this.user,
       required this.friendsAmount,
-      required this.postsAmount,
       required this.subscribersAmount,
+      required this.postsAmount,
       required this.amIFriend,
       required this.amISubscriber,
+      required this.areTheySubscribedToMe,
       required this.didISentFriendBid,
       required this.haveIFriendBidFromThisUser,
       final String? $type})
@@ -212,13 +222,15 @@ class _$EndUserInfo implements EndUserInfo {
   @override
   final int friendsAmount;
   @override
-  final int postsAmount;
-  @override
   final int subscribersAmount;
+  @override
+  final int postsAmount;
   @override
   final bool amIFriend;
   @override
   final bool amISubscriber;
+  @override
+  final bool areTheySubscribedToMe;
   @override
   final bool didISentFriendBid;
   @override
@@ -229,7 +241,7 @@ class _$EndUserInfo implements EndUserInfo {
 
   @override
   String toString() {
-    return 'UserInfo.end(user: $user, friendsAmount: $friendsAmount, postsAmount: $postsAmount, subscribersAmount: $subscribersAmount, amIFriend: $amIFriend, amISubscriber: $amISubscriber, didISentFriendBid: $didISentFriendBid, haveIFriendBidFromThisUser: $haveIFriendBidFromThisUser)';
+    return 'UserInfo.end(user: $user, friendsAmount: $friendsAmount, subscribersAmount: $subscribersAmount, postsAmount: $postsAmount, amIFriend: $amIFriend, amISubscriber: $amISubscriber, areTheySubscribedToMe: $areTheySubscribedToMe, didISentFriendBid: $didISentFriendBid, haveIFriendBidFromThisUser: $haveIFriendBidFromThisUser)';
   }
 
   @override
@@ -240,14 +252,16 @@ class _$EndUserInfo implements EndUserInfo {
             (identical(other.user, user) || other.user == user) &&
             (identical(other.friendsAmount, friendsAmount) ||
                 other.friendsAmount == friendsAmount) &&
-            (identical(other.postsAmount, postsAmount) ||
-                other.postsAmount == postsAmount) &&
             (identical(other.subscribersAmount, subscribersAmount) ||
                 other.subscribersAmount == subscribersAmount) &&
+            (identical(other.postsAmount, postsAmount) ||
+                other.postsAmount == postsAmount) &&
             (identical(other.amIFriend, amIFriend) ||
                 other.amIFriend == amIFriend) &&
             (identical(other.amISubscriber, amISubscriber) ||
                 other.amISubscriber == amISubscriber) &&
+            (identical(other.areTheySubscribedToMe, areTheySubscribedToMe) ||
+                other.areTheySubscribedToMe == areTheySubscribedToMe) &&
             (identical(other.didISentFriendBid, didISentFriendBid) ||
                 other.didISentFriendBid == didISentFriendBid) &&
             (identical(other.haveIFriendBidFromThisUser,
@@ -262,10 +276,11 @@ class _$EndUserInfo implements EndUserInfo {
       runtimeType,
       user,
       friendsAmount,
-      postsAmount,
       subscribersAmount,
+      postsAmount,
       amIFriend,
       amISubscriber,
+      areTheySubscribedToMe,
       didISentFriendBid,
       haveIFriendBidFromThisUser);
 
@@ -281,17 +296,26 @@ class _$EndUserInfo implements EndUserInfo {
     required TResult Function(
             EndUser user,
             int friendsAmount,
-            int postsAmount,
             int subscribersAmount,
+            int postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)
         end,
     required TResult Function(StaffUser user) staff,
   }) {
-    return end(user, friendsAmount, postsAmount, subscribersAmount, amIFriend,
-        amISubscriber, didISentFriendBid, haveIFriendBidFromThisUser);
+    return end(
+        user,
+        friendsAmount,
+        subscribersAmount,
+        postsAmount,
+        amIFriend,
+        amISubscriber,
+        areTheySubscribedToMe,
+        didISentFriendBid,
+        haveIFriendBidFromThisUser);
   }
 
   @override
@@ -300,10 +324,11 @@ class _$EndUserInfo implements EndUserInfo {
     TResult? Function(
             EndUser user,
             int friendsAmount,
-            int postsAmount,
             int subscribersAmount,
+            int postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,
@@ -312,10 +337,11 @@ class _$EndUserInfo implements EndUserInfo {
     return end?.call(
         user,
         friendsAmount,
-        postsAmount,
         subscribersAmount,
+        postsAmount,
         amIFriend,
         amISubscriber,
+        areTheySubscribedToMe,
         didISentFriendBid,
         haveIFriendBidFromThisUser);
   }
@@ -326,10 +352,11 @@ class _$EndUserInfo implements EndUserInfo {
     TResult Function(
             EndUser user,
             int friendsAmount,
-            int postsAmount,
             int subscribersAmount,
+            int postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,
@@ -337,8 +364,16 @@ class _$EndUserInfo implements EndUserInfo {
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(user, friendsAmount, postsAmount, subscribersAmount, amIFriend,
-          amISubscriber, didISentFriendBid, haveIFriendBidFromThisUser);
+      return end(
+          user,
+          friendsAmount,
+          subscribersAmount,
+          postsAmount,
+          amIFriend,
+          amISubscriber,
+          areTheySubscribedToMe,
+          didISentFriendBid,
+          haveIFriendBidFromThisUser);
     }
     return orElse();
   }
@@ -386,10 +421,11 @@ abstract class EndUserInfo implements UserInfo {
   const factory EndUserInfo(
       {required final EndUser user,
       required final int friendsAmount,
-      required final int postsAmount,
       required final int subscribersAmount,
+      required final int postsAmount,
       required final bool amIFriend,
       required final bool amISubscriber,
+      required final bool areTheySubscribedToMe,
       required final bool didISentFriendBid,
       required final bool haveIFriendBidFromThisUser}) = _$EndUserInfo;
 
@@ -399,10 +435,11 @@ abstract class EndUserInfo implements UserInfo {
   @override
   EndUser get user;
   int get friendsAmount;
-  int get postsAmount;
   int get subscribersAmount;
+  int get postsAmount;
   bool get amIFriend;
   bool get amISubscriber;
+  bool get areTheySubscribedToMe;
   bool get didISentFriendBid;
   bool get haveIFriendBidFromThisUser;
   @JsonKey(ignore: true)
@@ -485,10 +522,11 @@ class _$StaffUserInfo implements StaffUserInfo {
     required TResult Function(
             EndUser user,
             int friendsAmount,
-            int postsAmount,
             int subscribersAmount,
+            int postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)
         end,
@@ -503,10 +541,11 @@ class _$StaffUserInfo implements StaffUserInfo {
     TResult? Function(
             EndUser user,
             int friendsAmount,
-            int postsAmount,
             int subscribersAmount,
+            int postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,
@@ -521,10 +560,11 @@ class _$StaffUserInfo implements StaffUserInfo {
     TResult Function(
             EndUser user,
             int friendsAmount,
-            int postsAmount,
             int subscribersAmount,
+            int postsAmount,
             bool amIFriend,
             bool amISubscriber,
+            bool areTheySubscribedToMe,
             bool didISentFriendBid,
             bool haveIFriendBidFromThisUser)?
         end,

@@ -41,6 +41,7 @@ dependencies:
   problem_details: ^0.0.2
   retrofit: ^4.0.1
   rxdart: ^0.27.7
+  shimmer: ^2.0.0
   url_strategy: ^0.2.0
 
 dev_dependencies:

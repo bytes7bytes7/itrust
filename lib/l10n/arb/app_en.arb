@@ -100,6 +100,7 @@
   "open_chat_btn": "Message",
   "cancel_friend_bid_btn": "Cancel request",
   "remove_friend_btn": "Remove friend",
+  "remove_subscriber_btn": "Remove subscriber",
   "accept_friend_bid_btn": "Accept request",
   "decline_friend_bid_btn": "Decline request",
   "can_not_load_user": "Can not load user. Try again later.",

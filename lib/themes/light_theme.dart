@@ -270,6 +270,8 @@ final lightTheme = ThemeData.light().copyWith(
       sectionTitleBackground: _LightColors.cFFFFFFFF,
       moreImagesForeground: _LightColors.cFFFFFFFF,
       moreImagesBackground: _LightColors.c38000000,
+      shimmerBase: _LightColors.cFFF0EFEF,
+      shimmerHighlight: _LightColors.cFFFFFFFF,
     ),
     ButtonStyleTX(
       filledIcon: ButtonStyle(

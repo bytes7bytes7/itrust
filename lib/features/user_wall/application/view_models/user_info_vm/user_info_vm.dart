@@ -13,11 +13,12 @@ class UserInfoVM with _$UserInfoVM {
     required EndUserVM user,
     required String friendsAmountWithoutMe,
     required String friendsAmountWithMe,
-    required String postsAmount,
     required String subscribersAmountWithoutMe,
     required String subscribersAmountWithMe,
+    required String postsAmount,
     required bool amIFriend,
     required bool amISubscriber,
+    required bool areTheySubscribedToMe,
     required bool didISentFriendBid,
     required bool haveIFriendBidFromThisUser,
   }) = EndUserInfoVM;
