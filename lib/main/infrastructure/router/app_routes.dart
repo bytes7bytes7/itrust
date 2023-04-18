@@ -158,7 +158,7 @@ class _AppRoutes {
     },
     routes: [
       // TODO: make UserRoute parent to FriendsRoute
-      friends,
+      people,
       userWall,
     ],
   );
@@ -244,9 +244,9 @@ class _AppRoutes {
     },
   );
 
-  static final friends = GoRoute(
-    path: 'friends:userID',
-    name: 'friends',
+  static final people = GoRoute(
+    path: 'people:userID',
+    name: 'people',
     parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       final userID = state.params['userID']!;
@@ -256,7 +256,7 @@ class _AppRoutes {
         name: _getName(state),
         arguments: _getArgs(state),
         transitionsBuilder: _leftward,
-        child: FriendsScreen(
+        child: PeopleScreen(
           userID: userID,
         ),
       );

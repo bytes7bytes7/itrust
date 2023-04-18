@@ -119,8 +119,8 @@ class DevicesRoute extends CosyRoute {
   GoRoute get route => _AppRoutes.devices;
 }
 
-class FriendsRoute extends CosyRoute {
-  const FriendsRoute({
+class PeopleRoute extends CosyRoute {
+  const PeopleRoute({
     required this.userID,
   });
 
@@ -132,7 +132,7 @@ class FriendsRoute extends CosyRoute {
       };
 
   @override
-  GoRoute get route => _AppRoutes.friends;
+  GoRoute get route => _AppRoutes.people;
 }
 
 class UserWallRoute extends CosyRoute {

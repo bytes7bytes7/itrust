@@ -33,6 +33,31 @@ final lightTheme = ThemeData.light().copyWith(
     color: _LightColors.cFFEC2885,
     linearTrackColor: Colors.transparent,
   ),
+  tabBarTheme: const TabBarTheme(
+    labelColor: _LightColors.cFF000000,
+    unselectedLabelColor: _LightColors.cFFC7C7C7,
+    labelStyle: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+    unselectedLabelStyle: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+    indicatorSize: TabBarIndicatorSize.label,
+    indicator: BoxDecoration(
+      border: Border(
+        bottom: BorderSide(
+          color: _LightColors.cFF000000,
+          width: 2,
+        ),
+      ),
+    ),
+    labelPadding: EdgeInsets.symmetric(
+      horizontal: 20,
+      vertical: 8,
+    ),
+  ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     elevation: 8,
     showUnselectedLabels: false,

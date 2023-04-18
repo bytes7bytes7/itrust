@@ -20,7 +20,7 @@ class ProdUserWallCoordinator extends Coordinator
 
   @override
   void onFriendsPressed({required String userID}) {
-    FriendsRoute(userID: userID).push(goRouter);
+    PeopleRoute(userID: userID).push(goRouter);
   }
 
   @override

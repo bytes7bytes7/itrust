@@ -87,10 +87,47 @@
   "feed_has_no_posts": "There will be posts when you have at least one friend. Go and make some!",
   "can_not_like_comment": "Can not like comment. Try again later.",
   "can_not_unlike_comment": "Can not unlike comment. Try again later.",
-  "friends_btn": "Friends",
-  "friends_screen_title": "Friends",
-  "can_not_load_friends": "Can not load friends. Try again later.",
+  "people_btn": "People",
+  "people_screen_title": "People",
+  "all_users_tab": "All ({amount})",
+  "@all_users_tab": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "friends_tab": "Friends ({amount})",
+  "@friends_tab": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "subscribers_tab": "Subscribers ({amount})",
+  "@subscribers_tab": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptions_tab": "Subscriptions ({amount})",
+  "@subscriptions_tab": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "can_not_load_people_amount": "Can not load amount of users.",
+  "can_not_load_users": "Can not load users. Try again later.",
+  "no_users_found": "No users found.",
+  "no_other_users": "No other users.",
   "you_have_no_friends": "You do not have friends. Go and make some!",
+  "you_have_no_subscribers": "You do not have subscribers.",
+  "you_have_no_subscriptions": "You do not have subscriptions.",
   "can_not_load_myself": "Can not load information about your account.",
   "user_wall_screen_title": "User",
   "friends_amount": "friends",
@@ -113,5 +150,23 @@
   "can_not_remove_subscriber": "Can not remove subscriber.",
   "can_not_accept_friend_bid": "Can not accept friend request.",
   "can_not_unsubscribe": "Can not unsubscribe.",
-  "can_not_decline_friend_bid": "Can not decline friend request."
+  "can_not_decline_friend_bid": "Can not decline friend request.",
+  "friend_requests_btn": "Friend requests",
+  "friend_requests_screen_title": "Friend requests",
+  "inbox_friend_bids_tab": "Inbox ({amount})",
+  "@inbox_friend_bids_tab": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "outbox_friend_bids_tab": "Outbox ({amount})",
+  "@outbox_friend_bids_tab": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
 }

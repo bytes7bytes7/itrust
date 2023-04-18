@@ -16,11 +16,11 @@ class UserToUserVMMapper extends OneSourceMapper<User, UserVM> {
     final user = _user;
 
     if (user is EndUser) {
-      return _mapster.map1(source, To<EndUserVM>());
+      return _mapster.map1(user, To<EndUserVM>());
     }
 
     if (user is StaffUser) {
-      return _mapster.map1(source, To<StaffUserVM>());
+      return _mapster.map1(user, To<StaffUserVM>());
     }
 
     throw Exception('Unknown type of User');
