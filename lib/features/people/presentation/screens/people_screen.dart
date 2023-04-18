@@ -242,7 +242,7 @@ class _AllUsersTab extends StatelessWidget {
           return _UsersEmpty(
             theme: theme,
             text: l10n.no_other_users,
-            child: Assets.lottie.makeFriends.lottie(),
+            child: Assets.lottie.nothing.lottie(),
           );
         }
 
@@ -288,7 +288,7 @@ class _FriendsTab extends StatelessWidget {
           return _UsersEmpty(
             theme: theme,
             text: l10n.you_have_no_friends,
-            child: Assets.lottie.makeFriends.lottie(),
+            child: Assets.lottie.nothing.lottie(),
           );
         }
 
@@ -334,7 +334,7 @@ class _SubscribersTab extends StatelessWidget {
           return _UsersEmpty(
             theme: theme,
             text: l10n.you_have_no_subscribers,
-            child: Assets.lottie.makeFriends.lottie(),
+            child: Assets.lottie.nothing.lottie(),
           );
         }
 
@@ -380,7 +380,7 @@ class _SubscriptionsTab extends StatelessWidget {
           return _UsersEmpty(
             theme: theme,
             text: l10n.you_have_no_subscriptions,
-            child: Assets.lottie.makeFriends.lottie(),
+            child: Assets.lottie.nothing.lottie(),
           );
         }
 

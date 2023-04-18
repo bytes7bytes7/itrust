@@ -125,14 +125,14 @@
   "can_not_load_users": "Can not load users. Try again later.",
   "no_users_found": "No users found.",
   "no_other_users": "No other users.",
-  "you_have_no_friends": "You do not have friends. Go and make some!",
+  "you_have_no_friends": "You do not have friends.",
   "you_have_no_subscribers": "You do not have subscribers.",
   "you_have_no_subscriptions": "You do not have subscriptions.",
   "can_not_load_myself": "Can not load information about your account.",
   "user_wall_screen_title": "User",
   "friends_amount": "friends",
   "posts_amount": "posts",
-  "subscribers_amount": "followers",
+  "subscribers_amount": "subscribers",
   "send_friend_bid_btn": "Add friend",
   "open_chat_btn": "Message",
   "cancel_friend_bid_btn": "Cancel request",
@@ -168,5 +168,9 @@
         "type": "String"
       }
     }
-  }
+  },
+  "friends_screen_title": "Friends",
+  "subscribers_screen_title": "Subscribers",
+  "no_friends": "No friends",
+  "no_subscribers": "No subscribers"
 }

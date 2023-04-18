@@ -7,6 +7,7 @@ import '../../../../common/application/stores/sync_store.dart';
 import '../../../../common/application/view_models/view_models.dart';
 import '../../../../common/domain/domain.dart';
 import '../../../domain/services/people_service.dart';
+import '../../coordinators/people_coordinator.dart';
 import '../../providers/people_string_provider.dart';
 
 part 'subscribers_store.g.dart';
@@ -18,13 +19,16 @@ abstract class _SubscribersStore extends SyncStore with Store {
   _SubscribersStore({
     required PeopleService peopleService,
     required PeopleStringProvider peopleStringProvider,
+    required PeopleCoordinator coordinator,
     required Mapster mapster,
   })  : _peopleService = peopleService,
         _peopleStringProvider = peopleStringProvider,
+        _coordinator = coordinator,
         _mapster = mapster;
 
   final PeopleService _peopleService;
   final PeopleStringProvider _peopleStringProvider;
+  final PeopleCoordinator _coordinator;
   final Mapster _mapster;
   var _isInitialized = false;
 
@@ -144,5 +148,13 @@ abstract class _SubscribersStore extends SyncStore with Store {
   @action
   void resetIsLoaded() {
     _isLoaded = false;
+  }
+
+  void onBackButtonPressed() {
+    _coordinator.onBackButtonPressed();
+  }
+
+  void onUserPressed(String userID) {
+    _coordinator.onUserPressed(userID: userID);
   }
 }

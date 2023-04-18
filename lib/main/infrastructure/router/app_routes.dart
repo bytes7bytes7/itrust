@@ -157,7 +157,6 @@ class _AppRoutes {
       );
     },
     routes: [
-      // TODO: make UserRoute parent to FriendsRoute
       people,
       userWall,
     ],
@@ -276,6 +275,48 @@ class _AppRoutes {
         arguments: _getArgs(state),
         transitionsBuilder: _leftward,
         child: UserWallScreen(
+          userID: userID,
+        ),
+      );
+    },
+    routes: [
+      friends,
+      subscribers,
+    ],
+  );
+
+  static final friends = GoRoute(
+    path: 'friends',
+    name: 'friends',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      final userID = state.params['userID']!;
+
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: FriendsScreen(
+          userID: userID,
+        ),
+      );
+    },
+  );
+
+  static final subscribers = GoRoute(
+    path: 'subscribers',
+    name: 'subscribers',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      final userID = state.params['userID']!;
+
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: SubscribersScreen(
           userID: userID,
         ),
       );

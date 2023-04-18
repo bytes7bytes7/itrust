@@ -44,8 +44,21 @@ class $AssetsLottieGen {
   LottieGenImage get notFound =>
       const LottieGenImage('assets/lottie/not_found.json');
 
+  /// File path: assets/lottie/nothing.json
+  LottieGenImage get nothing =>
+      const LottieGenImage('assets/lottie/nothing.json');
+
+  /// File path: assets/lottie/search.json
+  LottieGenImage get search =>
+      const LottieGenImage('assets/lottie/search.json');
+
+  /// File path: assets/lottie/will_be_soon.json
+  LottieGenImage get willBeSoon =>
+      const LottieGenImage('assets/lottie/will_be_soon.json');
+
   /// List of all assets
-  List<LottieGenImage> get values => [chatting, makeFriends, notFound];
+  List<LottieGenImage> get values =>
+      [chatting, makeFriends, notFound, nothing, search, willBeSoon];
 }
 
 class $AssetsImagePngGen {
