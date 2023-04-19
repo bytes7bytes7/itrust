@@ -97,12 +97,6 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        if (menuStore.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
         final myID = menuStore.myID;
 
         if (myID == null) {
@@ -122,7 +116,12 @@ class _Body extends StatelessWidget {
               OptionButton(
                 iconPath: Assets.image.svg.group.path,
                 title: l10n.people_btn,
-                onPressed: () => menuStore.onFriendsButtonPressed(myID),
+                onPressed: menuStore.onPeopleButtonPressed,
+              ),
+              OptionButton(
+                iconPath: Assets.image.svg.personAdd.path,
+                title: l10n.friend_bids_btn,
+                onPressed: menuStore.onFriendBidsButtonPressed,
               ),
             ],
           ),

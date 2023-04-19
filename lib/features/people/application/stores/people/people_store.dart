@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../../repositories/interfaces/end_user_repository.dart';
 import '../../../../common/application/providers/beautified_number_provider.dart';
 import '../../../../common/application/stores/sync_store.dart';
 import '../../../../common/domain/domain.dart';
@@ -36,10 +37,12 @@ abstract class _PeopleStore extends SyncStore with Store {
     required PeopleStringProvider peopleStringProvider,
     required PeopleCoordinator coordinator,
     required BeautifiedNumberProvider beautifiedNumberProvider,
+    required EndUserRepository endUserRepository,
   })  : _peopleService = peopleService,
         _peopleStringProvider = peopleStringProvider,
         _coordinator = coordinator,
-        _beautifiedNumberProvider = beautifiedNumberProvider;
+        _beautifiedNumberProvider = beautifiedNumberProvider,
+        _endUserRepository = endUserRepository;
 
   final AllUsersStore allUsersStore;
   final FriendsStore friendsStore;
@@ -49,7 +52,7 @@ abstract class _PeopleStore extends SyncStore with Store {
   final PeopleStringProvider _peopleStringProvider;
   final PeopleCoordinator _coordinator;
   final BeautifiedNumberProvider _beautifiedNumberProvider;
-  var _isInitialized = false;
+  final EndUserRepository _endUserRepository;
 
   final int tabsAmount = 4;
 
@@ -77,16 +80,21 @@ abstract class _PeopleStore extends SyncStore with Store {
   @readonly
   String _subscriptionsAmount = _unknownAmount;
 
-  void init(String id) {
-    if (!_isInitialized) {
+  @action
+  void loadMe() {
+    final me = _endUserRepository.me;
+
+    if (me != null) {
+      final id = me.id.str;
+
       _userID = UserID.fromString(id);
 
       allUsersStore.init(id);
       friendsStore.init(id);
       subscribersStore.init(id);
       subscriptionsStore.init(id);
-
-      _isInitialized = true;
+    } else {
+      _error = _peopleStringProvider.canNotLoadMyself;
     }
   }
 

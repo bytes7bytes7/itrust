@@ -11,25 +11,28 @@ import '../../../common/application/view_models/user_vm/user_vm.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/people/people_store.dart';
 
+const _loadMeKey = 'load me (people)';
 const _loadPeopleKey = 'load people';
 const _tabHeight = 36.0;
 
 final _getIt = GetIt.instance;
 
 class PeopleScreen extends HookWidget {
-  const PeopleScreen({
-    super.key,
-    required this.userID,
-  });
-
-  final String userID;
+  const PeopleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final peopleStore =
-        useMemoized(() => _getIt.get<PeopleStore>()..init(userID));
+    final peopleStore = useMemoized(() => _getIt.get<PeopleStore>());
+
+    useEffect(
+      () {
+        peopleStore.loadMe();
+        return null;
+      },
+      [_loadMeKey],
+    );
 
     useEffect(
       () {

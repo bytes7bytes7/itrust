@@ -120,16 +120,7 @@ class DevicesRoute extends CosyRoute {
 }
 
 class PeopleRoute extends CosyRoute {
-  const PeopleRoute({
-    required this.userID,
-  });
-
-  final String userID;
-
-  @override
-  Map<String, String> get params => {
-        'userID': userID,
-      };
+  const PeopleRoute();
 
   @override
   GoRoute get route => _AppRoutes.people;
@@ -181,4 +172,11 @@ class SubscribersRoute extends CosyRoute {
 
   @override
   GoRoute get route => _AppRoutes.subscribers;
+}
+
+class FriendBidsRoute extends CosyRoute {
+  const FriendBidsRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.friendBids;
 }

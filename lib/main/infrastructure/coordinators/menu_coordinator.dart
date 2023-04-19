@@ -21,7 +21,12 @@ class ProdMenuCoordinator extends Coordinator implements MenuCoordinator {
   }
 
   @override
-  void onFriendsButtonPressed({required String userID}) {
-    PeopleRoute(userID: userID).push(goRouter);
+  void onPeopleButtonPressed() {
+    const PeopleRoute().push(goRouter);
+  }
+
+  @override
+  void onFriendBidsButtonPressed() {
+    const FriendBidsRoute().push(goRouter);
   }
 }

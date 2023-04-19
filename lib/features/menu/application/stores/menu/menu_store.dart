@@ -25,9 +25,6 @@ abstract class _MenuStore extends SyncStore with Store {
   final EndUserRepository _endUserRepository;
 
   @readonly
-  bool _isLoading = false;
-
-  @readonly
   String _error = '';
 
   @readonly
@@ -35,19 +32,13 @@ abstract class _MenuStore extends SyncStore with Store {
 
   @action
   void loadMe() {
-    perform(
-      () {
-        final me = _endUserRepository.me;
+    final me = _endUserRepository.me;
 
-        if (me != null) {
-          _myID = me.id.str;
-        } else {
-          _error = _menuStringProvider.canNotLoadMyself;
-        }
-      },
-      setIsLoading: (v) => _isLoading = v,
-      removeError: () => _error = '',
-    );
+    if (me != null) {
+      _myID = me.id.str;
+    } else {
+      _error = _menuStringProvider.canNotLoadMyself;
+    }
   }
 
   void onSettingsButtonPressed() {
@@ -64,7 +55,11 @@ abstract class _MenuStore extends SyncStore with Store {
     _menuCoordinator.onMyProfileButtonPressed(userID: id);
   }
 
-  void onFriendsButtonPressed(String userID) {
-    _menuCoordinator.onFriendsButtonPressed(userID: userID);
+  void onPeopleButtonPressed() {
+    _menuCoordinator.onPeopleButtonPressed();
+  }
+
+  void onFriendBidsButtonPressed() {
+    _menuCoordinator.onFriendBidsButtonPressed();
   }
 }

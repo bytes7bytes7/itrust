@@ -157,6 +157,17 @@ mixin _$PeopleStore on _PeopleStore, Store {
       ActionController(name: '_PeopleStore', context: context);
 
   @override
+  void loadMe() {
+    final _$actionInfo =
+        _$_PeopleStoreActionController.startAction(name: '_PeopleStore.loadMe');
+    try {
+      return super.loadMe();
+    } finally {
+      _$_PeopleStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void load() {
     final _$actionInfo =
         _$_PeopleStoreActionController.startAction(name: '_PeopleStore.load');

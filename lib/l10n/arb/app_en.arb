@@ -151,8 +151,10 @@
   "can_not_accept_friend_bid": "Can not accept friend request.",
   "can_not_unsubscribe": "Can not unsubscribe.",
   "can_not_decline_friend_bid": "Can not decline friend request.",
-  "friend_requests_btn": "Friend requests",
-  "friend_requests_screen_title": "Friend requests",
+  "friend_bids_btn": "Friend requests",
+  "friend_bids_screen_title": "Friend requests",
+  "no_inbox_friend_bids": "No friend bids.",
+  "no_outbox_friend_bids": "No friend bids.",
   "inbox_friend_bids_tab": "Inbox ({amount})",
   "@inbox_friend_bids_tab": {
     "placeholders": {
@@ -169,6 +171,9 @@
       }
     }
   },
+  "can_not_load_friend_bids_amount": "Can not load friend requests amount.",
+  "can_not_load_inbox_friend_bids": "Can not load inbox friend requests.",
+  "can_not_load_outbox_friend_bids": "Can not load outbox friend requests.",
   "friends_screen_title": "Friends",
   "subscribers_screen_title": "Subscribers",
   "no_friends": "No friends",

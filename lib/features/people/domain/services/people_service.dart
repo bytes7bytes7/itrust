@@ -11,23 +11,23 @@ import '../value_objects/people_amount/people_amount.dart';
 class PeopleService {
   const PeopleService({
     required KeepFreshTokenService keepFreshTokenService,
-    required PeopleProvider friendsProvider,
+    required PeopleProvider peopleProvider,
     required EndUserRepository endUserRepository,
     required StaffUserRepository staffUserRepository,
   })  : _keepFreshTokenService = keepFreshTokenService,
-        _friendsProvider = friendsProvider,
+        _peopleProvider = peopleProvider,
         _endUserRepository = endUserRepository,
         _staffUserRepository = staffUserRepository;
 
   final KeepFreshTokenService _keepFreshTokenService;
-  final PeopleProvider _friendsProvider;
+  final PeopleProvider _peopleProvider;
   final EndUserRepository _endUserRepository;
   final StaffUserRepository _staffUserRepository;
 
   Future<PeopleAmount> getPeopleAmount() async {
     try {
       final response = await _keepFreshTokenService.request(
-        _friendsProvider.getPeopleAmount,
+        _peopleProvider.getPeopleAmount,
       );
 
       return await response.value.fold(
@@ -55,7 +55,7 @@ class PeopleService {
   }) async {
     try {
       final response = await _keepFreshTokenService.request(
-        () => _friendsProvider.getAllUsers(
+        () => _peopleProvider.getAllUsers(
           lastUserID: lastUserID?.str,
         ),
       );
@@ -89,7 +89,7 @@ class PeopleService {
   }) async {
     try {
       final response = await _keepFreshTokenService.request(
-        () => _friendsProvider.getFriends(
+        () => _peopleProvider.getFriends(
           userID: friendsTo.str,
           lastUserID: lastUserID?.str,
         ),
@@ -120,7 +120,7 @@ class PeopleService {
   }) async {
     try {
       final response = await _keepFreshTokenService.request(
-        () => _friendsProvider.getSubscribers(
+        () => _peopleProvider.getSubscribers(
           userID: subscribersOf.str,
           lastUserID: lastUserID?.str,
         ),
@@ -151,7 +151,7 @@ class PeopleService {
   }) async {
     try {
       final response = await _keepFreshTokenService.request(
-        () => _friendsProvider.getSubscriptions(
+        () => _peopleProvider.getSubscriptions(
           userID: subscriptionsOf.str,
           lastUserID: lastUserID?.str,
         ),

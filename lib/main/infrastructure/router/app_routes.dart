@@ -159,6 +159,7 @@ class _AppRoutes {
     routes: [
       people,
       userWall,
+      friendBids,
     ],
   );
 
@@ -244,20 +245,16 @@ class _AppRoutes {
   );
 
   static final people = GoRoute(
-    path: 'people:userID',
+    path: 'people',
     name: 'people',
     parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
-      final userID = state.params['userID']!;
-
       return CustomTransitionPage(
         key: state.pageKey,
         name: _getName(state),
         arguments: _getArgs(state),
         transitionsBuilder: _leftward,
-        child: PeopleScreen(
-          userID: userID,
-        ),
+        child: const PeopleScreen(),
       );
     },
   );
@@ -319,6 +316,21 @@ class _AppRoutes {
         child: SubscribersScreen(
           userID: userID,
         ),
+      );
+    },
+  );
+
+  static final friendBids = GoRoute(
+    path: 'friend_bids',
+    name: 'friend_bids',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const FriendBidsScreen(),
       );
     },
   );

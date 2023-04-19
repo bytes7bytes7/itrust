@@ -13,4 +13,7 @@ class ProdPeopleStringProvider extends L10nProvider
 
   @override
   String get canNotLoadPeopleAmount => l10n.can_not_load_people_amount;
+
+  @override
+  String get canNotLoadMyself => l10n.can_not_load_myself;
 }

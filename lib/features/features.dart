@@ -5,6 +5,7 @@ export 'chat_list/chat_list.dart';
 export 'common/common.dart';
 export 'connection/connection.dart';
 export 'feed/feed.dart';
+export 'friend_bids/friend_bids.dart';
 export 'lock/lock.dart';
 export 'menu/menu.dart';
 export 'message_burn/message_burn.dart';

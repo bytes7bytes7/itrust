@@ -135,9 +135,17 @@ class $AssetsImageSvgGen {
   /// File path: assets/image/svg/home.svg
   SvgGenImage get home => const SvgGenImage('assets/image/svg/home.svg');
 
+  /// File path: assets/image/svg/keyboard_arrow_down.svg
+  SvgGenImage get keyboardArrowDown =>
+      const SvgGenImage('assets/image/svg/keyboard_arrow_down.svg');
+
   /// File path: assets/image/svg/keyboard_arrow_right.svg
   SvgGenImage get keyboardArrowRight =>
       const SvgGenImage('assets/image/svg/keyboard_arrow_right.svg');
+
+  /// File path: assets/image/svg/keyboard_arrow_up.svg
+  SvgGenImage get keyboardArrowUp =>
+      const SvgGenImage('assets/image/svg/keyboard_arrow_up.svg');
 
   /// File path: assets/image/svg/like.svg
   SvgGenImage get like => const SvgGenImage('assets/image/svg/like.svg');
@@ -176,6 +184,10 @@ class $AssetsImageSvgGen {
 
   /// File path: assets/image/svg/person.svg
   SvgGenImage get person => const SvgGenImage('assets/image/svg/person.svg');
+
+  /// File path: assets/image/svg/person_add.svg
+  SvgGenImage get personAdd =>
+      const SvgGenImage('assets/image/svg/person_add.svg');
 
   /// File path: assets/image/svg/radio_button_checked.svg
   SvgGenImage get radioButtonChecked =>
@@ -226,7 +238,9 @@ class $AssetsImageSvgGen {
         group,
         groups,
         home,
+        keyboardArrowDown,
         keyboardArrowRight,
+        keyboardArrowUp,
         like,
         likeFilled,
         localFireDepartment,
@@ -238,6 +252,7 @@ class $AssetsImageSvgGen {
         notifications,
         notificationsOff,
         person,
+        personAdd,
         radioButtonChecked,
         radioButtonUnchecked,
         removeRedEye,

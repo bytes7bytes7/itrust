@@ -3,5 +3,7 @@ abstract class MenuCoordinator {
 
   void onMyProfileButtonPressed({required String userID});
 
-  void onFriendsButtonPressed({required String userID});
+  void onPeopleButtonPressed();
+
+  void onFriendBidsButtonPressed();
 }
