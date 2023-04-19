@@ -25,11 +25,13 @@ abstract class _FriendBidsStore extends SyncStore with Store {
     required this.inboxStore,
     required this.outboxStore,
     required FriendBidsService friendBidsService,
+    required UserInfoService userInfoService,
     required FriendBidsStringProvider friendBidsStringProvider,
     required BeautifiedNumberProvider beautifiedNumberProvider,
     required FriendBidsCoordinator coordinator,
     required EndUserRepository endUserRepository,
   })  : _friendBidsService = friendBidsService,
+        _userInfoService = userInfoService,
         _friendBidsStringProvider = friendBidsStringProvider,
         _beautifiedNumberProvider = beautifiedNumberProvider,
         _coordinator = coordinator,
@@ -38,12 +40,15 @@ abstract class _FriendBidsStore extends SyncStore with Store {
   final InboxFriendBidsStore inboxStore;
   final OutboxFriendBidsStore outboxStore;
   final FriendBidsService _friendBidsService;
+  final UserInfoService _userInfoService;
   final FriendBidsStringProvider _friendBidsStringProvider;
   final BeautifiedNumberProvider _beautifiedNumberProvider;
   final FriendBidsCoordinator _coordinator;
   final EndUserRepository _endUserRepository;
 
   final int tabsAmount = 2;
+
+  final loadingActionUserIDs = ObservableSet<String>();
 
   @readonly
   bool _isLoading = false;
@@ -134,6 +139,90 @@ abstract class _FriendBidsStore extends SyncStore with Store {
 
         break;
     }
+  }
+
+  @action
+  void acceptBid(String userID) {
+    perform(
+      () async {
+        try {
+          final userInfo =
+              await _userInfoService.acceptFriendBid(UserID.fromString(userID));
+
+          if (userInfo is EndUserInfo) {
+            if (!userInfo.haveIFriendBidFromThisUser) {
+              load();
+            }
+          }
+        } catch (e) {
+          _error = _friendBidsStringProvider.canNotAcceptFriendBid;
+        }
+      },
+      setIsLoading: (v) {
+        if (v) {
+          loadingActionUserIDs.add(userID);
+        } else {
+          loadingActionUserIDs.remove(userID);
+        }
+      },
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void declineBid(String userID) {
+    perform(
+      () async {
+        try {
+          final userInfo = await _userInfoService
+              .declineFriendBid(UserID.fromString(userID));
+
+          if (userInfo is EndUserInfo) {
+            if (!userInfo.haveIFriendBidFromThisUser) {
+              load();
+            }
+          }
+        } catch (e) {
+          _error = _friendBidsStringProvider.canNotDeclineFriendBid;
+        }
+      },
+      setIsLoading: (v) {
+        if (v) {
+          loadingActionUserIDs.add(userID);
+        } else {
+          loadingActionUserIDs.remove(userID);
+        }
+      },
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void cancelBid(String userID) {
+    perform(
+      () async {
+        try {
+          final userInfo =
+              await _userInfoService.cancelFriendBid(UserID.fromString(userID));
+
+          if (userInfo is EndUserInfo) {
+            if (!userInfo.didISentFriendBid) {
+              load();
+            }
+          }
+        } catch (e) {
+          _error = _friendBidsStringProvider.canNotCancelFriendBid;
+        }
+      },
+      setIsLoading: (v) {
+        if (v) {
+          loadingActionUserIDs.add(userID);
+        } else {
+          loadingActionUserIDs.remove(userID);
+        }
+      },
+      removeError: () => _error = '',
+    );
   }
 
   void onBackButtonPressed() {

@@ -3,9 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
 import '../../application/view_models/media_vm/media_vm.dart';
 import 'custom_cached_network_image.dart';
+import 'sized_icon.dart';
 
 const _borderRadius = 4.0;
 const _itemSeparator = 2.0;
@@ -13,6 +15,7 @@ const _maxImages = 9;
 const _sigmaX = 1.0;
 const _sigmaY = 1.0;
 const _errorOpacity = 0.2;
+const _iconSize = 24.0;
 
 class ImageGrid extends StatelessWidget {
   const ImageGrid({
@@ -204,9 +207,11 @@ class _Image extends StatelessWidget {
         return ColoredBox(
           color: theme.shadowColor.withOpacity(_errorOpacity),
           child: Center(
-            child: Icon(
-              Icons.warning_amber,
-              color: theme.scaffoldBackgroundColor,
+            child: SizedIcon(
+              size: _iconSize,
+              icon: Assets.image.svg.warning.svg(
+                color: colorSchemeTX.avatarForeground,
+              ),
             ),
           ),
         );

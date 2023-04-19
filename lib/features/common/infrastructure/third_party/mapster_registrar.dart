@@ -69,6 +69,15 @@ class CommonMapsterRegistrar {
             mapster: _mapster,
           ),
         ),
+      )
+      ..register(
+        MapperMeta.one(
+          (input) => UserInfoToUserInfoVMMapper(
+            input,
+            beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
+            mapster: _mapster,
+          ),
+        ),
       );
   }
 }

@@ -2,7 +2,6 @@ import 'package:mapster/mapster.dart';
 
 import '../../../common/application/providers/beautified_number_provider.dart';
 import '../../../common/application/view_models/view_models.dart';
-import '../../application/view_models/view_models.dart';
 import '../../domain/domain.dart';
 
 class UserInfoToUserInfoVMMapper extends OneSourceMapper<UserInfo, UserInfoVM> {

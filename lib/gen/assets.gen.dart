@@ -218,6 +218,9 @@ class $AssetsImageSvgGen {
   SvgGenImage get visibilityOff =>
       const SvgGenImage('assets/image/svg/visibility_off.svg');
 
+  /// File path: assets/image/svg/warning.svg
+  SvgGenImage get warning => const SvgGenImage('assets/image/svg/warning.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
         add,
@@ -260,7 +263,8 @@ class $AssetsImageSvgGen {
         send,
         settings,
         share,
-        visibilityOff
+        visibilityOff,
+        warning
       ];
 }
 

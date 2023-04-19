@@ -6,11 +6,10 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
-import '../../../../themes/themes.dart';
 import '../../../../utils/hooks/reaction.dart';
+import '../../../common/application/view_models/view_models.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/user_info/user_info_store.dart';
-import '../../application/view_models/user_info_vm/user_info_vm.dart';
 
 const _loadUserInfoKey = 'load user info';
 const _paddingH = 20.0;
@@ -318,8 +317,6 @@ class _Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Observer(
       builder: (context) {
         return Padding(
@@ -333,7 +330,7 @@ class _Actions extends StatelessWidget {
                   child: SmallPrimaryButton(
                     onPressed: userInfoStore.sendFriendBid,
                     child: userInfoStore.isActionLoading
-                        ? _ActionPrimaryLoadingIndicator(theme: theme)
+                        ? const ActionPrimaryLoadingIndicator()
                         : Text(l10n.send_friend_bid_btn),
                   ),
                 ),
@@ -342,7 +339,7 @@ class _Actions extends StatelessWidget {
                   child: SmallSecondaryButton(
                     onPressed: userInfoStore.cancelFriendBid,
                     child: userInfoStore.isActionLoading
-                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        ? const ActionSecondaryLoadingIndicator()
                         : Text(l10n.cancel_friend_bid_btn),
                   ),
                 ),
@@ -351,7 +348,7 @@ class _Actions extends StatelessWidget {
                   child: SmallSecondaryButton(
                     onPressed: userInfoStore.removeFriend,
                     child: userInfoStore.isActionLoading
-                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        ? const ActionSecondaryLoadingIndicator()
                         : Text(l10n.remove_friend_btn),
                   ),
                 ),
@@ -360,7 +357,7 @@ class _Actions extends StatelessWidget {
                   child: SmallSecondaryButton(
                     onPressed: userInfoStore.removeSubscriber,
                     child: userInfoStore.isActionLoading
-                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        ? const ActionSecondaryLoadingIndicator()
                         : Text(l10n.remove_subscriber_btn),
                   ),
                 ),
@@ -369,7 +366,7 @@ class _Actions extends StatelessWidget {
                   child: SmallSecondaryButton(
                     onPressed: userInfoStore.acceptFriendBid,
                     child: userInfoStore.isActionLoading
-                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        ? const ActionSecondaryLoadingIndicator()
                         : Text(l10n.accept_friend_bid_btn),
                   ),
                 ),
@@ -378,7 +375,7 @@ class _Actions extends StatelessWidget {
                   child: SmallSecondaryButton(
                     onPressed: userInfoStore.unsubscribe,
                     child: userInfoStore.isActionLoading
-                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        ? const ActionSecondaryLoadingIndicator()
                         : Text(l10n.unsubscribe_btn),
                   ),
                 ),
@@ -392,7 +389,7 @@ class _Actions extends StatelessWidget {
                         ? userInfoStore.onMessageButtonPressed
                         : null,
                     child: userInfoStore.isActionLoading
-                        ? _ActionPrimaryLoadingIndicator(theme: theme)
+                        ? const ActionPrimaryLoadingIndicator()
                         : Text(l10n.open_chat_btn),
                   ),
                 ),
@@ -401,7 +398,7 @@ class _Actions extends StatelessWidget {
                   child: SmallSecondaryButton(
                     onPressed: userInfoStore.declineFriendBid,
                     child: userInfoStore.isActionLoading
-                        ? _ActionSecondaryLoadingIndicator(theme: theme)
+                        ? const ActionSecondaryLoadingIndicator()
                         : Text(l10n.decline_friend_bid_btn),
                   ),
                 ),
@@ -409,56 +406,6 @@ class _Actions extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _ActionPrimaryLoadingIndicator extends StatelessWidget {
-  const _ActionPrimaryLoadingIndicator({
-    required this.theme,
-  });
-
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
-    final style = buttonStyleTX.smallPrimary;
-
-    final size = style.textStyle?.resolve({MaterialState.focused})?.fontSize;
-
-    return SizedBox(
-      height: size,
-      width: size,
-      child: CircularProgressIndicator(
-        color: style.foregroundColor?.resolve({MaterialState.focused}),
-        strokeWidth: 2,
-      ),
-    );
-  }
-}
-
-class _ActionSecondaryLoadingIndicator extends StatelessWidget {
-  const _ActionSecondaryLoadingIndicator({
-    required this.theme,
-  });
-
-  final ThemeData theme;
-
-  @override
-  Widget build(BuildContext context) {
-    final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
-    final style = buttonStyleTX.smallSecondary;
-
-    final size = style.textStyle?.resolve({MaterialState.focused})?.fontSize;
-
-    return SizedBox(
-      height: size,
-      width: size,
-      child: CircularProgressIndicator(
-        color: style.foregroundColor?.resolve({MaterialState.focused}),
-        strokeWidth: 2,
-      ),
     );
   }
 }

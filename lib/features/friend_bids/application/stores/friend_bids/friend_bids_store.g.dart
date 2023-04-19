@@ -165,6 +165,39 @@ mixin _$FriendBidsStore on _FriendBidsStore, Store {
   }
 
   @override
+  void acceptBid(String userID) {
+    final _$actionInfo = _$_FriendBidsStoreActionController.startAction(
+        name: '_FriendBidsStore.acceptBid');
+    try {
+      return super.acceptBid(userID);
+    } finally {
+      _$_FriendBidsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void declineBid(String userID) {
+    final _$actionInfo = _$_FriendBidsStoreActionController.startAction(
+        name: '_FriendBidsStore.declineBid');
+    try {
+      return super.declineBid(userID);
+    } finally {
+      _$_FriendBidsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void cancelBid(String userID) {
+    final _$actionInfo = _$_FriendBidsStoreActionController.startAction(
+        name: '_FriendBidsStore.cancelBid');
+    try {
+      return super.cancelBid(userID);
+    } finally {
+      _$_FriendBidsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 

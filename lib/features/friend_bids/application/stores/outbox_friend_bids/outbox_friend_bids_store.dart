@@ -28,6 +28,8 @@ abstract class _OutboxFriendBidsStore extends SyncStore with Store {
   final Mapster _mapster;
   var _isInitialized = false;
 
+  final loadingActionUserIDs = ObservableSet<String>();
+
   @readonly
   bool _isLoading = false;
 

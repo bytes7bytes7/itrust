@@ -27,6 +27,7 @@ abstract class _InboxFriendBidsStore extends SyncStore with Store {
   final Mapster _mapster;
   var _isInitialized = false;
 
+
   @readonly
   bool _isLoading = false;
 

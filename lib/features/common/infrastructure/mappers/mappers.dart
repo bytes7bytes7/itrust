@@ -4,4 +4,5 @@ export 'post_end_user_to_post_vm.dart';
 export 'post_staff_user_to_post_vm.dart';
 export 'post_user_to_post_vm_mapper.dart';
 export 'staff_user_to_staff_user_vm_mapper.dart';
+export 'user_info_to_user_info_vm_mapper.dart';
 export 'user_to_user_vm_mapper.dart';

@@ -8,5 +8,6 @@ export 'post_response_json_converter.dart';
 export 'posts_response_json_converter.dart';
 export 'refresh_token_response_json_converter.dart';
 export 'register_response_json_converter.dart';
+export 'user_info_response_json_converter.dart';
 export 'users_response_json_converter.dart';
 export 'verify_token_response_json_converter.dart';

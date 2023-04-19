@@ -4,10 +4,8 @@ import 'package:mobx/mobx.dart';
 
 import '../../../../../repositories/interfaces/end_user_repository.dart';
 import '../../../../common/common.dart';
-import '../../../domain/services/user_info_service.dart';
 import '../../coordinators/coordinators.dart';
 import '../../providers/user_info_string_provider.dart';
-import '../../view_models/user_info_vm/user_info_vm.dart';
 import '../user_posts/user_posts_store.dart';
 
 part 'user_info_store.g.dart';

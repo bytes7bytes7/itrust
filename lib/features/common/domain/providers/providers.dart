@@ -7,4 +7,5 @@ export 'keep_fresh_token_provider.dart';
 export 'post_provider.dart';
 export 'server_availability_provider.dart';
 export 'server_exception_provider.dart';
+export 'user_info_provider.dart';
 export 'user_provider.dart';

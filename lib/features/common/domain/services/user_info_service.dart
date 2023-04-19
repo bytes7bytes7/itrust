@@ -1,10 +1,9 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../common/domain/services/keep_fresh_token_service.dart';
-import '../../../common/domain/value_objects/value_objects.dart';
 import '../dto/dto.dart';
 import '../providers/user_info_provider.dart';
-import '../value_objects/user_info/user_info.dart';
+import '../value_objects/value_objects.dart';
+import 'keep_fresh_token_service.dart';
 
 @singleton
 class UserInfoService {

@@ -16,6 +16,7 @@ class LoadingErrorContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: adapt for scroll (for RefreshIndicator)
     final theme = Theme.of(context);
     final l10n = context.l10n;
 

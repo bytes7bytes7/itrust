@@ -5,8 +5,8 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../../../utils/json_either_wrapper.dart';
 import '../../../../../utils/server_settings.dart';
+import '../../../../common/domain/providers/user_info_provider.dart';
 import '../../../domain/dto/dto.dart';
-import '../../../domain/providers/user_info_provider.dart';
 
 part 'user_info_provider.g.dart';
 

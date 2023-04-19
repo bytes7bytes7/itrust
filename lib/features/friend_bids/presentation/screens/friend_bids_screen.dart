@@ -10,6 +10,7 @@ import '../../../../utils/hooks/reaction.dart';
 import '../../../common/application/view_models/user_vm/user_vm.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/friend_bids/friend_bids_store.dart';
+import '../widgets/widgets.dart';
 
 const _loadMeKey = 'load me (friend bids)';
 const _loadPeopleKey = 'load friend bids';
@@ -227,7 +228,16 @@ class _InboxTab extends StatelessWidget {
           loadMore: inboxStore.loadMoreBids,
           isLoadingMore: inboxStore.isLoadingMore,
           users: inboxStore.users,
-          onUserPressed: friendBidsStore.onUserAvatarPressed,
+          childBuilder: (user) {
+            return InboxFriendBidListTile(
+              user: user,
+              isLoading: friendBidsStore.loadingActionUserIDs.contains(user.id),
+              onAvatarPressed: () =>
+                  friendBidsStore.onUserAvatarPressed(user.id),
+              onAcceptPressed: () => friendBidsStore.acceptBid(user.id),
+              onDeclinePressed: () => friendBidsStore.declineBid(user.id),
+            );
+          },
         );
       },
     );
@@ -279,7 +289,15 @@ class _OutboxTab extends StatelessWidget {
           loadMore: outboxStore.loadMoreBids,
           isLoadingMore: outboxStore.isLoadingMore,
           users: outboxStore.users,
-          onUserPressed: friendBidsStore.onUserAvatarPressed,
+          childBuilder: (user) {
+            return OutboxFriendBidListTile(
+              user: user,
+              isLoading: friendBidsStore.loadingActionUserIDs.contains(user.id),
+              onAvatarPressed: () =>
+                  friendBidsStore.onUserAvatarPressed(user.id),
+              onCancelPressed: () => friendBidsStore.cancelBid(user.id),
+            );
+          },
         );
       },
     );
@@ -340,7 +358,7 @@ class _BidsLoaded extends StatelessWidget {
     required this.loadMore,
     required this.isLoadingMore,
     required this.users,
-    required this.onUserPressed,
+    required this.childBuilder,
   });
 
   final FriendBidsStore friendBidsStore;
@@ -350,7 +368,7 @@ class _BidsLoaded extends StatelessWidget {
   final VoidCallback loadMore;
   final bool isLoadingMore;
   final List<UserVM> users;
-  final void Function(String) onUserPressed;
+  final Widget Function(UserVM) childBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -375,10 +393,7 @@ class _BidsLoaded extends StatelessWidget {
 
           final user = users[index];
 
-          return UserListTile(
-            user: user,
-            onPressed: () => onUserPressed(user.id),
-          );
+          return childBuilder.call(user);
         },
       ),
     );

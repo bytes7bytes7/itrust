@@ -19,4 +19,13 @@ class ProdFriendBidsStringProvider extends L10nProvider
 
   @override
   String get canNotLoadOutboxFriendBids => l10n.can_not_load_outbox_friend_bids;
+
+  @override
+  String get canNotAcceptFriendBid => l10n.can_not_accept_friend_bid;
+
+  @override
+  String get canNotDeclineFriendBid => l10n.can_not_decline_friend_bid;
+
+  @override
+  String get canNotCancelFriendBid => l10n.can_not_cancel_friend_bid;
 }
