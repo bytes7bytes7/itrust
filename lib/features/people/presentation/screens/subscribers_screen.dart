@@ -116,6 +116,12 @@ class _Body extends StatelessWidget {
           );
         }
 
+        if (subscribersStore.hasError && subscribersStore.subscribers.isEmpty) {
+          return LoadingErrorContainer(
+            onRetry: subscribersStore.refresh,
+          );
+        }
+
         if (subscribersStore.subscribers.isEmpty) {
           // TODO: add refresh indicator
           return Padding(

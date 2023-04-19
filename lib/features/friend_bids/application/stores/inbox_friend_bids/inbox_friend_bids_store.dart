@@ -48,6 +48,9 @@ abstract class _InboxFriendBidsStore extends SyncStore with Store {
   @readonly
   bool _isLoadingMore = false;
 
+  @computed
+  bool get hasError => _error.isNotEmpty;
+
   void init(String id) {
     if (!_isInitialized) {
       _userID = UserID.fromString(id);

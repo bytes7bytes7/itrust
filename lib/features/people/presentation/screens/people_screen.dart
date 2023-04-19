@@ -241,6 +241,12 @@ class _AllUsersTab extends StatelessWidget {
           return const _UsersLoading();
         }
 
+        if (allUsersStore.hasError && allUsersStore.users.isEmpty) {
+          return LoadingErrorContainer(
+            onRetry: peopleStore.refresh,
+          );
+        }
+
         if (allUsersStore.users.isEmpty) {
           return _UsersEmpty(
             theme: theme,
@@ -285,6 +291,12 @@ class _FriendsTab extends StatelessWidget {
       builder: (context) {
         if (friendsStore.isLoading) {
           return const _UsersLoading();
+        }
+
+        if (friendsStore.hasError && friendsStore.friends.isEmpty) {
+          return LoadingErrorContainer(
+            onRetry: peopleStore.refresh,
+          );
         }
 
         if (friendsStore.friends.isEmpty) {
@@ -333,6 +345,12 @@ class _SubscribersTab extends StatelessWidget {
           return const _UsersLoading();
         }
 
+        if (subscribersStore.hasError && subscribersStore.subscribers.isEmpty) {
+          return LoadingErrorContainer(
+            onRetry: peopleStore.refresh,
+          );
+        }
+
         if (subscribersStore.subscribers.isEmpty) {
           return _UsersEmpty(
             theme: theme,
@@ -377,6 +395,13 @@ class _SubscriptionsTab extends StatelessWidget {
       builder: (context) {
         if (subscriptionsStore.isLoading) {
           return const _UsersLoading();
+        }
+
+        if (subscriptionsStore.hasError &&
+            subscriptionsStore.subscriptions.isEmpty) {
+          return LoadingErrorContainer(
+            onRetry: peopleStore.refresh,
+          );
         }
 
         if (subscriptionsStore.subscriptions.isEmpty) {

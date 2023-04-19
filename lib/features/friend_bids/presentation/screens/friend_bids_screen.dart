@@ -203,6 +203,12 @@ class _InboxTab extends StatelessWidget {
           return const _UsersLoading();
         }
 
+        if (inboxStore.hasError && inboxStore.users.isEmpty) {
+          return LoadingErrorContainer(
+            onRetry: friendBidsStore.refresh,
+          );
+        }
+
         if (inboxStore.users.isEmpty) {
           return _BidsEmpty(
             theme: theme,
@@ -247,6 +253,12 @@ class _OutboxTab extends StatelessWidget {
       builder: (context) {
         if (outboxStore.isLoading) {
           return const _UsersLoading();
+        }
+
+        if (outboxStore.hasError && outboxStore.users.isEmpty) {
+          return LoadingErrorContainer(
+            onRetry: friendBidsStore.refresh,
+          );
         }
 
         if (outboxStore.users.isEmpty) {

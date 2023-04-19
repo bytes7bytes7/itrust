@@ -52,6 +52,9 @@ abstract class _FriendsStore extends SyncStore with Store {
   @readonly
   bool _isLoadingMore = false;
 
+  @computed
+  bool get hasError => _error.isNotEmpty;
+
   void init(String id) {
     if (!_isInitialized) {
       _friendsTo = UserID.fromString(id);
