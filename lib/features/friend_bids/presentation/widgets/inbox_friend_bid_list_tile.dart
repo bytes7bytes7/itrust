@@ -38,66 +38,71 @@ class InboxFriendBidListTile extends HookWidget {
 
     final isExpandedNotifier = useValueNotifier(false);
 
-    return ValueListenableBuilder<bool>(
-      valueListenable: isExpandedNotifier,
-      builder: (context, isExpanded, child) {
-        return ExpansionTile(
-          leading: UserCircleAvatar(
-            url: user.avatarUrl,
-            online: user.map(end: (v) => v.isOnline, staff: (_) => false),
-          ),
-          title: Text(
-            user.name,
-            style: theme.textTheme.headline5,
-          ),
-          subtitle: Text(
-            user.nick ?? user.id,
-            style: theme.textTheme.bodyText2,
-          ),
-          trailing: SizedIcon(
-            size: _iconSize,
-            icon: SvgPicture.asset(
-              isExpanded
-                  ? Assets.image.svg.keyboardArrowUp.path
-                  : Assets.image.svg.keyboardArrowDown.path,
-              color: colorSchemeTX.simpleIcon,
+    return Theme(
+      data: theme.copyWith(
+        dividerColor: Colors.transparent,
+      ),
+      child: ValueListenableBuilder<bool>(
+        valueListenable: isExpandedNotifier,
+        builder: (context, isExpanded, child) {
+          return ExpansionTile(
+            leading: UserCircleAvatar(
+              url: user.avatarUrl,
+              online: user.map(end: (v) => v.isOnline, staff: (_) => false),
             ),
-          ),
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: _paddingH,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: SmallSecondaryButton(
-                      onPressed: onAcceptPressed,
-                      child: isLoading
-                          ? const ActionSecondaryLoadingIndicator()
-                          : Text(l10n.accept_friend_bid_btn_short),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: SmallSecondaryButton(
-                      onPressed: onDeclinePressed,
-                      child: isLoading
-                          ? const ActionSecondaryLoadingIndicator()
-                          : Text(l10n.decline_friend_bid_btn_short),
-                    ),
-                  ),
-                ],
+            title: Text(
+              user.name,
+              style: theme.textTheme.headline5,
+            ),
+            subtitle: Text(
+              user.nick ?? user.id,
+              style: theme.textTheme.bodyText2,
+            ),
+            trailing: SizedIcon(
+              size: _iconSize,
+              icon: SvgPicture.asset(
+                isExpanded
+                    ? Assets.image.svg.keyboardArrowUp.path
+                    : Assets.image.svg.keyboardArrowDown.path,
+                color: colorSchemeTX.simpleIcon,
               ),
             ),
-          ],
-          onExpansionChanged: (value) {
-            isExpandedNotifier.value = value;
-          },
-        );
-      },
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: _paddingH,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SmallSecondaryButton(
+                        onPressed: onAcceptPressed,
+                        child: isLoading
+                            ? const ActionSecondaryLoadingIndicator()
+                            : Text(l10n.accept_friend_bid_btn_short),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: SmallSecondaryButton(
+                        onPressed: onDeclinePressed,
+                        child: isLoading
+                            ? const ActionSecondaryLoadingIndicator()
+                            : Text(l10n.decline_friend_bid_btn_short),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            onExpansionChanged: (value) {
+              isExpandedNotifier.value = value;
+            },
+          );
+        },
+      ),
     );
   }
 }

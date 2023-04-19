@@ -14,8 +14,8 @@ Future<void> main() async {
     widgetsBinding: WidgetsFlutterBinding.ensureInitialized(),
   );
 
-  const env = String.fromEnvironment('ENV', defaultValue: 'test');
-  const printLogs = bool.fromEnvironment('PRINT_LOGS', defaultValue: true);
+  const env = String.fromEnvironment('ENV', defaultValue: 'dev');
+  const printLogs = bool.fromEnvironment('PRINT_LOGS', defaultValue: false);
 
   _configLogger(printLogs: printLogs);
   setPathUrlStrategy();
