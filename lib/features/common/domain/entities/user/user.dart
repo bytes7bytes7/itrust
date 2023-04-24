@@ -15,9 +15,10 @@ class User with _$User {
     required UserID id,
     required String email,
     required String firstName,
-    required List<String> avatarUrls,
+    required int avatarsAmount,
     required bool isOnline,
     int? lastSeenAtMSSinceEpoch,
+    String? avatarUrl,
     String? lastName,
     String? nick,
   }) = EndUser;
@@ -25,7 +26,8 @@ class User with _$User {
   const factory User.staff({
     required UserID id,
     required String name,
-    required List<String> avatarUrls,
+    required int avatarsAmount,
+    String? avatarUrl,
     String? nick,
   }) = StaffUser;
 

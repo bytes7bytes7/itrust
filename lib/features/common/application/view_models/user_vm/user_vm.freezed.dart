@@ -18,33 +18,54 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$UserVM {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get avatarsAmount => throw _privateConstructorUsedError;
   String? get avatarUrl => throw _privateConstructorUsedError;
   String? get nick => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, String name, bool isOnline,
-            String? lastSeenAt, String? avatarUrl, String? nick)
-        end,
     required TResult Function(
-            String id, String name, String? avatarUrl, String? nick)
+            String id,
+            String name,
+            bool isOnline,
+            String avatarsAmount,
+            String? lastSeenAt,
+            String? avatarUrl,
+            String? nick)
+        end,
+    required TResult Function(String id, String name, String avatarsAmount,
+            String? avatarUrl, String? nick)
         staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String id, String name, bool isOnline, String? lastSeenAt,
-            String? avatarUrl, String? nick)?
+    TResult? Function(
+            String id,
+            String name,
+            bool isOnline,
+            String avatarsAmount,
+            String? lastSeenAt,
+            String? avatarUrl,
+            String? nick)?
         end,
-    TResult? Function(String id, String name, String? avatarUrl, String? nick)?
+    TResult? Function(String id, String name, String avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, String name, bool isOnline, String? lastSeenAt,
-            String? avatarUrl, String? nick)?
+    TResult Function(
+            String id,
+            String name,
+            bool isOnline,
+            String avatarsAmount,
+            String? lastSeenAt,
+            String? avatarUrl,
+            String? nick)?
         end,
-    TResult Function(String id, String name, String? avatarUrl, String? nick)?
+    TResult Function(String id, String name, String avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
     required TResult orElse(),
   }) =>
@@ -78,7 +99,12 @@ abstract class $UserVMCopyWith<$Res> {
   factory $UserVMCopyWith(UserVM value, $Res Function(UserVM) then) =
       _$UserVMCopyWithImpl<$Res, UserVM>;
   @useResult
-  $Res call({String id, String name, String? avatarUrl, String? nick});
+  $Res call(
+      {String id,
+      String name,
+      String avatarsAmount,
+      String? avatarUrl,
+      String? nick});
 }
 
 /// @nodoc
@@ -96,6 +122,7 @@ class _$UserVMCopyWithImpl<$Res, $Val extends UserVM>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? avatarsAmount = null,
     Object? avatarUrl = freezed,
     Object? nick = freezed,
   }) {
@@ -107,6 +134,10 @@ class _$UserVMCopyWithImpl<$Res, $Val extends UserVM>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarsAmount: null == avatarsAmount
+          ? _value.avatarsAmount
+          : avatarsAmount // ignore: cast_nullable_to_non_nullable
               as String,
       avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
@@ -131,6 +162,7 @@ abstract class _$$EndUserVMCopyWith<$Res> implements $UserVMCopyWith<$Res> {
       {String id,
       String name,
       bool isOnline,
+      String avatarsAmount,
       String? lastSeenAt,
       String? avatarUrl,
       String? nick});
@@ -150,6 +182,7 @@ class __$$EndUserVMCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? isOnline = null,
+    Object? avatarsAmount = null,
     Object? lastSeenAt = freezed,
     Object? avatarUrl = freezed,
     Object? nick = freezed,
@@ -167,6 +200,10 @@ class __$$EndUserVMCopyWithImpl<$Res>
           ? _value.isOnline
           : isOnline // ignore: cast_nullable_to_non_nullable
               as bool,
+      avatarsAmount: null == avatarsAmount
+          ? _value.avatarsAmount
+          : avatarsAmount // ignore: cast_nullable_to_non_nullable
+              as String,
       lastSeenAt: freezed == lastSeenAt
           ? _value.lastSeenAt
           : lastSeenAt // ignore: cast_nullable_to_non_nullable
@@ -190,6 +227,7 @@ class _$EndUserVM implements EndUserVM {
       {required this.id,
       required this.name,
       required this.isOnline,
+      required this.avatarsAmount,
       this.lastSeenAt,
       this.avatarUrl,
       this.nick});
@@ -201,6 +239,8 @@ class _$EndUserVM implements EndUserVM {
   @override
   final bool isOnline;
   @override
+  final String avatarsAmount;
+  @override
   final String? lastSeenAt;
   @override
   final String? avatarUrl;
@@ -209,7 +249,7 @@ class _$EndUserVM implements EndUserVM {
 
   @override
   String toString() {
-    return 'UserVM.end(id: $id, name: $name, isOnline: $isOnline, lastSeenAt: $lastSeenAt, avatarUrl: $avatarUrl, nick: $nick)';
+    return 'UserVM.end(id: $id, name: $name, isOnline: $isOnline, avatarsAmount: $avatarsAmount, lastSeenAt: $lastSeenAt, avatarUrl: $avatarUrl, nick: $nick)';
   }
 
   @override
@@ -221,6 +261,8 @@ class _$EndUserVM implements EndUserVM {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.isOnline, isOnline) ||
                 other.isOnline == isOnline) &&
+            (identical(other.avatarsAmount, avatarsAmount) ||
+                other.avatarsAmount == avatarsAmount) &&
             (identical(other.lastSeenAt, lastSeenAt) ||
                 other.lastSeenAt == lastSeenAt) &&
             (identical(other.avatarUrl, avatarUrl) ||
@@ -229,8 +271,8 @@ class _$EndUserVM implements EndUserVM {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, isOnline, lastSeenAt, avatarUrl, nick);
+  int get hashCode => Object.hash(runtimeType, id, name, isOnline,
+      avatarsAmount, lastSeenAt, avatarUrl, nick);
 
   @JsonKey(ignore: true)
   @override
@@ -241,40 +283,62 @@ class _$EndUserVM implements EndUserVM {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, String name, bool isOnline,
-            String? lastSeenAt, String? avatarUrl, String? nick)
-        end,
     required TResult Function(
-            String id, String name, String? avatarUrl, String? nick)
+            String id,
+            String name,
+            bool isOnline,
+            String avatarsAmount,
+            String? lastSeenAt,
+            String? avatarUrl,
+            String? nick)
+        end,
+    required TResult Function(String id, String name, String avatarsAmount,
+            String? avatarUrl, String? nick)
         staff,
   }) {
-    return end(id, name, isOnline, lastSeenAt, avatarUrl, nick);
+    return end(id, name, isOnline, avatarsAmount, lastSeenAt, avatarUrl, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String id, String name, bool isOnline, String? lastSeenAt,
-            String? avatarUrl, String? nick)?
+    TResult? Function(
+            String id,
+            String name,
+            bool isOnline,
+            String avatarsAmount,
+            String? lastSeenAt,
+            String? avatarUrl,
+            String? nick)?
         end,
-    TResult? Function(String id, String name, String? avatarUrl, String? nick)?
+    TResult? Function(String id, String name, String avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
   }) {
-    return end?.call(id, name, isOnline, lastSeenAt, avatarUrl, nick);
+    return end?.call(
+        id, name, isOnline, avatarsAmount, lastSeenAt, avatarUrl, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, String name, bool isOnline, String? lastSeenAt,
-            String? avatarUrl, String? nick)?
+    TResult Function(
+            String id,
+            String name,
+            bool isOnline,
+            String avatarsAmount,
+            String? lastSeenAt,
+            String? avatarUrl,
+            String? nick)?
         end,
-    TResult Function(String id, String name, String? avatarUrl, String? nick)?
+    TResult Function(String id, String name, String avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
     required TResult orElse(),
   }) {
     if (end != null) {
-      return end(id, name, isOnline, lastSeenAt, avatarUrl, nick);
+      return end(
+          id, name, isOnline, avatarsAmount, lastSeenAt, avatarUrl, nick);
     }
     return orElse();
   }
@@ -316,6 +380,7 @@ abstract class EndUserVM implements UserVM {
       {required final String id,
       required final String name,
       required final bool isOnline,
+      required final String avatarsAmount,
       final String? lastSeenAt,
       final String? avatarUrl,
       final String? nick}) = _$EndUserVM;
@@ -325,6 +390,8 @@ abstract class EndUserVM implements UserVM {
   @override
   String get name;
   bool get isOnline;
+  @override
+  String get avatarsAmount;
   String? get lastSeenAt;
   @override
   String? get avatarUrl;
@@ -343,7 +410,12 @@ abstract class _$$StaffUserVMCopyWith<$Res> implements $UserVMCopyWith<$Res> {
       __$$StaffUserVMCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String? avatarUrl, String? nick});
+  $Res call(
+      {String id,
+      String name,
+      String avatarsAmount,
+      String? avatarUrl,
+      String? nick});
 }
 
 /// @nodoc
@@ -359,6 +431,7 @@ class __$$StaffUserVMCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? avatarsAmount = null,
     Object? avatarUrl = freezed,
     Object? nick = freezed,
   }) {
@@ -370,6 +443,10 @@ class __$$StaffUserVMCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      avatarsAmount: null == avatarsAmount
+          ? _value.avatarsAmount
+          : avatarsAmount // ignore: cast_nullable_to_non_nullable
               as String,
       avatarUrl: freezed == avatarUrl
           ? _value.avatarUrl
@@ -387,12 +464,18 @@ class __$$StaffUserVMCopyWithImpl<$Res>
 
 class _$StaffUserVM implements StaffUserVM {
   const _$StaffUserVM(
-      {required this.id, required this.name, this.avatarUrl, this.nick});
+      {required this.id,
+      required this.name,
+      required this.avatarsAmount,
+      this.avatarUrl,
+      this.nick});
 
   @override
   final String id;
   @override
   final String name;
+  @override
+  final String avatarsAmount;
   @override
   final String? avatarUrl;
   @override
@@ -400,7 +483,7 @@ class _$StaffUserVM implements StaffUserVM {
 
   @override
   String toString() {
-    return 'UserVM.staff(id: $id, name: $name, avatarUrl: $avatarUrl, nick: $nick)';
+    return 'UserVM.staff(id: $id, name: $name, avatarsAmount: $avatarsAmount, avatarUrl: $avatarUrl, nick: $nick)';
   }
 
   @override
@@ -410,13 +493,16 @@ class _$StaffUserVM implements StaffUserVM {
             other is _$StaffUserVM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.avatarsAmount, avatarsAmount) ||
+                other.avatarsAmount == avatarsAmount) &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl) &&
             (identical(other.nick, nick) || other.nick == nick));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, avatarUrl, nick);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, avatarsAmount, avatarUrl, nick);
 
   @JsonKey(ignore: true)
   @override
@@ -427,40 +513,60 @@ class _$StaffUserVM implements StaffUserVM {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, String name, bool isOnline,
-            String? lastSeenAt, String? avatarUrl, String? nick)
-        end,
     required TResult Function(
-            String id, String name, String? avatarUrl, String? nick)
+            String id,
+            String name,
+            bool isOnline,
+            String avatarsAmount,
+            String? lastSeenAt,
+            String? avatarUrl,
+            String? nick)
+        end,
+    required TResult Function(String id, String name, String avatarsAmount,
+            String? avatarUrl, String? nick)
         staff,
   }) {
-    return staff(id, name, avatarUrl, nick);
+    return staff(id, name, avatarsAmount, avatarUrl, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String id, String name, bool isOnline, String? lastSeenAt,
-            String? avatarUrl, String? nick)?
+    TResult? Function(
+            String id,
+            String name,
+            bool isOnline,
+            String avatarsAmount,
+            String? lastSeenAt,
+            String? avatarUrl,
+            String? nick)?
         end,
-    TResult? Function(String id, String name, String? avatarUrl, String? nick)?
+    TResult? Function(String id, String name, String avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
   }) {
-    return staff?.call(id, name, avatarUrl, nick);
+    return staff?.call(id, name, avatarsAmount, avatarUrl, nick);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, String name, bool isOnline, String? lastSeenAt,
-            String? avatarUrl, String? nick)?
+    TResult Function(
+            String id,
+            String name,
+            bool isOnline,
+            String avatarsAmount,
+            String? lastSeenAt,
+            String? avatarUrl,
+            String? nick)?
         end,
-    TResult Function(String id, String name, String? avatarUrl, String? nick)?
+    TResult Function(String id, String name, String avatarsAmount,
+            String? avatarUrl, String? nick)?
         staff,
     required TResult orElse(),
   }) {
     if (staff != null) {
-      return staff(id, name, avatarUrl, nick);
+      return staff(id, name, avatarsAmount, avatarUrl, nick);
     }
     return orElse();
   }
@@ -501,6 +607,7 @@ abstract class StaffUserVM implements UserVM {
   const factory StaffUserVM(
       {required final String id,
       required final String name,
+      required final String avatarsAmount,
       final String? avatarUrl,
       final String? nick}) = _$StaffUserVM;
 
@@ -508,6 +615,8 @@ abstract class StaffUserVM implements UserVM {
   String get id;
   @override
   String get name;
+  @override
+  String get avatarsAmount;
   @override
   String? get avatarUrl;
   @override

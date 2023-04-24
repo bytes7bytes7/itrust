@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:mapster/mapster.dart';
 
 import '../../../common/common.dart';
@@ -50,7 +49,7 @@ class CommentUserToCommentVMMapper
               (user.lastName != null ? ' ${user.lastName!}' : '');
         },
       ),
-      avatarUrl: _user.avatarUrls.firstOrNull,
+      avatarUrl: _user.avatarUrl,
       likedByMe: _comment.likedByMe,
       likesAmountWithoutMyLike: _beautifiedNumberProvider
           .beautify(likesAmountWithoutMyLike, showZero: false),

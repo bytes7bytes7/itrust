@@ -19,7 +19,7 @@ final _me = User.end(
   email: 'bytes7@gmail.com',
   firstName: 'first',
   lastName: 'last',
-  avatarUrls: [],
+  avatarsAmount: 0,
   isOnline: true,
 );
 

@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:mapster/mapster.dart';
 
 import '../../application/providers/beautified_number_provider.dart';
@@ -32,7 +31,7 @@ class PostStaffUserToPostVM extends TwoSourcesMapper<Post, StaffUser, PostVM> {
       id: _post.id.str,
       authorID: _post.authorID.str,
       authorName: _user.name,
-      avatarUrl: _user.avatarUrls.firstOrNull,
+      avatarUrl: _user.avatarUrl,
       text: _post.text,
       createdAt: _formattedDateProvider.inRelationToNow(_post.createdAt),
       media: _post.media.map((e) => _mapster.map1(e, To<MediaVM>())).toList(),

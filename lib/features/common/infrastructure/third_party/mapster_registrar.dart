@@ -58,10 +58,18 @@ class CommonMapsterRegistrar {
           (input) => EndUserToEndUserVMMapper(
             input,
             formattedDateProvider: _getIt.get<FormattedDateProvider>(),
+            beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
           ),
         ),
       )
-      ..register(MapperMeta.one(StaffUserToStaffUserVMMapper.new))
+      ..register(
+        MapperMeta.one(
+          (input) => StaffUserToStaffUserVMMapper(
+            input,
+            beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
+          ),
+        ),
+      )
       ..register(
         MapperMeta.one(
           (input) => UserToUserVMMapper(

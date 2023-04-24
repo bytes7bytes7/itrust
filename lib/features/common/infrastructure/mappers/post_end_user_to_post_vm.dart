@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:mapster/mapster.dart';
 
 import '../../application/providers/beautified_number_provider.dart';
@@ -34,7 +33,7 @@ class PostEndUserToPostVMMapper
       authorID: _post.authorID.str,
       authorName: _user.firstName +
           (_user.lastName != null ? ' ${_user.lastName!}' : ''),
-      avatarUrl: _user.avatarUrls.firstOrNull,
+      avatarUrl: _user.avatarUrl,
       text: _post.text,
       createdAt: _formattedDateProvider.inRelationToNow(_post.createdAt),
       media: _post.media.map((e) => _mapster.map1(e, To<MediaVM>())).toList(),

@@ -11,6 +11,7 @@ class UserVM with _$UserVM {
     required String id,
     required String name,
     required bool isOnline,
+    required String avatarsAmount,
     String? lastSeenAt,
     String? avatarUrl,
     String? nick,
@@ -19,6 +20,7 @@ class UserVM with _$UserVM {
   const factory UserVM.staff({
     required String id,
     required String name,
+    required String avatarsAmount,
     String? avatarUrl,
     String? nick,
   }) = StaffUserVM;

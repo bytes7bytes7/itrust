@@ -1,12 +1,15 @@
 import 'dart:async';
 
 import 'package:injectable/injectable.dart';
+import 'package:logging/logging.dart';
 
 import '../../../../repositories/interfaces/interfaces.dart';
 import '../../../common/domain/domain.dart';
 import '../dto/dto.dart';
 import '../providers/account_provider.dart';
 import '../value_objects/device_session_list/device_session_list.dart';
+
+final _logger = Logger('$AccountService');
 
 @singleton
 class AccountService {
@@ -46,8 +49,10 @@ class AccountService {
             .request(() => _userProvider.getUserByID(id.str));
 
         await response.value.match(
+          // ignore: unnecessary_lambdas
           (l) {
             // TODO: think
+            _logger.severe(l);
           },
           (r) async {
             final user = r.user;

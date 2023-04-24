@@ -26,6 +26,7 @@ class InboxFriendBidListTile extends HookWidget {
 
   final UserVM user;
   final bool isLoading;
+  // TODO: use onAvatarPressed
   final VoidCallback onAvatarPressed;
   final VoidCallback onAcceptPressed;
   final VoidCallback onDeclinePressed;
