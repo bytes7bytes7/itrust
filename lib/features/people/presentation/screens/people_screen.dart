@@ -249,6 +249,7 @@ class _AllUsersTab extends StatelessWidget {
 
         if (allUsersStore.users.isEmpty) {
           return _UsersEmpty(
+            peopleStore: peopleStore,
             theme: theme,
             text: l10n.no_other_users,
             child: Assets.lottie.nothing.lottie(),
@@ -301,6 +302,7 @@ class _FriendsTab extends StatelessWidget {
 
         if (friendsStore.friends.isEmpty) {
           return _UsersEmpty(
+            peopleStore: peopleStore,
             theme: theme,
             text: l10n.you_have_no_friends,
             child: Assets.lottie.nothing.lottie(),
@@ -353,6 +355,7 @@ class _SubscribersTab extends StatelessWidget {
 
         if (subscribersStore.subscribers.isEmpty) {
           return _UsersEmpty(
+            peopleStore: peopleStore,
             theme: theme,
             text: l10n.you_have_no_subscribers,
             child: Assets.lottie.nothing.lottie(),
@@ -406,6 +409,7 @@ class _SubscriptionsTab extends StatelessWidget {
 
         if (subscriptionsStore.subscriptions.isEmpty) {
           return _UsersEmpty(
+            peopleStore: peopleStore,
             theme: theme,
             text: l10n.you_have_no_subscriptions,
             child: Assets.lottie.nothing.lottie(),
@@ -442,33 +446,39 @@ class _UsersLoading extends StatelessWidget {
 
 class _UsersEmpty extends StatelessWidget {
   const _UsersEmpty({
+    required this.peopleStore,
     required this.theme,
     required this.text,
     this.child,
   });
 
+  final PeopleStore peopleStore;
   final ThemeData theme;
   final String text;
   final Widget? child;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: add refresh indicator
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 10,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          child ?? const SizedBox.shrink(),
-          Text(
-            text,
-            style: theme.textTheme.bodyText1,
-            textAlign: TextAlign.center,
+    return RefreshIndicator(
+      onRefresh: () async => peopleStore.refresh(),
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 40,
           ),
-        ],
+          child: Column(
+            children: [
+              child ?? const SizedBox.shrink(),
+              Text(
+                text,
+                style: theme.textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

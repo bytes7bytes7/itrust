@@ -1,3 +1,4 @@
+export 'chats_response/chats_response.dart';
 export 'end_users_response/end_users_response.dart';
 export 'get_user_by_id_response/get_user_by_id_response.dart';
 export 'log_in_request/log_in_request.dart';

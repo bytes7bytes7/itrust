@@ -214,6 +214,10 @@ class $AssetsImageSvgGen {
   /// File path: assets/image/svg/share.svg
   SvgGenImage get share => const SvgGenImage('assets/image/svg/share.svg');
 
+  /// File path: assets/image/svg/translate.svg
+  SvgGenImage get translate =>
+      const SvgGenImage('assets/image/svg/translate.svg');
+
   /// File path: assets/image/svg/visibility_off.svg
   SvgGenImage get visibilityOff =>
       const SvgGenImage('assets/image/svg/visibility_off.svg');
@@ -263,6 +267,7 @@ class $AssetsImageSvgGen {
         send,
         settings,
         share,
+        translate,
         visibilityOff,
         warning
       ];

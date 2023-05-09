@@ -179,5 +179,13 @@
   "friends_screen_title": "Friends",
   "subscribers_screen_title": "Subscribers",
   "no_friends": "No friends",
-  "no_subscribers": "No subscribers"
+  "no_subscribers": "No subscribers",
+  "can_not_load_chats": "Can not load chats.",
+  "create_monologue_chat_btn": "Monologue chat",
+  "create_dialogue_chat_btn": "Dialogue chat",
+  "create_group_chat_btn": "Group chat",
+  "new_monologue_chat_screen_title": "New monologue",
+  "new_dialogue_chat_screen_title": "New dialogue",
+  "new_group_chat_screen_title": "New group",
+  "name_of_chat_hint": "Name of chat"
 }

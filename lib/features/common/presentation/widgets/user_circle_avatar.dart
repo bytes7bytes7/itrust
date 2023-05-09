@@ -14,8 +14,8 @@ class UserCircleAvatar extends StatelessWidget {
     this.url,
   });
 
-  final String? url;
   final bool online;
+  final String? url;
 
   @override
   Widget build(BuildContext context) {

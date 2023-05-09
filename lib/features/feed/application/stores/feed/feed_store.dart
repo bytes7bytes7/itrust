@@ -82,28 +82,7 @@ abstract class _FeedStore extends SyncStore with Store {
           );
 
           if (_processingCategory == category) {
-            final newPosts = <PostVM>[];
-            for (final post in data) {
-              final author = await _userService.getUserByID(
-                id: post.authorID,
-                cached: !refresh,
-              );
-
-              if (author == null) {
-                // TODO: maybe create deleted user or don't show their posts
-                continue;
-              }
-
-              newPosts.add(
-                _mapster.map2(
-                  post,
-                  author,
-                  To<PostVM>(),
-                ),
-              );
-            }
-
-            _posts = newPosts;
+            _posts = await _parsePosts(data, refresh: refresh);
           }
         } catch (e) {
           _error = _feedStringProvider.canNotLoadPosts;
@@ -129,25 +108,8 @@ abstract class _FeedStore extends SyncStore with Store {
           );
 
           if (_processingCategory == category) {
-            final newPosts = <PostVM>[];
-            for (final post in data) {
-              final author = await _userService.getUserByID(
-                id: post.authorID,
-              );
-
-              if (author == null) {
-                // TODO: maybe create deleted user or don't show their posts
-                continue;
-              }
-
-              newPosts.add(
-                _mapster.map2(
-                  post,
-                  author,
-                  To<PostVM>(),
-                ),
-              );
-            }
+            // TODO: there can be a problem with caching
+            final newPosts = await _parsePosts(data, refresh: false);
 
             _canLoadMore = false;
 
@@ -293,5 +255,33 @@ abstract class _FeedStore extends SyncStore with Store {
     );
 
     _posts = posts;
+  }
+
+  Future<List<PostVM>> _parsePosts(
+    List<Post> data, {
+    required bool refresh,
+  }) async {
+    final newPosts = <PostVM>[];
+    for (final post in data) {
+      final author = await _userService.getUserByID(
+        id: post.authorID,
+        cached: !refresh,
+      );
+
+      if (author == null) {
+        // TODO: maybe create deleted user or don't show their posts
+        continue;
+      }
+
+      newPosts.add(
+        _mapster.map2(
+          post,
+          author,
+          To<PostVM>(),
+        ),
+      );
+    }
+
+    return newPosts;
   }
 }

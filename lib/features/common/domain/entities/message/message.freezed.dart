@@ -32,7 +32,7 @@ mixin _$Message {
   MessageID get id => throw _privateConstructorUsedError;
   ChatID get chatID => throw _privateConstructorUsedError;
   DateTime get sentAt => throw _privateConstructorUsedError;
-  List<UserID> get readBy => throw _privateConstructorUsedError;
+  bool get isReadyByMe => throw _privateConstructorUsedError;
   DateTime? get willBeBurntAt => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -40,19 +40,19 @@ mixin _$Message {
             MessageID id,
             ChatID chatID,
             DateTime sentAt,
-            List<UserID> readBy,
+            bool isReadyByMe,
             String markUp,
-            List<String> markUpData,
+            Map<String, String> markUpData,
             DateTime? willBeBurntAt)
         info,
     required TResult Function(
             MessageID id,
             ChatID chatID,
-            DateTime sentAt,
-            List<UserID> readBy,
-            String text,
-            List<String> mediaUrls,
             UserID senderID,
+            DateTime sentAt,
+            bool isReadyByMe,
+            String text,
+            List<Media> mediaIDs,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)
         user,
@@ -64,19 +64,19 @@ mixin _$Message {
             MessageID id,
             ChatID chatID,
             DateTime sentAt,
-            List<UserID> readBy,
+            bool isReadyByMe,
             String markUp,
-            List<String> markUpData,
+            Map<String, String> markUpData,
             DateTime? willBeBurntAt)?
         info,
     TResult? Function(
             MessageID id,
             ChatID chatID,
-            DateTime sentAt,
-            List<UserID> readBy,
-            String text,
-            List<String> mediaUrls,
             UserID senderID,
+            DateTime sentAt,
+            bool isReadyByMe,
+            String text,
+            List<Media> mediaIDs,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
@@ -88,19 +88,19 @@ mixin _$Message {
             MessageID id,
             ChatID chatID,
             DateTime sentAt,
-            List<UserID> readBy,
+            bool isReadyByMe,
             String markUp,
-            List<String> markUpData,
+            Map<String, String> markUpData,
             DateTime? willBeBurntAt)?
         info,
     TResult Function(
             MessageID id,
             ChatID chatID,
-            DateTime sentAt,
-            List<UserID> readBy,
-            String text,
-            List<String> mediaUrls,
             UserID senderID,
+            DateTime sentAt,
+            bool isReadyByMe,
+            String text,
+            List<Media> mediaIDs,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
@@ -140,7 +140,7 @@ abstract class $MessageCopyWith<$Res> {
       {MessageID id,
       ChatID chatID,
       DateTime sentAt,
-      List<UserID> readBy,
+      bool isReadyByMe,
       DateTime? willBeBurntAt});
 
   $MessageIDCopyWith<$Res> get id;
@@ -163,7 +163,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? id = null,
     Object? chatID = null,
     Object? sentAt = null,
-    Object? readBy = null,
+    Object? isReadyByMe = null,
     Object? willBeBurntAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -179,10 +179,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      readBy: null == readBy
-          ? _value.readBy
-          : readBy // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
+      isReadyByMe: null == isReadyByMe
+          ? _value.isReadyByMe
+          : isReadyByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
       willBeBurntAt: freezed == willBeBurntAt
           ? _value.willBeBurntAt
           : willBeBurntAt // ignore: cast_nullable_to_non_nullable
@@ -218,9 +218,9 @@ abstract class _$$InfoMessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
       {MessageID id,
       ChatID chatID,
       DateTime sentAt,
-      List<UserID> readBy,
+      bool isReadyByMe,
       String markUp,
-      List<String> markUpData,
+      Map<String, String> markUpData,
       DateTime? willBeBurntAt});
 
   @override
@@ -243,7 +243,7 @@ class __$$InfoMessageCopyWithImpl<$Res>
     Object? id = null,
     Object? chatID = null,
     Object? sentAt = null,
-    Object? readBy = null,
+    Object? isReadyByMe = null,
     Object? markUp = null,
     Object? markUpData = null,
     Object? willBeBurntAt = freezed,
@@ -261,10 +261,10 @@ class __$$InfoMessageCopyWithImpl<$Res>
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      readBy: null == readBy
-          ? _value._readBy
-          : readBy // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
+      isReadyByMe: null == isReadyByMe
+          ? _value.isReadyByMe
+          : isReadyByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
       markUp: null == markUp
           ? _value.markUp
           : markUp // ignore: cast_nullable_to_non_nullable
@@ -272,7 +272,7 @@ class __$$InfoMessageCopyWithImpl<$Res>
       markUpData: null == markUpData
           ? _value._markUpData
           : markUpData // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Map<String, String>,
       willBeBurntAt: freezed == willBeBurntAt
           ? _value.willBeBurntAt
           : willBeBurntAt // ignore: cast_nullable_to_non_nullable
@@ -288,13 +288,12 @@ class _$InfoMessage implements InfoMessage {
       {required this.id,
       required this.chatID,
       required this.sentAt,
-      required final List<UserID> readBy,
+      required this.isReadyByMe,
       required this.markUp,
-      required final List<String> markUpData,
+      required final Map<String, String> markUpData,
       this.willBeBurntAt,
       final String? $type})
-      : _readBy = readBy,
-        _markUpData = markUpData,
+      : _markUpData = markUpData,
         $type = $type ?? 'info';
 
   factory _$InfoMessage.fromJson(Map<String, dynamic> json) =>
@@ -306,22 +305,16 @@ class _$InfoMessage implements InfoMessage {
   final ChatID chatID;
   @override
   final DateTime sentAt;
-  final List<UserID> _readBy;
   @override
-  List<UserID> get readBy {
-    if (_readBy is EqualUnmodifiableListView) return _readBy;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_readBy);
-  }
-
+  final bool isReadyByMe;
   @override
   final String markUp;
-  final List<String> _markUpData;
+  final Map<String, String> _markUpData;
   @override
-  List<String> get markUpData {
-    if (_markUpData is EqualUnmodifiableListView) return _markUpData;
+  Map<String, String> get markUpData {
+    if (_markUpData is EqualUnmodifiableMapView) return _markUpData;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_markUpData);
+    return EqualUnmodifiableMapView(_markUpData);
   }
 
   @override
@@ -332,7 +325,7 @@ class _$InfoMessage implements InfoMessage {
 
   @override
   String toString() {
-    return 'Message.info(id: $id, chatID: $chatID, sentAt: $sentAt, readBy: $readBy, markUp: $markUp, markUpData: $markUpData, willBeBurntAt: $willBeBurntAt)';
+    return 'Message.info(id: $id, chatID: $chatID, sentAt: $sentAt, isReadyByMe: $isReadyByMe, markUp: $markUp, markUpData: $markUpData, willBeBurntAt: $willBeBurntAt)';
   }
 
   @override
@@ -343,7 +336,8 @@ class _$InfoMessage implements InfoMessage {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.chatID, chatID) || other.chatID == chatID) &&
             (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
-            const DeepCollectionEquality().equals(other._readBy, _readBy) &&
+            (identical(other.isReadyByMe, isReadyByMe) ||
+                other.isReadyByMe == isReadyByMe) &&
             (identical(other.markUp, markUp) || other.markUp == markUp) &&
             const DeepCollectionEquality()
                 .equals(other._markUpData, _markUpData) &&
@@ -353,15 +347,8 @@ class _$InfoMessage implements InfoMessage {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      chatID,
-      sentAt,
-      const DeepCollectionEquality().hash(_readBy),
-      markUp,
-      const DeepCollectionEquality().hash(_markUpData),
-      willBeBurntAt);
+  int get hashCode => Object.hash(runtimeType, id, chatID, sentAt, isReadyByMe,
+      markUp, const DeepCollectionEquality().hash(_markUpData), willBeBurntAt);
 
   @JsonKey(ignore: true)
   @override
@@ -376,24 +363,25 @@ class _$InfoMessage implements InfoMessage {
             MessageID id,
             ChatID chatID,
             DateTime sentAt,
-            List<UserID> readBy,
+            bool isReadyByMe,
             String markUp,
-            List<String> markUpData,
+            Map<String, String> markUpData,
             DateTime? willBeBurntAt)
         info,
     required TResult Function(
             MessageID id,
             ChatID chatID,
-            DateTime sentAt,
-            List<UserID> readBy,
-            String text,
-            List<String> mediaUrls,
             UserID senderID,
+            DateTime sentAt,
+            bool isReadyByMe,
+            String text,
+            List<Media> mediaIDs,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)
         user,
   }) {
-    return info(id, chatID, sentAt, readBy, markUp, markUpData, willBeBurntAt);
+    return info(
+        id, chatID, sentAt, isReadyByMe, markUp, markUpData, willBeBurntAt);
   }
 
   @override
@@ -403,25 +391,25 @@ class _$InfoMessage implements InfoMessage {
             MessageID id,
             ChatID chatID,
             DateTime sentAt,
-            List<UserID> readBy,
+            bool isReadyByMe,
             String markUp,
-            List<String> markUpData,
+            Map<String, String> markUpData,
             DateTime? willBeBurntAt)?
         info,
     TResult? Function(
             MessageID id,
             ChatID chatID,
-            DateTime sentAt,
-            List<UserID> readBy,
-            String text,
-            List<String> mediaUrls,
             UserID senderID,
+            DateTime sentAt,
+            bool isReadyByMe,
+            String text,
+            List<Media> mediaIDs,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
   }) {
     return info?.call(
-        id, chatID, sentAt, readBy, markUp, markUpData, willBeBurntAt);
+        id, chatID, sentAt, isReadyByMe, markUp, markUpData, willBeBurntAt);
   }
 
   @override
@@ -431,19 +419,19 @@ class _$InfoMessage implements InfoMessage {
             MessageID id,
             ChatID chatID,
             DateTime sentAt,
-            List<UserID> readBy,
+            bool isReadyByMe,
             String markUp,
-            List<String> markUpData,
+            Map<String, String> markUpData,
             DateTime? willBeBurntAt)?
         info,
     TResult Function(
             MessageID id,
             ChatID chatID,
-            DateTime sentAt,
-            List<UserID> readBy,
-            String text,
-            List<String> mediaUrls,
             UserID senderID,
+            DateTime sentAt,
+            bool isReadyByMe,
+            String text,
+            List<Media> mediaIDs,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
@@ -451,7 +439,7 @@ class _$InfoMessage implements InfoMessage {
   }) {
     if (info != null) {
       return info(
-          id, chatID, sentAt, readBy, markUp, markUpData, willBeBurntAt);
+          id, chatID, sentAt, isReadyByMe, markUp, markUpData, willBeBurntAt);
     }
     return orElse();
   }
@@ -500,9 +488,9 @@ abstract class InfoMessage implements Message {
       {required final MessageID id,
       required final ChatID chatID,
       required final DateTime sentAt,
-      required final List<UserID> readBy,
+      required final bool isReadyByMe,
       required final String markUp,
-      required final List<String> markUpData,
+      required final Map<String, String> markUpData,
       final DateTime? willBeBurntAt}) = _$InfoMessage;
 
   factory InfoMessage.fromJson(Map<String, dynamic> json) =
@@ -515,9 +503,9 @@ abstract class InfoMessage implements Message {
   @override
   DateTime get sentAt;
   @override
-  List<UserID> get readBy;
+  bool get isReadyByMe;
   String get markUp;
-  List<String> get markUpData;
+  Map<String, String> get markUpData;
   @override
   DateTime? get willBeBurntAt;
   @override
@@ -536,11 +524,11 @@ abstract class _$$UserMessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
   $Res call(
       {MessageID id,
       ChatID chatID,
-      DateTime sentAt,
-      List<UserID> readBy,
-      String text,
-      List<String> mediaUrls,
       UserID senderID,
+      DateTime sentAt,
+      bool isReadyByMe,
+      String text,
+      List<Media> mediaIDs,
       DateTime? willBeBurntAt,
       DateTime? modifiedAt});
 
@@ -564,11 +552,11 @@ class __$$UserMessageCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? chatID = null,
-    Object? sentAt = null,
-    Object? readBy = null,
-    Object? text = null,
-    Object? mediaUrls = null,
     Object? senderID = null,
+    Object? sentAt = null,
+    Object? isReadyByMe = null,
+    Object? text = null,
+    Object? mediaIDs = null,
     Object? willBeBurntAt = freezed,
     Object? modifiedAt = freezed,
   }) {
@@ -581,26 +569,26 @@ class __$$UserMessageCopyWithImpl<$Res>
           ? _value.chatID
           : chatID // ignore: cast_nullable_to_non_nullable
               as ChatID,
-      sentAt: null == sentAt
-          ? _value.sentAt
-          : sentAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      readBy: null == readBy
-          ? _value._readBy
-          : readBy // ignore: cast_nullable_to_non_nullable
-              as List<UserID>,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-      mediaUrls: null == mediaUrls
-          ? _value._mediaUrls
-          : mediaUrls // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       senderID: null == senderID
           ? _value.senderID
           : senderID // ignore: cast_nullable_to_non_nullable
               as UserID,
+      sentAt: null == sentAt
+          ? _value.sentAt
+          : sentAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      isReadyByMe: null == isReadyByMe
+          ? _value.isReadyByMe
+          : isReadyByMe // ignore: cast_nullable_to_non_nullable
+              as bool,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      mediaIDs: null == mediaIDs
+          ? _value._mediaIDs
+          : mediaIDs // ignore: cast_nullable_to_non_nullable
+              as List<Media>,
       willBeBurntAt: freezed == willBeBurntAt
           ? _value.willBeBurntAt
           : willBeBurntAt // ignore: cast_nullable_to_non_nullable
@@ -627,16 +615,15 @@ class _$UserMessage implements UserMessage {
   const _$UserMessage(
       {required this.id,
       required this.chatID,
-      required this.sentAt,
-      required final List<UserID> readBy,
-      required this.text,
-      required final List<String> mediaUrls,
       required this.senderID,
+      required this.sentAt,
+      required this.isReadyByMe,
+      required this.text,
+      required final List<Media> mediaIDs,
       this.willBeBurntAt,
       this.modifiedAt,
       final String? $type})
-      : _readBy = readBy,
-        _mediaUrls = mediaUrls,
+      : _mediaIDs = mediaIDs,
         $type = $type ?? 'user';
 
   factory _$UserMessage.fromJson(Map<String, dynamic> json) =>
@@ -647,27 +634,21 @@ class _$UserMessage implements UserMessage {
   @override
   final ChatID chatID;
   @override
-  final DateTime sentAt;
-  final List<UserID> _readBy;
+  final UserID senderID;
   @override
-  List<UserID> get readBy {
-    if (_readBy is EqualUnmodifiableListView) return _readBy;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_readBy);
-  }
-
+  final DateTime sentAt;
+  @override
+  final bool isReadyByMe;
   @override
   final String text;
-  final List<String> _mediaUrls;
+  final List<Media> _mediaIDs;
   @override
-  List<String> get mediaUrls {
-    if (_mediaUrls is EqualUnmodifiableListView) return _mediaUrls;
+  List<Media> get mediaIDs {
+    if (_mediaIDs is EqualUnmodifiableListView) return _mediaIDs;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_mediaUrls);
+    return EqualUnmodifiableListView(_mediaIDs);
   }
 
-  @override
-  final UserID senderID;
   @override
   final DateTime? willBeBurntAt;
   @override
@@ -678,7 +659,7 @@ class _$UserMessage implements UserMessage {
 
   @override
   String toString() {
-    return 'Message.user(id: $id, chatID: $chatID, sentAt: $sentAt, readBy: $readBy, text: $text, mediaUrls: $mediaUrls, senderID: $senderID, willBeBurntAt: $willBeBurntAt, modifiedAt: $modifiedAt)';
+    return 'Message.user(id: $id, chatID: $chatID, senderID: $senderID, sentAt: $sentAt, isReadyByMe: $isReadyByMe, text: $text, mediaIDs: $mediaIDs, willBeBurntAt: $willBeBurntAt, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -688,13 +669,13 @@ class _$UserMessage implements UserMessage {
             other is _$UserMessage &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.chatID, chatID) || other.chatID == chatID) &&
-            (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
-            const DeepCollectionEquality().equals(other._readBy, _readBy) &&
-            (identical(other.text, text) || other.text == text) &&
-            const DeepCollectionEquality()
-                .equals(other._mediaUrls, _mediaUrls) &&
             (identical(other.senderID, senderID) ||
                 other.senderID == senderID) &&
+            (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
+            (identical(other.isReadyByMe, isReadyByMe) ||
+                other.isReadyByMe == isReadyByMe) &&
+            (identical(other.text, text) || other.text == text) &&
+            const DeepCollectionEquality().equals(other._mediaIDs, _mediaIDs) &&
             (identical(other.willBeBurntAt, willBeBurntAt) ||
                 other.willBeBurntAt == willBeBurntAt) &&
             (identical(other.modifiedAt, modifiedAt) ||
@@ -707,11 +688,11 @@ class _$UserMessage implements UserMessage {
       runtimeType,
       id,
       chatID,
-      sentAt,
-      const DeepCollectionEquality().hash(_readBy),
-      text,
-      const DeepCollectionEquality().hash(_mediaUrls),
       senderID,
+      sentAt,
+      isReadyByMe,
+      text,
+      const DeepCollectionEquality().hash(_mediaIDs),
       willBeBurntAt,
       modifiedAt);
 
@@ -728,24 +709,24 @@ class _$UserMessage implements UserMessage {
             MessageID id,
             ChatID chatID,
             DateTime sentAt,
-            List<UserID> readBy,
+            bool isReadyByMe,
             String markUp,
-            List<String> markUpData,
+            Map<String, String> markUpData,
             DateTime? willBeBurntAt)
         info,
     required TResult Function(
             MessageID id,
             ChatID chatID,
-            DateTime sentAt,
-            List<UserID> readBy,
-            String text,
-            List<String> mediaUrls,
             UserID senderID,
+            DateTime sentAt,
+            bool isReadyByMe,
+            String text,
+            List<Media> mediaIDs,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)
         user,
   }) {
-    return user(id, chatID, sentAt, readBy, text, mediaUrls, senderID,
+    return user(id, chatID, senderID, sentAt, isReadyByMe, text, mediaIDs,
         willBeBurntAt, modifiedAt);
   }
 
@@ -756,24 +737,24 @@ class _$UserMessage implements UserMessage {
             MessageID id,
             ChatID chatID,
             DateTime sentAt,
-            List<UserID> readBy,
+            bool isReadyByMe,
             String markUp,
-            List<String> markUpData,
+            Map<String, String> markUpData,
             DateTime? willBeBurntAt)?
         info,
     TResult? Function(
             MessageID id,
             ChatID chatID,
-            DateTime sentAt,
-            List<UserID> readBy,
-            String text,
-            List<String> mediaUrls,
             UserID senderID,
+            DateTime sentAt,
+            bool isReadyByMe,
+            String text,
+            List<Media> mediaIDs,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
   }) {
-    return user?.call(id, chatID, sentAt, readBy, text, mediaUrls, senderID,
+    return user?.call(id, chatID, senderID, sentAt, isReadyByMe, text, mediaIDs,
         willBeBurntAt, modifiedAt);
   }
 
@@ -784,26 +765,26 @@ class _$UserMessage implements UserMessage {
             MessageID id,
             ChatID chatID,
             DateTime sentAt,
-            List<UserID> readBy,
+            bool isReadyByMe,
             String markUp,
-            List<String> markUpData,
+            Map<String, String> markUpData,
             DateTime? willBeBurntAt)?
         info,
     TResult Function(
             MessageID id,
             ChatID chatID,
-            DateTime sentAt,
-            List<UserID> readBy,
-            String text,
-            List<String> mediaUrls,
             UserID senderID,
+            DateTime sentAt,
+            bool isReadyByMe,
+            String text,
+            List<Media> mediaIDs,
             DateTime? willBeBurntAt,
             DateTime? modifiedAt)?
         user,
     required TResult orElse(),
   }) {
     if (user != null) {
-      return user(id, chatID, sentAt, readBy, text, mediaUrls, senderID,
+      return user(id, chatID, senderID, sentAt, isReadyByMe, text, mediaIDs,
           willBeBurntAt, modifiedAt);
     }
     return orElse();
@@ -852,11 +833,11 @@ abstract class UserMessage implements Message {
   const factory UserMessage(
       {required final MessageID id,
       required final ChatID chatID,
-      required final DateTime sentAt,
-      required final List<UserID> readBy,
-      required final String text,
-      required final List<String> mediaUrls,
       required final UserID senderID,
+      required final DateTime sentAt,
+      required final bool isReadyByMe,
+      required final String text,
+      required final List<Media> mediaIDs,
       final DateTime? willBeBurntAt,
       final DateTime? modifiedAt}) = _$UserMessage;
 
@@ -867,13 +848,13 @@ abstract class UserMessage implements Message {
   MessageID get id;
   @override
   ChatID get chatID;
+  UserID get senderID;
   @override
   DateTime get sentAt;
   @override
-  List<UserID> get readBy;
+  bool get isReadyByMe;
   String get text;
-  List<String> get mediaUrls;
-  UserID get senderID;
+  List<Media> get mediaIDs;
   @override
   DateTime? get willBeBurntAt;
   DateTime? get modifiedAt;

@@ -212,6 +212,7 @@ class _InboxTab extends StatelessWidget {
 
         if (inboxStore.users.isEmpty) {
           return _BidsEmpty(
+            friendBidsStore: friendBidsStore,
             theme: theme,
             text: l10n.no_inbox_friend_bids,
             child: Assets.lottie.nothing.lottie(),
@@ -273,6 +274,7 @@ class _OutboxTab extends StatelessWidget {
 
         if (outboxStore.users.isEmpty) {
           return _BidsEmpty(
+            friendBidsStore: friendBidsStore,
             theme: theme,
             text: l10n.no_outbox_friend_bids,
             child: Assets.lottie.nothing.lottie(),
@@ -317,33 +319,40 @@ class _UsersLoading extends StatelessWidget {
 
 class _BidsEmpty extends StatelessWidget {
   const _BidsEmpty({
+    required this.friendBidsStore,
     required this.theme,
     required this.text,
     this.child,
   });
 
+  final FriendBidsStore friendBidsStore;
   final ThemeData theme;
   final String text;
   final Widget? child;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: add refresh indicator
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 10,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          child ?? const SizedBox.shrink(),
-          Text(
-            text,
-            style: theme.textTheme.bodyText1,
-            textAlign: TextAlign.center,
+    return RefreshIndicator(
+      onRefresh: () async => friendBidsStore.refresh(),
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 40,
           ),
-        ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              child ?? const SizedBox.shrink(),
+              Text(
+                text,
+                style: theme.textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

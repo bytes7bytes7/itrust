@@ -1,8 +1,15 @@
+export 'chat_to_chat_vm_mapper.dart';
+export 'dialogue_chat_to_dialogue_chat_vm_mapper.dart';
 export 'end_user_to_end_user_vm_mapper.dart';
+export 'group_chat_to_group_chat_vm_mapper.dart';
+export 'info_message_to_info_message_vm_mapper.dart';
 export 'media_to_media_vm_mapper.dart';
+export 'message_to_message_vm_mapper.dart';
+export 'monologue_chat_to_monologue_chat_vm_mapper.dart';
 export 'post_end_user_to_post_vm.dart';
 export 'post_staff_user_to_post_vm.dart';
 export 'post_user_to_post_vm_mapper.dart';
 export 'staff_user_to_staff_user_vm_mapper.dart';
 export 'user_info_to_user_info_vm_mapper.dart';
+export 'user_message_to_user_message_vm_mapper.dart';
 export 'user_to_user_vm_mapper.dart';

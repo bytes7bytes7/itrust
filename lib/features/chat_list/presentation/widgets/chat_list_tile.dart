@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../l10n/l10n.dart';
 import '../../../../themes/themes.dart';
-import '../../../common/domain/domain.dart';
+import '../../../common/application/view_models/chat_vm/chat_vm.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import 'unread_indicator.dart';
 
@@ -23,7 +22,7 @@ class ChatListTile extends StatelessWidget {
     required this.onPressed,
   });
 
-  final Chat chat;
+  final ChatVM chat;
   final VoidCallback onPressed;
 
   @override
@@ -33,37 +32,36 @@ class ChatListTile extends StatelessWidget {
 
     final l10n = context.l10n;
 
-    // TODO: implement
-    final lastMessageID = chat.lastMessageID;
-    final lastMessage = lastMessageID != null
-        ? Message.user(
-            id: lastMessageID,
-            chatID: chat.id,
-            sentAt: DateTime.now(),
-            readBy: [],
-            text: 'some text $lastMessageID',
-            mediaUrls: [],
-            senderID: UserID.fromString('some id $lastMessageID'),
-          )
-        : null;
+    final lastMessage = chat.lastMessage;
+
+    final avatarUrl = chat.map(
+      monologue: (chat) => chat.pic?.url,
+      dialogue: (_) => null,
+      group: (chat) => chat.pic?.url,
+    );
+
+    final iconName = chat.map(
+      monologue: (chat) => chat.iconName,
+      dialogue: (_) => null,
+      group: (_) => null,
+    );
 
     // TODO: implement
-    final avatarUrl = chat.map(
-      monologue: (chat) => chat.picUrl,
-      dialogue: (chat) => null,
-      group: (chat) => chat.picUrl,
-    );
     const online = true;
 
-    // TODO: implement
     final title = chat.map(
       monologue: (chat) => chat.title,
-      dialogue: (chat) => 'dialog title',
+      dialogue: (chat) => chat.partnerName,
       group: (chat) => chat.title,
     );
 
-    // TODO: implement
-    final unreadAmount = '${chat.unreadAmount}';
+    final unreadAmount = chat
+        .map(
+          monologue: (_) => 0,
+          dialogue: (e) => e.unreadAmount,
+          group: (e) => e.unreadAmount,
+        )
+        .toString();
 
     // TODO: use ListTile instead
     return Material(
@@ -77,9 +75,15 @@ class ChatListTile extends StatelessWidget {
           ),
           child: Row(
             children: [
-              UserCircleAvatar(
+              ChatCircleAvatar(
+                type: chat.map(
+                  monologue: (_) => ChatCircleAvatarType.monologue,
+                  dialogue: (_) => ChatCircleAvatarType.dialogue,
+                  group: (_) => ChatCircleAvatarType.group,
+                ),
                 url: avatarUrl,
                 online: online,
+                iconName: iconName,
               ),
               const SizedBox(
                 width: _avatarAndTitleSeparator,
@@ -101,7 +105,7 @@ class ChatListTile extends StatelessWidget {
                       lastMessage.map(
                         info: (message) {
                           return Text(
-                            message.markUp,
+                            message.text,
                             style: theme.textTheme.bodyText2?.copyWith(
                               color: colorSchemeTX.infoMsgPreviewColor,
                             ),
@@ -109,34 +113,86 @@ class ChatListTile extends StatelessWidget {
                           );
                         },
                         user: (message) {
-                          // TODO: implement
-                          final senderName = 'sender ${message.senderID}';
-
-                          return Row(
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  senderName,
-                                  style: theme.textTheme.subtitle1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              Text(
-                                l10n.chat_card_author_and_msg_separator,
-                                style: theme.textTheme.subtitle1,
-                              ),
-                              const SizedBox(
-                                width: _authorAndMessageSeparator,
-                              ),
-                              Flexible(
-                                flex: _messageFlex,
-                                child: Text(
+                          return chat.map(
+                            monologue: (chat) {
+                              return Text(
+                                message.text,
+                                style: theme.textTheme.bodyText2,
+                                overflow: TextOverflow.ellipsis,
+                              );
+                            },
+                            dialogue: (chat) {
+                              if (message.isSentByMe) {
+                                return Text(
                                   message.text,
                                   style: theme.textTheme.bodyText2,
                                   overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
+                                );
+                              }
+
+                              return Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      message.senderName,
+                                      style: theme.textTheme.subtitle1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Text(
+                                    l10n.chat_card_author_and_msg_separator,
+                                    style: theme.textTheme.subtitle1,
+                                  ),
+                                  const SizedBox(
+                                    width: _authorAndMessageSeparator,
+                                  ),
+                                  Flexible(
+                                    flex: _messageFlex,
+                                    child: Text(
+                                      message.text,
+                                      style: theme.textTheme.bodyText2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                            group: (chat) {
+                              if (message.isSentByMe) {
+                                return Text(
+                                  message.text,
+                                  style: theme.textTheme.bodyText2,
+                                  overflow: TextOverflow.ellipsis,
+                                );
+                              }
+
+                              return Row(
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      message.senderName,
+                                      style: theme.textTheme.subtitle1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Text(
+                                    l10n.chat_card_author_and_msg_separator,
+                                    style: theme.textTheme.subtitle1,
+                                  ),
+                                  const SizedBox(
+                                    width: _authorAndMessageSeparator,
+                                  ),
+                                  Flexible(
+                                    flex: _messageFlex,
+                                    child: Text(
+                                      message.text,
+                                      style: theme.textTheme.bodyText2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
                           );
                         },
                       ),
@@ -144,7 +200,14 @@ class ChatListTile extends StatelessWidget {
                   ],
                 ),
               ),
-              if (lastMessage != null && chat.unreadAmount > 0)
+              if (lastMessage != null &&
+                  chat
+                      .map(
+                        monologue: (_) => '',
+                        dialogue: (e) => e.unreadAmount,
+                        group: (e) => e.unreadAmount,
+                      )
+                      .isNotEmpty)
                 UnreadIndicator(
                   unread: unreadAmount,
                 ),
@@ -154,7 +217,7 @@ class ChatListTile extends StatelessWidget {
               if (lastMessage != null)
                 Flexible(
                   child: Text(
-                    _formattedDateTime(lastMessage.sentAt),
+                    lastMessage.sentAt,
                     style: theme.textTheme.bodyText2,
                   ),
                 ),
@@ -163,22 +226,5 @@ class ChatListTile extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  // TODO: move this logic
-  String _formattedDateTime(DateTime dateTime) {
-    final now = DateTime.now();
-
-    if (dateTime.year == now.year) {
-      if (dateTime.month == now.month) {
-        if (dateTime.day == now.day) {
-          return DateFormat.Hm().format(dateTime);
-        }
-      }
-
-      return DateFormat.MMMd().format(dateTime);
-    }
-
-    return DateFormat('dd.MM.yyy').format(dateTime);
   }
 }

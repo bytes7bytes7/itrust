@@ -1,6 +1,7 @@
 export 'auth_exception_provider.dart';
 export 'auth_provider.dart';
 export 'auth_status_provider.dart';
+export 'chat_list_provider.dart';
 export 'device_info_provider.dart';
 export 'keep_fresh_token_exception_provider.dart';
 export 'keep_fresh_token_provider.dart';

@@ -123,22 +123,27 @@ class _Body extends StatelessWidget {
         }
 
         if (subscribersStore.subscribers.isEmpty) {
-          // TODO: add refresh indicator
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 10,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Assets.lottie.nothing.lottie(),
-                Text(
-                  l10n.no_subscribers,
-                  style: theme.textTheme.bodyText1,
-                  textAlign: TextAlign.center,
+          return RefreshIndicator(
+            onRefresh: () async => subscribersStore.refresh(),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 40,
                 ),
-              ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Assets.lottie.nothing.lottie(),
+                    Text(
+                      l10n.no_subscribers,
+                      style: theme.textTheme.bodyText1,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
             ),
           );
         }

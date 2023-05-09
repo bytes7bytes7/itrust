@@ -5,14 +5,14 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../utils/hooks/reaction.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/chat_list/chat_list_store.dart';
 import '../widgets/widgets.dart';
 
-const _loadingMorePadding = 8.0;
 const _appBarHeight = kToolbarHeight;
 const _appBarBottomHeight = 2.0;
-const _loadMoreOffset = 10;
+const _loadChatsKey = 'load chats';
 final _getIt = GetIt.instance;
 
 class ChatListScreen extends HookWidget {
@@ -21,6 +21,25 @@ class ChatListScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final chatListStore = useMemoized(() => _getIt.get<ChatListStore>());
+
+    useEffect(
+      () {
+        chatListStore.loadChats();
+        return null;
+      },
+      [_loadChatsKey],
+    );
+
+    useReaction<String>(
+      (_) => chatListStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
+    );
 
     return Scaffold(
       appBar: _AppBar(
@@ -111,54 +130,77 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final theme = Theme.of(context);
 
     return Observer(
       builder: (context) {
-        // TODO: place start_chatting.json lottie animation
+        if (chatListStore.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-        return chatListStore.showItems
-            ? NotificationListener<ScrollNotification>(
-                onNotification: (notification) {
-                  if (notification.metrics.extentAfter < _loadMoreOffset &&
-                      chatListStore.hasMoreChats) {
-                    chatListStore.load();
-                  }
+        final itemCount = chatListStore.chats.length + 1;
 
-                  return true;
+        if (chatListStore.chats.isEmpty) {
+          return RefreshIndicator(
+            onRefresh: () async => chatListStore.refresh(),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 40,
+                ),
+                child: Column(
+                  children: [
+                    Assets.lottie.chatting.lottie(),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      l10n.empty_chat_list_message,
+                      style: theme.textTheme.bodyText1,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+
+        return RefreshIndicator(
+          onRefresh: () async => chatListStore.refresh(),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: itemCount,
+            itemBuilder: (context, index) {
+              if (index == itemCount - 1) {
+                if (chatListStore.canLoadMore) {
+                  chatListStore.loadMoreChats();
+                }
+
+                if (chatListStore.isLoadingMore) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return const SizedBox.shrink();
+              }
+
+              final chat = chatListStore.chats[index];
+
+              return ChatListTile(
+                chat: chat,
+                onPressed: () {
+                  chatListStore.onChatCardPressed(chatID: chat.id);
                 },
-                child: RefreshIndicator(
-                  onRefresh: () async => chatListStore.refresh(),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: chatListStore.chats.length +
-                        (chatListStore.showItemLoading ? 1 : 0),
-                    itemBuilder: (context, index) {
-                      if (index == chatListStore.chats.length) {
-                        return const Padding(
-                          padding: EdgeInsets.all(_loadingMorePadding),
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
-
-                      final chat = chatListStore.chats[index];
-
-                      return ChatListTile(
-                        chat: chat,
-                        onPressed: () {
-                          chatListStore.onChatCardPressed(chat);
-                        },
-                      );
-                    },
-                  ),
-                ),
-              )
-            : Center(
-                child: Text(
-                  l10n.empty_chat_list_message,
-                ),
               );
+            },
+          ),
+        );
       },
     );
   }

@@ -148,34 +148,36 @@ class _Body extends StatelessWidget {
         }
 
         if (categoryStore.feedStore.posts.isEmpty) {
-          // TODO: add refresh indicator
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _CategoryList(
-                key: _categoryListKey,
-                categoryStore: categoryStore,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
+          return RefreshIndicator(
+            onRefresh: () async => categoryStore.refresh(),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _CategoryList(
+                    key: _categoryListKey,
+                    categoryStore: categoryStore,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Assets.lottie.makeFriends.lottie(),
-                      Text(
-                        l10n.feed_has_no_posts,
-                        style: theme.textTheme.bodyText1,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 40,
+                    ),
+                    child: Column(
+                      children: [
+                        Assets.lottie.makeFriends.lottie(),
+                        Text(
+                          l10n.feed_has_no_posts,
+                          style: theme.textTheme.bodyText1,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           );
         }
 

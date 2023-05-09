@@ -86,6 +86,55 @@ class CommonMapsterRegistrar {
             mapster: _mapster,
           ),
         ),
+      )
+      ..register(
+        MapperMeta.two((input) => ChatToChatVMMapper(input, mapster: _mapster)),
+      )
+      ..register(
+        MapperMeta.two(
+          (input) =>
+              MonologueChatToMonologueChatVMMapper(input, mapster: _mapster),
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          (input) => DialogueChatToDialogueChatVMMapper(
+            input,
+            mapster: _mapster,
+            beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
+          ),
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          (input) => GroupChatToGroupChatVMMapper(
+            input,
+            mapster: _mapster,
+            beautifiedNumberProvider: _getIt.get<BeautifiedNumberProvider>(),
+          ),
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          (input) => MessageToMessageVMMapper(input, mapster: _mapster),
+        ),
+      )
+      ..register(
+        MapperMeta.one(
+          (input) => InfoMessageToInfoMessageVMMapper(
+            input,
+            formattedDateProvider: _getIt.get<FormattedDateProvider>(),
+          ),
+        ),
+      )
+      ..register(
+        MapperMeta.two(
+          (input) => UserMessageToUserMessageVMMapper(
+            input,
+            mapster: _mapster,
+            formattedDateProvider: _getIt.get<FormattedDateProvider>(),
+          ),
+        ),
       );
   }
 }

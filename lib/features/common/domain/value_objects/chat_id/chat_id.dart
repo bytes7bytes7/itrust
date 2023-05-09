@@ -16,5 +16,7 @@ class ChatID with _$ChatID {
 
   factory ChatID.fromJson(JsonMap json) => _$ChatIDFromJson(json);
 
+  factory ChatID.fromString(String string) => ChatID(string);
+
   String get str => value;
 }

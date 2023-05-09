@@ -23,6 +23,7 @@ class ChatListResponse {
         update = const [];
 }
 
+// TODO: implement
 @dev
 @LazySingleton(as: ChatRepository)
 class DevChatRepository implements ChatRepository {
@@ -34,6 +35,7 @@ class DevChatRepository implements ChatRepository {
 
   @override
   Stream<Chat> onChatUpdate(ChatID chatID) {
+    // TODO: implement
     throw UnimplementedError();
   }
 
@@ -73,12 +75,12 @@ class DevChatRepository implements ChatRepository {
   }
 
   @override
-  void add(Chat chat) {
+  Future<void> addOrUpdate(Chat chat) async {
     _storage[chat.id] = chat;
   }
 
   @override
-  void addAll(List<Chat> chats) {
+  Future<void> addAllOrUpdate(List<Chat> chats) async {
     for (final e in chats) {
       _storage[e.id] = e;
     }
@@ -90,7 +92,6 @@ class DevChatRepository implements ChatRepository {
         return Chat.monologue(
           id: chatID,
           title: 'Monologue $chatID',
-          unreadAmount: 0,
         );
       case 1:
         return Chat.dialogue(
@@ -102,7 +103,9 @@ class DevChatRepository implements ChatRepository {
         return Chat.group(
           id: chatID,
           unreadAmount: 0,
+          ownerID: UserID.fromString('1'),
           title: 'Group $chatID',
+          participantsAmount: 1,
         );
     }
   }

@@ -9,13 +9,6 @@ part of 'chat_list_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ChatListStore on _ChatListStore, Store {
-  Computed<bool>? _$showItemLoadingComputed;
-
-  @override
-  bool get showItemLoading =>
-      (_$showItemLoadingComputed ??= Computed<bool>(() => super.showItemLoading,
-              name: '_ChatListStore.showItemLoading'))
-          .value;
   Computed<bool>? _$showAppBarLoadingComputed;
 
   @override
@@ -23,13 +16,6 @@ mixin _$ChatListStore on _ChatListStore, Store {
           () => super.showAppBarLoading,
           name: '_ChatListStore.showAppBarLoading'))
       .value;
-  Computed<bool>? _$showItemsComputed;
-
-  @override
-  bool get showItems =>
-      (_$showItemsComputed ??= Computed<bool>(() => super.showItems,
-              name: '_ChatListStore.showItems'))
-          .value;
 
   late final _$_isLoadingAtom =
       Atom(name: '_ChatListStore._isLoading', context: context);
@@ -67,6 +53,42 @@ mixin _$ChatListStore on _ChatListStore, Store {
     });
   }
 
+  late final _$_chatsAtom =
+      Atom(name: '_ChatListStore._chats', context: context);
+
+  List<ChatVM> get chats {
+    _$_chatsAtom.reportRead();
+    return super._chats;
+  }
+
+  @override
+  List<ChatVM> get _chats => chats;
+
+  @override
+  set _chats(List<ChatVM> value) {
+    _$_chatsAtom.reportWrite(value, super._chats, () {
+      super._chats = value;
+    });
+  }
+
+  late final _$_canLoadMoreAtom =
+      Atom(name: '_ChatListStore._canLoadMore', context: context);
+
+  bool get canLoadMore {
+    _$_canLoadMoreAtom.reportRead();
+    return super._canLoadMore;
+  }
+
+  @override
+  bool get _canLoadMore => canLoadMore;
+
+  @override
+  set _canLoadMore(bool value) {
+    _$_canLoadMoreAtom.reportWrite(value, super._canLoadMore, () {
+      super._canLoadMore = value;
+    });
+  }
+
   late final _$_isLoadingMoreAtom =
       Atom(name: '_ChatListStore._isLoadingMore', context: context);
 
@@ -85,68 +107,26 @@ mixin _$ChatListStore on _ChatListStore, Store {
     });
   }
 
-  late final _$_chatsAtom =
-      Atom(name: '_ChatListStore._chats', context: context);
-
-  List<Chat> get chats {
-    _$_chatsAtom.reportRead();
-    return super._chats;
-  }
-
-  @override
-  List<Chat> get _chats => chats;
-
-  @override
-  set _chats(List<Chat> value) {
-    _$_chatsAtom.reportWrite(value, super._chats, () {
-      super._chats = value;
-    });
-  }
-
-  late final _$_hasMoreChatsAtom =
-      Atom(name: '_ChatListStore._hasMoreChats', context: context);
-
-  bool get hasMoreChats {
-    _$_hasMoreChatsAtom.reportRead();
-    return super._hasMoreChats;
-  }
-
-  @override
-  bool get _hasMoreChats => hasMoreChats;
-
-  @override
-  set _hasMoreChats(bool value) {
-    _$_hasMoreChatsAtom.reportWrite(value, super._hasMoreChats, () {
-      super._hasMoreChats = value;
-    });
-  }
-
-  late final _$_pageAtom = Atom(name: '_ChatListStore._page', context: context);
-
-  int get page {
-    _$_pageAtom.reportRead();
-    return super._page;
-  }
-
-  @override
-  int get _page => page;
-
-  @override
-  set _page(int value) {
-    _$_pageAtom.reportWrite(value, super._page, () {
-      super._page = value;
-    });
-  }
-
   late final _$_ChatListStoreActionController =
       ActionController(name: '_ChatListStore', context: context);
 
   @override
-  void load() {
+  void loadChats({bool refresh = false}) {
     final _$actionInfo = _$_ChatListStoreActionController.startAction(
-        name: '_ChatListStore.load');
+        name: '_ChatListStore.loadChats');
     try {
-      return super.load();
+      return super.loadChats(refresh: refresh);
+    } finally {
+      _$_ChatListStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void loadMoreChats() {
+    final _$actionInfo = _$_ChatListStoreActionController.startAction(
+        name: '_ChatListStore.loadMoreChats');
+    try {
+      return super.loadMoreChats();
     } finally {
       _$_ChatListStoreActionController.endAction(_$actionInfo);
     }
@@ -164,11 +144,11 @@ mixin _$ChatListStore on _ChatListStore, Store {
   }
 
   @override
-  void onChatCardPressed(Chat chat) {
+  void onChatCardPressed({required String chatID}) {
     final _$actionInfo = _$_ChatListStoreActionController.startAction(
         name: '_ChatListStore.onChatCardPressed');
     try {
-      return super.onChatCardPressed(chat);
+      return super.onChatCardPressed(chatID: chatID);
     } finally {
       _$_ChatListStoreActionController.endAction(_$actionInfo);
     }
@@ -177,9 +157,7 @@ mixin _$ChatListStore on _ChatListStore, Store {
   @override
   String toString() {
     return '''
-showItemLoading: ${showItemLoading},
-showAppBarLoading: ${showAppBarLoading},
-showItems: ${showItems}
+showAppBarLoading: ${showAppBarLoading}
     ''';
   }
 }

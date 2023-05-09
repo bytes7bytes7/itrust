@@ -68,7 +68,6 @@ abstract class _ChatStore extends SyncStore with Store {
           // TODO: implement
           final chat = Chat.monologue(
             id: chatID,
-            unreadAmount: 0,
             title: 'title $chatID',
           );
 

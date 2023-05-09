@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../utils/typedef.dart';
 import '../../value_objects/value_objects.dart';
+import '../media/media.dart';
 
 part 'chat.freezed.dart';
 
@@ -15,29 +16,30 @@ class Chat with _$Chat {
   /// All messages in this chat are always read.
   const factory Chat.monologue({
     required ChatID id,
-    required int unreadAmount,
     required String title,
-    MessageID? lastMessageID,
-    String? picUrl,
     String? iconName,
+    Media? pic,
+    MessageID? lastMessageID,
   }) = MonologueChat;
 
   /// Direct messages between two users.
   /// There is NO ability to add more users.
   const factory Chat.dialogue({
     required ChatID id,
-    required int unreadAmount,
     required UserID partnerID,
+    required int unreadAmount,
     MessageID? lastMessageID,
   }) = DialogueChat;
 
   /// Chat for 1..N user(s).
   const factory Chat.group({
     required ChatID id,
-    required int unreadAmount,
+    required UserID ownerID,
+    required int participantsAmount,
     required String title,
+    required int unreadAmount,
+    Media? pic,
     MessageID? lastMessageID,
-    String? picUrl,
   }) = GroupChat;
 
   factory Chat.fromJson(JsonMap json) => _$ChatFromJson(json);

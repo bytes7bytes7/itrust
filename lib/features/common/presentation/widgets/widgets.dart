@@ -1,6 +1,7 @@
 export 'action_primary_loading_indicator.dart';
 export 'action_secondary_loading_indicator.dart';
 export 'author_card_header.dart';
+export 'chat_circle_avatar.dart';
 export 'custom_cached_network_image.dart';
 export 'custom_circle_avatar.dart';
 export 'custom_snack_bar.dart';

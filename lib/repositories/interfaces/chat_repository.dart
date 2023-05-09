@@ -19,7 +19,7 @@ abstract class ChatRepository {
     required int offset,
   });
 
-  void add(Chat chat);
+  Future<void> addOrUpdate(Chat chat);
 
-  void addAll(List<Chat> chats);
+  Future<void> addAllOrUpdate(List<Chat> chats);
 }
