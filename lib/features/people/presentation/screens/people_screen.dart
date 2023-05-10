@@ -141,7 +141,9 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
       actions: [
         FilledIconButton(
           iconPath: Assets.image.svg.search.path,
-          onPressed: () {},
+          onPressed: () {
+            // TODO: implement search
+          },
         ),
       ],
     );

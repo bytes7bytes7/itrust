@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../themes/themes.dart';
 import '../../../../utils/hooks/reaction.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/chat_list/chat_list_store.dart';
@@ -68,6 +70,7 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final theme = Theme.of(context);
 
     return PreferredSize(
       preferredSize: preferredSize,
@@ -79,17 +82,94 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
         actions: [
           FilledIconButton(
             iconPath: Assets.image.svg.add.path,
-            onPressed: () {},
+            onPressed: () {
+              _showCreateChat(
+                context: context,
+                theme: theme,
+                l10n: l10n,
+              );
+            },
           ),
           FilledIconButton(
             iconPath: Assets.image.svg.search.path,
-            onPressed: () {},
+            onPressed: () {
+              // TODO: implement search
+            },
           ),
         ],
         bottom: _AppBarBottom(
           chatListStore: chatListStore,
         ),
       ),
+    );
+  }
+
+  void _showCreateChat({
+    required BuildContext context,
+    required ThemeData theme,
+    required AppLocalizations l10n,
+  }) {
+    final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
+
+    showMenu(
+      context: context,
+      position: const RelativeRect.fromLTRB(
+        double.maxFinite,
+        0,
+        0,
+        double.maxFinite,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide.none,
+      ),
+      items: [
+        PopupMenuItem(
+          onTap: chatListStore.onCreateMonologueBtnPressed,
+          child: Row(
+            children: [
+              Assets.image.svg.person.svg(
+                color: colorSchemeTX.simpleIcon,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                l10n.create_monologue_chat_btn,
+                style: theme.textTheme.bodyText1,
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          onTap: chatListStore.onCreateDialogueBtnPressed,
+          child: Row(
+            children: [
+              Assets.image.svg.group.svg(
+                color: colorSchemeTX.simpleIcon,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                l10n.create_dialogue_chat_btn,
+                style: theme.textTheme.bodyText1,
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          onTap: chatListStore.onCreateGroupBtnPressed,
+          child: Row(
+            children: [
+              Assets.image.svg.groups.svg(
+                color: colorSchemeTX.simpleIcon,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                l10n.create_group_chat_btn,
+                style: theme.textTheme.bodyText1,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

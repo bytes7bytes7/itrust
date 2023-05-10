@@ -1,3 +1,4 @@
+export 'chat_response_json_converter.dart';
 export 'chats_response_json_converter.dart';
 export 'end_users_response_json_converter.dart';
 export 'get_user_by_id_response_json_converter.dart';

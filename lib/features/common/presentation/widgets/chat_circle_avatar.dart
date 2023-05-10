@@ -57,17 +57,17 @@ class ChatCircleAvatar extends StatelessWidget {
   Widget _getAvatar() {
     switch (type) {
       case ChatCircleAvatarType.monologue:
-        return CustomInCircleAvatar(
+        return CustomCircleAvatar(
           url: url,
           iconPath: iconName ?? Assets.image.svg.bookmark.path,
         );
       case ChatCircleAvatarType.dialogue:
-        return CustomInCircleAvatar(
+        return CustomCircleAvatar(
           url: url,
           iconPath: Assets.image.svg.person.path,
         );
       case ChatCircleAvatarType.group:
-        return CustomInCircleAvatar(
+        return CustomCircleAvatar(
           url: url,
           iconPath: Assets.image.svg.group.path,
         );

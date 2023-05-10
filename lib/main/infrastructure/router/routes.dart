@@ -84,6 +84,29 @@ class ChatListRoute extends CosyRoute {
   GoRoute get route => _AppRoutes.chatList;
 }
 
+class CreateMonologueRoute extends CosyRoute {
+  const CreateMonologueRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.createMonologue;
+}
+
+class ChatRoute extends CosyRoute {
+  const ChatRoute({
+    required this.chatID,
+  });
+
+  final String chatID;
+
+  @override
+  Map<String, String> get params => {
+        'chatID': chatID,
+      };
+
+  @override
+  GoRoute get route => _AppRoutes.chat;
+}
+
 class MenuRoute extends CosyRoute {
   const MenuRoute();
 

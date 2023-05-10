@@ -29,7 +29,7 @@ class ChatScreen extends StatelessWidget {
     required this.chatID,
   });
 
-  final ChatID chatID;
+  final String chatID;
 
   @override
   Widget build(BuildContext context) {

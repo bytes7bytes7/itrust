@@ -20,14 +20,6 @@ class ChatListService {
   final ChatListProvider _chatListProvider;
   final ChatRepository _chatRepository;
 
-  void init() {
-    // TODO: implement
-  }
-
-  void dispose() {
-    // TODO: implement
-  }
-
   Future<List<Chat>> loadChats({
     ChatID? lastChatID,
   }) async {

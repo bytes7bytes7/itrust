@@ -25,7 +25,7 @@ class UserCircleAvatar extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        CustomInCircleAvatar(
+        CustomCircleAvatar(
           url: url,
           iconPath: Assets.image.svg.person.path,
         ),

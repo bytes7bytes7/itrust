@@ -15,7 +15,7 @@ class _AppRoutes {
 
   static final notFound = GoRoute(
     path: '/not_found',
-    name: 'notFound',
+    name: 'not_found',
     parentNavigatorKey: _rootKey,
     pageBuilder: (context, state) {
       return NoTransitionPage(
@@ -141,6 +141,44 @@ class _AppRoutes {
         name: _getName(state),
         arguments: _getArgs(state),
         child: const ChatListScreen(),
+      );
+    },
+    routes: [
+      createMonologue,
+      chat,
+    ],
+  );
+
+  static final createMonologue = GoRoute(
+    path: 'create_monologue',
+    name: 'create_monologue',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const CreateMonologueScreen(),
+      );
+    },
+  );
+
+  static final chat = GoRoute(
+    path: 'chat:chatID',
+    name: 'chat',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      final chatID = state.params['chatID']!;
+
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: ChatScreen(
+          chatID: chatID,
+        ),
       );
     },
   );

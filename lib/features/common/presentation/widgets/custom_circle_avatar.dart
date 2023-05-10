@@ -11,8 +11,8 @@ const _loadingPadding = 4.0;
 const _loadingStrokeWidth = 2.0;
 const _iconSize = 24.0;
 
-class CustomInCircleAvatar extends StatelessWidget {
-  const CustomInCircleAvatar({
+class CustomCircleAvatar extends StatelessWidget {
+  const CustomCircleAvatar({
     super.key,
     required this.url,
     required this.iconPath,

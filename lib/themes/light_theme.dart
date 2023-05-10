@@ -33,6 +33,9 @@ final lightTheme = ThemeData.light().copyWith(
     color: _LightColors.cFFEC2885,
     linearTrackColor: Colors.transparent,
   ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    iconSize: 40,
+  ),
   tabBarTheme: const TabBarTheme(
     labelColor: _LightColors.cFF000000,
     unselectedLabelColor: _LightColors.cFFC7C7C7,

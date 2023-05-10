@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/application.dart';
 import '../../../../common/domain/domain.dart';
+import '../../coordinators/chat_list_coordinator.dart';
 
 part 'chat_list_store.g.dart';
 
@@ -18,12 +19,14 @@ abstract class _ChatListStore extends SyncStore with Store {
     required MessageService messageService,
     required UserService userService,
     required EndUserRepository endUserRepository,
+    required ChatListCoordinator coordinator,
     required ChatListStringProvider chatListStringProvider,
     required Mapster mapster,
   })  : _chatListService = chatListService,
         _messageService = messageService,
         _userService = userService,
         _endUserRepository = endUserRepository,
+  _coordinator = coordinator,
         _chatListStringProvider = chatListStringProvider,
         _mapster = mapster;
 
@@ -31,6 +34,7 @@ abstract class _ChatListStore extends SyncStore with Store {
   final MessageService _messageService;
   final UserService _userService;
   final EndUserRepository _endUserRepository;
+  final ChatListCoordinator _coordinator;
   final ChatListStringProvider _chatListStringProvider;
   final Mapster _mapster;
 
@@ -118,6 +122,18 @@ abstract class _ChatListStore extends SyncStore with Store {
   void onChatCardPressed({required String chatID}) {
     // TODO: implement
     // _chatListService.onChatSelected(chat.id);
+  }
+
+  void onCreateMonologueBtnPressed() {
+    _coordinator.onCreateMonologueBtnPressed();
+  }
+
+  void onCreateDialogueBtnPressed() {
+    _coordinator.onCreateDialogueBtnPressed();
+  }
+
+  void onCreateGroupBtnPressed() {
+    _coordinator.onCreateGroupBtnPressed();
   }
 
   Future<List<ChatVM>> _parseChats(

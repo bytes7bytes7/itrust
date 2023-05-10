@@ -1,7 +1,9 @@
 export 'account_settings_coordinator.dart';
 export 'change_personal_info_coordinator.dart';
+export 'chat_list_coordinator.dart';
 export 'comment_coordinator.dart';
 export 'coordinator.dart';
+export 'create_monologue_coordinator.dart';
 export 'devices_coordinator.dart';
 export 'feed_coordinator.dart';
 export 'friend_bids_coordinator.dart';
