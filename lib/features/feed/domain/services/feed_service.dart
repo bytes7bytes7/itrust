@@ -32,7 +32,7 @@ class FeedService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {

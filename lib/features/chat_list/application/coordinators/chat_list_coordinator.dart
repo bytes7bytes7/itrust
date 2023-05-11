@@ -4,4 +4,6 @@ abstract class ChatListCoordinator {
   void onCreateDialogueBtnPressed();
 
   void onCreateGroupBtnPressed();
+
+  void onChatPressed({required String chatID});
 }

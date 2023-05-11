@@ -13,13 +13,6 @@ abstract class GroupChatService {
   /// If null comes then chat is deleted.
   Stream<Chat?> get updatedChat;
 
-  // TODO: move to new_chat feature
-  Future<void> create({
-    required String title,
-    required List<UserID> participantIDs,
-    Uint8List? pic,
-  });
-
   Future<void> delete();
 
   Future<void> updateTitle({

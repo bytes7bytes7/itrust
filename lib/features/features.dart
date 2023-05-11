@@ -9,7 +9,6 @@ export 'friend_bids/friend_bids.dart';
 export 'lock/lock.dart';
 export 'menu/menu.dart';
 export 'message_burn/message_burn.dart';
-export 'new_chat/new_chat.dart';
 export 'notifications/notifications.dart';
 export 'people/people.dart';
 export 'post/post.dart';

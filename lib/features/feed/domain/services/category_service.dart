@@ -22,7 +22,7 @@ class CategoryService {
 
       return response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) {

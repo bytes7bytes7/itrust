@@ -54,7 +54,6 @@ abstract class _PostCommentStore extends SyncStore with Store {
   @computed
   bool get hasError => _error.isNotEmpty;
 
-  // TODO: add pagination
   @action
   void loadPostComments({
     required String postID,

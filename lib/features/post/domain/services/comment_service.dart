@@ -32,7 +32,7 @@ class CommentService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {
@@ -72,7 +72,7 @@ class CommentService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {
@@ -103,7 +103,7 @@ class CommentService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {
@@ -140,7 +140,7 @@ class CommentService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {
@@ -171,7 +171,7 @@ class CommentService {
 
       return response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) {
@@ -198,7 +198,7 @@ class CommentService {
 
       return response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) {

@@ -13,11 +13,6 @@ abstract class DialogueChatService {
   /// If null comes then chat is deleted.
   Stream<Chat?> get updatedChat;
 
-  // TODO: move to new_chat feature
-  Future<void> create({
-    required UserID partnerID,
-  });
-
   Future<void> delete();
 
   Future<void> sendMessage({

@@ -1,5 +1,6 @@
 export 'account_settings_coordinator.dart';
 export 'change_personal_info_coordinator.dart';
+export 'chat_coordinator.dart';
 export 'chat_list_coordinator.dart';
 export 'comment_coordinator.dart';
 export 'coordinator.dart';

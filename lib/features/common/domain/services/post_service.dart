@@ -24,7 +24,10 @@ class PostService {
   final PostRepository _postRepository;
   final CommentRepository _commentRepository;
 
-  Future<Post> loadPost(PostID id, {bool cached = true}) async {
+  Future<Post> loadPost(
+    PostID id, {
+    bool cached = true,
+  }) async {
     if (cached) {
       final post = await _postRepository.getByID(id);
 
@@ -42,7 +45,7 @@ class PostService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {
@@ -71,7 +74,7 @@ class PostService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {
@@ -98,7 +101,7 @@ class PostService {
 
       return response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) {
@@ -121,7 +124,7 @@ class PostService {
 
       return response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) {
@@ -152,7 +155,7 @@ class PostService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {

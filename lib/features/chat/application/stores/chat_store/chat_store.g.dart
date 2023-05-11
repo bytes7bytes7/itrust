@@ -16,12 +16,12 @@ mixin _$ChatStore on _ChatStore, Store {
       (_$showItemLoadingComputed ??= Computed<bool>(() => super.showItemLoading,
               name: '_ChatStore.showItemLoading'))
           .value;
-  Computed<bool>? _$showAppBarLoadingComputed;
+  Computed<bool>? _$showChatInfoLoadingComputed;
 
   @override
-  bool get showAppBarLoading => (_$showAppBarLoadingComputed ??= Computed<bool>(
-          () => super.showAppBarLoading,
-          name: '_ChatStore.showAppBarLoading'))
+  bool get showChatInfoLoading => (_$showChatInfoLoadingComputed ??=
+          Computed<bool>(() => super.showChatInfoLoading,
+              name: '_ChatStore.showChatInfoLoading'))
       .value;
   Computed<bool>? _$showItemsComputed;
 
@@ -30,18 +30,33 @@ mixin _$ChatStore on _ChatStore, Store {
           Computed<bool>(() => super.showItems, name: '_ChatStore.showItems'))
       .value;
 
+  late final _$chatIDAtom = Atom(name: '_ChatStore.chatID', context: context);
+
+  @override
+  String get chatID {
+    _$chatIDAtom.reportRead();
+    return super.chatID;
+  }
+
+  @override
+  set chatID(String value) {
+    _$chatIDAtom.reportWrite(value, super.chatID, () {
+      super.chatID = value;
+    });
+  }
+
   late final _$_chatAtom = Atom(name: '_ChatStore._chat', context: context);
 
-  Chat? get chat {
+  ChatVM? get chat {
     _$_chatAtom.reportRead();
     return super._chat;
   }
 
   @override
-  Chat? get _chat => chat;
+  ChatVM? get _chat => chat;
 
   @override
-  set _chat(Chat? value) {
+  set _chat(ChatVM? value) {
     _$_chatAtom.reportWrite(value, super._chat, () {
       super._chat = value;
     });
@@ -103,16 +118,16 @@ mixin _$ChatStore on _ChatStore, Store {
   late final _$_messagesAtom =
       Atom(name: '_ChatStore._messages', context: context);
 
-  List<Message> get messages {
+  List<MessageVM> get messages {
     _$_messagesAtom.reportRead();
     return super._messages;
   }
 
   @override
-  List<Message> get _messages => messages;
+  List<MessageVM> get _messages => messages;
 
   @override
-  set _messages(List<Message> value) {
+  set _messages(List<MessageVM> value) {
     _$_messagesAtom.reportWrite(value, super._messages, () {
       super._messages = value;
     });
@@ -133,23 +148,6 @@ mixin _$ChatStore on _ChatStore, Store {
   set _hasMoreMessages(bool value) {
     _$_hasMoreMessagesAtom.reportWrite(value, super._hasMoreMessages, () {
       super._hasMoreMessages = value;
-    });
-  }
-
-  late final _$_pageAtom = Atom(name: '_ChatStore._page', context: context);
-
-  int get page {
-    _$_pageAtom.reportRead();
-    return super._page;
-  }
-
-  @override
-  int get _page => page;
-
-  @override
-  set _page(int value) {
-    _$_pageAtom.reportWrite(value, super._page, () {
-      super._page = value;
     });
   }
 
@@ -175,33 +173,11 @@ mixin _$ChatStore on _ChatStore, Store {
       ActionController(name: '_ChatStore', context: context);
 
   @override
-  void loadChat(ChatID chatID) {
+  void loadChat({bool refresh = false}) {
     final _$actionInfo =
         _$_ChatStoreActionController.startAction(name: '_ChatStore.loadChat');
     try {
-      return super.loadChat(chatID);
-    } finally {
-      _$_ChatStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void load() {
-    final _$actionInfo =
-        _$_ChatStoreActionController.startAction(name: '_ChatStore.load');
-    try {
-      return super.load();
-    } finally {
-      _$_ChatStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void onBackPressed() {
-    final _$actionInfo = _$_ChatStoreActionController.startAction(
-        name: '_ChatStore.onBackPressed');
-    try {
-      return super.onBackPressed();
+      return super.loadChat(refresh: refresh);
     } finally {
       _$_ChatStoreActionController.endAction(_$actionInfo);
     }
@@ -210,8 +186,9 @@ mixin _$ChatStore on _ChatStore, Store {
   @override
   String toString() {
     return '''
+chatID: ${chatID},
 showItemLoading: ${showItemLoading},
-showAppBarLoading: ${showAppBarLoading},
+showChatInfoLoading: ${showChatInfoLoading},
 showItems: ${showItems}
     ''';
   }

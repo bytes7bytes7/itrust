@@ -8,7 +8,6 @@ export 'custom_snack_bar.dart';
 export 'filled_icon.dart';
 export 'filled_icon_button.dart';
 export 'image_grid.dart';
-export 'loading_bottom_bar.dart';
 export 'loading_error_container.dart';
 export 'message_field.dart';
 export 'option_button.dart';

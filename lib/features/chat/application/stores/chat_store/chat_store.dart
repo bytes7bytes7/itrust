@@ -1,18 +1,18 @@
-import 'dart:async';
-
-import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
-import 'package:logging/logging.dart';
+import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/application.dart';
-import '../../../../common/domain/domain.dart';
+import '../../../../common/domain/entities/entities.dart';
+import '../../../../common/domain/services/message_service.dart';
+import '../../../../common/domain/services/user_service.dart';
+import '../../../../common/domain/value_objects/value_objects.dart';
 import '../../../domain/services/chat_service.dart';
+import '../../coordinators/chat_coordinator.dart';
+import '../../providers/chat_string_provider.dart';
 
 part 'chat_store.g.dart';
-
-const _defaultLimit = 10;
-final _logger = Logger('$ChatStore');
 
 @injectable
 class ChatStore = _ChatStore with _$ChatStore;
@@ -20,13 +20,33 @@ class ChatStore = _ChatStore with _$ChatStore;
 abstract class _ChatStore extends SyncStore with Store {
   _ChatStore({
     required ChatService chatService,
-  }) : _chatService = chatService;
+    required MessageService messageService,
+    required UserService userService,
+    required ChatStringProvider chatStringProvider,
+    required ChatCoordinator coordinator,
+    required EndUserRepository endUserRepository,
+    required Mapster mapster,
+  })  : _chatService = chatService,
+        _messageService = messageService,
+        _userService = userService,
+        _chatStringProvider = chatStringProvider,
+        _coordinator = coordinator,
+        _endUserRepository = endUserRepository,
+        _mapster = mapster;
 
   final ChatService _chatService;
-  final int _limit = _defaultLimit;
+  final MessageService _messageService;
+  final UserService _userService;
+  final ChatStringProvider _chatStringProvider;
+  final ChatCoordinator _coordinator;
+  final EndUserRepository _endUserRepository;
+  final Mapster _mapster;
+
+  @observable
+  String chatID = '';
 
   @readonly
-  Chat? _chat;
+  ChatVM? _chat;
 
   @readonly
   bool _isLoading = false;
@@ -38,13 +58,10 @@ abstract class _ChatStore extends SyncStore with Store {
   bool _isLoadingMore = false;
 
   @readonly
-  List<Message> _messages = const [];
+  List<MessageVM> _messages = const [];
 
   @readonly
   bool _hasMoreMessages = true;
-
-  @readonly
-  int _page = 0;
 
   @readonly
   Map<MessageID, int> _messageKeys = {};
@@ -53,119 +70,113 @@ abstract class _ChatStore extends SyncStore with Store {
   bool get showItemLoading => _messages.isNotEmpty && _hasMoreMessages;
 
   @computed
-  bool get showAppBarLoading => _messages.isEmpty && _isLoading;
+  bool get showChatInfoLoading => _messages.isEmpty && _isLoading;
 
   @computed
   bool get showItems => _isLoading || _messages.isNotEmpty;
 
   @action
-  void loadChat(ChatID chatID) {
-    _reset();
+  void loadChat({
+    bool refresh = false,
+  }) {
+    late final ChatID id;
+    if (chatID.isNotEmpty) {
+      id = ChatID.fromString(chatID);
+    }
 
     perform(
       () async {
         try {
-          // TODO: implement
-          final chat = Chat.monologue(
-            id: chatID,
-            title: 'title $chatID',
+          final chat = await _chatService.getChat(
+            id: id,
+            cached: !refresh,
           );
 
-          _chat = chat;
+          final me = _endUserRepository.me;
+
+          if (me == null) {
+            throw Exception('Me is null');
+          }
+
+          final lastMessageID = chat.lastMessageID;
+
+          Message? lastMessage;
+          if (lastMessageID != null) {
+            lastMessage = await _messageService.getMessageByID(
+              lastMessageID,
+              cached: !refresh,
+            );
+          }
+
+          if (chat is MonologueChat) {
+            _chat = _mapster.map2(
+              chat,
+              ToChatVM(
+                toMessageVM: ToMessageVM(
+                  isSentByMe: true,
+                  user: me,
+                ),
+                lastMessage: lastMessage,
+              ),
+              To<MonologueChatVM>(),
+            );
+          } else if (chat is DialogueChat) {
+            final partner = await _userService.getUserByID(
+              id: chat.partnerID,
+              cached: !refresh,
+            );
+
+            _chat = _mapster.map2(
+              chat,
+              ToChatVM(
+                toMessageVM: ToMessageVM(
+                  isSentByMe: true,
+                  user: me,
+                ),
+                lastMessage: lastMessage,
+                partner: partner,
+              ),
+              To<DialogueChatVM>(),
+            );
+          } else if (chat is GroupChat) {
+            User? messageUser;
+            if (lastMessage != null) {
+              if (lastMessage is UserMessage) {
+                if (lastMessage.senderID == me.id) {
+                  messageUser = me;
+                } else {
+                  messageUser = await _userService.getUserByID(
+                    id: lastMessage.senderID,
+                    cached: !refresh,
+                  );
+                }
+              }
+            }
+
+            _chat = _mapster.map2(
+              chat,
+              ToChatVM(
+                toMessageVM: ToMessageVM(
+                  isSentByMe: messageUser?.id == me.id,
+                  user: messageUser,
+                ),
+                lastMessage: lastMessage,
+              ),
+              To<GroupChatVM>(),
+            );
+          } else {
+            throw Exception('Unknown type of chat');
+          }
         } catch (e) {
-          _error = 'Some error';
+          _error = _chatStringProvider.canNotLoadChatInfo;
         }
       },
       setIsLoading: (v) => _isLoading = v,
       removeError: () => _error = '',
     );
-
-    load();
   }
 
-  @action
-  void load() {
-    if (_isLoading || _isLoadingMore) {
-      return;
-    }
-
-    _error = '';
-
-    if (_hasMoreMessages) {
-      _isLoadingMore = true;
-
-      if (_page == 0) {
-        // TODO: implement
-      }
-
-      _logger.fine('try to load data');
-
-      perform(
-        () async {
-          await _loadData(page: _page);
-          _isLoadingMore = false;
-        },
-        setIsLoading: (v) => _isLoading = v,
-        removeError: () => _error = '',
-      );
-    }
-  }
-
-  @action
-  void onBackPressed() {
-    _reset();
-
-    // TODO: implement
-    // _chatService.onLeaveChat();
-  }
-
-  void _reset() {
-    _isLoading = false;
-    _error = '';
-    _isLoadingMore = false;
-    _messages = const [];
-    _hasMoreMessages = true;
-    _page = 0;
-    _messageKeys = const {};
-    _chat = null;
-  }
-
-  Future<void> _loadData({
-    required int page,
-  }) async {
-    try {
-      final data = await _chatService.load(
-        limit: _limit,
-        offset: _limit * _page,
-      );
-
-      late List<Message> suggestions;
-      late Map<MessageID, int> messagesKeys;
-      if (page == 0) {
-        suggestions = data;
-        messagesKeys = Map.fromEntries(
-          data.mapIndexed((index, e) {
-            return MapEntry(e.id, index);
-          }),
-        );
-      } else {
-        suggestions = List.from(_messages)..addAll(data);
-        messagesKeys = Map.from(_messageKeys)
-          ..addAll(
-            Map.fromEntries(
-              data.mapIndexed((index, e) {
-                return MapEntry(e.id, index);
-              }),
-            ),
-          );
-      }
-
-      _messages = List.unmodifiable(suggestions);
-      _messageKeys = messagesKeys;
-      _hasMoreMessages = data.isNotEmpty && data.length == _limit;
-      _page = page + 1;
-    } catch (e) {
-      _error = 'Some error';
-    }
+  void onBackButtonPressed() {
+    _coordinator.onBackButtonPressed();
   }
 }

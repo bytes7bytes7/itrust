@@ -23,4 +23,9 @@ class ProdChatListCoordinator extends Coordinator
   void onCreateGroupBtnPressed() {
     // TODO: implement onCreateGroupBtnPressed
   }
+
+  @override
+  void onChatPressed({required String chatID}) {
+    ChatRoute(chatID: chatID).push(goRouter);
+  }
 }

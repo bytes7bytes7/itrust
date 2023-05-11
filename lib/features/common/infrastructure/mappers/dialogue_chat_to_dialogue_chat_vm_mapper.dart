@@ -36,6 +36,8 @@ class DialogueChatToDialogueChatVMMapper
         _chat.unreadAmount,
         showZero: false,
       ),
+      // TODO: add online status
+      onlineStatus: 'some status',
       lastMessage: lastMessage != null
           ? _mapster.map2(lastMessage, _dto.toMessageVM, To<MessageVM>())
           : null,

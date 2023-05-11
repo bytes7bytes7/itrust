@@ -38,7 +38,7 @@ mixin _$MessageVM {
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
-            DateTime? modifiedAt)
+            String? modifiedAt)
         user,
   }) =>
       throw _privateConstructorUsedError;
@@ -58,7 +58,7 @@ mixin _$MessageVM {
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
-            DateTime? modifiedAt)?
+            String? modifiedAt)?
         user,
   }) =>
       throw _privateConstructorUsedError;
@@ -78,7 +78,7 @@ mixin _$MessageVM {
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
-            DateTime? modifiedAt)?
+            String? modifiedAt)?
         user,
     required TResult orElse(),
   }) =>
@@ -306,7 +306,7 @@ class _$InfoMessageVM implements InfoMessageVM {
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
-            DateTime? modifiedAt)
+            String? modifiedAt)
         user,
   }) {
     return info(id, chatID, sentAt, isReadByMe, text, willBeBurntAt);
@@ -329,7 +329,7 @@ class _$InfoMessageVM implements InfoMessageVM {
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
-            DateTime? modifiedAt)?
+            String? modifiedAt)?
         user,
   }) {
     return info?.call(id, chatID, sentAt, isReadByMe, text, willBeBurntAt);
@@ -352,7 +352,7 @@ class _$InfoMessageVM implements InfoMessageVM {
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
-            DateTime? modifiedAt)?
+            String? modifiedAt)?
         user,
     required TResult orElse(),
   }) {
@@ -440,7 +440,7 @@ abstract class _$$UserMessageVMCopyWith<$Res>
       String text,
       List<MediaVM> media,
       DateTime? willBeBurntAt,
-      DateTime? modifiedAt});
+      String? modifiedAt});
 }
 
 /// @nodoc
@@ -510,7 +510,7 @@ class __$$UserMessageVMCopyWithImpl<$Res>
       modifiedAt: freezed == modifiedAt
           ? _value.modifiedAt
           : modifiedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as String?,
     ));
   }
 }
@@ -559,7 +559,7 @@ class _$UserMessageVM implements UserMessageVM {
   @override
   final DateTime? willBeBurntAt;
   @override
-  final DateTime? modifiedAt;
+  final String? modifiedAt;
 
   @override
   String toString() {
@@ -628,7 +628,7 @@ class _$UserMessageVM implements UserMessageVM {
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
-            DateTime? modifiedAt)
+            String? modifiedAt)
         user,
   }) {
     return user(id, chatID, senderID, isSentByMe, senderName, sentAt,
@@ -652,7 +652,7 @@ class _$UserMessageVM implements UserMessageVM {
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
-            DateTime? modifiedAt)?
+            String? modifiedAt)?
         user,
   }) {
     return user?.call(id, chatID, senderID, isSentByMe, senderName, sentAt,
@@ -676,7 +676,7 @@ class _$UserMessageVM implements UserMessageVM {
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
-            DateTime? modifiedAt)?
+            String? modifiedAt)?
         user,
     required TResult orElse(),
   }) {
@@ -731,7 +731,7 @@ abstract class UserMessageVM implements MessageVM {
       required final String text,
       required final List<MediaVM> media,
       final DateTime? willBeBurntAt,
-      final DateTime? modifiedAt}) = _$UserMessageVM;
+      final String? modifiedAt}) = _$UserMessageVM;
 
   @override
   String get id;
@@ -749,7 +749,7 @@ abstract class UserMessageVM implements MessageVM {
   List<MediaVM> get media;
   @override
   DateTime? get willBeBurntAt;
-  DateTime? get modifiedAt;
+  String? get modifiedAt;
   @override
   @JsonKey(ignore: true)
   _$$UserMessageVMCopyWith<_$UserMessageVM> get copyWith =>

@@ -13,7 +13,6 @@ import '../../application/stores/chat_list/chat_list_store.dart';
 import '../widgets/widgets.dart';
 
 const _appBarHeight = kToolbarHeight;
-const _appBarBottomHeight = 2.0;
 const _loadChatsKey = 'load chats';
 final _getIt = GetIt.instance;
 
@@ -97,9 +96,6 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
             },
           ),
         ],
-        bottom: _AppBarBottom(
-          chatListStore: chatListStore,
-        ),
       ),
     );
   }
@@ -170,32 +166,6 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-// ignore: prefer_mixin
-class _AppBarBottom extends StatelessWidget with PreferredSizeWidget {
-  const _AppBarBottom({
-    required this.chatListStore,
-  });
-
-  final ChatListStore chatListStore;
-
-  @override
-  Size get preferredSize => const Size.fromHeight(_appBarBottomHeight);
-
-  @override
-  Widget build(BuildContext context) {
-    return Observer(
-      builder: (context) {
-        return PreferredSize(
-          preferredSize: preferredSize,
-          child: chatListStore.showAppBarLoading
-              ? const LoadingBottomBar()
-              : const SizedBox.shrink(),
-        );
-      },
     );
   }
 }

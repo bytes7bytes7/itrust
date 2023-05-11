@@ -120,8 +120,7 @@ abstract class _ChatListStore extends SyncStore with Store {
 
   @action
   void onChatCardPressed({required String chatID}) {
-    // TODO: implement
-    // _chatListService.onChatSelected(chat.id);
+    _coordinator.onChatPressed(chatID: chatID);
   }
 
   void onCreateMonologueBtnPressed() {

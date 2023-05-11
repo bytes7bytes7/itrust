@@ -27,6 +27,8 @@ class UserMessageToUserMessageVMMapper
       throw Exception('User is null during mapping to $UserMessageVM');
     }
 
+    final modifiedAt = _message.modifiedAt;
+
     return UserMessageVM(
       id: _message.id.str,
       chatID: _message.chatID.str,
@@ -41,8 +43,9 @@ class UserMessageToUserMessageVMMapper
           .toList(),
       // TODO: convert DateTime from UTC to local
       willBeBurntAt: _message.willBeBurntAt,
-      // TODO: convert DateTime from UTC to local
-      modifiedAt: _message.modifiedAt,
+      modifiedAt: modifiedAt != null
+          ? _formattedDateProvider.inRelationToNow(modifiedAt)
+          : null,
     );
   }
 

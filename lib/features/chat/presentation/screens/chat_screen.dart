@@ -1,29 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../utils/hooks/reaction.dart';
 import '../../../common/domain/domain.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/chat_store/chat_store.dart';
 import '../widgets/widgets.dart';
 
 const _appBarHeight = kToolbarHeight;
+const _loadChatKey = 'load chat';
 final _getIt = GetIt.instance;
 
-// TODO: remove
-final _me = User.end(
-  id: UserID.fromString('me'),
-  email: 'bytes7@gmail.com',
-  firstName: 'first',
-  lastName: 'last',
-  avatarsAmount: 0,
-  isOnline: true,
-);
-
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends HookWidget {
   const ChatScreen({
     super.key,
     required this.chatID,
@@ -35,47 +28,66 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    final chatStore = useMemoized(() => _getIt.get<ChatStore>());
+
+    useEffect(
+      () {
+        chatStore
+          ..chatID = chatID
+          ..loadChat();
+
+        return null;
+      },
+      [_loadChatKey],
+    );
+
+    useReaction<String>(
+      (_) => chatStore.error,
+      (error) {
+        if (error.isNotEmpty) {
+          CustomSnackBar(
+            message: error,
+          ).build(context);
+        }
+      },
+    );
+
     return Scaffold(
-      appBar: const _AppBar(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            const Expanded(
-              child: _MessageList(),
-            ),
-            MessageField(
-              hint: l10n.message_field_hint,
-              onEmojiPressed: () {},
-              onAttachFilePressed: () {},
-              onSendPressed: (value) {},
-            ),
-          ],
-        ),
+      appBar: _AppBar(
+        chatStore: chatStore,
+      ),
+      body: _Body(
+        l10n: l10n,
+        chatStore: chatStore,
       ),
     );
   }
 }
 
 // ignore: prefer_mixin
-class _AppBar extends HookWidget with PreferredSizeWidget {
-  const _AppBar();
+class _AppBar extends StatelessWidget with PreferredSizeWidget {
+  const _AppBar({
+    required this.chatStore,
+  });
+
+  final ChatStore chatStore;
 
   @override
   Size get preferredSize => const Size.fromHeight(_appBarHeight);
 
   @override
   Widget build(BuildContext context) {
-    final chatStore = useMemoized(() => _getIt.get<ChatStore>());
-
     return PreferredSize(
       preferredSize: preferredSize,
       child: AppBar(
         leading: FilledIconButton(
           iconPath: Assets.image.svg.arrowBack.path,
-          onPressed: chatStore.onBackPressed,
+          onPressed: chatStore.onBackButtonPressed,
         ),
         centerTitle: true,
-        title: const _AppBarTitle(),
+        title: _AppBarTitle(
+          chatStore: chatStore,
+        ),
         actions: [
           FilledIconButton(
             iconPath: Assets.image.svg.moreVert.path,
@@ -87,14 +99,16 @@ class _AppBar extends HookWidget with PreferredSizeWidget {
   }
 }
 
-class _AppBarTitle extends HookWidget {
-  const _AppBarTitle();
+class _AppBarTitle extends StatelessWidget {
+  const _AppBarTitle({
+    required this.chatStore,
+  });
+
+  final ChatStore chatStore;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    final chatStore = useMemoized(() => _getIt.get<ChatStore>());
 
     return Observer(
       builder: (context) {
@@ -104,23 +118,24 @@ class _AppBarTitle extends HookWidget {
           return const SizedBox.shrink();
         }
 
-        // TODO: get info about user
-        const onlineStatus = '';
-
-        // TODO: get info about user/chat
-        const title = 'title';
-
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              title,
+            Text(
+              chat.map(
+                monologue: (e) => e.title,
+                dialogue: (e) => e.partnerName,
+                group: (e) => e.title,
+              ),
             ),
-            if (onlineStatus.isNotEmpty)
-              Text(
-                onlineStatus,
+            chat.map(
+              monologue: (_) => const SizedBox.shrink(),
+              dialogue: (e) => Text(
+                e.onlineStatus,
                 style: theme.textTheme.headline6,
               ),
+              group: (_) => const SizedBox.shrink(),
+            ),
           ],
         );
       },
@@ -128,13 +143,46 @@ class _AppBarTitle extends HookWidget {
   }
 }
 
-class _MessageList extends HookWidget {
-  const _MessageList();
+class _Body extends StatelessWidget {
+  const _Body({
+    required this.l10n,
+    required this.chatStore,
+  });
+
+  final AppLocalizations l10n;
+  final ChatStore chatStore;
 
   @override
   Widget build(BuildContext context) {
-    final chatStore = useMemoized(() => _getIt.get<ChatStore>());
+    return SafeArea(
+      child: Column(
+        children: [
+          Expanded(
+            child: _MessageList(
+              chatStore: chatStore,
+            ),
+          ),
+          MessageField(
+            hint: l10n.message_field_hint,
+            onEmojiPressed: () {},
+            onAttachFilePressed: () {},
+            onSendPressed: (value) {},
+          ),
+        ],
+      ),
+    );
+  }
+}
 
+class _MessageList extends StatelessWidget {
+  const _MessageList({
+    required this.chatStore,
+  });
+
+  final ChatStore chatStore;
+
+  @override
+  Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
         final chat = chatStore.chat;
@@ -159,34 +207,28 @@ class _MessageList extends HookWidget {
 
               return message.map(
                 info: (message) {
-                  // TODO: use markUp and markUpData
                   return InfoMessageListTile(
                     key: ValueKey(message.id),
-                    text: message.markUp,
-                    // TODO: beautify datetime
-                    dateTime: 'DT',
+                    text: message.text,
+                    dateTime: message.sentAt,
                   );
                 },
                 user: (message) {
-                  if (message.senderID == _me.id) {
+                  if (message.isSentByMe) {
                     return MyMessageListTile(
                       key: ValueKey(message.id),
                       text: message.text,
-                      // TODO: calculate in MobX
-                      isRead: false,
-                      // TODO: beautify datetime
-                      dateTime: 'DT',
+                      isRead: message.isReadByMe,
+                      dateTime: message.modifiedAt ?? message.sentAt,
                     );
                   }
 
                   return OthersMessageListTile(
                     key: ValueKey(message.id),
-                    showSender: chatStore.chat is GroupChat,
-                    // TODO: beautify datetime
-                    dateTime: 'DT',
+                    showSender: chat is GroupChat,
+                    dateTime: message.modifiedAt ?? message.sentAt,
                     text: message.text,
-                    // TODO: get name
-                    senderName: 'sender',
+                    senderName: message.senderName,
                   );
                 },
               );

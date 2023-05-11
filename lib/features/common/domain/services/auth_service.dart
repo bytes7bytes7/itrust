@@ -170,6 +170,7 @@ class AuthService {
 
       response.value.fold(
         (l) {
+          // TODO: check exception title
           throw Exception();
         },
         (r) {

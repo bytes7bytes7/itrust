@@ -29,6 +29,6 @@ class MessageVM with _$MessageVM {
     required String text,
     required List<MediaVM> media,
     DateTime? willBeBurntAt,
-    DateTime? modifiedAt,
+    String? modifiedAt,
   }) = UserMessageVM;
 }

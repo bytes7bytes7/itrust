@@ -13,13 +13,6 @@ abstract class MonologueChatService {
   /// If null comes then chat is deleted.
   Stream<Chat?> get updatedChat;
 
-  // TODO: move to new_chat feature
-  Future<void> create({
-    required String title,
-    String? iconName,
-    Uint8List? pic,
-  });
-
   Future<void> delete();
 
   Future<void> updateTitle({

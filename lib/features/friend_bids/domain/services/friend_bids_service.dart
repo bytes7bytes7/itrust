@@ -27,7 +27,7 @@ class FriendBidsService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {
@@ -55,7 +55,7 @@ class FriendBidsService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {
@@ -84,7 +84,7 @@ class FriendBidsService {
 
       return await response.value.fold(
         (l) {
-          // TODO: implement
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {

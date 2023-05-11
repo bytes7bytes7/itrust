@@ -88,7 +88,7 @@ class AccountService {
 
       await response.value.fold(
         (l) {
-          // TODO:
+          // TODO: check exception title
           throw Exception();
         },
         (r) async {
@@ -109,7 +109,7 @@ class AccountService {
 
       return response.value.fold(
         (l) {
-          // TODO:
+          // TODO: check exception title
           throw Exception();
         },
         (r) {

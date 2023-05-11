@@ -23,6 +23,7 @@ class ChatVM with _$ChatVM {
     required String partnerID,
     required String partnerName,
     required String unreadAmount,
+    required String onlineStatus,
     MessageVM? lastMessage,
   }) = DialogueChatVM;
 

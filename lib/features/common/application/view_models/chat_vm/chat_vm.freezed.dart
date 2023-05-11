@@ -24,7 +24,7 @@ mixin _$ChatVM {
             MediaVM? pic, MessageVM? lastMessage)
         monologue,
     required TResult Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)
         dialogue,
     required TResult Function(
             String id,
@@ -43,7 +43,7 @@ mixin _$ChatVM {
             MessageVM? lastMessage)?
         monologue,
     TResult? Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)?
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)?
         dialogue,
     TResult? Function(
             String id,
@@ -62,7 +62,7 @@ mixin _$ChatVM {
             MessageVM? lastMessage)?
         monologue,
     TResult Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)?
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)?
         dialogue,
     TResult Function(
             String id,
@@ -285,7 +285,7 @@ class _$MonologueChatVM implements MonologueChatVM {
             MediaVM? pic, MessageVM? lastMessage)
         monologue,
     required TResult Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)
         dialogue,
     required TResult Function(
             String id,
@@ -307,7 +307,7 @@ class _$MonologueChatVM implements MonologueChatVM {
             MessageVM? lastMessage)?
         monologue,
     TResult? Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)?
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)?
         dialogue,
     TResult? Function(
             String id,
@@ -329,7 +329,7 @@ class _$MonologueChatVM implements MonologueChatVM {
             MessageVM? lastMessage)?
         monologue,
     TResult Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)?
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)?
         dialogue,
     TResult Function(
             String id,
@@ -417,6 +417,7 @@ abstract class _$$DialogueChatVMCopyWith<$Res>
       String partnerID,
       String partnerName,
       String unreadAmount,
+      String onlineStatus,
       MessageVM? lastMessage});
 
   @override
@@ -438,6 +439,7 @@ class __$$DialogueChatVMCopyWithImpl<$Res>
     Object? partnerID = null,
     Object? partnerName = null,
     Object? unreadAmount = null,
+    Object? onlineStatus = null,
     Object? lastMessage = freezed,
   }) {
     return _then(_$DialogueChatVM(
@@ -457,6 +459,10 @@ class __$$DialogueChatVMCopyWithImpl<$Res>
           ? _value.unreadAmount
           : unreadAmount // ignore: cast_nullable_to_non_nullable
               as String,
+      onlineStatus: null == onlineStatus
+          ? _value.onlineStatus
+          : onlineStatus // ignore: cast_nullable_to_non_nullable
+              as String,
       lastMessage: freezed == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
@@ -473,6 +479,7 @@ class _$DialogueChatVM implements DialogueChatVM {
       required this.partnerID,
       required this.partnerName,
       required this.unreadAmount,
+      required this.onlineStatus,
       this.lastMessage});
 
   @override
@@ -484,11 +491,13 @@ class _$DialogueChatVM implements DialogueChatVM {
   @override
   final String unreadAmount;
   @override
+  final String onlineStatus;
+  @override
   final MessageVM? lastMessage;
 
   @override
   String toString() {
-    return 'ChatVM.dialogue(id: $id, partnerID: $partnerID, partnerName: $partnerName, unreadAmount: $unreadAmount, lastMessage: $lastMessage)';
+    return 'ChatVM.dialogue(id: $id, partnerID: $partnerID, partnerName: $partnerName, unreadAmount: $unreadAmount, onlineStatus: $onlineStatus, lastMessage: $lastMessage)';
   }
 
   @override
@@ -503,13 +512,15 @@ class _$DialogueChatVM implements DialogueChatVM {
                 other.partnerName == partnerName) &&
             (identical(other.unreadAmount, unreadAmount) ||
                 other.unreadAmount == unreadAmount) &&
+            (identical(other.onlineStatus, onlineStatus) ||
+                other.onlineStatus == onlineStatus) &&
             (identical(other.lastMessage, lastMessage) ||
                 other.lastMessage == lastMessage));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, partnerID, partnerName, unreadAmount, lastMessage);
+  int get hashCode => Object.hash(runtimeType, id, partnerID, partnerName,
+      unreadAmount, onlineStatus, lastMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -524,7 +535,7 @@ class _$DialogueChatVM implements DialogueChatVM {
             MediaVM? pic, MessageVM? lastMessage)
         monologue,
     required TResult Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)
         dialogue,
     required TResult Function(
             String id,
@@ -536,7 +547,8 @@ class _$DialogueChatVM implements DialogueChatVM {
             MessageVM? lastMessage)
         group,
   }) {
-    return dialogue(id, partnerID, partnerName, unreadAmount, lastMessage);
+    return dialogue(
+        id, partnerID, partnerName, unreadAmount, onlineStatus, lastMessage);
   }
 
   @override
@@ -546,7 +558,7 @@ class _$DialogueChatVM implements DialogueChatVM {
             MessageVM? lastMessage)?
         monologue,
     TResult? Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)?
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)?
         dialogue,
     TResult? Function(
             String id,
@@ -559,7 +571,7 @@ class _$DialogueChatVM implements DialogueChatVM {
         group,
   }) {
     return dialogue?.call(
-        id, partnerID, partnerName, unreadAmount, lastMessage);
+        id, partnerID, partnerName, unreadAmount, onlineStatus, lastMessage);
   }
 
   @override
@@ -569,7 +581,7 @@ class _$DialogueChatVM implements DialogueChatVM {
             MessageVM? lastMessage)?
         monologue,
     TResult Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)?
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)?
         dialogue,
     TResult Function(
             String id,
@@ -583,7 +595,8 @@ class _$DialogueChatVM implements DialogueChatVM {
     required TResult orElse(),
   }) {
     if (dialogue != null) {
-      return dialogue(id, partnerID, partnerName, unreadAmount, lastMessage);
+      return dialogue(
+          id, partnerID, partnerName, unreadAmount, onlineStatus, lastMessage);
     }
     return orElse();
   }
@@ -629,6 +642,7 @@ abstract class DialogueChatVM implements ChatVM {
       required final String partnerID,
       required final String partnerName,
       required final String unreadAmount,
+      required final String onlineStatus,
       final MessageVM? lastMessage}) = _$DialogueChatVM;
 
   @override
@@ -636,6 +650,7 @@ abstract class DialogueChatVM implements ChatVM {
   String get partnerID;
   String get partnerName;
   String get unreadAmount;
+  String get onlineStatus;
   @override
   MessageVM? get lastMessage;
   @override
@@ -795,7 +810,7 @@ class _$GroupChatVM implements GroupChatVM {
             MediaVM? pic, MessageVM? lastMessage)
         monologue,
     required TResult Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)
         dialogue,
     required TResult Function(
             String id,
@@ -818,7 +833,7 @@ class _$GroupChatVM implements GroupChatVM {
             MessageVM? lastMessage)?
         monologue,
     TResult? Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)?
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)?
         dialogue,
     TResult? Function(
             String id,
@@ -841,7 +856,7 @@ class _$GroupChatVM implements GroupChatVM {
             MessageVM? lastMessage)?
         monologue,
     TResult Function(String id, String partnerID, String partnerName,
-            String unreadAmount, MessageVM? lastMessage)?
+            String unreadAmount, String onlineStatus, MessageVM? lastMessage)?
         dialogue,
     TResult Function(
             String id,
