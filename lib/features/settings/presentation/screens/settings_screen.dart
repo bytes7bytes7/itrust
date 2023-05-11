@@ -11,6 +11,7 @@ import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/settings/settings_store.dart';
 
 const _appBarHeight = kToolbarHeight;
+const _loadSettingsKey = 'load settings';
 final _getIt = GetIt.instance;
 
 class SettingsScreen extends HookWidget {
@@ -20,8 +21,16 @@ class SettingsScreen extends HookWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final settingsStore =
-        useMemoized(() => _getIt.get<SettingsStore>()..init());
+    final settingsStore = useMemoized(() => _getIt.get<SettingsStore>());
+
+    useEffect(
+      () {
+        settingsStore.init();
+
+        return null;
+      },
+      [_loadSettingsKey],
+    );
 
     useReaction<String>(
       (_) => settingsStore.error,
@@ -123,8 +132,7 @@ class _Body extends StatelessWidget {
             OptionButton(
               iconPath: Assets.image.svg.logout.path,
               title: l10n.log_out_btn_title,
-              onPressed:
-                  settingsStore.isLoading ? null : settingsStore.logOut,
+              onPressed: settingsStore.isLoading ? null : settingsStore.logOut,
               showTrailing: false,
               isWarning: true,
             ),

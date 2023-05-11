@@ -34,7 +34,7 @@ class UserInfoService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -61,7 +61,7 @@ class UserInfoService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -88,7 +88,7 @@ class UserInfoService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -115,7 +115,7 @@ class UserInfoService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -142,7 +142,7 @@ class UserInfoService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -170,7 +170,7 @@ class UserInfoService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -198,7 +198,7 @@ class UserInfoService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -225,7 +225,7 @@ class UserInfoService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }

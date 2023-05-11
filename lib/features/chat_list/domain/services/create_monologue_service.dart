@@ -51,7 +51,7 @@ class CreateMonologueService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }

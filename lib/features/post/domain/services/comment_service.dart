@@ -44,7 +44,7 @@ class CommentService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -82,7 +82,7 @@ class CommentService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -115,7 +115,7 @@ class CommentService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -152,7 +152,7 @@ class CommentService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -179,7 +179,7 @@ class CommentService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -206,7 +206,7 @@ class CommentService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }

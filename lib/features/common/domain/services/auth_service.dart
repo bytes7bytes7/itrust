@@ -87,29 +87,34 @@ class AuthService {
       agreeWithRules: agreeWithRules,
     );
 
-    final response = await _authProvider.register(request);
+    try {
+      final response = await _authProvider.register(request);
 
-    response.value.fold(
-      (l) {
-        _authStatusProvider.remove();
+      response.value.fold(
+        (l) {
+          _authStatusProvider.remove();
 
-        if (l.title == _authExceptionProvider.emailIsAlreadyInUse) {
-          throw const EmailIsAlreadyInUse();
-        } else {
-          throw Exception();
-        }
-      },
-      (r) {
-        _authStatusProvider.setTo(r.id);
+          if (l.title == _authExceptionProvider.emailIsAlreadyInUse) {
+            throw const EmailIsAlreadyInUse();
+          } else {
+            throw Exception();
+          }
+        },
+        (r) {
+          _authStatusProvider.setTo(r.id);
 
-        _tokenService.setTokenPair(
-          TokenPair(
-            access: r.accessToken,
-            refresh: r.refreshToken,
-          ),
-        );
-      },
-    );
+          _tokenService.setTokenPair(
+            TokenPair(
+              access: r.accessToken,
+              refresh: r.refreshToken,
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
   }
 
   Future<void> logIn({
@@ -126,49 +131,59 @@ class AuthService {
       deviceInfo: deviceInfo,
     );
 
-    final response = await _authProvider.logIn(request);
+    try {
+      final response = await _authProvider.logIn(request);
 
-    response.value.fold(
-      (l) {
-        _authStatusProvider.remove();
+      response.value.fold(
+        (l) {
+          _authStatusProvider.remove();
 
-        if (l.title == _authExceptionProvider.invalidCredentials) {
-          throw const InvalidCredentials();
-        } else {
-          throw Exception();
-        }
-      },
-      (r) {
-        _authStatusProvider.setTo(r.id);
+          if (l.title == _authExceptionProvider.invalidCredentials) {
+            throw const InvalidCredentials();
+          } else {
+            throw Exception();
+          }
+        },
+        (r) {
+          _authStatusProvider.setTo(r.id);
 
-        _tokenService.setTokenPair(
-          TokenPair(
-            access: r.accessToken,
-            refresh: r.refreshToken,
-          ),
-        );
-      },
-    );
+          _tokenService.setTokenPair(
+            TokenPair(
+              access: r.accessToken,
+              refresh: r.refreshToken,
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
   }
 
   Future<void> logOut() async {
     const request = LogOutRequest();
 
-    final response = await _keepFreshTokenService
-        .request(() => _authProvider.logOut(request));
+    try {
+      final response = await _keepFreshTokenService
+          .request(() => _authProvider.logOut(request));
 
-    response.value.fold(
-      (l) {
-        throw Exception();
-      },
-      (r) {
-        _authStatusProvider.remove();
+      response.value.fold(
+        (l) {
+          throw Exception();
+        },
+        (r) {
+          _authStatusProvider.remove();
 
-        _tokenService.removeTokens();
+          _tokenService.removeTokens();
 
-        _endUserRepository.removeMe();
-      },
-    );
+          _endUserRepository.removeMe();
+        },
+      );
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
   }
 
   Future<void> _verifyToken() async {
@@ -178,22 +193,27 @@ class AuthService {
       deviceInfo: deviceInfo,
     );
 
-    final response = await _keepFreshTokenService
-        .request(() => _authProvider.verifyToken(request));
+    try {
+      final response = await _keepFreshTokenService
+          .request(() => _authProvider.verifyToken(request));
 
-    response.value.fold(
-      (l) {
-        _tokenService.removeTokens();
-        _authStatusProvider.remove();
-      },
-      (r) {
-        final me = _endUserRepository.me;
+      response.value.fold(
+        (l) {
+          _tokenService.removeTokens();
+          _authStatusProvider.remove();
+        },
+        (r) {
+          final me = _endUserRepository.me;
 
-        if (me != null) {
-          _authStatusProvider.setTo(me.id);
-        }
-      },
-    );
+          if (me != null) {
+            _authStatusProvider.setTo(me.id);
+          }
+        },
+      );
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
   }
 
   Future<void> _checkServerAvailability() async {

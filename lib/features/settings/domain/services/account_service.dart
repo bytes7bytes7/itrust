@@ -77,41 +77,51 @@ class AccountService {
     required String firstName,
     required String lastName,
   }) async {
-    final request = ChangePersonalInfoRequest(
-      firstName: firstName,
-      lastName: lastName,
-    );
+    try {
+      final request = ChangePersonalInfoRequest(
+        firstName: firstName,
+        lastName: lastName,
+      );
 
-    final response = await _keepFreshTokenService
-        .request(() => _accountProvider.changePersonalInfo(request));
+      final response = await _keepFreshTokenService
+          .request(() => _accountProvider.changePersonalInfo(request));
 
-    await response.value.fold(
-      (l) {
-        // TODO:
-        throw Exception();
-      },
-      (r) async {
-        final user = r.user;
-        await _endUserRepository.setMe(user);
-      },
-    );
+      await response.value.fold(
+        (l) {
+          // TODO:
+          throw Exception();
+        },
+        (r) async {
+          final user = r.user;
+          await _endUserRepository.setMe(user);
+        },
+      );
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
   }
 
   Future<DeviceSessionList> getDevices() async {
-    final response =
-        await _keepFreshTokenService.request(_accountProvider.getDevices);
+    try {
+      final response =
+          await _keepFreshTokenService.request(_accountProvider.getDevices);
 
-    return response.value.fold(
-      (l) {
-        // TODO:
-        throw Exception();
-      },
-      (r) {
-        return DeviceSessionList(
-          thisSession: r.thisSession,
-          otherSessions: r.otherSessions,
-        );
-      },
-    );
+      return response.value.fold(
+        (l) {
+          // TODO:
+          throw Exception();
+        },
+        (r) {
+          return DeviceSessionList(
+            thisSession: r.thisSession,
+            otherSessions: r.otherSessions,
+          );
+        },
+      );
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
   }
 }

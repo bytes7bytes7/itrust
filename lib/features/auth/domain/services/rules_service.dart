@@ -24,7 +24,7 @@ class RulesService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }

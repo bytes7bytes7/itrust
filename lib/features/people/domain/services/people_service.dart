@@ -45,7 +45,7 @@ class PeopleService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -78,7 +78,7 @@ class PeopleService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -109,7 +109,7 @@ class PeopleService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -140,7 +140,7 @@ class PeopleService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -171,7 +171,7 @@ class PeopleService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }

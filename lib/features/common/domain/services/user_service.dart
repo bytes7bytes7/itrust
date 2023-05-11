@@ -63,7 +63,7 @@ class UserService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       throw Exception();
     }
   }

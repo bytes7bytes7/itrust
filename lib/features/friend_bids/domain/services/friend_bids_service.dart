@@ -38,7 +38,7 @@ class FriendBidsService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -67,7 +67,7 @@ class FriendBidsService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
@@ -96,7 +96,7 @@ class FriendBidsService {
         },
       );
     } catch (e) {
-      // TODO: implement
+      // TODO: no internet
       rethrow;
     }
   }
