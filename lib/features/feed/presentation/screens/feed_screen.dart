@@ -15,6 +15,7 @@ const _appBarHeight = kToolbarHeight;
 const _categoryListHeight = 54.0;
 const _categoryListTitlePaddingH = 0.0;
 const _categoryListKey = PageStorageKey('feed category list');
+const _loadCategoriesKey = 'load categories';
 
 final _getIt = GetIt.instance;
 
@@ -25,8 +26,16 @@ class FeedScreen extends HookWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    final categoryStore =
-        useMemoized(() => _getIt.get<CategoryStore>()..init());
+    final categoryStore = useMemoized(() => _getIt.get<CategoryStore>());
+
+    useEffect(
+      () {
+        categoryStore.loadCategories();
+        categoryStore.feedStore.loadPosts(null);
+        return null;
+      },
+      [_loadCategoriesKey],
+    );
 
     useReaction<String>(
       (_) => categoryStore.error,

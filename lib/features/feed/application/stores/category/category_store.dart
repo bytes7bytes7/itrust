@@ -22,7 +22,6 @@ abstract class _CategoryStore extends SyncStore with Store {
   final FeedStore feedStore;
   final CategoryService _categoryService;
   final CategoryStringProvider _categoryStringProvider;
-  var _isInitialized = false;
 
   @readonly
   bool _isLoading = false;
@@ -38,14 +37,6 @@ abstract class _CategoryStore extends SyncStore with Store {
 
   @computed
   bool get hasError => _error.isNotEmpty;
-
-  void init() {
-    if (!_isInitialized) {
-      loadCategories();
-      feedStore.loadPosts(null);
-      _isInitialized = true;
-    }
-  }
 
   @action
   void loadCategories() {
