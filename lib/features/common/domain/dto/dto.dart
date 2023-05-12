@@ -1,3 +1,4 @@
+export 'chat_event_response/chat_event_response.dart';
 export 'chat_response/chat_response.dart';
 export 'chats_response/chats_response.dart';
 export 'end_users_response/end_users_response.dart';

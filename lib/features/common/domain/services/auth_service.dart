@@ -18,7 +18,7 @@ class AuthService {
   AuthService({
     required ServerAvailabilityProvider serverAvailabilityProvider,
     required AuthProvider authProvider,
-    required TokenRepository tokenService,
+    required TokenRepository tokenRepository,
     required EndUserRepository endUserRepository,
     required AuthExceptionProvider authExceptionProvider,
     required DeviceInfoProvider deviceInfoProvider,
@@ -26,7 +26,7 @@ class AuthService {
     required AuthStatusProvider authStatusProvider,
   })  : _serverAvailabilityProvider = serverAvailabilityProvider,
         _authProvider = authProvider,
-        _tokenService = tokenService,
+        _tokenRepository = tokenRepository,
         _endUserRepository = endUserRepository,
         _authExceptionProvider = authExceptionProvider,
         _deviceInfoProvider = deviceInfoProvider,
@@ -35,7 +35,7 @@ class AuthService {
 
   final ServerAvailabilityProvider _serverAvailabilityProvider;
   final AuthProvider _authProvider;
-  final TokenRepository _tokenService;
+  final TokenRepository _tokenRepository;
   final EndUserRepository _endUserRepository;
   final AuthExceptionProvider _authExceptionProvider;
   final DeviceInfoProvider _deviceInfoProvider;
@@ -44,9 +44,9 @@ class AuthService {
 
   @PostConstruct(preResolve: true)
   Future<void> init() async {
-    await _tokenService.init();
+    await _tokenRepository.init();
 
-    final accessTokenOrNull = await _tokenService.getAccessToken();
+    final accessTokenOrNull = await _tokenRepository.getAccessToken();
 
     if (accessTokenOrNull != null) {
       final serverAvailable = await _serverAvailabilityProvider.check();
@@ -103,7 +103,7 @@ class AuthService {
         (r) {
           _authStatusProvider.setTo(r.id);
 
-          _tokenService.setTokenPair(
+          _tokenRepository.setTokenPair(
             TokenPair(
               access: r.accessToken,
               refresh: r.refreshToken,
@@ -147,7 +147,7 @@ class AuthService {
         (r) {
           _authStatusProvider.setTo(r.id);
 
-          _tokenService.setTokenPair(
+          _tokenRepository.setTokenPair(
             TokenPair(
               access: r.accessToken,
               refresh: r.refreshToken,
@@ -176,7 +176,7 @@ class AuthService {
         (r) {
           _authStatusProvider.remove();
 
-          _tokenService.removeTokens();
+          _tokenRepository.removeTokens();
 
           _endUserRepository.removeMe();
         },
@@ -200,7 +200,7 @@ class AuthService {
 
       response.value.fold(
         (l) {
-          _tokenService.removeTokens();
+          _tokenRepository.removeTokens();
           _authStatusProvider.remove();
         },
         (r) {

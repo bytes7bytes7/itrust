@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:collection';
+
 import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mapster/mapster.dart';
@@ -26,7 +29,7 @@ abstract class _ChatListStore extends SyncStore with Store {
         _messageService = messageService,
         _userService = userService,
         _endUserRepository = endUserRepository,
-  _coordinator = coordinator,
+        _coordinator = coordinator,
         _chatListStringProvider = chatListStringProvider,
         _mapster = mapster;
 
@@ -37,6 +40,8 @@ abstract class _ChatListStore extends SyncStore with Store {
   final ChatListCoordinator _coordinator;
   final ChatListStringProvider _chatListStringProvider;
   final Mapster _mapster;
+  StreamSubscription? _chatEventSub;
+  final _messages = HashMap<String, Message>();
 
   @readonly
   bool _isLoading = false;
@@ -55,6 +60,149 @@ abstract class _ChatListStore extends SyncStore with Store {
 
   @computed
   bool get showAppBarLoading => _chats.isEmpty && _isLoading;
+
+  @disposeMethod
+  void dispose() {
+    _chatEventSub?.cancel();
+  }
+
+  @action
+  void listen() {
+    perform(
+      () async {
+        try {
+          final stream = await _chatListService.listenChatEvents();
+
+          _chatEventSub = stream.listen((event) async {
+            final chats = List.of(_chats);
+
+            final createdChats =
+                await _parseChats(event.created, refresh: true);
+            chats.insertAll(0, createdChats);
+
+            for (final id in event.deleted) {
+              final index = chats.indexWhere((e) => e.id == id.str);
+
+              if (index != -1) {
+                final chat = chats[index];
+
+                final lastMessageID = chat.lastMessage?.id;
+                if (lastMessageID != null) {
+                  _messages.remove(lastMessageID);
+                }
+
+                chats.removeAt(index);
+              }
+            }
+
+            final updatedChats =
+                await _parseChats(event.updated, refresh: true);
+
+            for (final chat in updatedChats) {
+              final index = chats.indexWhere((e) => e.id == chat.id);
+
+              if (index != -1) {
+                final oldChat = chats[index];
+
+                final lastMessage = _messages[chat.lastMessage?.id];
+
+                if (chat.lastMessage?.id == oldChat.lastMessage?.id) {
+                  chats[index] = chat;
+                } else {
+                  // remove old chat
+                  chats.removeAt(index);
+
+                  var pasted = false;
+
+                  if (lastMessage == null) {
+                    pasted = true;
+                  }
+
+                  if (!pasted) {
+                    for (var i = 0; i < chats.length; i++) {
+                      final otherChat = chats[i];
+
+                      final otherLastMessage =
+                          _messages[otherChat.lastMessage?.id];
+
+                      if (otherLastMessage == null) {
+                        chats.insert(i, chat);
+                        pasted = true;
+                        break;
+                      }
+
+                      if (lastMessage == null) {
+                        // this should never be true, because there is other
+                        // check for it above
+                        break;
+                      }
+
+                      final dateTime = lastMessage.map(
+                        info: (e) => e.sentAt,
+                        user: (e) => e.modifiedAt ?? e.sentAt,
+                      );
+
+                      final otherDateTime = otherLastMessage.map(
+                        info: (e) => e.sentAt,
+                        user: (e) => e.modifiedAt ?? e.sentAt,
+                      );
+
+                      if (otherDateTime.isAfter(dateTime)) {
+                        chats.insert(i, chat);
+                        pasted = true;
+                        break;
+                      }
+                    }
+                  }
+
+                  if (!pasted) {
+                    chats.add(chat);
+                  }
+                }
+              } else {
+                final lastMessage = _messages[chat.lastMessage?.id];
+
+                if (lastMessage != null) {
+                  for (var i = 0; i < chats.length; i++) {
+                    final otherChat = chats[i];
+
+                    final otherLastMessage =
+                        _messages[otherChat.lastMessage?.id];
+
+                    if (otherLastMessage == null) {
+                      chats.insert(i, chat);
+                      break;
+                    }
+
+                    final dateTime = lastMessage.map(
+                      info: (e) => e.sentAt,
+                      user: (e) => e.modifiedAt ?? e.sentAt,
+                    );
+
+                    final otherDateTime = otherLastMessage.map(
+                      info: (e) => e.sentAt,
+                      user: (e) => e.modifiedAt ?? e.sentAt,
+                    );
+
+                    if (otherDateTime.isAfter(dateTime)) {
+                      chats.insert(i, chat);
+                      break;
+                    }
+                  }
+                }
+              }
+            }
+
+            _chats = chats;
+          });
+        } catch (e) {
+          _error = _chatListStringProvider.chatEventError;
+        }
+      },
+      setIsLoading: (_) {},
+      removeError: () => _error = '',
+    );
+  }
 
   @action
   void loadChats({
@@ -155,6 +303,10 @@ abstract class _ChatListStore extends SyncStore with Store {
           lastMessageID,
           cached: !refresh,
         );
+
+        if (lastMessage != null) {
+          _messages[lastMessage.id.str] = lastMessage;
+        }
       }
 
       ChatVM? chatVM;

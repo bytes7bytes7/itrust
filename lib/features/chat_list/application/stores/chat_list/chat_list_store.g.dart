@@ -111,6 +111,17 @@ mixin _$ChatListStore on _ChatListStore, Store {
       ActionController(name: '_ChatListStore', context: context);
 
   @override
+  void listen() {
+    final _$actionInfo = _$_ChatListStoreActionController.startAction(
+        name: '_ChatListStore.listen');
+    try {
+      return super.listen();
+    } finally {
+      _$_ChatListStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void loadChats({bool refresh = false}) {
     final _$actionInfo = _$_ChatListStoreActionController.startAction(
         name: '_ChatListStore.loadChats');

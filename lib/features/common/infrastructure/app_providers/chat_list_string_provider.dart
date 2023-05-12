@@ -10,4 +10,7 @@ class ProdChatListStringProvider extends L10nProvider
 
   @override
   String get canNotLoadChats => l10n.can_not_load_chats;
+
+  @override
+  String get chatEventError => l10n.chat_event_error;
 }

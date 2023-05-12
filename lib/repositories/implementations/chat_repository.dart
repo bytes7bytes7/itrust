@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:injectable/injectable.dart';
 
-import '../../../../utils/long_polling.dart';
 import '../../features/common/domain/domain.dart';
 import '../interfaces/chat_repository.dart';
 
@@ -29,9 +28,6 @@ class ChatListResponse {
 class DevChatRepository implements ChatRepository {
   final _storage = <ChatID, Chat>{};
   final _rand = Random();
-  LongPolling<ChatListResponse> _polling = LongPolling<ChatListResponse>(
-    () => const ChatListResponse.empty(),
-  );
 
   @override
   Stream<Chat> onChatUpdate(ChatID chatID) {
@@ -40,9 +36,7 @@ class DevChatRepository implements ChatRepository {
   }
 
   @override
-  Stream<List<Chat>> get onAllChatsUpdate => _polling.stream.map((event) {
-        return <Chat>[];
-      }).where((list) => list.isNotEmpty);
+  Stream<List<Chat>> get onAllChatsUpdate => const Stream.empty();
 
   @override
   Future<Chat?> getByID(ChatID chatID) async {
@@ -67,11 +61,6 @@ class DevChatRepository implements ChatRepository {
     required int limit,
     required int offset,
   }) async {
-    _polling
-      ..stop()
-      ..dispose();
-
-    _polling = LongPolling(() => const ChatListResponse.empty());
   }
 
   @override

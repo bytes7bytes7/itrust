@@ -43,6 +43,7 @@ dependencies:
   rxdart: ^0.27.7
   shimmer: ^2.0.0
   url_strategy: ^0.2.0
+  web_socket_channel: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -52,7 +53,7 @@ dev_dependencies:
   envied_generator: ^0.3.0
   flutter_gen_runner: ^5.1.0+1
   flutter_lints: ^2.0.1
-  freezed: ^2.3.2
+  freezed: ^2.3.3
   injectable_generator: ^2.1.4
   json_serializable: ^6.6.1
   mobx_codegen: ^2.1.1

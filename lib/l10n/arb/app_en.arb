@@ -189,5 +189,6 @@
   "new_group_chat_screen_title": "New group",
   "name_of_chat_hint": "Name of chat",
   "can_not_create_chat": "Can not create chat. Try again later.",
-  "can_not_load_chat_info": "Can not load chat info."
+  "can_not_load_chat_info": "Can not load chat info.",
+  "chat_event_error": "An error occurs during updating chats."
 }

@@ -1,3 +1,4 @@
+export 'chat_event/chat_event.dart';
 export 'chat_id/chat_id.dart';
 export 'comment_id/comment_id.dart';
 export 'media_id/media_id.dart';

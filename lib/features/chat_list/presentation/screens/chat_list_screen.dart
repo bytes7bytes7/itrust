@@ -93,6 +93,7 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
             iconPath: Assets.image.svg.search.path,
             onPressed: () {
               // TODO: implement search
+              chatListStore.listen();
             },
           ),
         ],

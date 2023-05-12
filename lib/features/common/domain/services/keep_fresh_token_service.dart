@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:injectable/injectable.dart';
 import 'package:problem_details/problem_details.dart';
 
@@ -14,15 +16,15 @@ import '../value_objects/token_pair/token_pair.dart';
 
 @singleton
 class KeepFreshTokenService {
-  const KeepFreshTokenService({
-    required TokenRepository tokenService,
+  KeepFreshTokenService({
+    required TokenRepository tokenRepository,
     required KeepFreshTokenProvider keepFreshTokenProvider,
     required AuthStatusProvider authStatusProvider,
     required DeviceInfoProvider deviceInfoProvider,
     required KeepFreshTokenExceptionProvider keepFreshTokenExceptionProvider,
     required ServerAvailabilityProvider serverAvailabilityProvider,
     required EndUserRepository endUserRepository,
-  })  : _tokenService = tokenService,
+  })  : _tokenRepository = tokenRepository,
         _keepFreshTokenProvider = keepFreshTokenProvider,
         _authStatusProvider = authStatusProvider,
         _deviceInfoProvider = deviceInfoProvider,
@@ -30,64 +32,109 @@ class KeepFreshTokenService {
         _serverAvailabilityProvider = serverAvailabilityProvider,
         _endUserRepository = endUserRepository;
 
-  final TokenRepository _tokenService;
+  final TokenRepository _tokenRepository;
   final KeepFreshTokenProvider _keepFreshTokenProvider;
   final AuthStatusProvider _authStatusProvider;
   final DeviceInfoProvider _deviceInfoProvider;
   final KeepFreshTokenExceptionProvider _keepFreshTokenExceptionProvider;
   final ServerAvailabilityProvider _serverAvailabilityProvider;
   final EndUserRepository _endUserRepository;
+  var _refreshing = Completer()..complete();
 
   Future<JsonEitherWrapper<ProblemDetails, T>> request<T>(
     Future<JsonEitherWrapper<ProblemDetails, T>> Function() callback,
   ) async {
-    await _checkServerAvailability();
+    while (true) {
+      await _checkServerAvailability();
 
-    final response = await callback();
+      final response = await callback();
 
-    return await response.value.match(
-      (l) async {
-        if (l.title == _keepFreshTokenExceptionProvider.tokenExpired) {
-          final refreshToken = await _tokenService.getRefreshToken();
-
-          if (refreshToken == null) {
-            await _logOut();
-
-            throw Exception('No tokens found');
+      final result = await response.value.match(
+        (l) async {
+          if (l.title == _keepFreshTokenExceptionProvider.tokenExpired) {
+            await _refreshToken();
+          } else {
+            throw Exception('Unexpected response');
           }
 
-          final deviceInfo = await _deviceInfoProvider.getDeviceInfo();
-          final request = RefreshTokenRequest(
-            refreshToken: refreshToken,
-            deviceInfo: deviceInfo,
-          );
+          return null;
+        },
+        (r) async {
+          return response;
+        },
+      );
 
-          final refreshResponse =
-              await _keepFreshTokenProvider.refreshToken(request);
+      if (result != null) {
+        return result;
+      }
+    }
+  }
 
-          return await refreshResponse.value.match(
-            (l) async {
-              await _logOut();
+  Future<Stream<JsonEitherWrapper<ProblemDetails, T>>> listen<T>(
+    Future<Stream<JsonEitherWrapper<ProblemDetails, T>>> Function() callback,
+  ) async {
+    await _checkServerAvailability();
 
-              throw Exception('Wrong refresh token');
-            },
-            (r) async {
-              await _tokenService.setTokenPair(
-                TokenPair(
-                  access: r.accessToken,
-                  refresh: r.refreshToken,
-                ),
-              );
+    final stream = await callback();
 
-              return callback();
-            },
-          );
-        }
+    return stream.asyncMap((event) async {
+      return event.value.match(
+        (l) async {
+          if (l.title == _keepFreshTokenExceptionProvider.tokenExpired) {
+            await _refreshToken();
+          } else {
+            throw Exception('Unexpected response');
+          }
 
-        return response;
+          return event;
+        },
+        (r) async {
+          return event;
+        },
+      );
+    });
+  }
+
+  Future<void> _refreshToken() async {
+    if (!_refreshing.isCompleted) {
+      return _refreshing.future;
+    }
+
+    _refreshing = Completer();
+
+    final refreshToken = await _tokenRepository.getRefreshToken();
+
+    if (refreshToken == null) {
+      await _logOut();
+
+      throw Exception('No tokens found');
+    }
+
+    final deviceInfo = await _deviceInfoProvider.getDeviceInfo();
+    final request = RefreshTokenRequest(
+      refreshToken: refreshToken,
+      deviceInfo: deviceInfo,
+    );
+
+    final refreshResponse = await _keepFreshTokenProvider.refreshToken(request);
+
+    return await refreshResponse.value.match(
+      (l) async {
+        await _logOut();
+
+        _refreshing.complete();
+
+        throw Exception('Wrong refresh token');
       },
-      (r) {
-        return response;
+      (r) async {
+        await _tokenRepository.setTokenPair(
+          TokenPair(
+            access: r.accessToken,
+            refresh: r.refreshToken,
+          ),
+        );
+
+        _refreshing.complete();
       },
     );
   }
@@ -102,7 +149,7 @@ class KeepFreshTokenService {
 
   Future<void> _logOut() async {
     _authStatusProvider.remove();
-    await _tokenService.removeTokens();
+    await _tokenRepository.removeTokens();
     await _endUserRepository.removeMe();
   }
 }
