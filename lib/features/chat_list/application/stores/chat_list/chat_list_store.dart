@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
@@ -41,7 +40,6 @@ abstract class _ChatListStore extends SyncStore with Store {
   final ChatListStringProvider _chatListStringProvider;
   final Mapster _mapster;
   StreamSubscription? _chatEventSub;
-  final _messages = HashMap<String, Message>();
 
   @readonly
   bool _isLoading = false;
@@ -58,9 +56,6 @@ abstract class _ChatListStore extends SyncStore with Store {
   @readonly
   bool _isLoadingMore = false;
 
-  @computed
-  bool get showAppBarLoading => _chats.isEmpty && _isLoading;
-
   @disposeMethod
   void dispose() {
     _chatEventSub?.cancel();
@@ -71,6 +66,8 @@ abstract class _ChatListStore extends SyncStore with Store {
     perform(
       () async {
         try {
+          await _chatEventSub?.cancel();
+
           final stream = await _chatListService.listenChatEvents();
 
           _chatEventSub = stream.listen((event) async {
@@ -78,19 +75,19 @@ abstract class _ChatListStore extends SyncStore with Store {
 
             final createdChats =
                 await _parseChats(event.created, refresh: true);
-            chats.insertAll(0, createdChats);
+
+            for (final chat in createdChats) {
+              final index = chats.indexWhere((e) => e.id == chat.id);
+
+              if (index == -1) {
+                chats.insert(0, chat);
+              }
+            }
 
             for (final id in event.deleted) {
               final index = chats.indexWhere((e) => e.id == id.str);
 
               if (index != -1) {
-                final chat = chats[index];
-
-                final lastMessageID = chat.lastMessage?.id;
-                if (lastMessageID != null) {
-                  _messages.remove(lastMessageID);
-                }
-
                 chats.removeAt(index);
               }
             }
@@ -102,94 +99,57 @@ abstract class _ChatListStore extends SyncStore with Store {
               final index = chats.indexWhere((e) => e.id == chat.id);
 
               if (index != -1) {
-                final oldChat = chats[index];
+                chats[index] = chat;
+              }
+            }
 
-                final lastMessage = _messages[chat.lastMessage?.id];
+            for (final chatMessageID in event.lastMessageID.entries) {
+              final chatID = chatMessageID.key;
 
-                if (chat.lastMessage?.id == oldChat.lastMessage?.id) {
-                  chats[index] = chat;
-                } else {
-                  // remove old chat
-                  chats.removeAt(index);
+              final index = chats.indexWhere((e) => e.id == chatID.str);
 
-                  var pasted = false;
+              final chat = (await _parseChats(
+                [
+                  await _chatListService.getChat(
+                    id: chatID,
+                    cached: false,
+                  )
+                ],
+                refresh: true,
+              ))
+                  .first;
 
-                  if (lastMessage == null) {
-                    pasted = true;
-                  }
+              final chatDT = chat.lastMessage?.map(
+                    info: (e) => e.sentAtDT,
+                    user: (e) => e.modifiedAtDT ?? e.sentAtDT,
+                  ) ??
+                  chat.createdAt;
 
-                  if (!pasted) {
-                    for (var i = 0; i < chats.length; i++) {
-                      final otherChat = chats[i];
+              if (index != -1) {
+                // remove old chat instance
+                chats.removeAt(index);
+              }
 
-                      final otherLastMessage =
-                          _messages[otherChat.lastMessage?.id];
+              var pasted = false;
 
-                      if (otherLastMessage == null) {
-                        chats.insert(i, chat);
-                        pasted = true;
-                        break;
-                      }
+              for (var i = 0; i < chats.length; i++) {
+                final oldChat = chats[i];
 
-                      if (lastMessage == null) {
-                        // this should never be true, because there is other
-                        // check for it above
-                        break;
-                      }
+                final oldChatDT = oldChat.lastMessage?.map(
+                      info: (e) => e.sentAtDT,
+                      user: (e) => e.modifiedAtDT ?? e.sentAtDT,
+                    ) ??
+                    oldChat.createdAt;
 
-                      final dateTime = lastMessage.map(
-                        info: (e) => e.sentAt,
-                        user: (e) => e.modifiedAt ?? e.sentAt,
-                      );
-
-                      final otherDateTime = otherLastMessage.map(
-                        info: (e) => e.sentAt,
-                        user: (e) => e.modifiedAt ?? e.sentAt,
-                      );
-
-                      if (otherDateTime.isAfter(dateTime)) {
-                        chats.insert(i, chat);
-                        pasted = true;
-                        break;
-                      }
-                    }
-                  }
-
-                  if (!pasted) {
-                    chats.add(chat);
-                  }
+                if (oldChatDT.isBefore(chatDT)) {
+                  chats.insert(i, chat);
+                  pasted = true;
+                  break;
                 }
-              } else {
-                final lastMessage = _messages[chat.lastMessage?.id];
+              }
 
-                if (lastMessage != null) {
-                  for (var i = 0; i < chats.length; i++) {
-                    final otherChat = chats[i];
-
-                    final otherLastMessage =
-                        _messages[otherChat.lastMessage?.id];
-
-                    if (otherLastMessage == null) {
-                      chats.insert(i, chat);
-                      break;
-                    }
-
-                    final dateTime = lastMessage.map(
-                      info: (e) => e.sentAt,
-                      user: (e) => e.modifiedAt ?? e.sentAt,
-                    );
-
-                    final otherDateTime = otherLastMessage.map(
-                      info: (e) => e.sentAt,
-                      user: (e) => e.modifiedAt ?? e.sentAt,
-                    );
-
-                    if (otherDateTime.isAfter(dateTime)) {
-                      chats.insert(i, chat);
-                      break;
-                    }
-                  }
-                }
+              if (!pasted) {
+                _canLoadMore = true;
               }
             }
 
@@ -300,13 +260,10 @@ abstract class _ChatListStore extends SyncStore with Store {
       Message? lastMessage;
       if (lastMessageID != null) {
         lastMessage = await _messageService.getMessageByID(
-          lastMessageID,
+          chatID: chat.id,
+          messageID: lastMessageID,
           cached: !refresh,
         );
-
-        if (lastMessage != null) {
-          _messages[lastMessage.id.str] = lastMessage;
-        }
       }
 
       ChatVM? chatVM;

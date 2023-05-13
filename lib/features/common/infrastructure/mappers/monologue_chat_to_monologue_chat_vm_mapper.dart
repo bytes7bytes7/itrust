@@ -22,6 +22,7 @@ class MonologueChatToMonologueChatVMMapper
 
     return MonologueChatVM(
       id: _chat.id.str,
+      createdAt: _chat.createdAt,
       title: _chat.title,
       iconName: _chat.iconName,
       pic: pic != null ? _mapster.map1(pic, To<MediaVM>()) : null,

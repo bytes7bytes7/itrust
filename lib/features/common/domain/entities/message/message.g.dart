@@ -11,7 +11,7 @@ _$InfoMessage _$$InfoMessageFromJson(Map<String, dynamic> json) =>
       id: MessageID.fromJson(json['id'] as Map<String, dynamic>),
       chatID: ChatID.fromJson(json['chatID'] as Map<String, dynamic>),
       sentAt: DateTime.parse(json['sentAt'] as String),
-      isReadyByMe: json['isReadyByMe'] as bool,
+      isReadByMe: json['isReadByMe'] as bool,
       markUp: json['markUp'] as String,
       markUpData: Map<String, String>.from(json['markUpData'] as Map),
       willBeBurntAt: json['willBeBurntAt'] == null
@@ -25,7 +25,7 @@ Map<String, dynamic> _$$InfoMessageToJson(_$InfoMessage instance) =>
       'id': instance.id.toJson(),
       'chatID': instance.chatID.toJson(),
       'sentAt': instance.sentAt.toIso8601String(),
-      'isReadyByMe': instance.isReadyByMe,
+      'isReadByMe': instance.isReadByMe,
       'markUp': instance.markUp,
       'markUpData': instance.markUpData,
       'willBeBurntAt': instance.willBeBurntAt?.toIso8601String(),
@@ -38,9 +38,9 @@ _$UserMessage _$$UserMessageFromJson(Map<String, dynamic> json) =>
       chatID: ChatID.fromJson(json['chatID'] as Map<String, dynamic>),
       senderID: UserID.fromJson(json['senderID'] as Map<String, dynamic>),
       sentAt: DateTime.parse(json['sentAt'] as String),
-      isReadyByMe: json['isReadyByMe'] as bool,
+      isReadByMe: json['isReadByMe'] as bool,
       text: json['text'] as String,
-      mediaIDs: (json['mediaIDs'] as List<dynamic>)
+      media: (json['media'] as List<dynamic>)
           .map((e) => Media.fromJson(e as Map<String, dynamic>))
           .toList(),
       willBeBurntAt: json['willBeBurntAt'] == null
@@ -58,9 +58,9 @@ Map<String, dynamic> _$$UserMessageToJson(_$UserMessage instance) =>
       'chatID': instance.chatID.toJson(),
       'senderID': instance.senderID.toJson(),
       'sentAt': instance.sentAt.toIso8601String(),
-      'isReadyByMe': instance.isReadyByMe,
+      'isReadByMe': instance.isReadByMe,
       'text': instance.text,
-      'mediaIDs': instance.mediaIDs.map((e) => e.toJson()).toList(),
+      'media': instance.media.map((e) => e.toJson()).toList(),
       'willBeBurntAt': instance.willBeBurntAt?.toIso8601String(),
       'modifiedAt': instance.modifiedAt?.toIso8601String(),
       'type': instance.$type,

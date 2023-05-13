@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'chat_provider.dart';
+part of 'message_provider.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'chat_provider.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _ProdChatProvider implements ProdChatProvider {
-  _ProdChatProvider(
+class _ProdMessageProvider implements ProdMessageProvider {
+  _ProdMessageProvider(
     this._dio, {
     this.baseUrl,
   });
@@ -19,27 +19,30 @@ class _ProdChatProvider implements ProdChatProvider {
   String? baseUrl;
 
   @override
-  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> getChat(
-      {required id}) async {
+  Future<JsonEitherWrapper<ProblemDetails, MessageResponse>> getMessage({
+    required chatID,
+    required messageID,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<JsonEitherWrapper<ProblemDetails, ChatResponse>>(Options(
+        _setStreamType<JsonEitherWrapper<ProblemDetails, MessageResponse>>(
+            Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '/${id}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value =
-        JsonEitherWrapper<ProblemDetails, ChatResponse>.fromJson(_result.data!);
+                .compose(
+                  _dio.options,
+                  '/${chatID}/messages/${messageID}',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = JsonEitherWrapper<ProblemDetails, MessageResponse>.fromJson(
+        _result.data!);
     return value;
   }
 

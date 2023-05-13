@@ -20,6 +20,10 @@ ChatEventResponse _$ChatEventResponseFromJson(Map<String, dynamic> json) =>
               ?.map((e) => Chat.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      lastMessage: (json['lastMessage'] as List<dynamic>?)
+              ?.map((e) => ChatLastMessage.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$ChatEventResponseToJson(ChatEventResponse instance) =>
@@ -27,4 +31,5 @@ Map<String, dynamic> _$ChatEventResponseToJson(ChatEventResponse instance) =>
       'created': instance.created.map((e) => e.toJson()).toList(),
       'deleted': instance.deleted.map((e) => e.toJson()).toList(),
       'updated': instance.updated.map((e) => e.toJson()).toList(),
+      'lastMessage': instance.lastMessage.map((e) => e.toJson()).toList(),
     };

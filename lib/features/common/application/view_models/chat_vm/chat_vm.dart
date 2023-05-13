@@ -12,6 +12,7 @@ part 'chat_vm.freezed.dart';
 class ChatVM with _$ChatVM {
   const factory ChatVM.monologue({
     required String id,
+    required DateTime createdAt,
     required String title,
     String? iconName,
     MediaVM? pic,
@@ -20,6 +21,7 @@ class ChatVM with _$ChatVM {
 
   const factory ChatVM.dialogue({
     required String id,
+    required DateTime createdAt,
     required String partnerID,
     required String partnerName,
     required String unreadAmount,
@@ -29,6 +31,7 @@ class ChatVM with _$ChatVM {
 
   const factory ChatVM.group({
     required String id,
+    required DateTime createdAt,
     required String ownerID,
     required String participantsAmount,
     required String title,

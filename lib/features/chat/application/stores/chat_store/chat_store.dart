@@ -5,10 +5,10 @@ import 'package:mobx/mobx.dart';
 import '../../../../../repositories/interfaces/interfaces.dart';
 import '../../../../common/application/application.dart';
 import '../../../../common/domain/entities/entities.dart';
+import '../../../../common/domain/services/chat_list_service.dart';
 import '../../../../common/domain/services/message_service.dart';
 import '../../../../common/domain/services/user_service.dart';
 import '../../../../common/domain/value_objects/value_objects.dart';
-import '../../../domain/services/chat_service.dart';
 import '../../coordinators/chat_coordinator.dart';
 import '../../providers/chat_string_provider.dart';
 
@@ -19,14 +19,14 @@ class ChatStore = _ChatStore with _$ChatStore;
 
 abstract class _ChatStore extends SyncStore with Store {
   _ChatStore({
-    required ChatService chatService,
+    required ChatListService chatListService,
     required MessageService messageService,
     required UserService userService,
     required ChatStringProvider chatStringProvider,
     required ChatCoordinator coordinator,
     required EndUserRepository endUserRepository,
     required Mapster mapster,
-  })  : _chatService = chatService,
+  })  : _chatListService = chatListService,
         _messageService = messageService,
         _userService = userService,
         _chatStringProvider = chatStringProvider,
@@ -34,7 +34,7 @@ abstract class _ChatStore extends SyncStore with Store {
         _endUserRepository = endUserRepository,
         _mapster = mapster;
 
-  final ChatService _chatService;
+  final ChatListService _chatListService;
   final MessageService _messageService;
   final UserService _userService;
   final ChatStringProvider _chatStringProvider;
@@ -87,7 +87,7 @@ abstract class _ChatStore extends SyncStore with Store {
     perform(
       () async {
         try {
-          final chat = await _chatService.getChat(
+          final chat = await _chatListService.getChat(
             id: id,
             cached: !refresh,
           );
@@ -103,7 +103,8 @@ abstract class _ChatStore extends SyncStore with Store {
           Message? lastMessage;
           if (lastMessageID != null) {
             lastMessage = await _messageService.getMessageByID(
-              lastMessageID,
+              chatID: chat.id,
+              messageID: lastMessageID,
               cached: !refresh,
             );
           }

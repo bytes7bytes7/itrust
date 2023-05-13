@@ -18,14 +18,21 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MessageVM {
   String get id => throw _privateConstructorUsedError;
   String get chatID => throw _privateConstructorUsedError;
+  DateTime get sentAtDT => throw _privateConstructorUsedError;
   String get sentAt => throw _privateConstructorUsedError;
   bool get isReadByMe => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   DateTime? get willBeBurntAt => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, String chatID, String sentAt,
-            bool isReadByMe, String text, DateTime? willBeBurntAt)
+    required TResult Function(
+            String id,
+            String chatID,
+            DateTime sentAtDT,
+            String sentAt,
+            bool isReadByMe,
+            String text,
+            DateTime? willBeBurntAt)
         info,
     required TResult Function(
             String id,
@@ -33,19 +40,27 @@ mixin _$MessageVM {
             String senderID,
             bool isSentByMe,
             String senderName,
+            DateTime sentAtDT,
             String sentAt,
             bool isReadByMe,
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
+            DateTime? modifiedAtDT,
             String? modifiedAt)
         user,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String id, String chatID, String sentAt, bool isReadByMe,
-            String text, DateTime? willBeBurntAt)?
+    TResult? Function(
+            String id,
+            String chatID,
+            DateTime sentAtDT,
+            String sentAt,
+            bool isReadByMe,
+            String text,
+            DateTime? willBeBurntAt)?
         info,
     TResult? Function(
             String id,
@@ -53,19 +68,21 @@ mixin _$MessageVM {
             String senderID,
             bool isSentByMe,
             String senderName,
+            DateTime sentAtDT,
             String sentAt,
             bool isReadByMe,
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
+            DateTime? modifiedAtDT,
             String? modifiedAt)?
         user,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, String chatID, String sentAt, bool isReadByMe,
-            String text, DateTime? willBeBurntAt)?
+    TResult Function(String id, String chatID, DateTime sentAtDT, String sentAt,
+            bool isReadByMe, String text, DateTime? willBeBurntAt)?
         info,
     TResult Function(
             String id,
@@ -73,11 +90,13 @@ mixin _$MessageVM {
             String senderID,
             bool isSentByMe,
             String senderName,
+            DateTime sentAtDT,
             String sentAt,
             bool isReadByMe,
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
+            DateTime? modifiedAtDT,
             String? modifiedAt)?
         user,
     required TResult orElse(),
@@ -116,6 +135,7 @@ abstract class $MessageVMCopyWith<$Res> {
   $Res call(
       {String id,
       String chatID,
+      DateTime sentAtDT,
       String sentAt,
       bool isReadByMe,
       String text,
@@ -137,6 +157,7 @@ class _$MessageVMCopyWithImpl<$Res, $Val extends MessageVM>
   $Res call({
     Object? id = null,
     Object? chatID = null,
+    Object? sentAtDT = null,
     Object? sentAt = null,
     Object? isReadByMe = null,
     Object? text = null,
@@ -151,6 +172,10 @@ class _$MessageVMCopyWithImpl<$Res, $Val extends MessageVM>
           ? _value.chatID
           : chatID // ignore: cast_nullable_to_non_nullable
               as String,
+      sentAtDT: null == sentAtDT
+          ? _value.sentAtDT
+          : sentAtDT // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       sentAt: null == sentAt
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
@@ -182,6 +207,7 @@ abstract class _$$InfoMessageVMCopyWith<$Res>
   $Res call(
       {String id,
       String chatID,
+      DateTime sentAtDT,
       String sentAt,
       bool isReadByMe,
       String text,
@@ -201,6 +227,7 @@ class __$$InfoMessageVMCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? chatID = null,
+    Object? sentAtDT = null,
     Object? sentAt = null,
     Object? isReadByMe = null,
     Object? text = null,
@@ -215,6 +242,10 @@ class __$$InfoMessageVMCopyWithImpl<$Res>
           ? _value.chatID
           : chatID // ignore: cast_nullable_to_non_nullable
               as String,
+      sentAtDT: null == sentAtDT
+          ? _value.sentAtDT
+          : sentAtDT // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       sentAt: null == sentAt
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
@@ -241,6 +272,7 @@ class _$InfoMessageVM implements InfoMessageVM {
   const _$InfoMessageVM(
       {required this.id,
       required this.chatID,
+      required this.sentAtDT,
       required this.sentAt,
       required this.isReadByMe,
       required this.text,
@@ -250,6 +282,8 @@ class _$InfoMessageVM implements InfoMessageVM {
   final String id;
   @override
   final String chatID;
+  @override
+  final DateTime sentAtDT;
   @override
   final String sentAt;
   @override
@@ -261,7 +295,7 @@ class _$InfoMessageVM implements InfoMessageVM {
 
   @override
   String toString() {
-    return 'MessageVM.info(id: $id, chatID: $chatID, sentAt: $sentAt, isReadByMe: $isReadByMe, text: $text, willBeBurntAt: $willBeBurntAt)';
+    return 'MessageVM.info(id: $id, chatID: $chatID, sentAtDT: $sentAtDT, sentAt: $sentAt, isReadByMe: $isReadByMe, text: $text, willBeBurntAt: $willBeBurntAt)';
   }
 
   @override
@@ -271,6 +305,8 @@ class _$InfoMessageVM implements InfoMessageVM {
             other is _$InfoMessageVM &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.chatID, chatID) || other.chatID == chatID) &&
+            (identical(other.sentAtDT, sentAtDT) ||
+                other.sentAtDT == sentAtDT) &&
             (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
             (identical(other.isReadByMe, isReadByMe) ||
                 other.isReadByMe == isReadByMe) &&
@@ -280,8 +316,8 @@ class _$InfoMessageVM implements InfoMessageVM {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, chatID, sentAt, isReadByMe, text, willBeBurntAt);
+  int get hashCode => Object.hash(runtimeType, id, chatID, sentAtDT, sentAt,
+      isReadByMe, text, willBeBurntAt);
 
   @JsonKey(ignore: true)
   @override
@@ -292,8 +328,14 @@ class _$InfoMessageVM implements InfoMessageVM {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, String chatID, String sentAt,
-            bool isReadByMe, String text, DateTime? willBeBurntAt)
+    required TResult Function(
+            String id,
+            String chatID,
+            DateTime sentAtDT,
+            String sentAt,
+            bool isReadByMe,
+            String text,
+            DateTime? willBeBurntAt)
         info,
     required TResult Function(
             String id,
@@ -301,22 +343,30 @@ class _$InfoMessageVM implements InfoMessageVM {
             String senderID,
             bool isSentByMe,
             String senderName,
+            DateTime sentAtDT,
             String sentAt,
             bool isReadByMe,
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
+            DateTime? modifiedAtDT,
             String? modifiedAt)
         user,
   }) {
-    return info(id, chatID, sentAt, isReadByMe, text, willBeBurntAt);
+    return info(id, chatID, sentAtDT, sentAt, isReadByMe, text, willBeBurntAt);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String id, String chatID, String sentAt, bool isReadByMe,
-            String text, DateTime? willBeBurntAt)?
+    TResult? Function(
+            String id,
+            String chatID,
+            DateTime sentAtDT,
+            String sentAt,
+            bool isReadByMe,
+            String text,
+            DateTime? willBeBurntAt)?
         info,
     TResult? Function(
             String id,
@@ -324,22 +374,25 @@ class _$InfoMessageVM implements InfoMessageVM {
             String senderID,
             bool isSentByMe,
             String senderName,
+            DateTime sentAtDT,
             String sentAt,
             bool isReadByMe,
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
+            DateTime? modifiedAtDT,
             String? modifiedAt)?
         user,
   }) {
-    return info?.call(id, chatID, sentAt, isReadByMe, text, willBeBurntAt);
+    return info?.call(
+        id, chatID, sentAtDT, sentAt, isReadByMe, text, willBeBurntAt);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, String chatID, String sentAt, bool isReadByMe,
-            String text, DateTime? willBeBurntAt)?
+    TResult Function(String id, String chatID, DateTime sentAtDT, String sentAt,
+            bool isReadByMe, String text, DateTime? willBeBurntAt)?
         info,
     TResult Function(
             String id,
@@ -347,17 +400,20 @@ class _$InfoMessageVM implements InfoMessageVM {
             String senderID,
             bool isSentByMe,
             String senderName,
+            DateTime sentAtDT,
             String sentAt,
             bool isReadByMe,
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
+            DateTime? modifiedAtDT,
             String? modifiedAt)?
         user,
     required TResult orElse(),
   }) {
     if (info != null) {
-      return info(id, chatID, sentAt, isReadByMe, text, willBeBurntAt);
+      return info(
+          id, chatID, sentAtDT, sentAt, isReadByMe, text, willBeBurntAt);
     }
     return orElse();
   }
@@ -398,6 +454,7 @@ abstract class InfoMessageVM implements MessageVM {
   const factory InfoMessageVM(
       {required final String id,
       required final String chatID,
+      required final DateTime sentAtDT,
       required final String sentAt,
       required final bool isReadByMe,
       required final String text,
@@ -407,6 +464,8 @@ abstract class InfoMessageVM implements MessageVM {
   String get id;
   @override
   String get chatID;
+  @override
+  DateTime get sentAtDT;
   @override
   String get sentAt;
   @override
@@ -435,11 +494,13 @@ abstract class _$$UserMessageVMCopyWith<$Res>
       String senderID,
       bool isSentByMe,
       String senderName,
+      DateTime sentAtDT,
       String sentAt,
       bool isReadByMe,
       String text,
       List<MediaVM> media,
       DateTime? willBeBurntAt,
+      DateTime? modifiedAtDT,
       String? modifiedAt});
 }
 
@@ -459,11 +520,13 @@ class __$$UserMessageVMCopyWithImpl<$Res>
     Object? senderID = null,
     Object? isSentByMe = null,
     Object? senderName = null,
+    Object? sentAtDT = null,
     Object? sentAt = null,
     Object? isReadByMe = null,
     Object? text = null,
     Object? media = null,
     Object? willBeBurntAt = freezed,
+    Object? modifiedAtDT = freezed,
     Object? modifiedAt = freezed,
   }) {
     return _then(_$UserMessageVM(
@@ -487,6 +550,10 @@ class __$$UserMessageVMCopyWithImpl<$Res>
           ? _value.senderName
           : senderName // ignore: cast_nullable_to_non_nullable
               as String,
+      sentAtDT: null == sentAtDT
+          ? _value.sentAtDT
+          : sentAtDT // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       sentAt: null == sentAt
           ? _value.sentAt
           : sentAt // ignore: cast_nullable_to_non_nullable
@@ -507,6 +574,10 @@ class __$$UserMessageVMCopyWithImpl<$Res>
           ? _value.willBeBurntAt
           : willBeBurntAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      modifiedAtDT: freezed == modifiedAtDT
+          ? _value.modifiedAtDT
+          : modifiedAtDT // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       modifiedAt: freezed == modifiedAt
           ? _value.modifiedAt
           : modifiedAt // ignore: cast_nullable_to_non_nullable
@@ -524,11 +595,13 @@ class _$UserMessageVM implements UserMessageVM {
       required this.senderID,
       required this.isSentByMe,
       required this.senderName,
+      required this.sentAtDT,
       required this.sentAt,
       required this.isReadByMe,
       required this.text,
       required final List<MediaVM> media,
       this.willBeBurntAt,
+      this.modifiedAtDT,
       this.modifiedAt})
       : _media = media;
 
@@ -542,6 +615,8 @@ class _$UserMessageVM implements UserMessageVM {
   final bool isSentByMe;
   @override
   final String senderName;
+  @override
+  final DateTime sentAtDT;
   @override
   final String sentAt;
   @override
@@ -559,11 +634,13 @@ class _$UserMessageVM implements UserMessageVM {
   @override
   final DateTime? willBeBurntAt;
   @override
+  final DateTime? modifiedAtDT;
+  @override
   final String? modifiedAt;
 
   @override
   String toString() {
-    return 'MessageVM.user(id: $id, chatID: $chatID, senderID: $senderID, isSentByMe: $isSentByMe, senderName: $senderName, sentAt: $sentAt, isReadByMe: $isReadByMe, text: $text, media: $media, willBeBurntAt: $willBeBurntAt, modifiedAt: $modifiedAt)';
+    return 'MessageVM.user(id: $id, chatID: $chatID, senderID: $senderID, isSentByMe: $isSentByMe, senderName: $senderName, sentAtDT: $sentAtDT, sentAt: $sentAt, isReadByMe: $isReadByMe, text: $text, media: $media, willBeBurntAt: $willBeBurntAt, modifiedAtDT: $modifiedAtDT, modifiedAt: $modifiedAt)';
   }
 
   @override
@@ -579,6 +656,8 @@ class _$UserMessageVM implements UserMessageVM {
                 other.isSentByMe == isSentByMe) &&
             (identical(other.senderName, senderName) ||
                 other.senderName == senderName) &&
+            (identical(other.sentAtDT, sentAtDT) ||
+                other.sentAtDT == sentAtDT) &&
             (identical(other.sentAt, sentAt) || other.sentAt == sentAt) &&
             (identical(other.isReadByMe, isReadByMe) ||
                 other.isReadByMe == isReadByMe) &&
@@ -586,6 +665,8 @@ class _$UserMessageVM implements UserMessageVM {
             const DeepCollectionEquality().equals(other._media, _media) &&
             (identical(other.willBeBurntAt, willBeBurntAt) ||
                 other.willBeBurntAt == willBeBurntAt) &&
+            (identical(other.modifiedAtDT, modifiedAtDT) ||
+                other.modifiedAtDT == modifiedAtDT) &&
             (identical(other.modifiedAt, modifiedAt) ||
                 other.modifiedAt == modifiedAt));
   }
@@ -598,11 +679,13 @@ class _$UserMessageVM implements UserMessageVM {
       senderID,
       isSentByMe,
       senderName,
+      sentAtDT,
       sentAt,
       isReadByMe,
       text,
       const DeepCollectionEquality().hash(_media),
       willBeBurntAt,
+      modifiedAtDT,
       modifiedAt);
 
   @JsonKey(ignore: true)
@@ -614,8 +697,14 @@ class _$UserMessageVM implements UserMessageVM {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, String chatID, String sentAt,
-            bool isReadByMe, String text, DateTime? willBeBurntAt)
+    required TResult Function(
+            String id,
+            String chatID,
+            DateTime sentAtDT,
+            String sentAt,
+            bool isReadByMe,
+            String text,
+            DateTime? willBeBurntAt)
         info,
     required TResult Function(
             String id,
@@ -623,23 +712,31 @@ class _$UserMessageVM implements UserMessageVM {
             String senderID,
             bool isSentByMe,
             String senderName,
+            DateTime sentAtDT,
             String sentAt,
             bool isReadByMe,
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
+            DateTime? modifiedAtDT,
             String? modifiedAt)
         user,
   }) {
-    return user(id, chatID, senderID, isSentByMe, senderName, sentAt,
-        isReadByMe, text, media, willBeBurntAt, modifiedAt);
+    return user(id, chatID, senderID, isSentByMe, senderName, sentAtDT, sentAt,
+        isReadByMe, text, media, willBeBurntAt, modifiedAtDT, modifiedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String id, String chatID, String sentAt, bool isReadByMe,
-            String text, DateTime? willBeBurntAt)?
+    TResult? Function(
+            String id,
+            String chatID,
+            DateTime sentAtDT,
+            String sentAt,
+            bool isReadByMe,
+            String text,
+            DateTime? willBeBurntAt)?
         info,
     TResult? Function(
             String id,
@@ -647,23 +744,37 @@ class _$UserMessageVM implements UserMessageVM {
             String senderID,
             bool isSentByMe,
             String senderName,
+            DateTime sentAtDT,
             String sentAt,
             bool isReadByMe,
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
+            DateTime? modifiedAtDT,
             String? modifiedAt)?
         user,
   }) {
-    return user?.call(id, chatID, senderID, isSentByMe, senderName, sentAt,
-        isReadByMe, text, media, willBeBurntAt, modifiedAt);
+    return user?.call(
+        id,
+        chatID,
+        senderID,
+        isSentByMe,
+        senderName,
+        sentAtDT,
+        sentAt,
+        isReadByMe,
+        text,
+        media,
+        willBeBurntAt,
+        modifiedAtDT,
+        modifiedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id, String chatID, String sentAt, bool isReadByMe,
-            String text, DateTime? willBeBurntAt)?
+    TResult Function(String id, String chatID, DateTime sentAtDT, String sentAt,
+            bool isReadByMe, String text, DateTime? willBeBurntAt)?
         info,
     TResult Function(
             String id,
@@ -671,18 +782,32 @@ class _$UserMessageVM implements UserMessageVM {
             String senderID,
             bool isSentByMe,
             String senderName,
+            DateTime sentAtDT,
             String sentAt,
             bool isReadByMe,
             String text,
             List<MediaVM> media,
             DateTime? willBeBurntAt,
+            DateTime? modifiedAtDT,
             String? modifiedAt)?
         user,
     required TResult orElse(),
   }) {
     if (user != null) {
-      return user(id, chatID, senderID, isSentByMe, senderName, sentAt,
-          isReadByMe, text, media, willBeBurntAt, modifiedAt);
+      return user(
+          id,
+          chatID,
+          senderID,
+          isSentByMe,
+          senderName,
+          sentAtDT,
+          sentAt,
+          isReadByMe,
+          text,
+          media,
+          willBeBurntAt,
+          modifiedAtDT,
+          modifiedAt);
     }
     return orElse();
   }
@@ -726,11 +851,13 @@ abstract class UserMessageVM implements MessageVM {
       required final String senderID,
       required final bool isSentByMe,
       required final String senderName,
+      required final DateTime sentAtDT,
       required final String sentAt,
       required final bool isReadByMe,
       required final String text,
       required final List<MediaVM> media,
       final DateTime? willBeBurntAt,
+      final DateTime? modifiedAtDT,
       final String? modifiedAt}) = _$UserMessageVM;
 
   @override
@@ -741,6 +868,8 @@ abstract class UserMessageVM implements MessageVM {
   bool get isSentByMe;
   String get senderName;
   @override
+  DateTime get sentAtDT;
+  @override
   String get sentAt;
   @override
   bool get isReadByMe;
@@ -749,6 +878,7 @@ abstract class UserMessageVM implements MessageVM {
   List<MediaVM> get media;
   @override
   DateTime? get willBeBurntAt;
+  DateTime? get modifiedAtDT;
   String? get modifiedAt;
   @override
   @JsonKey(ignore: true)

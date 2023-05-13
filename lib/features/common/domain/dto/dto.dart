@@ -1,4 +1,5 @@
 export 'chat_event_response/chat_event_response.dart';
+export 'chat_last_message/chat_last_message.dart';
 export 'chat_response/chat_response.dart';
 export 'chats_response/chats_response.dart';
 export 'end_users_response/end_users_response.dart';
@@ -7,6 +8,7 @@ export 'log_in_request/log_in_request.dart';
 export 'log_in_response/log_in_response.dart';
 export 'log_out_request/log_out_request.dart';
 export 'log_out_response/log_out_response.dart';
+export 'message_response/message_response.dart';
 export 'new_media/new_media.dart';
 export 'post_comment_request/post_comment_request.dart';
 export 'post_comment_response/post_comment_response.dart';

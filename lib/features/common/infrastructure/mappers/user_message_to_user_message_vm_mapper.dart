@@ -35,12 +35,12 @@ class UserMessageToUserMessageVMMapper
       senderID: _message.senderID.str,
       isSentByMe: _dto.isSentByMe,
       senderName: _mapster.map1(user, To<UserVM>()).name,
+      sentAtDT: _message.sentAt,
       sentAt: _formattedDateProvider.inRelationToNow(_message.sentAt),
-      isReadByMe: _message.isReadyByMe,
+      isReadByMe: _message.isReadByMe,
       text: _message.text,
-      media: _message.mediaIDs
-          .map((e) => _mapster.map1(e, To<MediaVM>()))
-          .toList(),
+      media:
+          _message.media.map((e) => _mapster.map1(e, To<MediaVM>())).toList(),
       // TODO: convert DateTime from UTC to local
       willBeBurntAt: _message.willBeBurntAt,
       modifiedAt: modifiedAt != null

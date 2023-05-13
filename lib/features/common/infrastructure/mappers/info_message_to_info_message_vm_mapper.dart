@@ -18,8 +18,9 @@ class InfoMessageToInfoMessageVMMapper
     return InfoMessageVM(
       id: _message.id.str,
       chatID: _message.chatID.str,
+      sentAtDT: _message.sentAt,
       sentAt: _formattedDateProvider.inRelationToNow(_message.sentAt),
-      isReadByMe: _message.isReadyByMe,
+      isReadByMe: _message.isReadByMe,
       // TODO: use markUp and markUpData
       text: _message.markUp,
       // TODO: convert DateTime from UTC to local

@@ -7,4 +7,8 @@ abstract class ChatListProvider {
   Future<JsonEitherWrapper<ProblemDetails, ChatsResponse>> getChats({
     String? lastChatID,
   });
+
+  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> getChat({
+    required String id,
+  });
 }

@@ -79,10 +79,49 @@ class ChatListService {
               created: r.created,
               deleted: r.deleted,
               updated: r.updated,
+              lastMessageID: {
+                for (final e in r.lastMessage) e.chatID: e.messageID
+              },
             );
           },
         );
       });
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
+  }
+
+  Future<Chat> getChat({
+    required ChatID id,
+    bool cached = true,
+  }) async {
+    if (cached) {
+      final chat = await _chatRepository.getByID(id);
+
+      if (chat != null) {
+        return chat;
+      }
+    }
+
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _chatListProvider.getChat(
+          id: id.str,
+        ),
+      );
+
+      return await response.value.fold(
+        (l) {
+          // TODO: check exception title
+          throw Exception();
+        },
+        (r) async {
+          await _chatRepository.addOrUpdate(r.chat);
+
+          return r.chat;
+        },
+      );
     } catch (e) {
       // TODO: no internet
       rethrow;

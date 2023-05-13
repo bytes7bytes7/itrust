@@ -12,6 +12,8 @@ part 'chat_list_provider.g.dart';
 
 const _route = '/chats/';
 
+const _idParam = 'id';
+
 @Singleton(as: ChatListProvider)
 @RestApi()
 abstract class ProdChatListProvider implements ChatListProvider {
@@ -32,5 +34,11 @@ abstract class ProdChatListProvider implements ChatListProvider {
   @GET('/')
   Future<JsonEitherWrapper<ProblemDetails, ChatsResponse>> getChats({
     @Query('lastChatID') String? lastChatID,
+  });
+
+  @override
+  @GET('/{$_idParam}/')
+  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> getChat({
+    @Path(_idParam) required String id,
   });
 }

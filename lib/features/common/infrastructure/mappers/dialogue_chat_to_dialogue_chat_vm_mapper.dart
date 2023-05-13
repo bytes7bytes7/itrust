@@ -30,6 +30,7 @@ class DialogueChatToDialogueChatVMMapper
 
     return DialogueChatVM(
       id: _chat.id.str,
+      createdAt: _chat.createdAt,
       partnerID: _chat.partnerID.str,
       partnerName: _mapster.map1(partner, To<UserVM>()).name,
       unreadAmount: _beautifiedNumberProvider.beautify(

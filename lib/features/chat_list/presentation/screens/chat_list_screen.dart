@@ -13,6 +13,7 @@ import '../../application/stores/chat_list/chat_list_store.dart';
 import '../widgets/widgets.dart';
 
 const _appBarHeight = kToolbarHeight;
+const _listenChatEventsKey = 'listen chat events';
 const _loadChatsKey = 'load chats';
 final _getIt = GetIt.instance;
 
@@ -22,6 +23,14 @@ class ChatListScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final chatListStore = useMemoized(() => _getIt.get<ChatListStore>());
+
+    useEffect(
+      () {
+        chatListStore.listen();
+        return null;
+      },
+      [_listenChatEventsKey],
+    );
 
     useEffect(
       () {
@@ -93,7 +102,6 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
             iconPath: Assets.image.svg.search.path,
             onPressed: () {
               // TODO: implement search
-              chatListStore.listen();
             },
           ),
         ],
@@ -224,7 +232,7 @@ class _Body extends StatelessWidget {
         return RefreshIndicator(
           onRefresh: () async => chatListStore.refresh(),
           child: ListView.builder(
-            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(),
             itemCount: itemCount,
             itemBuilder: (context, index) {
               if (index == itemCount - 1) {

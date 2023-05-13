@@ -12,6 +12,7 @@ class MessageVM with _$MessageVM {
   const factory MessageVM.info({
     required String id,
     required String chatID,
+    required DateTime sentAtDT,
     required String sentAt,
     required bool isReadByMe,
     required String text,
@@ -24,11 +25,13 @@ class MessageVM with _$MessageVM {
     required String senderID,
     required bool isSentByMe,
     required String senderName,
+    required DateTime sentAtDT,
     required String sentAt,
     required bool isReadByMe,
     required String text,
     required List<MediaVM> media,
     DateTime? willBeBurntAt,
+    DateTime? modifiedAtDT,
     String? modifiedAt,
   }) = UserMessageVM;
 }
