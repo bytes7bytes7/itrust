@@ -26,6 +26,7 @@ class ChatScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final l10n = context.l10n;
 
     final chatStore = useMemoized(() => _getIt.get<ChatStore>());
@@ -34,6 +35,7 @@ class ChatScreen extends HookWidget {
       () {
         chatStore
           ..chatID = chatID
+          ..listen()
           ..loadChat();
 
         return null;
@@ -57,6 +59,7 @@ class ChatScreen extends HookWidget {
         chatStore: chatStore,
       ),
       body: _Body(
+        theme: theme,
         l10n: l10n,
         chatStore: chatStore,
       ),
@@ -145,10 +148,12 @@ class _AppBarTitle extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   const _Body({
+    required this.theme,
     required this.l10n,
     required this.chatStore,
   });
 
+  final ThemeData theme;
   final AppLocalizations l10n;
   final ChatStore chatStore;
 
@@ -159,6 +164,8 @@ class _Body extends StatelessWidget {
         children: [
           Expanded(
             child: _MessageList(
+              theme: theme,
+              l10n: l10n,
               chatStore: chatStore,
             ),
           ),
@@ -176,9 +183,13 @@ class _Body extends StatelessWidget {
 
 class _MessageList extends StatelessWidget {
   const _MessageList({
+    required this.theme,
+    required this.l10n,
     required this.chatStore,
   });
 
+  final ThemeData theme;
+  final AppLocalizations l10n;
   final ChatStore chatStore;
 
   @override
@@ -191,19 +202,65 @@ class _MessageList extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
+        if (chatStore.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        final itemCount = chatStore.messages.length + 1;
+
+        if (itemCount == 1) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Assets.lottie.chatting.lottie(),
+              const SizedBox(
+                height: 30,
+              ),
+              Text(
+                l10n.no_messages_in_chat,
+                style: theme.textTheme.bodyText1,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          );
+        }
+
         return ListView.custom(
+          physics: const AlwaysScrollableScrollPhysics(),
           reverse: true,
           childrenDelegate: SliverChildBuilderDelegate(
-            childCount: chatStore.messages.length,
-            findChildIndexCallback: (key) {
-              final messageKey = key as ValueKey;
-              final val = chatStore.messageKeys[messageKey.value]!;
-
-              return chatStore.messages.length - 1 - val;
-            },
+            childCount: itemCount,
+            // findChildIndexCallback: (key) {
+            //   final messageKey = key as ValueKey<String>;
+            //   final val = chatStore.messages
+            //       .indexWhere((e) => e.id == messageKey.value);
+            //
+            //   final index = chatStore.messages.length - 1 - val;
+            //
+            //   if (index >= 0) {
+            //     return index;
+            //   }
+            //
+            //   return null;
+            // },
             (context, index) {
-              final message =
-                  chatStore.messages[chatStore.messages.length - 1 - index];
+              if (index == itemCount - 1) {
+                if (chatStore.canLoadMore) {
+                  chatStore.loadMoreMessages();
+                }
+
+                if (chatStore.isLoadingMore) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return const SizedBox.shrink();
+              }
+
+              final message = chatStore.messages[index];
 
               return message.map(
                 info: (message) {

@@ -20,7 +20,7 @@ abstract class ProdFeedProvider implements FeedProvider {
   factory ProdFeedProvider(Dio dio, ServerSettings settings) {
     return ProdFeedProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

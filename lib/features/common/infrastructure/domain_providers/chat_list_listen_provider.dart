@@ -5,19 +5,19 @@ import 'package:injectable/injectable.dart';
 import 'package:problem_details/problem_details.dart';
 import 'package:web_socket_channel/io.dart';
 
-import '../../../../../utils/json_either_wrapper.dart';
-import '../../../../../utils/server_settings.dart';
-import '../../../domain/dto/chat_event_response/chat_event_response.dart';
-import '../../../domain/providers/chat_list_listen_provider.dart';
+import '../../../../utils/json_either_wrapper.dart';
+import '../../../../utils/server_settings.dart';
+import '../../domain/dto/chat_event_response/chat_event_response.dart';
+import '../../domain/providers/chat_list_listen_provider.dart';
 
-const _subRoute = '/chats';
+const _subRoute = 'chats';
 
 @Singleton(as: ChatListListenProvider)
 class ProdChatListListenProvider implements ChatListListenProvider {
   ProdChatListListenProvider(
     this._dio,
     ServerSettings serverSettings,
-  ) : _baseUrl = 'ws://${serverSettings.ip}:${serverSettings.port}$_subRoute';
+  ) : _baseUrl = '${serverSettings.wsBaseUri}$_subRoute';
 
   final Dio _dio;
   final String _baseUrl;

@@ -18,7 +18,7 @@ abstract class ProdAuthProvider implements AuthProvider {
   factory ProdAuthProvider(Dio dio, ServerSettings settings) {
     return ProdAuthProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

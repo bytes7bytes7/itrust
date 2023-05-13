@@ -20,7 +20,7 @@ abstract class ProdKeepFreshTokenProvider implements KeepFreshTokenProvider {
   factory ProdKeepFreshTokenProvider(Dio dio, ServerSettings settings) {
     return ProdKeepFreshTokenProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

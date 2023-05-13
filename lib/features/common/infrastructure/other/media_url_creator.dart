@@ -9,7 +9,7 @@ const _subRoute = 'media/';
 class MediaUrlCreator {
   MediaUrlCreator({
     required ServerSettings serverSettings,
-  }) : _host = '${serverSettings.baseUri}$_subRoute';
+  }) : _host = '${serverSettings.httpBaseUri}$_subRoute';
 
   final String _host;
 

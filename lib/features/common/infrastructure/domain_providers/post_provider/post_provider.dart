@@ -19,7 +19,7 @@ abstract class ProdPostProvider implements PostProvider {
   factory ProdPostProvider(Dio dio, ServerSettings settings) {
     return ProdPostProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

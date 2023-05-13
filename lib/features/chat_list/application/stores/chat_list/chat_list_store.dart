@@ -71,6 +71,7 @@ abstract class _ChatListStore extends SyncStore with Store {
           final stream = await _chatListService.listenChatEvents();
 
           _chatEventSub = stream.listen((event) async {
+            // TODO: add try-catch
             final chats = List.of(_chats);
 
             final createdChats =

@@ -19,7 +19,7 @@ abstract class ProdCommentProvider implements CommentProvider {
   factory ProdCommentProvider(Dio dio, ServerSettings settings) {
     return ProdCommentProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

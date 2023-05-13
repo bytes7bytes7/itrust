@@ -97,6 +97,24 @@ mixin _$ChatStore on _ChatStore, Store {
     });
   }
 
+  late final _$_canLoadMoreAtom =
+      Atom(name: '_ChatStore._canLoadMore', context: context);
+
+  bool get canLoadMore {
+    _$_canLoadMoreAtom.reportRead();
+    return super._canLoadMore;
+  }
+
+  @override
+  bool get _canLoadMore => canLoadMore;
+
+  @override
+  set _canLoadMore(bool value) {
+    _$_canLoadMoreAtom.reportWrite(value, super._canLoadMore, () {
+      super._canLoadMore = value;
+    });
+  }
+
   late final _$_isLoadingMoreAtom =
       Atom(name: '_ChatStore._isLoadingMore', context: context);
 
@@ -133,44 +151,19 @@ mixin _$ChatStore on _ChatStore, Store {
     });
   }
 
-  late final _$_hasMoreMessagesAtom =
-      Atom(name: '_ChatStore._hasMoreMessages', context: context);
-
-  bool get hasMoreMessages {
-    _$_hasMoreMessagesAtom.reportRead();
-    return super._hasMoreMessages;
-  }
-
-  @override
-  bool get _hasMoreMessages => hasMoreMessages;
-
-  @override
-  set _hasMoreMessages(bool value) {
-    _$_hasMoreMessagesAtom.reportWrite(value, super._hasMoreMessages, () {
-      super._hasMoreMessages = value;
-    });
-  }
-
-  late final _$_messageKeysAtom =
-      Atom(name: '_ChatStore._messageKeys', context: context);
-
-  Map<MessageID, int> get messageKeys {
-    _$_messageKeysAtom.reportRead();
-    return super._messageKeys;
-  }
-
-  @override
-  Map<MessageID, int> get _messageKeys => messageKeys;
-
-  @override
-  set _messageKeys(Map<MessageID, int> value) {
-    _$_messageKeysAtom.reportWrite(value, super._messageKeys, () {
-      super._messageKeys = value;
-    });
-  }
-
   late final _$_ChatStoreActionController =
       ActionController(name: '_ChatStore', context: context);
+
+  @override
+  void listen() {
+    final _$actionInfo =
+        _$_ChatStoreActionController.startAction(name: '_ChatStore.listen');
+    try {
+      return super.listen();
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void loadChat({bool refresh = false}) {
@@ -178,6 +171,28 @@ mixin _$ChatStore on _ChatStore, Store {
         _$_ChatStoreActionController.startAction(name: '_ChatStore.loadChat');
     try {
       return super.loadChat(refresh: refresh);
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void loadMessages() {
+    final _$actionInfo = _$_ChatStoreActionController.startAction(
+        name: '_ChatStore.loadMessages');
+    try {
+      return super.loadMessages();
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void loadMoreMessages() {
+    final _$actionInfo = _$_ChatStoreActionController.startAction(
+        name: '_ChatStore.loadMoreMessages');
+    try {
+      return super.loadMoreMessages();
     } finally {
       _$_ChatStoreActionController.endAction(_$actionInfo);
     }

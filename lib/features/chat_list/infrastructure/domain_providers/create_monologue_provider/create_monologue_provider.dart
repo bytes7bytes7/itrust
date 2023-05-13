@@ -20,7 +20,7 @@ abstract class ProdCreateMonologueProvider implements CreateMonologueProvider {
   factory ProdCreateMonologueProvider(Dio dio, ServerSettings settings) {
     return ProdCreateMonologueProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

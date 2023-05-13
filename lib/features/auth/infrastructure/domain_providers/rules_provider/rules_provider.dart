@@ -19,7 +19,7 @@ abstract class ProdRulesProvider implements RulesProvider {
   factory ProdRulesProvider(Dio dio, ServerSettings settings) {
     return ProdRulesProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

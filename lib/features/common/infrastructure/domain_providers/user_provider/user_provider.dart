@@ -21,7 +21,7 @@ abstract class ProdUserProvider implements UserProvider {
   factory ProdUserProvider(Dio dio, ServerSettings settings) {
     return ProdUserProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

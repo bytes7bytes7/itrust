@@ -9,6 +9,9 @@ abstract class EnvModule {
   ServerSettings get serverSettings => ServerSettings(
         ip: Env.serverIp,
         port: int.parse(Env.serverPort),
-        baseUri: '${Env.serverProtocol}://${Env.serverIp}:${Env.serverPort}/',
+        httpBaseUri:
+            '${Env.httpServerProtocol}://${Env.serverIp}:${Env.serverPort}/',
+        wsBaseUri:
+            '${Env.wsServerProtocol}://${Env.serverIp}:${Env.serverPort}/',
       );
 }

@@ -21,7 +21,7 @@ abstract class ProdChatListProvider implements ChatListProvider {
   factory ProdChatListProvider(Dio dio, ServerSettings settings) {
     return ProdChatListProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

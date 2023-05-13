@@ -19,7 +19,7 @@ abstract class ProdUserInfoProvider implements UserInfoProvider {
   factory ProdUserInfoProvider(Dio dio, ServerSettings settings) {
     return ProdUserInfoProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

@@ -25,6 +25,7 @@ class ChatListService {
   final ChatListListenProvider _chatListListenProvider;
   final ChatRepository _chatRepository;
 
+  // TODO: add cached
   Future<List<Chat>> loadChats({
     ChatID? lastChatID,
   }) async {

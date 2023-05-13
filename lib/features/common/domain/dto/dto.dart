@@ -9,6 +9,7 @@ export 'log_in_response/log_in_response.dart';
 export 'log_out_request/log_out_request.dart';
 export 'log_out_response/log_out_response.dart';
 export 'message_response/message_response.dart';
+export 'messages_response/messages_response.dart';
 export 'new_media/new_media.dart';
 export 'post_comment_request/post_comment_request.dart';
 export 'post_comment_response/post_comment_response.dart';

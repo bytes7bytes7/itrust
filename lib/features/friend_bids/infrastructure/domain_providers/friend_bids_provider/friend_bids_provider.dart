@@ -20,7 +20,7 @@ abstract class ProdFriendBidsProvider implements FriendBidsProvider {
   factory ProdFriendBidsProvider(Dio dio, ServerSettings settings) {
     return ProdFriendBidsProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

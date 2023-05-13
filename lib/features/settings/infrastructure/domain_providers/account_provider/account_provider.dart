@@ -19,7 +19,7 @@ abstract class ProdAccountProvider implements AccountProvider {
   factory ProdAccountProvider(Dio dio, ServerSettings settings) {
     return ProdAccountProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

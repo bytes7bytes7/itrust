@@ -6,6 +6,7 @@ import 'package:retrofit/retrofit.dart';
 import '../../../../../utils/json_either_wrapper.dart';
 import '../../../../../utils/server_settings.dart';
 import '../../../domain/dto/message_response/message_response.dart';
+import '../../../domain/dto/messages_response/messages_response.dart';
 import '../../../domain/providers/message_provider.dart';
 
 part 'message_provider.g.dart';
@@ -14,6 +15,7 @@ const _route = '/chats/';
 
 const _chatIDParam = 'chatID';
 const _messageIDParam = 'messageID';
+const _lastMessageIDParam = 'lastMessageID';
 
 @Singleton(as: MessageProvider)
 @RestApi()
@@ -22,7 +24,7 @@ abstract class ProdMessageProvider implements MessageProvider {
   factory ProdMessageProvider(Dio dio, ServerSettings settings) {
     return ProdMessageProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 
@@ -36,5 +38,12 @@ abstract class ProdMessageProvider implements MessageProvider {
   Future<JsonEitherWrapper<ProblemDetails, MessageResponse>> getMessage({
     @Path(_chatIDParam) required String chatID,
     @Path(_messageIDParam) required String messageID,
+  });
+
+  @override
+  @GET('/{$_chatIDParam}/messages')
+  Future<JsonEitherWrapper<ProblemDetails, MessagesResponse>> getMessages({
+    @Path(_chatIDParam) required String chatID,
+    @Query(_lastMessageIDParam) String? lastMessageID,
   });
 }

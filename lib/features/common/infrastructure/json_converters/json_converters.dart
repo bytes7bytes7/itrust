@@ -6,6 +6,7 @@ export 'get_user_by_id_response_json_converter.dart';
 export 'log_in_response_json_converter.dart';
 export 'log_out_response_json_converter.dart';
 export 'message_response_json_converter.dart';
+export 'messages_response_json_converter.dart';
 export 'post_comment_response_json_converter.dart';
 export 'post_comments_response_json_converter.dart';
 export 'post_response_json_converter.dart';

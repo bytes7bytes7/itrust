@@ -14,8 +14,9 @@ class MessageID with _$MessageID {
 
   const MessageID._();
 
-  factory MessageID.fromJson(JsonMap json) =>
-      _$MessageIDFromJson(json);
+  factory MessageID.fromJson(JsonMap json) => _$MessageIDFromJson(json);
+
+  factory MessageID.fromString(String string) => MessageID(string);
 
   String get str => value;
 }

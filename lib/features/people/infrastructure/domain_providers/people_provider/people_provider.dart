@@ -20,7 +20,7 @@ abstract class ProdPeopleProvider implements PeopleProvider {
   factory ProdPeopleProvider(Dio dio, ServerSettings settings) {
     return ProdPeopleProvider._(
       dio,
-      baseUrl: '${settings.baseUri}$_route',
+      baseUrl: '${settings.httpBaseUri}$_route',
     );
   }
 

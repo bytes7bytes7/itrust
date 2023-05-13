@@ -58,4 +58,36 @@ class MessageService {
       rethrow;
     }
   }
+
+  // TODO: add `cached` in all load N of something functions
+  Future<List<Message>> loadMessages({
+    required ChatID chatID,
+    MessageID? lastMessageID,
+  }) async {
+    try {
+      final response = await _keepFreshTokenService.request(
+        () => _messageProvider.getMessages(
+          chatID: chatID.str,
+          lastMessageID: lastMessageID?.str,
+        ),
+      );
+
+      return await response.value.fold(
+        (l) {
+          // TODO: check exception title
+          throw Exception();
+        },
+        (r) async {
+          for (final m in r.messages) {
+            await _messageRepository.addOrUpdate(m);
+          }
+
+          return r.messages;
+        },
+      );
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
+  }
 }
