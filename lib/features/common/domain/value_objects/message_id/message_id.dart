@@ -14,6 +14,10 @@ class MessageID with _$MessageID {
 
   const MessageID._();
 
+  factory MessageID.sending(DateTime dt) {
+    return MessageID('sending ${dt.millisecondsSinceEpoch}');
+  }
+
   factory MessageID.fromJson(JsonMap json) => _$MessageIDFromJson(json);
 
   factory MessageID.fromString(String string) => MessageID(string);

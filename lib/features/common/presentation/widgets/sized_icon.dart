@@ -14,9 +14,8 @@ class SizedIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return UnconstrainedBox(
       alignment: Alignment.center,
-      child: SizedBox(
-        width: size,
-        height: size,
+      child: SizedBox.square(
+        dimension: size,
         child: icon,
       ),
     );

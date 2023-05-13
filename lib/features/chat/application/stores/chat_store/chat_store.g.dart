@@ -9,27 +9,6 @@ part of 'chat_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ChatStore on _ChatStore, Store {
-  Computed<bool>? _$showItemLoadingComputed;
-
-  @override
-  bool get showItemLoading =>
-      (_$showItemLoadingComputed ??= Computed<bool>(() => super.showItemLoading,
-              name: '_ChatStore.showItemLoading'))
-          .value;
-  Computed<bool>? _$showChatInfoLoadingComputed;
-
-  @override
-  bool get showChatInfoLoading => (_$showChatInfoLoadingComputed ??=
-          Computed<bool>(() => super.showChatInfoLoading,
-              name: '_ChatStore.showChatInfoLoading'))
-      .value;
-  Computed<bool>? _$showItemsComputed;
-
-  @override
-  bool get showItems => (_$showItemsComputed ??=
-          Computed<bool>(() => super.showItems, name: '_ChatStore.showItems'))
-      .value;
-
   late final _$chatIDAtom = Atom(name: '_ChatStore.chatID', context: context);
 
   @override
@@ -151,6 +130,24 @@ mixin _$ChatStore on _ChatStore, Store {
     });
   }
 
+  late final _$_sendingMessagesAtom =
+      Atom(name: '_ChatStore._sendingMessages', context: context);
+
+  List<UserMessageVM> get sendingMessages {
+    _$_sendingMessagesAtom.reportRead();
+    return super._sendingMessages;
+  }
+
+  @override
+  List<UserMessageVM> get _sendingMessages => sendingMessages;
+
+  @override
+  set _sendingMessages(List<UserMessageVM> value) {
+    _$_sendingMessagesAtom.reportWrite(value, super._sendingMessages, () {
+      super._sendingMessages = value;
+    });
+  }
+
   late final _$_ChatStoreActionController =
       ActionController(name: '_ChatStore', context: context);
 
@@ -199,12 +196,20 @@ mixin _$ChatStore on _ChatStore, Store {
   }
 
   @override
+  void sendMessage({required String text}) {
+    final _$actionInfo = _$_ChatStoreActionController.startAction(
+        name: '_ChatStore.sendMessage');
+    try {
+      return super.sendMessage(text: text);
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-chatID: ${chatID},
-showItemLoading: ${showItemLoading},
-showChatInfoLoading: ${showChatInfoLoading},
-showItems: ${showItems}
+chatID: ${chatID}
     ''';
   }
 }

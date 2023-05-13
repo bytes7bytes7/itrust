@@ -5,8 +5,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../../../utils/json_either_wrapper.dart';
 import '../../../../../utils/server_settings.dart';
-import '../../../domain/dto/message_response/message_response.dart';
-import '../../../domain/dto/messages_response/messages_response.dart';
+import '../../../domain/dto/dto.dart';
 import '../../../domain/providers/message_provider.dart';
 
 part 'message_provider.g.dart';
@@ -45,5 +44,11 @@ abstract class ProdMessageProvider implements MessageProvider {
   Future<JsonEitherWrapper<ProblemDetails, MessagesResponse>> getMessages({
     @Path(_chatIDParam) required String chatID,
     @Query(_lastMessageIDParam) String? lastMessageID,
+  });
+
+  @override
+  @POST('/send_message')
+  Future<JsonEitherWrapper<ProblemDetails, MessageResponse>> sendMessage({
+    @Body() required SendMessageRequest request,
   });
 }

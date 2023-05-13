@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../themes/themes.dart';
-import '../../../common/common.dart';
+import '../../../common/presentation/widgets/widgets.dart';
 
 const _paddingH = 20.0;
 const _paddingV = 6.0;
@@ -12,6 +12,7 @@ const _messageBodyPadding = 10.0;
 const _messageAndTimeSeparator = 14.0;
 const _readIconAndTimeSeparator = 6.0;
 const _readIconSize = 12.0;
+const _sendingSize = 12.0;
 
 class MyMessageListTile extends StatelessWidget {
   const MyMessageListTile({
@@ -19,12 +20,14 @@ class MyMessageListTile extends StatelessWidget {
     required this.isRead,
     required this.text,
     required this.dateTime,
+    this.sending = false,
   });
 
   // TODO: add media support
   final bool isRead;
   final String text;
   final String dateTime;
+  final bool sending;
 
   @override
   Widget build(BuildContext context) {
@@ -41,21 +44,25 @@ class MyMessageListTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          // TODO: adapt for readBy
-          if (isRead)
-            SizedIcon(
-              size: _readIconSize,
-              icon: Assets.image.svg.doneAll.svg(
-                color: colorSchemeTX.simpleIcon,
-              ),
+          if (sending)
+            const SizedBox.square(
+              dimension: _sendingSize,
+              child: ActionSecondaryLoadingIndicator(),
             )
           else
-            SizedIcon(
-              size: _readIconSize,
-              icon: Assets.image.svg.done.svg(
-                color: colorSchemeTX.simpleIcon,
-              ),
-            ),
+            isRead
+                ? SizedIcon(
+                    size: _readIconSize,
+                    icon: Assets.image.svg.doneAll.svg(
+                      color: colorSchemeTX.simpleIcon,
+                    ),
+                  )
+                : SizedIcon(
+                    size: _readIconSize,
+                    icon: Assets.image.svg.done.svg(
+                      color: colorSchemeTX.simpleIcon,
+                    ),
+                  ),
           const SizedBox(
             width: _readIconAndTimeSeparator,
           ),

@@ -173,7 +173,7 @@ class _Body extends StatelessWidget {
             hint: l10n.message_field_hint,
             onEmojiPressed: () {},
             onAttachFilePressed: () {},
-            onSendPressed: (value) {},
+            onSendPressed: (text) => chatStore.sendMessage(text: text),
           ),
         ],
       ),
@@ -208,7 +208,8 @@ class _MessageList extends StatelessWidget {
           );
         }
 
-        final itemCount = chatStore.messages.length + 1;
+        final itemCount =
+            chatStore.messages.length + chatStore.sendingMessages.length + 1;
 
         if (itemCount == 1) {
           return Column(
@@ -232,19 +233,31 @@ class _MessageList extends StatelessWidget {
           reverse: true,
           childrenDelegate: SliverChildBuilderDelegate(
             childCount: itemCount,
-            // findChildIndexCallback: (key) {
-            //   final messageKey = key as ValueKey<String>;
-            //   final val = chatStore.messages
-            //       .indexWhere((e) => e.id == messageKey.value);
-            //
-            //   final index = chatStore.messages.length - 1 - val;
-            //
-            //   if (index >= 0) {
-            //     return index;
-            //   }
-            //
-            //   return null;
-            // },
+            // TODO: return this code add fix error in it
+            findChildIndexCallback: (key) {
+              final messageKey = key as ValueKey<String>;
+              var val = chatStore.sendingMessages
+                  .indexWhere((e) => e.id == messageKey.value);
+
+              if (val != -1) {
+                return val;
+              }
+
+              val = chatStore.messages
+                  .indexWhere((e) => e.id == messageKey.value);
+
+              if (val == -1) {
+                return null;
+              }
+
+              final index = chatStore.sendingMessages.length + val;
+
+              if (index >= 0) {
+                return index;
+              }
+
+              return null;
+            },
             (context, index) {
               if (index == itemCount - 1) {
                 if (chatStore.canLoadMore) {
@@ -260,34 +273,47 @@ class _MessageList extends StatelessWidget {
                 return const SizedBox.shrink();
               }
 
-              final message = chatStore.messages[index];
+              if (index >= chatStore.sendingMessages.length) {
+                final message = chatStore
+                    .messages[index - chatStore.sendingMessages.length];
 
-              return message.map(
-                info: (message) {
-                  return InfoMessageListTile(
-                    key: ValueKey(message.id),
-                    text: message.text,
-                    dateTime: message.sentAt,
-                  );
-                },
-                user: (message) {
-                  if (message.isSentByMe) {
-                    return MyMessageListTile(
+                return message.map(
+                  info: (message) {
+                    return InfoMessageListTile(
                       key: ValueKey(message.id),
                       text: message.text,
-                      isRead: message.isReadByMe,
-                      dateTime: message.modifiedAt ?? message.sentAt,
+                      dateTime: message.sentAt,
                     );
-                  }
+                  },
+                  user: (message) {
+                    if (message.isSentByMe) {
+                      return MyMessageListTile(
+                        key: ValueKey(message.id),
+                        text: message.text,
+                        isRead: message.isReadByMe,
+                        dateTime: message.modifiedAt ?? message.sentAt,
+                      );
+                    }
 
-                  return OthersMessageListTile(
-                    key: ValueKey(message.id),
-                    showSender: chat is GroupChat,
-                    dateTime: message.modifiedAt ?? message.sentAt,
-                    text: message.text,
-                    senderName: message.senderName,
-                  );
-                },
+                    return OthersMessageListTile(
+                      key: ValueKey(message.id),
+                      showSender: chat is GroupChat,
+                      dateTime: message.modifiedAt ?? message.sentAt,
+                      text: message.text,
+                      senderName: message.senderName,
+                    );
+                  },
+                );
+              }
+
+              final sendingMessage = chatStore.sendingMessages[index];
+
+              return MyMessageListTile(
+                key: ValueKey(sendingMessage.id),
+                sending: true,
+                text: sendingMessage.text,
+                isRead: sendingMessage.isReadByMe,
+                dateTime: sendingMessage.modifiedAt ?? sendingMessage.sentAt,
               );
             },
           ),

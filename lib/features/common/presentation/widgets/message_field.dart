@@ -27,7 +27,6 @@ class MessageField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final textController = useTextEditingController();
-    final focusNode = useFocusNode();
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -44,7 +43,6 @@ class MessageField extends HookWidget {
               suffixIconPath: Assets.image.svg.attachFile.path,
               onPrefixPressed: onEmojiPressed,
               onSuffixPressed: onAttachFilePressed,
-              focusNode: focusNode,
             ),
           ),
           const SizedBox(
@@ -55,7 +53,6 @@ class MessageField extends HookWidget {
             onPressed: () {
               onSendPressed.call(textController.text);
               textController.clear();
-              focusNode.unfocus();
             },
           ),
         ],

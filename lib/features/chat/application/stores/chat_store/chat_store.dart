@@ -30,6 +30,7 @@ abstract class _ChatStore extends SyncStore with Store {
     required ChatStringProvider chatStringProvider,
     required ChatCoordinator coordinator,
     required EndUserRepository endUserRepository,
+    required DateTimeProvider dateTimeProvider,
     required Mapster mapster,
   })  : _chatService = chatService,
         _chatListService = chatListService,
@@ -38,6 +39,7 @@ abstract class _ChatStore extends SyncStore with Store {
         _chatStringProvider = chatStringProvider,
         _coordinator = coordinator,
         _endUserRepository = endUserRepository,
+        _dateTimeProvider = dateTimeProvider,
         _mapster = mapster;
 
   final ChatService _chatService;
@@ -47,6 +49,7 @@ abstract class _ChatStore extends SyncStore with Store {
   final ChatStringProvider _chatStringProvider;
   final ChatCoordinator _coordinator;
   final EndUserRepository _endUserRepository;
+  final DateTimeProvider _dateTimeProvider;
   final Mapster _mapster;
   StreamSubscription? _messageEventSub;
 
@@ -71,14 +74,8 @@ abstract class _ChatStore extends SyncStore with Store {
   @readonly
   List<MessageVM> _messages = const [];
 
-  @computed
-  bool get showItemLoading => _messages.isNotEmpty;
-
-  @computed
-  bool get showChatInfoLoading => _messages.isEmpty && _isLoading;
-
-  @computed
-  bool get showItems => _isLoading || _messages.isNotEmpty;
+  @readonly
+  List<UserMessageVM> _sendingMessages = const [];
 
   @disposeMethod
   void dispose() {
@@ -251,7 +248,7 @@ abstract class _ChatStore extends SyncStore with Store {
           _error = _chatStringProvider.canNotLoadChatInfo;
         }
       },
-      setIsLoading: (v) => _isLoading = v,
+      setIsLoading: (_) {},
       removeError: () => _error = '',
     );
   }
@@ -327,6 +324,87 @@ abstract class _ChatStore extends SyncStore with Store {
         }
       },
       setIsLoading: (v) => _isLoadingMore = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void sendMessage({required String text}) {
+    perform(
+      () async {
+        ChatID? id;
+        if (chatID.isNotEmpty) {
+          id = ChatID.fromString(chatID);
+        }
+
+        if (id == null) {
+          return;
+        }
+
+        try {
+          final me = _endUserRepository.me;
+
+          if (me == null) {
+            throw Exception('Me is null');
+          }
+
+          final dt = _dateTimeProvider.now();
+          final sendingMessage = _mapster.map2(
+            UserMessage(
+              id: MessageID.sending(dt),
+              chatID: id,
+              senderID: me.id,
+              sentAt: dt,
+              isReadByMe: true,
+              text: text,
+              // TODO: add media
+              media: [],
+              // TODO: add burn
+              willBeBurntAt: null,
+            ),
+            ToMessageVM(
+              isSentByMe: true,
+              user: me,
+            ),
+            To<UserMessageVM>(),
+          );
+
+          final sendingMessages = List.of(_sendingMessages)
+            ..add(sendingMessage);
+          _sendingMessages = sendingMessages;
+
+          final createdMessage = (await _parseMessages(
+            [
+              await _messageService.sendMessage(
+                chatID: id,
+                text: text,
+                // TODO: add media & burn msg
+                // media: ,
+                // willBeBurntAfterSec: ,
+              ),
+            ],
+            refresh: false,
+          ))
+              .first;
+
+          final messages = List.of(_messages);
+          final index = messages.indexWhere((e) => e.id == createdMessage.id);
+
+          if (index == -1) {
+            messages.insert(0, createdMessage);
+          }
+
+          transaction(() {
+            final newSendingMessages = List.of(_sendingMessages)
+              ..remove(sendingMessage);
+            _sendingMessages = newSendingMessages;
+            _messages = _messages;
+          });
+        } catch (e) {
+          _error = _chatStringProvider.canNotLoadMessages;
+        }
+      },
+      setIsLoading: (_) {},
       removeError: () => _error = '',
     );
   }

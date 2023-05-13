@@ -22,6 +22,7 @@ export 'refresh_token_response/refresh_token_response.dart';
 export 'register_request/register_request.dart';
 export 'register_response/register_response.dart';
 export 'respond_friend_bid_request/respond_friend_bid_request.dart';
+export 'send_message_request/send_message_request.dart';
 export 'user_action_request/user_action_request.dart';
 export 'user_info_response/user_info_response.dart';
 export 'users_response/users_response.dart';

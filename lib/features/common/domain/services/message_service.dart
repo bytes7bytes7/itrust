@@ -1,6 +1,8 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../../repositories/interfaces/interfaces.dart';
+import '../dto/new_media/new_media.dart';
+import '../dto/send_message_request/send_message_request.dart';
 import '../entities/message/message.dart';
 import '../providers/message_provider.dart';
 import '../value_objects/chat_id/chat_id.dart';
@@ -83,6 +85,43 @@ class MessageService {
           }
 
           return r.messages;
+        },
+      );
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
+  }
+
+  Future<Message> sendMessage({
+    required ChatID chatID,
+    required String text,
+    List<NewMedia> media = const [],
+    int? willBeBurntAfterSec,
+  }) async {
+    try {
+      final request = SendMessageRequest(
+        chatID: chatID.str,
+        text: text,
+        media: media,
+        willBeBurntAfterSec: willBeBurntAfterSec,
+      );
+
+      final response = await _keepFreshTokenService.request(
+        () => _messageProvider.sendMessage(
+          request: request,
+        ),
+      );
+
+      return await response.value.fold(
+        (l) {
+          // TODO: check exception title
+          throw Exception();
+        },
+        (r) async {
+          await _messageRepository.addOrUpdate(r.message);
+
+          return r.message;
         },
       );
     } catch (e) {
