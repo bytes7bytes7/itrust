@@ -146,6 +146,7 @@ class _AppRoutes {
     routes: [
       createMonologue,
       createDialogue,
+      createGroup,
       chat,
     ],
   );
@@ -179,6 +180,40 @@ class _AppRoutes {
       );
     },
   );
+
+  static final createGroup = GoRoute(
+    path: 'create_group',
+    name: 'create_group',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const CreateGroupScreen(),
+      );
+    },
+    routes: [
+      createGroupInfo,
+    ],
+  );
+
+  static final createGroupInfo = GoRoute(
+    path: 'create_group_info',
+    name: 'create_group_info',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const CreateGroupInfoScreen(),
+      );
+    },
+  );
+
 
   static final chat = GoRoute(
     path: 'chat:chatID',

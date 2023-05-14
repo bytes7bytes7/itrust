@@ -19,7 +19,7 @@ class _ProdCreateChatProvider implements ProdCreateChatProvider {
   String? baseUrl;
 
   @override
-  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> createChat(
+  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> createMonologue(
       {required request}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -68,6 +68,32 @@ class _ProdCreateChatProvider implements ProdCreateChatProvider {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = JsonEitherWrapper<ProblemDetails, UsersResponse>.fromJson(
         _result.data!);
+    return value;
+  }
+
+  @override
+  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> createGroup(
+      {required request}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<JsonEitherWrapper<ProblemDetails, ChatResponse>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/group',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value =
+        JsonEitherWrapper<ProblemDetails, ChatResponse>.fromJson(_result.data!);
     return value;
   }
 

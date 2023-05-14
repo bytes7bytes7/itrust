@@ -21,7 +21,7 @@ class ProdChatListCoordinator extends Coordinator
 
   @override
   void onCreateGroupBtnPressed() {
-    // TODO: implement onCreateGroupBtnPressed
+    const CreateGroupRoute().push(goRouter);
   }
 
   @override

@@ -6,11 +6,15 @@ import '../../../common/domain/dto/users_response/users_response.dart';
 import '../dto/dto.dart';
 
 abstract class CreateChatProvider {
-  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> createChat({
+  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> createMonologue({
     required CreateMonologueChatRequest request,
   });
 
   Future<JsonEitherWrapper<ProblemDetails, UsersResponse>> getChatPartners({
     String? lastUserID,
+  });
+
+  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> createGroup({
+    required CreateGroupChatRequest request,
   });
 }

@@ -41,7 +41,7 @@ class CreateChatService {
       );
 
       final response = await _keepFreshTokenService.request(
-        () => _createChatProvider.createChat(
+        () => _createChatProvider.createMonologue(
           request: request,
         ),
       );
@@ -88,6 +88,41 @@ class CreateChatService {
           }
 
           return r.users;
+        },
+      );
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
+  }
+
+  Future<Chat> createGroup({
+    required String title,
+    required List<UserID> guestIDs,
+    NewMedia? image,
+  }) async {
+    try {
+      final request = CreateGroupChatRequest(
+        title: title,
+        guestIDs: guestIDs,
+        image: image,
+      );
+
+      final response = await _keepFreshTokenService.request(
+        () => _createChatProvider.createGroup(
+          request: request,
+        ),
+      );
+
+      return await response.value.fold(
+        (l) {
+          // TODO: check exception title
+          throw Exception();
+        },
+        (r) async {
+          await _chatRepository.addOrUpdate(r.chat);
+
+          return r.chat;
         },
       );
     } catch (e) {

@@ -188,10 +188,22 @@
   "new_dialogue_chat_screen_title": "New dialogue",
   "new_group_chat_screen_title": "New group",
   "name_of_chat_hint": "Name of chat",
+  "name_of_group_chat_hint": "Name of group",
   "can_not_create_chat": "Can not create chat. Try again later.",
   "can_not_load_chat_info": "Can not load chat info.",
   "chat_event_error": "An error occurs during updating chats.",
   "message_event_error": "An error occurs during updating messages.",
   "no_messages_in_chat": "Start chatting!",
-  "can_not_load_messages": "Can not load messages."
+  "can_not_load_messages": "Can not load messages.",
+  "selected_chat_participants": "Selected",
+  "unselected_chat_participants": "Unselected",
+  "chat_participants_amount": "{amount} participant(-s)",
+  "@chat_participants_amount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "admin_chat_status": "Admin"
 }

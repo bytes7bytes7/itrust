@@ -7,7 +7,7 @@ import '../../../../../utils/json_either_wrapper.dart';
 import '../../../../../utils/server_settings.dart';
 import '../../../../common/domain/dto/chat_response/chat_response.dart';
 import '../../../../common/domain/dto/users_response/users_response.dart';
-import '../../../domain/dto/create_monologue_chat_request/create_monologue_chat_request.dart';
+import '../../../domain/dto/dto.dart';
 import '../../../domain/providers/create_chat_provider.dart';
 
 part 'create_chat_provider.g.dart';
@@ -34,7 +34,7 @@ abstract class ProdCreateChatProvider implements CreateChatProvider {
 
   @override
   @POST('/monologue')
-  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> createChat({
+  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> createMonologue({
     @Body() required CreateMonologueChatRequest request,
   });
 
@@ -42,5 +42,11 @@ abstract class ProdCreateChatProvider implements CreateChatProvider {
   @GET('/chat_partners')
   Future<JsonEitherWrapper<ProblemDetails, UsersResponse>> getChatPartners({
     @Query(_lastUserIDParam) String? lastUserID,
+  });
+
+  @override
+  @POST('/group')
+  Future<JsonEitherWrapper<ProblemDetails, ChatResponse>> createGroup({
+    @Body() required CreateGroupChatRequest request,
   });
 }

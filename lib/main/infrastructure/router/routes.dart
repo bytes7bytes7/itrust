@@ -98,6 +98,20 @@ class CreateDialogueRoute extends CosyRoute {
   GoRoute get route => _AppRoutes.createDialogue;
 }
 
+class CreateGroupRoute extends CosyRoute {
+  const CreateGroupRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.createGroup;
+}
+
+class CreateGroupInfoRoute extends CosyRoute {
+  const CreateGroupInfoRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.createGroupInfo;
+}
+
 class ChatRoute extends CosyRoute {
   const ChatRoute({
     required this.chatID,

@@ -8,29 +8,30 @@ import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
 import '../../../../utils/hooks/reaction.dart';
 import '../../../common/presentation/widgets/widgets.dart';
-import '../../application/stores/create_dialogue/create_dialogue_store.dart';
+import '../../application/stores/create_group/create_group_store.dart';
 import '../widgets/chat_partner_list_tile.dart';
 
 const _appBarHeight = kToolbarHeight;
-const _loadDialoguePartners = 'load dialogue partners';
+const _loadDialoguePartners = 'load group partners';
 final _getIt = GetIt.instance;
 
-class CreateDialogueScreen extends HookWidget {
-  const CreateDialogueScreen({super.key});
+class CreateGroupScreen extends HookWidget {
+  const CreateGroupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
-    final createDialogueStore =
-        useMemoized(() => _getIt.get<CreateDialogueStore>());
+    final createGroupStore = useMemoized(() => _getIt.get<CreateGroupStore>());
 
     final commonFocusNode = useFocusNode();
 
     useEffect(
       () {
-        createDialogueStore.loadUsers();
+        createGroupStore
+          ..reset()
+          ..loadUsers();
 
         return null;
       },
@@ -38,7 +39,7 @@ class CreateDialogueScreen extends HookWidget {
     );
 
     useReaction<String>(
-      (_) => createDialogueStore.error,
+      (_) => createGroupStore.error,
       (error) {
         if (error.isNotEmpty) {
           CustomSnackBar(
@@ -55,14 +56,18 @@ class CreateDialogueScreen extends HookWidget {
       child: Scaffold(
         appBar: _AppBar(
           l10n: l10n,
-          createDialogueStore: createDialogueStore,
+          createGroupStore: createGroupStore,
         ),
         body: SafeArea(
           child: _Body(
             l10n: l10n,
             theme: theme,
-            createDialogueStore: createDialogueStore,
+            createGroupStore: createGroupStore,
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: createGroupStore.onFABButtonPressed,
+          child: Assets.image.svg.keyboardArrowRight.svg(),
         ),
       ),
     );
@@ -73,11 +78,11 @@ class CreateDialogueScreen extends HookWidget {
 class _AppBar extends StatelessWidget with PreferredSizeWidget {
   const _AppBar({
     required this.l10n,
-    required this.createDialogueStore,
+    required this.createGroupStore,
   });
 
   final AppLocalizations l10n;
-  final CreateDialogueStore createDialogueStore;
+  final CreateGroupStore createGroupStore;
 
   @override
   Size get preferredSize => const Size.fromHeight(_appBarHeight);
@@ -90,11 +95,11 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
         automaticallyImplyLeading: false,
         leading: FilledIconButton(
           iconPath: Assets.image.svg.arrowBack.path,
-          onPressed: createDialogueStore.onBackButtonPressed,
+          onPressed: createGroupStore.onBackButtonPressed,
         ),
         centerTitle: true,
         title: Text(
-          l10n.new_dialogue_chat_screen_title,
+          l10n.new_group_chat_screen_title,
         ),
       ),
     );
@@ -105,32 +110,32 @@ class _Body extends StatelessWidget {
   const _Body({
     required this.l10n,
     required this.theme,
-    required this.createDialogueStore,
+    required this.createGroupStore,
   });
 
   final AppLocalizations l10n;
   final ThemeData theme;
-  final CreateDialogueStore createDialogueStore;
+  final CreateGroupStore createGroupStore;
 
   @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        if (createDialogueStore.isLoading) {
+        if (createGroupStore.isLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
 
-        if (createDialogueStore.hasError && createDialogueStore.users.isEmpty) {
+        if (createGroupStore.hasError && createGroupStore.userIDs.isEmpty) {
           return LoadingErrorContainer(
-            onRetry: createDialogueStore.refresh,
+            onRetry: createGroupStore.refresh,
           );
         }
 
-        if (createDialogueStore.users.isEmpty) {
+        if (createGroupStore.userIDs.isEmpty) {
           return RefreshIndicator(
-            onRefresh: () async => createDialogueStore.refresh(),
+            onRefresh: () async => createGroupStore.refresh(),
             child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
               children: [
@@ -155,19 +160,20 @@ class _Body extends StatelessWidget {
           );
         }
 
-        final itemCount = createDialogueStore.users.length + 1;
+        final itemCount = createGroupStore.userIDs.length + 1;
+        final selectedUsersLength = createGroupStore.selectedUserIDs.length;
 
         return RefreshIndicator(
-          onRefresh: () async => createDialogueStore.refresh(),
+          onRefresh: () async => createGroupStore.refresh(),
           child: ListView.builder(
             itemCount: itemCount,
             itemBuilder: (context, index) {
               if (index == itemCount - 1) {
-                if (createDialogueStore.canLoadMore) {
-                  createDialogueStore.loadMoreUsers();
+                if (createGroupStore.canLoadMore) {
+                  createGroupStore.loadMoreUsers();
                 }
 
-                if (createDialogueStore.isLoadingMore) {
+                if (createGroupStore.isLoadingMore) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
@@ -176,12 +182,46 @@ class _Body extends StatelessWidget {
                 return const SizedBox.shrink();
               }
 
-              final user = createDialogueStore.users[index];
+              if (index >= selectedUsersLength) {
+                final unselectedIndex = index - selectedUsersLength;
+                final user =
+                    createGroupStore.getNotSelectedUser(unselectedIndex);
 
-              return ChatPartnerListTile(
-                user: user,
-                onPressed: () =>
-                    createDialogueStore.onUserPressed(userID: user.id),
+                return Column(
+                  children: [
+                    if (selectedUsersLength > 0 && unselectedIndex == 0)
+                      SectionTitle(
+                        title: l10n.unselected_chat_participants,
+                      ),
+                    ChatPartnerListTile(
+                      user: user,
+                      selected: false,
+                      onPressed: () =>
+                          createGroupStore.onUserCheckboxTap(userID: user.id),
+                      onSelectedChanged: (_) =>
+                          createGroupStore.onUserCheckboxTap(userID: user.id),
+                    ),
+                  ],
+                );
+              }
+
+              final user = createGroupStore.getSelectedUser(index);
+
+              return Column(
+                children: [
+                  if (index == 0)
+                    SectionTitle(
+                      title: l10n.selected_chat_participants,
+                    ),
+                  ChatPartnerListTile(
+                    user: user,
+                    selected: true,
+                    onPressed: () =>
+                        createGroupStore.onUserCheckboxTap(userID: user.id),
+                    onSelectedChanged: (_) =>
+                        createGroupStore.onUserCheckboxTap(userID: user.id),
+                  ),
+                ],
               );
             },
           ),
