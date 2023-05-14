@@ -145,6 +145,7 @@ class _AppRoutes {
     },
     routes: [
       createMonologue,
+      createDialogue,
       chat,
     ],
   );
@@ -160,6 +161,21 @@ class _AppRoutes {
         arguments: _getArgs(state),
         transitionsBuilder: _leftward,
         child: const CreateMonologueScreen(),
+      );
+    },
+  );
+
+  static final createDialogue = GoRoute(
+    path: 'create_dialogue',
+    name: 'create_dialogue',
+    parentNavigatorKey: _rootKey,
+    pageBuilder: (context, state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: _getName(state),
+        arguments: _getArgs(state),
+        transitionsBuilder: _leftward,
+        child: const CreateDialogueScreen(),
       );
     },
   );

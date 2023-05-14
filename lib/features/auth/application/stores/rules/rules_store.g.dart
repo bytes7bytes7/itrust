@@ -76,6 +76,17 @@ mixin _$RulesStore on _RulesStore, Store {
   }
 
   @override
+  void refresh() {
+    final _$actionInfo =
+        _$_RulesStoreActionController.startAction(name: '_RulesStore.refresh');
+    try {
+      return super.refresh();
+    } finally {
+      _$_RulesStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 

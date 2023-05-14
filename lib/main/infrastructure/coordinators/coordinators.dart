@@ -4,6 +4,7 @@ export 'chat_coordinator.dart';
 export 'chat_list_coordinator.dart';
 export 'comment_coordinator.dart';
 export 'coordinator.dart';
+export 'create_dialogue_coordinator.dart';
 export 'create_monologue_coordinator.dart';
 export 'devices_coordinator.dart';
 export 'feed_coordinator.dart';

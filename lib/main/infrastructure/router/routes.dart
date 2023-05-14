@@ -91,6 +91,13 @@ class CreateMonologueRoute extends CosyRoute {
   GoRoute get route => _AppRoutes.createMonologue;
 }
 
+class CreateDialogueRoute extends CosyRoute {
+  const CreateDialogueRoute();
+
+  @override
+  GoRoute get route => _AppRoutes.createDialogue;
+}
+
 class ChatRoute extends CosyRoute {
   const ChatRoute({
     required this.chatID,

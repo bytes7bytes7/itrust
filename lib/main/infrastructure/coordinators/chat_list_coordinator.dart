@@ -16,7 +16,7 @@ class ProdChatListCoordinator extends Coordinator
 
   @override
   void onCreateDialogueBtnPressed() {
-    // TODO: implement onCreateDialogueBtnPressed
+    const CreateDialogueRoute().push(goRouter);
   }
 
   @override

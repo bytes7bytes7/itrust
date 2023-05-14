@@ -4,9 +4,9 @@ import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../common/application/stores/sync_store.dart';
-import '../../../domain/providers/create_monologue_string_provider.dart';
-import '../../../domain/services/create_monologue_service.dart';
+import '../../../domain/services/create_chat_service.dart';
 import '../../coordinators/create_monologue_coordinator.dart';
+import '../../providers/create_monologue_string_provider.dart';
 
 part 'create_monologue_store.g.dart';
 
@@ -15,14 +15,14 @@ class CreateMonologueStore = _CreateMonologueStore with _$CreateMonologueStore;
 
 abstract class _CreateMonologueStore extends SyncStore with Store {
   _CreateMonologueStore({
-    required CreateMonologueService createMonologueService,
+    required CreateChatService createChatService,
     required CreateMonologueCoordinator coordinator,
     required CreateMonologueStringProvider createMonologueStringProvider,
-  })  : _createMonologueService = createMonologueService,
+  })  : _createChatService = createChatService,
         _coordinator = coordinator,
         _createMonologueStringProvider = createMonologueStringProvider;
 
-  final CreateMonologueService _createMonologueService;
+  final CreateChatService _createChatService;
   final CreateMonologueCoordinator _coordinator;
   final CreateMonologueStringProvider _createMonologueStringProvider;
 
@@ -48,7 +48,7 @@ abstract class _CreateMonologueStore extends SyncStore with Store {
     perform(
       () async {
         try {
-          final chat = await _createMonologueService.createChat(
+          final chat = await _createChatService.createMonologue(
             title: chatName,
             // TODO: add image & iconName
             // image: ,

@@ -1,1 +1,1 @@
-export 'create_monologue_service.dart';
+export 'create_chat_service.dart';
