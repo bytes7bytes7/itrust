@@ -9,5 +9,8 @@ abstract class UserWallCoordinator {
 
   void onCommentButtonPressed({required String postID});
 
-  void onMessageButtonPressed({required String userID});
+  void onMessageButtonPressed({
+    required String firstUserID,
+    required String secondUserID,
+  });
 }

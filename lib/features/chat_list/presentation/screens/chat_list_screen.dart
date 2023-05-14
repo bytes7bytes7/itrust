@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logging/logging.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
@@ -13,9 +14,9 @@ import '../../application/stores/chat_list/chat_list_store.dart';
 import '../widgets/widgets.dart';
 
 const _appBarHeight = kToolbarHeight;
-const _listenChatEventsKey = 'listen chat events';
 const _loadChatsKey = 'load chats';
 final _getIt = GetIt.instance;
+final _logger = Logger('$ChatListScreen');
 
 class ChatListScreen extends HookWidget {
   const ChatListScreen({super.key});
@@ -26,15 +27,10 @@ class ChatListScreen extends HookWidget {
 
     useEffect(
       () {
-        chatListStore.listen();
-        return null;
-      },
-      [_listenChatEventsKey],
-    );
+        chatListStore
+          ..listen()
+          ..loadChats();
 
-    useEffect(
-      () {
-        chatListStore.loadChats();
         return null;
       },
       [_loadChatsKey],
@@ -191,6 +187,8 @@ class _Body extends StatelessWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
 
+    // TODO: fix bug when chat list is empty (but it is NOT on the server)
+
     return Observer(
       builder: (context) {
         if (chatListStore.isLoading) {
@@ -202,6 +200,8 @@ class _Body extends StatelessWidget {
         final itemCount = chatListStore.chats.length + 1;
 
         if (chatListStore.chats.isEmpty) {
+          _logger.fine('Empty: ${chatListStore.chats.length}');
+
           return RefreshIndicator(
             onRefresh: () async => chatListStore.refresh(),
             child: SingleChildScrollView(
@@ -228,6 +228,8 @@ class _Body extends StatelessWidget {
             ),
           );
         }
+
+        _logger.fine('Not empty: ${chatListStore.chats.length}');
 
         return RefreshIndicator(
           onRefresh: () async => chatListStore.refresh(),

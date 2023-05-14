@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logging/logging.dart';
 import 'package:mapster/mapster.dart';
 import 'package:mobx/mobx.dart';
 
@@ -11,6 +12,8 @@ import '../../../../common/domain/domain.dart';
 import '../../coordinators/chat_list_coordinator.dart';
 
 part 'chat_list_store.g.dart';
+
+final _logger = Logger('$ChatListStore');
 
 @singleton
 class ChatListStore = _ChatListStore with _$ChatListStore;
@@ -63,6 +66,8 @@ abstract class _ChatListStore extends SyncStore with Store {
 
   @action
   void listen() {
+    _logger.fine('Listen: start');
+
     perform(
       () async {
         try {
@@ -71,6 +76,8 @@ abstract class _ChatListStore extends SyncStore with Store {
           final stream = await _chatListService.listenChatEvents();
 
           _chatEventSub = stream.listen((event) async {
+            _logger.fine('Listen: new event');
+
             // TODO: add try-catch
             final chats = List.of(_chats);
 
@@ -78,6 +85,8 @@ abstract class _ChatListStore extends SyncStore with Store {
                 await _parseChats(event.created, refresh: true);
 
             for (final chat in createdChats) {
+              _logger.fine('Listen: created chats');
+
               final index = chats.indexWhere((e) => e.id == chat.id);
 
               if (index == -1) {
@@ -86,6 +95,8 @@ abstract class _ChatListStore extends SyncStore with Store {
             }
 
             for (final id in event.deleted) {
+              _logger.fine('Listen: deleted chats');
+
               final index = chats.indexWhere((e) => e.id == id.str);
 
               if (index != -1) {
@@ -97,6 +108,8 @@ abstract class _ChatListStore extends SyncStore with Store {
                 await _parseChats(event.updated, refresh: true);
 
             for (final chat in updatedChats) {
+              _logger.fine('Listen: updated chats');
+
               final index = chats.indexWhere((e) => e.id == chat.id);
 
               if (index != -1) {
@@ -105,6 +118,8 @@ abstract class _ChatListStore extends SyncStore with Store {
             }
 
             for (final chatMessageID in event.lastMessageID.entries) {
+              _logger.fine('Listen: chat messages');
+
               final chatID = chatMessageID.key;
 
               final index = chats.indexWhere((e) => e.id == chatID.str);
@@ -127,6 +142,8 @@ abstract class _ChatListStore extends SyncStore with Store {
                   chat.createdAt;
 
               if (index != -1) {
+                _logger.fine('Listen: chat messages: remove old chat');
+
                 // remove old chat instance
                 chats.removeAt(index);
               }
@@ -150,9 +167,15 @@ abstract class _ChatListStore extends SyncStore with Store {
               }
 
               if (!pasted) {
+                if (index != -1) {
+                  chats.add(chat);
+                }
+
                 _canLoadMore = true;
               }
             }
+
+            _logger.fine('Listen: update chats');
 
             _chats = chats;
           });
@@ -169,11 +192,14 @@ abstract class _ChatListStore extends SyncStore with Store {
   void loadChats({
     bool refresh = false,
   }) {
+    _logger.fine('Load: start');
+
     perform(
       () async {
         try {
           final data = await _chatListService.loadChats();
 
+          _logger.fine('Load: update chats');
           _chats = await _parseChats(data, refresh: refresh);
         } catch (e) {
           _error = _chatListStringProvider.canNotLoadChats;
@@ -186,6 +212,8 @@ abstract class _ChatListStore extends SyncStore with Store {
 
   @action
   void loadMoreChats() {
+    _logger.fine('Load more: start');
+
     perform(
       () async {
         try {
@@ -207,6 +235,7 @@ abstract class _ChatListStore extends SyncStore with Store {
             });
           }
 
+          _logger.fine('Load more: update chats');
           _chats = List.of(_chats)..addAll(newChats);
         } catch (e) {
           _canLoadMore = false;

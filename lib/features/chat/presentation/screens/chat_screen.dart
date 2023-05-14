@@ -194,6 +194,7 @@ class _MessageList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: fix bug when new message is blinking during sending
     return Observer(
       builder: (context) {
         final chat = chatStore.chat;
@@ -233,7 +234,6 @@ class _MessageList extends StatelessWidget {
           reverse: true,
           childrenDelegate: SliverChildBuilderDelegate(
             childCount: itemCount,
-            // TODO: return this code add fix error in it
             findChildIndexCallback: (key) {
               final messageKey = key as ValueKey<String>;
               var val = chatStore.sendingMessages

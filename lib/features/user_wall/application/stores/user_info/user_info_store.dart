@@ -463,12 +463,16 @@ abstract class _UserInfoStore extends SyncStore with Store {
 
   void onMessageButtonPressed() {
     final userID = _userID;
+    final me = _endUserRepository.me;
 
-    if (userID == null) {
+    if (userID == null || me == null) {
       return;
     }
 
-    _coordinator.onMessageButtonPressed(userID: userID);
+    _coordinator.onMessageButtonPressed(
+      firstUserID: me.id.str,
+      secondUserID: userID,
+    );
   }
 
   void onFriendsPressed() {

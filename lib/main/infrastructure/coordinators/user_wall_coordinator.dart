@@ -1,5 +1,7 @@
 import 'package:injectable/injectable.dart';
 
+import '../../../features/common/domain/value_objects/chat_id/chat_id.dart';
+import '../../../features/common/domain/value_objects/user_id/user_id.dart';
 import '../../../features/user_wall/application/coordinators/user_wall_coordinator.dart';
 import '../router/router.dart';
 import 'coordinator.dart';
@@ -39,7 +41,15 @@ class ProdUserWallCoordinator extends Coordinator
   }
 
   @override
-  void onMessageButtonPressed({required String userID}) {
-    // TODO: implement onMessageButtonPressed
+  void onMessageButtonPressed({
+    required String firstUserID,
+    required String secondUserID,
+  }) {
+    final chatID = ChatID.createDialogue(
+      UserID.fromString(firstUserID),
+      UserID.fromString(secondUserID),
+    );
+
+    ChatRoute(chatID: chatID.str).push(goRouter);
   }
 }
