@@ -105,26 +105,24 @@ class _Body extends StatelessWidget {
           );
         }
 
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              OptionButton(
-                iconPath: Assets.image.svg.person.path,
-                title: l10n.my_profile_btn,
-                onPressed: menuStore.onMyProfileButtonPressed,
-              ),
-              OptionButton(
-                iconPath: Assets.image.svg.group.path,
-                title: l10n.people_btn,
-                onPressed: menuStore.onPeopleButtonPressed,
-              ),
-              OptionButton(
-                iconPath: Assets.image.svg.personAdd.path,
-                title: l10n.friend_bids_btn,
-                onPressed: menuStore.onFriendBidsButtonPressed,
-              ),
-            ],
-          ),
+        return ListView(
+          children: [
+            OptionButton(
+              iconPath: Assets.image.svg.person.path,
+              title: l10n.my_profile_btn,
+              onPressed: menuStore.onMyProfileButtonPressed,
+            ),
+            OptionButton(
+              iconPath: Assets.image.svg.group.path,
+              title: l10n.people_btn,
+              onPressed: menuStore.onPeopleButtonPressed,
+            ),
+            OptionButton(
+              iconPath: Assets.image.svg.personAdd.path,
+              title: l10n.friend_bids_btn,
+              onPressed: menuStore.onFriendBidsButtonPressed,
+            ),
+          ],
         );
       },
     );

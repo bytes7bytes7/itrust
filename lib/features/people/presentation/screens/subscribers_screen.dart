@@ -127,25 +127,27 @@ class _Body extends StatelessWidget {
         if (subscribersStore.subscribers.isEmpty) {
           return RefreshIndicator(
             onRefresh: () async => subscribersStore.refresh(),
-            child: SingleChildScrollView(
+            child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 40,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 40,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Assets.lottie.nothing.lottie(),
+                      Text(
+                        l10n.no_subscribers,
+                        style: theme.textTheme.bodyText1,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Assets.lottie.nothing.lottie(),
-                    Text(
-                      l10n.no_subscribers,
-                      style: theme.textTheme.bodyText1,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
+              ],
             ),
           );
         }

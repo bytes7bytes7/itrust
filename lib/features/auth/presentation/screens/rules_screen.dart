@@ -98,39 +98,44 @@ class _Body extends HookWidget {
           );
         }
 
-        return SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: _paddingH,
-              vertical: _paddingV,
-            ),
-            child: Align(
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: _aboveLogoPadding,
+        return RefreshIndicator(
+          onRefresh: () async => rulesStore.refresh(),
+          child: ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: _paddingH,
+                  vertical: _paddingV,
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: _aboveLogoPadding,
+                      ),
+                      FractionallySizedBox(
+                        widthFactor: _logoWidthFactor,
+                        child: Assets.image.png.logo.image(),
+                      ),
+                      Text(
+                        l10n.app_name,
+                        style: theme.textTheme.headline1,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: _underTitlePadding,
+                      ),
+                      Text(
+                        rules,
+                        style: theme.textTheme.bodyText1,
+                      ),
+                    ],
                   ),
-                  FractionallySizedBox(
-                    widthFactor: _logoWidthFactor,
-                    child: Assets.image.png.logo.image(),
-                  ),
-                  Text(
-                    l10n.app_name,
-                    style: theme.textTheme.headline1,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: _underTitlePadding,
-                  ),
-                  Text(
-                    rules,
-                    style: theme.textTheme.bodyText1,
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         );
       },

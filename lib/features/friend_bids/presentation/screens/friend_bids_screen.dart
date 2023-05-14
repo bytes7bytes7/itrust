@@ -336,25 +336,27 @@ class _BidsEmpty extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => friendBidsStore.refresh(),
-      child: SingleChildScrollView(
+      child: ListView(
         physics: const AlwaysScrollableScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 40,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 40,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                child ?? const SizedBox.shrink(),
+                Text(
+                  text,
+                  style: theme.textTheme.bodyText1,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              child ?? const SizedBox.shrink(),
-              Text(
-                text,
-                style: theme.textTheme.bodyText1,
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

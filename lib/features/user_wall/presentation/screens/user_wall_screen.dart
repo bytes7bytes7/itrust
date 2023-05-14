@@ -130,25 +130,23 @@ class _Body extends StatelessWidget {
         }
 
         if (userInfoStore.userPostsStore.isLoading) {
-          return SingleChildScrollView(
+          return ListView(
             physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              children: [
-                _UserInfoContainer(
-                  l10n: l10n,
-                  userInfo: userInfo,
-                  userInfoStore: userInfoStore,
+            children: [
+              _UserInfoContainer(
+                l10n: l10n,
+                userInfo: userInfo,
+                userInfoStore: userInfoStore,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 14,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 14,
-                  ),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                child: Center(
+                  child: CircularProgressIndicator(),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         }
 

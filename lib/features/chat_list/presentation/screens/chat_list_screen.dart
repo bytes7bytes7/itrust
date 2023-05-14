@@ -204,27 +204,29 @@ class _Body extends StatelessWidget {
 
           return RefreshIndicator(
             onRefresh: () async => chatListStore.refresh(),
-            child: SingleChildScrollView(
+            child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 40,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 40,
+                  ),
+                  child: Column(
+                    children: [
+                      Assets.lottie.chatting.lottie(),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        l10n.empty_chat_list_message,
+                        style: theme.textTheme.bodyText1,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    Assets.lottie.chatting.lottie(),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      l10n.empty_chat_list_message,
-                      style: theme.textTheme.bodyText1,
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
+              ],
             ),
           );
         }

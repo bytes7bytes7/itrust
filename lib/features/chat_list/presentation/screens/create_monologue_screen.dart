@@ -112,44 +112,46 @@ class _Body extends StatelessWidget {
       builder: (context) {
         final photo = createMonologueStore.photo;
 
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 12,
-            ),
-            child: Row(
-              children: [
-                SizedBox.square(
-                  dimension: _avatarSize,
-                  child: ElevatedButton(
-                    style: buttonStyleTX.roundedFilledIcon,
-                    clipBehavior: Clip.hardEdge,
-                    onPressed: () {},
-                    child: (photo != null)
-                        ? SizedBox.square(
-                            dimension: _avatarSize,
-                            child: Image.memory(
-                              photo,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : Assets.image.svg.addAPhoto.svg(),
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    onChanged: (v) {
-                      createMonologueStore.chatName = v;
-                    },
-                    decoration: InputDecoration(
-                      labelText: l10n.name_of_chat_hint,
+        return ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 12,
+              ),
+              child: Row(
+                children: [
+                  SizedBox.square(
+                    dimension: _avatarSize,
+                    child: ElevatedButton(
+                      style: buttonStyleTX.roundedFilledIcon,
+                      clipBehavior: Clip.hardEdge,
+                      onPressed: () {},
+                      child: (photo != null)
+                          ? SizedBox.square(
+                              dimension: _avatarSize,
+                              child: Image.memory(
+                                photo,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : Assets.image.svg.addAPhoto.svg(),
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: TextField(
+                      onChanged: (v) {
+                        createMonologueStore.chatName = v;
+                      },
+                      decoration: InputDecoration(
+                        labelText: l10n.name_of_chat_hint,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         );
       },
     );

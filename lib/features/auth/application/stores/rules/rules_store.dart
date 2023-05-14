@@ -48,6 +48,11 @@ abstract class _RulesStore extends SyncStore with Store {
     );
   }
 
+  @action
+  void refresh () {
+    getRules();
+  }
+
   void onBackButtonPressed() {
     _rulesCoordinator.onBackButtonPressed();
   }

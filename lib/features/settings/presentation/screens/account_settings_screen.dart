@@ -72,26 +72,25 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          OptionButton(
-            iconPath: Assets.image.svg.person.path,
-            title: l10n.change_personal_info_btn,
-            onPressed: accountSettingsStore.onPersonalInfoPressed,
-          ),
-          OptionButton(
-            iconPath: Assets.image.svg.lock.path,
-            title: l10n.change_password_btn,
-            onPressed: () {},
-          ),
-          OptionButton(
-            iconPath: Assets.image.svg.devices.path,
-            title: l10n.change_devices_btn,
-            onPressed: accountSettingsStore.onDevicesPressed,
-          ),
-        ],
-      ),
+    return ListView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      children: [
+        OptionButton(
+          iconPath: Assets.image.svg.person.path,
+          title: l10n.change_personal_info_btn,
+          onPressed: accountSettingsStore.onPersonalInfoPressed,
+        ),
+        OptionButton(
+          iconPath: Assets.image.svg.lock.path,
+          title: l10n.change_password_btn,
+          onPressed: () {},
+        ),
+        OptionButton(
+          iconPath: Assets.image.svg.devices.path,
+          title: l10n.change_devices_btn,
+          onPressed: accountSettingsStore.onDevicesPressed,
+        ),
+      ],
     );
   }
 }

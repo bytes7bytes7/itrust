@@ -159,33 +159,30 @@ class _Body extends StatelessWidget {
         if (categoryStore.feedStore.posts.isEmpty) {
           return RefreshIndicator(
             onRefresh: () async => categoryStore.refresh(),
-            child: SingleChildScrollView(
+            child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _CategoryList(
-                    key: _categoryListKey,
-                    categoryStore: categoryStore,
+              children: [
+                _CategoryList(
+                  key: _categoryListKey,
+                  categoryStore: categoryStore,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 40,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 40,
-                    ),
-                    child: Column(
-                      children: [
-                        Assets.lottie.makeFriends.lottie(),
-                        Text(
-                          l10n.feed_has_no_posts,
-                          style: theme.textTheme.bodyText1,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      Assets.lottie.makeFriends.lottie(),
+                      Text(
+                        l10n.feed_has_no_posts,
+                        style: theme.textTheme.bodyText1,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         }
