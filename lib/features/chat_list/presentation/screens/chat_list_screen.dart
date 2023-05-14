@@ -27,9 +27,7 @@ class ChatListScreen extends HookWidget {
 
     useEffect(
       () {
-        chatListStore
-          ..listen()
-          ..loadChats();
+        chatListStore.loadChats();
 
         return null;
       },
@@ -240,14 +238,14 @@ class _Body extends StatelessWidget {
             itemCount: itemCount,
             itemBuilder: (context, index) {
               if (index == itemCount - 1) {
-                if (chatListStore.canLoadMore) {
-                  chatListStore.loadMoreChats();
-                }
-
                 if (chatListStore.isLoadingMore) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
+                }
+
+                if (chatListStore.canLoadMore) {
+                  chatListStore.loadMoreChats();
                 }
 
                 return const SizedBox.shrink();

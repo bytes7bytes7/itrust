@@ -152,17 +152,6 @@ mixin _$ChatStore on _ChatStore, Store {
       ActionController(name: '_ChatStore', context: context);
 
   @override
-  void listen() {
-    final _$actionInfo =
-        _$_ChatStoreActionController.startAction(name: '_ChatStore.listen');
-    try {
-      return super.listen();
-    } finally {
-      _$_ChatStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void loadChat({bool refresh = false}) {
     final _$actionInfo =
         _$_ChatStoreActionController.startAction(name: '_ChatStore.loadChat');
@@ -201,6 +190,17 @@ mixin _$ChatStore on _ChatStore, Store {
         name: '_ChatStore.sendMessage');
     try {
       return super.sendMessage(text: text);
+    } finally {
+      _$_ChatStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void _listen() {
+    final _$actionInfo =
+        _$_ChatStoreActionController.startAction(name: '_ChatStore._listen');
+    try {
+      return super._listen();
     } finally {
       _$_ChatStoreActionController.endAction(_$actionInfo);
     }

@@ -217,14 +217,14 @@ class _Body extends HookWidget {
                     }
 
                     if (index == itemCount - 1) {
-                      if (commentStore.commentReplyStore.canLoadMore) {
-                        commentStore.commentReplyStore.loadMoreReplies();
-                      }
-
                       if (commentStore.commentReplyStore.isLoadingMore) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
+                      }
+
+                      if (commentStore.commentReplyStore.canLoadMore) {
+                        commentStore.commentReplyStore.loadMoreReplies();
                       }
 
                       return const SizedBox.shrink();

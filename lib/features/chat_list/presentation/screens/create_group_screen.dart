@@ -169,14 +169,14 @@ class _Body extends StatelessWidget {
             itemCount: itemCount,
             itemBuilder: (context, index) {
               if (index == itemCount - 1) {
-                if (createGroupStore.canLoadMore) {
-                  createGroupStore.loadMoreUsers();
-                }
-
                 if (createGroupStore.isLoadingMore) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
+                }
+
+                if (createGroupStore.canLoadMore) {
+                  createGroupStore.loadMoreUsers();
                 }
 
                 return const SizedBox.shrink();

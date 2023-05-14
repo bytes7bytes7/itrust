@@ -83,69 +83,6 @@ abstract class _ChatStore extends SyncStore with Store {
   }
 
   @action
-  void listen() {
-    perform(
-      () async {
-        ChatID? id;
-        if (chatID.isNotEmpty) {
-          id = ChatID.fromString(chatID);
-        }
-
-        if (id == null) {
-          return;
-        }
-
-        try {
-          await _messageEventSub?.cancel();
-
-          final stream = await _chatService.listenMessageEvents(chatID: id);
-
-          _messageEventSub = stream.listen((event) async {
-            // TODO: add try-catch
-            final messages = List.of(_messages);
-
-            final createdMessages =
-                await _parseMessages(event.created, refresh: true);
-
-            for (final message in createdMessages) {
-              final index = messages.indexWhere((e) => e.id == message.id);
-
-              if (index == -1) {
-                messages.insert(0, message);
-              }
-            }
-
-            for (final id in event.deleted) {
-              final index = messages.indexWhere((e) => e.id == id.str);
-
-              if (index != -1) {
-                messages.removeAt(index);
-              }
-            }
-
-            final updatedMessages =
-                await _parseMessages(event.updated, refresh: true);
-
-            for (final message in updatedMessages) {
-              final index = messages.indexWhere((e) => e.id == message.id);
-
-              if (index != -1) {
-                messages[index] = message;
-              }
-            }
-
-            _messages = messages;
-          });
-        } catch (e) {
-          _error = _chatStringProvider.messageEventError;
-        }
-      },
-      setIsLoading: (_) {},
-      removeError: () => _error = '',
-    );
-  }
-
-  @action
   void loadChat({
     bool refresh = false,
   }) {
@@ -273,6 +210,8 @@ abstract class _ChatStore extends SyncStore with Store {
         } catch (e) {
           _error = _chatStringProvider.canNotLoadMessages;
         }
+
+        Future.delayed(const Duration(seconds: 1), _listen);
       },
       setIsLoading: (v) => _isLoading = v,
       removeError: () => _error = '',
@@ -402,6 +341,69 @@ abstract class _ChatStore extends SyncStore with Store {
           });
         } catch (e) {
           _error = _chatStringProvider.canNotLoadMessages;
+        }
+      },
+      setIsLoading: (_) {},
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void _listen() {
+    perform(
+      () async {
+        ChatID? id;
+        if (chatID.isNotEmpty) {
+          id = ChatID.fromString(chatID);
+        }
+
+        if (id == null) {
+          return;
+        }
+
+        try {
+          await _messageEventSub?.cancel();
+
+          final stream = await _chatService.listenMessageEvents(chatID: id);
+
+          _messageEventSub = stream.listen((event) async {
+            // TODO: add try-catch
+            final messages = List.of(_messages);
+
+            final createdMessages =
+                await _parseMessages(event.created, refresh: true);
+
+            for (final message in createdMessages) {
+              final index = messages.indexWhere((e) => e.id == message.id);
+
+              if (index == -1) {
+                messages.insert(0, message);
+              }
+            }
+
+            for (final id in event.deleted) {
+              final index = messages.indexWhere((e) => e.id == id.str);
+
+              if (index != -1) {
+                messages.removeAt(index);
+              }
+            }
+
+            final updatedMessages =
+                await _parseMessages(event.updated, refresh: true);
+
+            for (final message in updatedMessages) {
+              final index = messages.indexWhere((e) => e.id == message.id);
+
+              if (index != -1) {
+                messages[index] = message;
+              }
+            }
+
+            _messages = messages;
+          });
+        } catch (e) {
+          _error = _chatStringProvider.messageEventError;
         }
       },
       setIsLoading: (_) {},

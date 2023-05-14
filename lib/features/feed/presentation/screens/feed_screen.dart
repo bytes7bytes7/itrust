@@ -276,14 +276,14 @@ class _PostList extends StatelessWidget {
             childCount: itemCount,
             (context, index) {
               if (index == itemCount - 1) {
-                if (feedStore.canLoadMore) {
-                  feedStore.loadMorePosts();
-                }
-
                 if (feedStore.isLoadingMore) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
+                }
+
+                if (feedStore.canLoadMore) {
+                  feedStore.loadMorePosts();
                 }
 
                 return const SizedBox.shrink();

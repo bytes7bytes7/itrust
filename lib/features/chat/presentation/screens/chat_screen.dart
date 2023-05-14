@@ -35,7 +35,6 @@ class ChatScreen extends HookWidget {
       () {
         chatStore
           ..chatID = chatID
-          ..listen()
           ..loadChat();
 
         return null;
@@ -260,14 +259,14 @@ class _MessageList extends StatelessWidget {
             },
             (context, index) {
               if (index == itemCount - 1) {
-                if (chatStore.canLoadMore) {
-                  chatStore.loadMoreMessages();
-                }
-
                 if (chatStore.isLoadingMore) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
+                }
+
+                if (chatStore.canLoadMore) {
+                  chatStore.loadMoreMessages();
                 }
 
                 return const SizedBox.shrink();

@@ -65,7 +65,79 @@ abstract class _ChatListStore extends SyncStore with Store {
   }
 
   @action
-  void listen() {
+  void loadChats({
+    bool refresh = false,
+  }) {
+    _logger.fine('Load: start');
+
+    perform(
+      () async {
+        try {
+          final data = await _chatListService.loadChats();
+
+          _logger.fine('Load: update chats');
+          _chats = await _parseChats(data, refresh: refresh);
+
+          Future.delayed(const Duration(seconds: 1), _listen);
+
+          _logger.fine('Load: end');
+        } catch (e) {
+          _error = _chatListStringProvider.canNotLoadChats;
+        }
+      },
+      setIsLoading: (v) => _isLoading = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void loadMoreChats() {
+    _logger.fine('Load more: start');
+
+    perform(
+      () async {
+        try {
+          final lastChatID = _chats.lastOrNull?.id;
+
+          final data = await _chatListService.loadChats(
+            lastChatID:
+                lastChatID != null ? ChatID.fromString(lastChatID) : null,
+          );
+
+          // TODO: there can be a problem with caching
+          final newChats = await _parseChats(data, refresh: false);
+
+          _canLoadMore = false;
+
+          if (newChats.isNotEmpty) {
+            doAfterDelay(() {
+              _canLoadMore = true;
+            });
+          }
+
+          _logger.fine('Load more: update chats');
+          _chats = List.of(_chats)..addAll(newChats);
+        } catch (e) {
+          _canLoadMore = false;
+          doAfterDelay(() {
+            _canLoadMore = true;
+          });
+
+          _error = _chatListStringProvider.canNotLoadChats;
+        }
+      },
+      setIsLoading: (v) => _isLoadingMore = v,
+      removeError: () => _error = '',
+    );
+  }
+
+  @action
+  void refresh() {
+    loadChats(refresh: true);
+  }
+
+  @action
+  void _listen() {
     _logger.fine('Listen: start');
 
     perform(
@@ -186,74 +258,6 @@ abstract class _ChatListStore extends SyncStore with Store {
       setIsLoading: (_) {},
       removeError: () => _error = '',
     );
-  }
-
-  @action
-  void loadChats({
-    bool refresh = false,
-  }) {
-    _logger.fine('Load: start');
-
-    perform(
-      () async {
-        try {
-          final data = await _chatListService.loadChats();
-
-          _logger.fine('Load: update chats');
-          _chats = await _parseChats(data, refresh: refresh);
-        } catch (e) {
-          _error = _chatListStringProvider.canNotLoadChats;
-        }
-      },
-      setIsLoading: (v) => _isLoading = v,
-      removeError: () => _error = '',
-    );
-  }
-
-  @action
-  void loadMoreChats() {
-    _logger.fine('Load more: start');
-
-    perform(
-      () async {
-        try {
-          final lastChatID = _chats.lastOrNull?.id;
-
-          final data = await _chatListService.loadChats(
-            lastChatID:
-                lastChatID != null ? ChatID.fromString(lastChatID) : null,
-          );
-
-          // TODO: there can be a problem with caching
-          final newChats = await _parseChats(data, refresh: false);
-
-          _canLoadMore = false;
-
-          if (newChats.isNotEmpty) {
-            doAfterDelay(() {
-              _canLoadMore = true;
-            });
-          }
-
-          _logger.fine('Load more: update chats');
-          _chats = List.of(_chats)..addAll(newChats);
-        } catch (e) {
-          _canLoadMore = false;
-          doAfterDelay(() {
-            _canLoadMore = true;
-          });
-
-          _error = _chatListStringProvider.canNotLoadChats;
-        }
-      },
-      setIsLoading: (v) => _isLoadingMore = v,
-      removeError: () => _error = '',
-    );
-  }
-
-  @action
-  void refresh() {
-    loadChats(refresh: true);
   }
 
   @action
