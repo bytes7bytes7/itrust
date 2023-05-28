@@ -143,23 +143,45 @@ mixin _$CommentReplyStore on _CommentReplyStore, Store {
     });
   }
 
-  late final _$_CommentReplyStoreActionController =
-      ActionController(name: '_CommentReplyStore', context: context);
+  late final _$loadCommentRepliesAsyncAction =
+      AsyncAction('_CommentReplyStore.loadCommentReplies', context: context);
 
   @override
-  void loadCommentReplies(
+  Future<void> loadCommentReplies(
       {required String postID,
       required String commentID,
       bool refresh = false}) {
-    final _$actionInfo = _$_CommentReplyStoreActionController.startAction(
-        name: '_CommentReplyStore.loadCommentReplies');
-    try {
-      return super.loadCommentReplies(
-          postID: postID, commentID: commentID, refresh: refresh);
-    } finally {
-      _$_CommentReplyStoreActionController.endAction(_$actionInfo);
-    }
+    return _$loadCommentRepliesAsyncAction.run(() => super.loadCommentReplies(
+        postID: postID, commentID: commentID, refresh: refresh));
   }
+
+  late final _$loadMoreRepliesAsyncAction =
+      AsyncAction('_CommentReplyStore.loadMoreReplies', context: context);
+
+  @override
+  Future<void> loadMoreReplies() {
+    return _$loadMoreRepliesAsyncAction.run(() => super.loadMoreReplies());
+  }
+
+  late final _$onLikeReplyPressedAsyncAction =
+      AsyncAction('_CommentReplyStore.onLikeReplyPressed', context: context);
+
+  @override
+  Future<void> onLikeReplyPressed({required String replyID}) {
+    return _$onLikeReplyPressedAsyncAction
+        .run(() => super.onLikeReplyPressed(replyID: replyID));
+  }
+
+  late final _$setCommentsAsyncAction =
+      AsyncAction('_CommentReplyStore.setComments', context: context);
+
+  @override
+  Future<void> setComments(List<Comment> comments) {
+    return _$setCommentsAsyncAction.run(() => super.setComments(comments));
+  }
+
+  late final _$_CommentReplyStoreActionController =
+      ActionController(name: '_CommentReplyStore', context: context);
 
   @override
   void refresh() {
@@ -167,39 +189,6 @@ mixin _$CommentReplyStore on _CommentReplyStore, Store {
         name: '_CommentReplyStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_CommentReplyStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadMoreReplies() {
-    final _$actionInfo = _$_CommentReplyStoreActionController.startAction(
-        name: '_CommentReplyStore.loadMoreReplies');
-    try {
-      return super.loadMoreReplies();
-    } finally {
-      _$_CommentReplyStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void onLikeReplyPressed({required String replyID}) {
-    final _$actionInfo = _$_CommentReplyStoreActionController.startAction(
-        name: '_CommentReplyStore.onLikeReplyPressed');
-    try {
-      return super.onLikeReplyPressed(replyID: replyID);
-    } finally {
-      _$_CommentReplyStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setComments(List<Comment> comments) {
-    final _$actionInfo = _$_CommentReplyStoreActionController.startAction(
-        name: '_CommentReplyStore.setComments');
-    try {
-      return super.setComments(comments);
     } finally {
       _$_CommentReplyStoreActionController.endAction(_$actionInfo);
     }

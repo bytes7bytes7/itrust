@@ -40,8 +40,8 @@ abstract class _LogInStore extends SyncStore with Store {
   bool get canLogIn => !_isLoading && email.isNotEmpty && password.isNotEmpty;
 
   @action
-  void logIn() {
-    perform(
+  Future<void> logIn() async {
+    await perform(
       () async {
         try {
           await _authService.logIn(

@@ -48,8 +48,8 @@ abstract class _ChangePersonalInfoStore extends SyncStore with Store {
       (firstName != _initFirstName || lastName != _initLastName);
 
   @action
-  void init() {
-    perform(
+  Future<void> init() async {
+    await perform(
       () async {
         final me = _accountService.me;
 
@@ -66,8 +66,8 @@ abstract class _ChangePersonalInfoStore extends SyncStore with Store {
   }
 
   @action
-  void applyChanges() {
-    perform(
+  Future<void> applyChanges() async {
+    await perform(
       () async {
         try {
           await _accountService.changePersonalInfo(

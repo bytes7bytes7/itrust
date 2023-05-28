@@ -143,19 +143,33 @@ mixin _$UserPostsStore on _UserPostsStore, Store {
     });
   }
 
-  late final _$_UserPostsStoreActionController =
-      ActionController(name: '_UserPostsStore', context: context);
+  late final _$loadPostsAsyncAction =
+      AsyncAction('_UserPostsStore.loadPosts', context: context);
 
   @override
-  void loadPosts({bool refresh = false}) {
-    final _$actionInfo = _$_UserPostsStoreActionController.startAction(
-        name: '_UserPostsStore.loadPosts');
-    try {
-      return super.loadPosts(refresh: refresh);
-    } finally {
-      _$_UserPostsStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadPosts({bool refresh = false}) {
+    return _$loadPostsAsyncAction.run(() => super.loadPosts(refresh: refresh));
   }
+
+  late final _$loadMorePostsAsyncAction =
+      AsyncAction('_UserPostsStore.loadMorePosts', context: context);
+
+  @override
+  Future<void> loadMorePosts() {
+    return _$loadMorePostsAsyncAction.run(() => super.loadMorePosts());
+  }
+
+  late final _$onLikeButtonPressedAsyncAction =
+      AsyncAction('_UserPostsStore.onLikeButtonPressed', context: context);
+
+  @override
+  Future<void> onLikeButtonPressed({required String postID}) {
+    return _$onLikeButtonPressedAsyncAction
+        .run(() => super.onLikeButtonPressed(postID: postID));
+  }
+
+  late final _$_UserPostsStoreActionController =
+      ActionController(name: '_UserPostsStore', context: context);
 
   @override
   void refresh() {
@@ -163,28 +177,6 @@ mixin _$UserPostsStore on _UserPostsStore, Store {
         name: '_UserPostsStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_UserPostsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadMorePosts() {
-    final _$actionInfo = _$_UserPostsStoreActionController.startAction(
-        name: '_UserPostsStore.loadMorePosts');
-    try {
-      return super.loadMorePosts();
-    } finally {
-      _$_UserPostsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void onLikeButtonPressed({required String postID}) {
-    final _$actionInfo = _$_UserPostsStoreActionController.startAction(
-        name: '_UserPostsStore.onLikeButtonPressed');
-    try {
-      return super.onLikeButtonPressed(postID: postID);
     } finally {
       _$_UserPostsStoreActionController.endAction(_$actionInfo);
     }

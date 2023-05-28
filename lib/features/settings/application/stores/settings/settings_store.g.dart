@@ -62,6 +62,14 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
+  late final _$logOutAsyncAction =
+      AsyncAction('_SettingsStore.logOut', context: context);
+
+  @override
+  Future<void> logOut() {
+    return _$logOutAsyncAction.run(() => super.logOut());
+  }
+
   late final _$_SettingsStoreActionController =
       ActionController(name: '_SettingsStore', context: context);
 
@@ -71,17 +79,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
         name: '_SettingsStore.init');
     try {
       return super.init();
-    } finally {
-      _$_SettingsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void logOut() {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(
-        name: '_SettingsStore.logOut');
-    try {
-      return super.logOut();
     } finally {
       _$_SettingsStoreActionController.endAction(_$actionInfo);
     }

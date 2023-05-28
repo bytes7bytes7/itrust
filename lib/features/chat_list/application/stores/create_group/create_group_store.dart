@@ -100,8 +100,8 @@ abstract class _CreateGroupStore extends SyncStore with Store {
   }
 
   @action
-  void loadUsers() {
-    perform(
+  Future<void> loadUsers() async {
+    await perform(
       () async {
         try {
           final users = await _createChatService.getChatPartners();
@@ -131,8 +131,8 @@ abstract class _CreateGroupStore extends SyncStore with Store {
   }
 
   @action
-  void loadMoreUsers() {
-    perform(
+  Future<void> loadMoreUsers() async {
+    await perform(
       () async {
         try {
           final lastUserID = _userIDs.lastOrNull;
@@ -194,8 +194,8 @@ abstract class _CreateGroupStore extends SyncStore with Store {
   }
 
   @action
-  void createChat() {
-    perform(
+  Future<void> createChat() async {
+    await perform(
       () async {
         final title = chatName;
 

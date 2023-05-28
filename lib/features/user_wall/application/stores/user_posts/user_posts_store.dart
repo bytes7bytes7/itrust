@@ -73,10 +73,10 @@ abstract class _UserPostsStore extends SyncStore with Store {
   }
 
   @action
-  void loadPosts({
+  Future<void> loadPosts({
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         try {
           final userID = _userID;
@@ -142,8 +142,8 @@ abstract class _UserPostsStore extends SyncStore with Store {
   }
 
   @action
-  void loadMorePosts() {
-    perform(
+  Future<void> loadMorePosts() async {
+    await perform(
       () async {
         try {
           final user = _user;
@@ -194,7 +194,7 @@ abstract class _UserPostsStore extends SyncStore with Store {
   }
 
   @action
-  void onLikeButtonPressed({required String postID}) {
+  Future<void> onLikeButtonPressed({required String postID}) async {
     final user = _user;
     final post = _posts.firstWhereOrNull((e) => e.id == postID);
 
@@ -202,7 +202,7 @@ abstract class _UserPostsStore extends SyncStore with Store {
       return;
     }
 
-    perform(
+    await perform(
       () async {
         if (post.likedByMe) {
           try {

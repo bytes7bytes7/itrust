@@ -54,8 +54,8 @@ abstract class _CreateDialogueStore extends SyncStore with Store {
   bool get hasError => _error.isNotEmpty;
 
   @action
-  void loadUsers() {
-    perform(
+  Future<void> loadUsers() async {
+    await perform(
       () async {
         try {
           final users = await _createChatService.getChatPartners();
@@ -85,8 +85,8 @@ abstract class _CreateDialogueStore extends SyncStore with Store {
   }
 
   @action
-  void loadMoreUsers() {
-    perform(
+  Future<void> loadMoreUsers() async {
+    await perform(
       () async {
         try {
           final lastUserID = _users.lastOrNull?.id;

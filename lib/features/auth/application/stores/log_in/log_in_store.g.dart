@@ -82,18 +82,12 @@ mixin _$LogInStore on _LogInStore, Store {
     });
   }
 
-  late final _$_LogInStoreActionController =
-      ActionController(name: '_LogInStore', context: context);
+  late final _$logInAsyncAction =
+      AsyncAction('_LogInStore.logIn', context: context);
 
   @override
-  void logIn() {
-    final _$actionInfo =
-        _$_LogInStoreActionController.startAction(name: '_LogInStore.logIn');
-    try {
-      return super.logIn();
-    } finally {
-      _$_LogInStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> logIn() {
+    return _$logInAsyncAction.run(() => super.logIn());
   }
 
   @override

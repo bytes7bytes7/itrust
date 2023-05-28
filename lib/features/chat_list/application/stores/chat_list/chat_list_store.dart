@@ -65,12 +65,12 @@ abstract class _ChatListStore extends SyncStore with Store {
   }
 
   @action
-  void loadChats({
+  Future<void> loadChats({
     bool refresh = false,
-  }) {
+  }) async {
     _logger.fine('Load: start');
 
-    perform(
+    await perform(
       () async {
         try {
           final data = await _chatListService.loadChats();
@@ -91,10 +91,10 @@ abstract class _ChatListStore extends SyncStore with Store {
   }
 
   @action
-  void loadMoreChats() {
+  Future<void> loadMoreChats() async {
     _logger.fine('Load more: start');
 
-    perform(
+    await perform(
       () async {
         try {
           final lastChatID = _chats.lastOrNull?.id;
@@ -137,10 +137,10 @@ abstract class _ChatListStore extends SyncStore with Store {
   }
 
   @action
-  void _listen() {
+  Future<void> _listen() async {
     _logger.fine('Listen: start');
 
-    perform(
+    await perform(
       () async {
         try {
           await _chatEventSub?.cancel();

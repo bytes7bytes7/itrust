@@ -27,8 +27,8 @@ abstract class _LockStore extends SyncStore with Store {
   User? selectedUser;
 
   @action
-  void unlock({required String passphrase}) {
-    perform(
+  Future<void> unlock({required String passphrase}) async {
+    await perform(
       () async {
         try {
           await _lockService.unlock(passphrase: passphrase);

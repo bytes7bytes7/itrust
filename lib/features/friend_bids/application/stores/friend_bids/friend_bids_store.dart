@@ -85,8 +85,8 @@ abstract class _FriendBidsStore extends SyncStore with Store {
   }
 
   @action
-  void load() {
-    perform(
+  Future<void> load() async {
+    await perform(
       () async {
         try {
           final data = await _friendBidsService.getFriendBidsAmount();
@@ -105,10 +105,10 @@ abstract class _FriendBidsStore extends SyncStore with Store {
 
     switch (_currentTabIndex) {
       case _inboxBidsTabIndex:
-        inboxStore.loadBids();
+        await inboxStore.loadBids();
         break;
       case _outboxBidsTabIndex:
-        outboxStore.loadBids();
+        await outboxStore.loadBids();
         break;
     }
   }
@@ -142,8 +142,8 @@ abstract class _FriendBidsStore extends SyncStore with Store {
   }
 
   @action
-  void acceptBid(String userID) {
-    perform(
+  Future<void> acceptBid(String userID) async {
+    await perform(
       () async {
         try {
           final userInfo =
@@ -151,7 +151,7 @@ abstract class _FriendBidsStore extends SyncStore with Store {
 
           if (userInfo is EndUserInfo) {
             if (!userInfo.haveIFriendBidFromThisUser) {
-              load();
+              await load();
             }
           }
         } catch (e) {
@@ -170,8 +170,8 @@ abstract class _FriendBidsStore extends SyncStore with Store {
   }
 
   @action
-  void declineBid(String userID) {
-    perform(
+  Future<void> declineBid(String userID) async {
+    await perform(
       () async {
         try {
           final userInfo = await _userInfoService
@@ -179,7 +179,7 @@ abstract class _FriendBidsStore extends SyncStore with Store {
 
           if (userInfo is EndUserInfo) {
             if (!userInfo.haveIFriendBidFromThisUser) {
-              load();
+              await load();
             }
           }
         } catch (e) {
@@ -198,8 +198,8 @@ abstract class _FriendBidsStore extends SyncStore with Store {
   }
 
   @action
-  void cancelBid(String userID) {
-    perform(
+  Future<void> cancelBid(String userID) async {
+    await perform(
       () async {
         try {
           final userInfo =
@@ -207,7 +207,7 @@ abstract class _FriendBidsStore extends SyncStore with Store {
 
           if (userInfo is EndUserInfo) {
             if (!userInfo.didISentFriendBid) {
-              load();
+              await load();
             }
           }
         } catch (e) {

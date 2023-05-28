@@ -256,10 +256,10 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @action
-  void loadInfo({
+  Future<void> loadInfo({
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         try {
           final userID = _userID;
@@ -273,7 +273,7 @@ abstract class _UserInfoStore extends SyncStore with Store {
 
           _userInfo = _mapster.map1(userInfo, To<UserInfoVM>());
 
-          userPostsStore.loadPosts();
+          await userPostsStore.loadPosts();
         } catch (e) {
           _error = _userInfoStringProvider.canNotLoadUserInfo;
         }
@@ -290,8 +290,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @action
-  void sendFriendBid() {
-    perform(
+  Future<void> sendFriendBid() async {
+    await perform(
       () async {
         try {
           final userID = _userID;
@@ -314,8 +314,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @action
-  void cancelFriendBid() {
-    perform(
+  Future<void> cancelFriendBid() async {
+    await perform(
       () async {
         try {
           final userID = _userID;
@@ -338,8 +338,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @action
-  void removeFriend() {
-    perform(
+  Future<void> removeFriend() async {
+    await perform(
       () async {
         try {
           final userID = _userID;
@@ -362,8 +362,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @action
-  void removeSubscriber() {
-    perform(
+  Future<void> removeSubscriber() async {
+    await perform(
       () async {
         try {
           final userID = _userID;
@@ -386,8 +386,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @action
-  void acceptFriendBid() {
-    perform(
+  Future<void> acceptFriendBid() async {
+    await perform(
       () async {
         try {
           final userID = _userID;
@@ -410,8 +410,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @action
-  void declineFriendBid() {
-    perform(
+  Future<void> declineFriendBid() async {
+    await perform(
       () async {
         try {
           final userID = _userID;
@@ -434,8 +434,8 @@ abstract class _UserInfoStore extends SyncStore with Store {
   }
 
   @action
-  void unsubscribe() {
-    perform(
+  Future<void> unsubscribe() async {
+    await perform(
       () async {
         try {
           final userID = _userID;

@@ -44,8 +44,8 @@ abstract class _CreateMonologueStore extends SyncStore with Store {
   bool get canGoNext => chatName.isNotEmpty;
 
   @action
-  void createChat() {
-    perform(
+  Future<void> createChat() async {
+    await perform(
       () async {
         try {
           final chat = await _createChatService.createMonologue(

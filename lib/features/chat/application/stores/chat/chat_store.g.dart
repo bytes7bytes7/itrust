@@ -148,62 +148,44 @@ mixin _$ChatStore on _ChatStore, Store {
     });
   }
 
-  late final _$_ChatStoreActionController =
-      ActionController(name: '_ChatStore', context: context);
+  late final _$loadChatAsyncAction =
+      AsyncAction('_ChatStore.loadChat', context: context);
 
   @override
-  void loadChat({bool refresh = false}) {
-    final _$actionInfo =
-        _$_ChatStoreActionController.startAction(name: '_ChatStore.loadChat');
-    try {
-      return super.loadChat(refresh: refresh);
-    } finally {
-      _$_ChatStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadChat({bool refresh = false}) {
+    return _$loadChatAsyncAction.run(() => super.loadChat(refresh: refresh));
   }
 
-  @override
-  void loadMessages() {
-    final _$actionInfo = _$_ChatStoreActionController.startAction(
-        name: '_ChatStore.loadMessages');
-    try {
-      return super.loadMessages();
-    } finally {
-      _$_ChatStoreActionController.endAction(_$actionInfo);
-    }
-  }
+  late final _$loadMessagesAsyncAction =
+      AsyncAction('_ChatStore.loadMessages', context: context);
 
   @override
-  void loadMoreMessages() {
-    final _$actionInfo = _$_ChatStoreActionController.startAction(
-        name: '_ChatStore.loadMoreMessages');
-    try {
-      return super.loadMoreMessages();
-    } finally {
-      _$_ChatStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadMessages() {
+    return _$loadMessagesAsyncAction.run(() => super.loadMessages());
   }
 
-  @override
-  void sendMessage({required String text}) {
-    final _$actionInfo = _$_ChatStoreActionController.startAction(
-        name: '_ChatStore.sendMessage');
-    try {
-      return super.sendMessage(text: text);
-    } finally {
-      _$_ChatStoreActionController.endAction(_$actionInfo);
-    }
-  }
+  late final _$loadMoreMessagesAsyncAction =
+      AsyncAction('_ChatStore.loadMoreMessages', context: context);
 
   @override
-  void _listen() {
-    final _$actionInfo =
-        _$_ChatStoreActionController.startAction(name: '_ChatStore._listen');
-    try {
-      return super._listen();
-    } finally {
-      _$_ChatStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadMoreMessages() {
+    return _$loadMoreMessagesAsyncAction.run(() => super.loadMoreMessages());
+  }
+
+  late final _$sendMessageAsyncAction =
+      AsyncAction('_ChatStore.sendMessage', context: context);
+
+  @override
+  Future<void> sendMessage({required String text}) {
+    return _$sendMessageAsyncAction.run(() => super.sendMessage(text: text));
+  }
+
+  late final _$_listenAsyncAction =
+      AsyncAction('_ChatStore._listen', context: context);
+
+  @override
+  Future<void> _listen() {
+    return _$_listenAsyncAction.run(() => super._listen());
   }
 
   @override

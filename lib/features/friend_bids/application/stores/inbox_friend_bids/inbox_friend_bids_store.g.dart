@@ -143,19 +143,24 @@ mixin _$InboxFriendBidsStore on _InboxFriendBidsStore, Store {
     });
   }
 
-  late final _$_InboxFriendBidsStoreActionController =
-      ActionController(name: '_InboxFriendBidsStore', context: context);
+  late final _$loadBidsAsyncAction =
+      AsyncAction('_InboxFriendBidsStore.loadBids', context: context);
 
   @override
-  void loadBids({bool refresh = false}) {
-    final _$actionInfo = _$_InboxFriendBidsStoreActionController.startAction(
-        name: '_InboxFriendBidsStore.loadBids');
-    try {
-      return super.loadBids(refresh: refresh);
-    } finally {
-      _$_InboxFriendBidsStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadBids({bool refresh = false}) {
+    return _$loadBidsAsyncAction.run(() => super.loadBids(refresh: refresh));
   }
+
+  late final _$loadMoreBidsAsyncAction =
+      AsyncAction('_InboxFriendBidsStore.loadMoreBids', context: context);
+
+  @override
+  Future<void> loadMoreBids() {
+    return _$loadMoreBidsAsyncAction.run(() => super.loadMoreBids());
+  }
+
+  late final _$_InboxFriendBidsStoreActionController =
+      ActionController(name: '_InboxFriendBidsStore', context: context);
 
   @override
   void refresh() {
@@ -163,17 +168,6 @@ mixin _$InboxFriendBidsStore on _InboxFriendBidsStore, Store {
         name: '_InboxFriendBidsStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_InboxFriendBidsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadMoreBids() {
-    final _$actionInfo = _$_InboxFriendBidsStoreActionController.startAction(
-        name: '_InboxFriendBidsStore.loadMoreBids');
-    try {
-      return super.loadMoreBids();
     } finally {
       _$_InboxFriendBidsStoreActionController.endAction(_$actionInfo);
     }

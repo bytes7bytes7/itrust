@@ -64,10 +64,10 @@ abstract class _SubscribersStore extends SyncStore with Store {
   }
 
   @action
-  void loadSubscribers({
+  Future<void> loadSubscribers({
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         try {
           final userID = _userID;
@@ -103,8 +103,8 @@ abstract class _SubscribersStore extends SyncStore with Store {
   }
 
   @action
-  void loadMoreSubscribers() {
-    perform(
+  Future<void> loadMoreSubscribers() async {
+    await perform(
       () async {
         try {
           final userID = _userID;

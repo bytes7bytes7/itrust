@@ -131,23 +131,37 @@ mixin _$CommentStore on _CommentStore, Store {
     });
   }
 
-  late final _$_CommentStoreActionController =
-      ActionController(name: '_CommentStore', context: context);
+  late final _$loadCommentAsyncAction =
+      AsyncAction('_CommentStore.loadComment', context: context);
 
   @override
-  void loadComment(
+  Future<void> loadComment(
       {required String postID,
       required String commentID,
       bool refresh = false}) {
-    final _$actionInfo = _$_CommentStoreActionController.startAction(
-        name: '_CommentStore.loadComment');
-    try {
-      return super
-          .loadComment(postID: postID, commentID: commentID, refresh: refresh);
-    } finally {
-      _$_CommentStoreActionController.endAction(_$actionInfo);
-    }
+    return _$loadCommentAsyncAction.run(() => super
+        .loadComment(postID: postID, commentID: commentID, refresh: refresh));
   }
+
+  late final _$onLikeCommentPressedAsyncAction =
+      AsyncAction('_CommentStore.onLikeCommentPressed', context: context);
+
+  @override
+  Future<void> onLikeCommentPressed() {
+    return _$onLikeCommentPressedAsyncAction
+        .run(() => super.onLikeCommentPressed());
+  }
+
+  late final _$replyAsyncAction =
+      AsyncAction('_CommentStore.reply', context: context);
+
+  @override
+  Future<void> reply(String text) {
+    return _$replyAsyncAction.run(() => super.reply(text));
+  }
+
+  late final _$_CommentStoreActionController =
+      ActionController(name: '_CommentStore', context: context);
 
   @override
   void refresh() {
@@ -155,28 +169,6 @@ mixin _$CommentStore on _CommentStore, Store {
         name: '_CommentStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_CommentStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void onLikeCommentPressed() {
-    final _$actionInfo = _$_CommentStoreActionController.startAction(
-        name: '_CommentStore.onLikeCommentPressed');
-    try {
-      return super.onLikeCommentPressed();
-    } finally {
-      _$_CommentStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void reply(String text) {
-    final _$actionInfo = _$_CommentStoreActionController.startAction(
-        name: '_CommentStore.reply');
-    try {
-      return super.reply(text);
     } finally {
       _$_CommentStoreActionController.endAction(_$actionInfo);
     }

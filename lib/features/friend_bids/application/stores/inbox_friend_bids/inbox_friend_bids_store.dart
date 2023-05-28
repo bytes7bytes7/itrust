@@ -27,7 +27,6 @@ abstract class _InboxFriendBidsStore extends SyncStore with Store {
   final Mapster _mapster;
   var _isInitialized = false;
 
-
   @readonly
   bool _isLoading = false;
 
@@ -60,10 +59,10 @@ abstract class _InboxFriendBidsStore extends SyncStore with Store {
   }
 
   @action
-  void loadBids({
+  Future<void> loadBids({
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         try {
           final users = await _friendBidsService.getInboxFriendBids();
@@ -91,8 +90,8 @@ abstract class _InboxFriendBidsStore extends SyncStore with Store {
   }
 
   @action
-  void loadMoreBids() {
-    perform(
+  Future<void> loadMoreBids() async {
+    await perform(
       () async {
         try {
           final lastUserID = _users.lastOrNull?.id;

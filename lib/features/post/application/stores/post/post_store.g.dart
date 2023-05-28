@@ -109,19 +109,33 @@ mixin _$PostStore on _PostStore, Store {
     });
   }
 
-  late final _$_PostStoreActionController =
-      ActionController(name: '_PostStore', context: context);
+  late final _$loadPostAsyncAction =
+      AsyncAction('_PostStore.loadPost', context: context);
 
   @override
-  void loadPost({required String postID, bool refresh = false}) {
-    final _$actionInfo =
-        _$_PostStoreActionController.startAction(name: '_PostStore.loadPost');
-    try {
-      return super.loadPost(postID: postID, refresh: refresh);
-    } finally {
-      _$_PostStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadPost({required String postID, bool refresh = false}) {
+    return _$loadPostAsyncAction
+        .run(() => super.loadPost(postID: postID, refresh: refresh));
   }
+
+  late final _$onLikePostPressedAsyncAction =
+      AsyncAction('_PostStore.onLikePostPressed', context: context);
+
+  @override
+  Future<void> onLikePostPressed() {
+    return _$onLikePostPressedAsyncAction.run(() => super.onLikePostPressed());
+  }
+
+  late final _$replyAsyncAction =
+      AsyncAction('_PostStore.reply', context: context);
+
+  @override
+  Future<void> reply(String text) {
+    return _$replyAsyncAction.run(() => super.reply(text));
+  }
+
+  late final _$_PostStoreActionController =
+      ActionController(name: '_PostStore', context: context);
 
   @override
   void refresh() {
@@ -129,28 +143,6 @@ mixin _$PostStore on _PostStore, Store {
         _$_PostStoreActionController.startAction(name: '_PostStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_PostStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void onLikePostPressed() {
-    final _$actionInfo = _$_PostStoreActionController.startAction(
-        name: '_PostStore.onLikePostPressed');
-    try {
-      return super.onLikePostPressed();
-    } finally {
-      _$_PostStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void reply(String text) {
-    final _$actionInfo =
-        _$_PostStoreActionController.startAction(name: '_PostStore.reply');
-    try {
-      return super.reply(text);
     } finally {
       _$_PostStoreActionController.endAction(_$actionInfo);
     }

@@ -153,6 +153,14 @@ mixin _$PeopleStore on _PeopleStore, Store {
     });
   }
 
+  late final _$loadAsyncAction =
+      AsyncAction('_PeopleStore.load', context: context);
+
+  @override
+  Future<void> load() {
+    return _$loadAsyncAction.run(() => super.load());
+  }
+
   late final _$_PeopleStoreActionController =
       ActionController(name: '_PeopleStore', context: context);
 
@@ -162,17 +170,6 @@ mixin _$PeopleStore on _PeopleStore, Store {
         _$_PeopleStoreActionController.startAction(name: '_PeopleStore.loadMe');
     try {
       return super.loadMe();
-    } finally {
-      _$_PeopleStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void load() {
-    final _$actionInfo =
-        _$_PeopleStoreActionController.startAction(name: '_PeopleStore.load');
-    try {
-      return super.load();
     } finally {
       _$_PeopleStoreActionController.endAction(_$actionInfo);
     }

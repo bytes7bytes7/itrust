@@ -125,19 +125,43 @@ mixin _$PostCommentStore on _PostCommentStore, Store {
     });
   }
 
-  late final _$_PostCommentStoreActionController =
-      ActionController(name: '_PostCommentStore', context: context);
+  late final _$loadPostCommentsAsyncAction =
+      AsyncAction('_PostCommentStore.loadPostComments', context: context);
 
   @override
-  void loadPostComments({required String postID, bool refresh = false}) {
-    final _$actionInfo = _$_PostCommentStoreActionController.startAction(
-        name: '_PostCommentStore.loadPostComments');
-    try {
-      return super.loadPostComments(postID: postID, refresh: refresh);
-    } finally {
-      _$_PostCommentStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadPostComments(
+      {required String postID, bool refresh = false}) {
+    return _$loadPostCommentsAsyncAction
+        .run(() => super.loadPostComments(postID: postID, refresh: refresh));
   }
+
+  late final _$loadMoreCommentsAsyncAction =
+      AsyncAction('_PostCommentStore.loadMoreComments', context: context);
+
+  @override
+  Future<void> loadMoreComments() {
+    return _$loadMoreCommentsAsyncAction.run(() => super.loadMoreComments());
+  }
+
+  late final _$onLikeCommentPressedAsyncAction =
+      AsyncAction('_PostCommentStore.onLikeCommentPressed', context: context);
+
+  @override
+  Future<void> onLikeCommentPressed({required String commentID}) {
+    return _$onLikeCommentPressedAsyncAction
+        .run(() => super.onLikeCommentPressed(commentID: commentID));
+  }
+
+  late final _$setCommentsAsyncAction =
+      AsyncAction('_PostCommentStore.setComments', context: context);
+
+  @override
+  Future<void> setComments(List<Comment> comments) {
+    return _$setCommentsAsyncAction.run(() => super.setComments(comments));
+  }
+
+  late final _$_PostCommentStoreActionController =
+      ActionController(name: '_PostCommentStore', context: context);
 
   @override
   void refresh() {
@@ -145,39 +169,6 @@ mixin _$PostCommentStore on _PostCommentStore, Store {
         name: '_PostCommentStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_PostCommentStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadMoreComments() {
-    final _$actionInfo = _$_PostCommentStoreActionController.startAction(
-        name: '_PostCommentStore.loadMoreComments');
-    try {
-      return super.loadMoreComments();
-    } finally {
-      _$_PostCommentStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void onLikeCommentPressed({required String commentID}) {
-    final _$actionInfo = _$_PostCommentStoreActionController.startAction(
-        name: '_PostCommentStore.onLikeCommentPressed');
-    try {
-      return super.onLikeCommentPressed(commentID: commentID);
-    } finally {
-      _$_PostCommentStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setComments(List<Comment> comments) {
-    final _$actionInfo = _$_PostCommentStoreActionController.startAction(
-        name: '_PostCommentStore.setComments');
-    try {
-      return super.setComments(comments);
     } finally {
       _$_PostCommentStoreActionController.endAction(_$actionInfo);
     }

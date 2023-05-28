@@ -142,19 +142,24 @@ mixin _$AllUsersStore on _AllUsersStore, Store {
     });
   }
 
-  late final _$_AllUsersStoreActionController =
-      ActionController(name: '_AllUsersStore', context: context);
+  late final _$loadUsersAsyncAction =
+      AsyncAction('_AllUsersStore.loadUsers', context: context);
 
   @override
-  void loadUsers({bool refresh = false}) {
-    final _$actionInfo = _$_AllUsersStoreActionController.startAction(
-        name: '_AllUsersStore.loadUsers');
-    try {
-      return super.loadUsers(refresh: refresh);
-    } finally {
-      _$_AllUsersStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadUsers({bool refresh = false}) {
+    return _$loadUsersAsyncAction.run(() => super.loadUsers(refresh: refresh));
   }
+
+  late final _$loadMoreUsersAsyncAction =
+      AsyncAction('_AllUsersStore.loadMoreUsers', context: context);
+
+  @override
+  Future<void> loadMoreUsers() {
+    return _$loadMoreUsersAsyncAction.run(() => super.loadMoreUsers());
+  }
+
+  late final _$_AllUsersStoreActionController =
+      ActionController(name: '_AllUsersStore', context: context);
 
   @override
   void refresh() {
@@ -162,17 +167,6 @@ mixin _$AllUsersStore on _AllUsersStore, Store {
         name: '_AllUsersStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_AllUsersStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadMoreUsers() {
-    final _$actionInfo = _$_AllUsersStoreActionController.startAction(
-        name: '_AllUsersStore.loadMoreUsers');
-    try {
-      return super.loadMoreUsers();
     } finally {
       _$_AllUsersStoreActionController.endAction(_$actionInfo);
     }

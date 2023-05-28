@@ -85,18 +85,12 @@ mixin _$CreateMonologueStore on _CreateMonologueStore, Store {
     });
   }
 
-  late final _$_CreateMonologueStoreActionController =
-      ActionController(name: '_CreateMonologueStore', context: context);
+  late final _$createChatAsyncAction =
+      AsyncAction('_CreateMonologueStore.createChat', context: context);
 
   @override
-  void createChat() {
-    final _$actionInfo = _$_CreateMonologueStoreActionController.startAction(
-        name: '_CreateMonologueStore.createChat');
-    try {
-      return super.createChat();
-    } finally {
-      _$_CreateMonologueStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> createChat() {
+    return _$createChatAsyncAction.run(() => super.createChat());
   }
 
   @override

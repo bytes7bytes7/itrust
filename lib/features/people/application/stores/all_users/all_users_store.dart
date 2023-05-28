@@ -60,10 +60,10 @@ abstract class _AllUsersStore extends SyncStore with Store {
   }
 
   @action
-  void loadUsers({
+  Future<void> loadUsers({
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         try {
           final users = await _peopleService.getAllUsers();
@@ -91,8 +91,8 @@ abstract class _AllUsersStore extends SyncStore with Store {
   }
 
   @action
-  void loadMoreUsers() {
-    perform(
+  Future<void> loadMoreUsers() async {
+    await perform(
       () async {
         try {
           final lastUserID = _users.lastOrNull?.id;

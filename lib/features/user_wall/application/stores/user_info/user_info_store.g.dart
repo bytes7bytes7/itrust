@@ -187,19 +187,72 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
     });
   }
 
-  late final _$_UserInfoStoreActionController =
-      ActionController(name: '_UserInfoStore', context: context);
+  late final _$loadInfoAsyncAction =
+      AsyncAction('_UserInfoStore.loadInfo', context: context);
 
   @override
-  void loadInfo({bool refresh = false}) {
-    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
-        name: '_UserInfoStore.loadInfo');
-    try {
-      return super.loadInfo(refresh: refresh);
-    } finally {
-      _$_UserInfoStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadInfo({bool refresh = false}) {
+    return _$loadInfoAsyncAction.run(() => super.loadInfo(refresh: refresh));
   }
+
+  late final _$sendFriendBidAsyncAction =
+      AsyncAction('_UserInfoStore.sendFriendBid', context: context);
+
+  @override
+  Future<void> sendFriendBid() {
+    return _$sendFriendBidAsyncAction.run(() => super.sendFriendBid());
+  }
+
+  late final _$cancelFriendBidAsyncAction =
+      AsyncAction('_UserInfoStore.cancelFriendBid', context: context);
+
+  @override
+  Future<void> cancelFriendBid() {
+    return _$cancelFriendBidAsyncAction.run(() => super.cancelFriendBid());
+  }
+
+  late final _$removeFriendAsyncAction =
+      AsyncAction('_UserInfoStore.removeFriend', context: context);
+
+  @override
+  Future<void> removeFriend() {
+    return _$removeFriendAsyncAction.run(() => super.removeFriend());
+  }
+
+  late final _$removeSubscriberAsyncAction =
+      AsyncAction('_UserInfoStore.removeSubscriber', context: context);
+
+  @override
+  Future<void> removeSubscriber() {
+    return _$removeSubscriberAsyncAction.run(() => super.removeSubscriber());
+  }
+
+  late final _$acceptFriendBidAsyncAction =
+      AsyncAction('_UserInfoStore.acceptFriendBid', context: context);
+
+  @override
+  Future<void> acceptFriendBid() {
+    return _$acceptFriendBidAsyncAction.run(() => super.acceptFriendBid());
+  }
+
+  late final _$declineFriendBidAsyncAction =
+      AsyncAction('_UserInfoStore.declineFriendBid', context: context);
+
+  @override
+  Future<void> declineFriendBid() {
+    return _$declineFriendBidAsyncAction.run(() => super.declineFriendBid());
+  }
+
+  late final _$unsubscribeAsyncAction =
+      AsyncAction('_UserInfoStore.unsubscribe', context: context);
+
+  @override
+  Future<void> unsubscribe() {
+    return _$unsubscribeAsyncAction.run(() => super.unsubscribe());
+  }
+
+  late final _$_UserInfoStoreActionController =
+      ActionController(name: '_UserInfoStore', context: context);
 
   @override
   void refresh() {
@@ -207,83 +260,6 @@ mixin _$UserInfoStore on _UserInfoStore, Store {
         name: '_UserInfoStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_UserInfoStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void sendFriendBid() {
-    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
-        name: '_UserInfoStore.sendFriendBid');
-    try {
-      return super.sendFriendBid();
-    } finally {
-      _$_UserInfoStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void cancelFriendBid() {
-    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
-        name: '_UserInfoStore.cancelFriendBid');
-    try {
-      return super.cancelFriendBid();
-    } finally {
-      _$_UserInfoStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void removeFriend() {
-    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
-        name: '_UserInfoStore.removeFriend');
-    try {
-      return super.removeFriend();
-    } finally {
-      _$_UserInfoStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void removeSubscriber() {
-    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
-        name: '_UserInfoStore.removeSubscriber');
-    try {
-      return super.removeSubscriber();
-    } finally {
-      _$_UserInfoStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void acceptFriendBid() {
-    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
-        name: '_UserInfoStore.acceptFriendBid');
-    try {
-      return super.acceptFriendBid();
-    } finally {
-      _$_UserInfoStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void declineFriendBid() {
-    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
-        name: '_UserInfoStore.declineFriendBid');
-    try {
-      return super.declineFriendBid();
-    } finally {
-      _$_UserInfoStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void unsubscribe() {
-    final _$actionInfo = _$_UserInfoStoreActionController.startAction(
-        name: '_UserInfoStore.unsubscribe');
-    try {
-      return super.unsubscribe();
     } finally {
       _$_UserInfoStoreActionController.endAction(_$actionInfo);
     }

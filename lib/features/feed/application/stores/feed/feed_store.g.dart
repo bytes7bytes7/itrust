@@ -122,6 +122,32 @@ mixin _$FeedStore on _FeedStore, Store {
     });
   }
 
+  late final _$loadPostsAsyncAction =
+      AsyncAction('_FeedStore.loadPosts', context: context);
+
+  @override
+  Future<void> loadPosts(String? category, {bool refresh = false}) {
+    return _$loadPostsAsyncAction
+        .run(() => super.loadPosts(category, refresh: refresh));
+  }
+
+  late final _$loadMorePostsAsyncAction =
+      AsyncAction('_FeedStore.loadMorePosts', context: context);
+
+  @override
+  Future<void> loadMorePosts() {
+    return _$loadMorePostsAsyncAction.run(() => super.loadMorePosts());
+  }
+
+  late final _$onLikeButtonPressedAsyncAction =
+      AsyncAction('_FeedStore.onLikeButtonPressed', context: context);
+
+  @override
+  Future<void> onLikeButtonPressed({required String postID}) {
+    return _$onLikeButtonPressedAsyncAction
+        .run(() => super.onLikeButtonPressed(postID: postID));
+  }
+
   late final _$_FeedStoreActionController =
       ActionController(name: '_FeedStore', context: context);
 
@@ -137,44 +163,11 @@ mixin _$FeedStore on _FeedStore, Store {
   }
 
   @override
-  void loadPosts(String? category, {bool refresh = false}) {
-    final _$actionInfo =
-        _$_FeedStoreActionController.startAction(name: '_FeedStore.loadPosts');
-    try {
-      return super.loadPosts(category, refresh: refresh);
-    } finally {
-      _$_FeedStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadMorePosts() {
-    final _$actionInfo = _$_FeedStoreActionController.startAction(
-        name: '_FeedStore.loadMorePosts');
-    try {
-      return super.loadMorePosts();
-    } finally {
-      _$_FeedStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void refresh() {
     final _$actionInfo =
         _$_FeedStoreActionController.startAction(name: '_FeedStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_FeedStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void onLikeButtonPressed({required String postID}) {
-    final _$actionInfo = _$_FeedStoreActionController.startAction(
-        name: '_FeedStore.onLikeButtonPressed');
-    try {
-      return super.onLikeButtonPressed(postID: postID);
     } finally {
       _$_FeedStoreActionController.endAction(_$actionInfo);
     }

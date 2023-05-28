@@ -62,10 +62,10 @@ abstract class _OutboxFriendBidsStore extends SyncStore with Store {
   }
 
   @action
-  void loadBids({
+  Future<void> loadBids({
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         try {
           final users = await _friendBidsService.getOutboxFriendBids();
@@ -93,8 +93,8 @@ abstract class _OutboxFriendBidsStore extends SyncStore with Store {
   }
 
   @action
-  void loadMoreBids() {
-    perform(
+  Future<void> loadMoreBids() async {
+    await perform(
       () async {
         try {
           final lastUserID = _users.lastOrNull?.id;

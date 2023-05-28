@@ -64,12 +64,12 @@ abstract class _CommentStore extends SyncStore with Store {
       !commentReplyStore.hasError;
 
   @action
-  void loadComment({
+  Future<void> loadComment({
     required String postID,
     required String commentID,
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         try {
           _postID = postID;
@@ -93,7 +93,7 @@ abstract class _CommentStore extends SyncStore with Store {
 
           _comment = _mapster.map2(comment, author, To<CommentVM>());
 
-          commentReplyStore.loadCommentReplies(
+          await commentReplyStore.loadCommentReplies(
             postID: postID,
             commentID: commentID,
             refresh: refresh,
@@ -118,7 +118,7 @@ abstract class _CommentStore extends SyncStore with Store {
   }
 
   @action
-  void onLikeCommentPressed() {
+  Future<void> onLikeCommentPressed() async {
     final comment = _comment;
     final postID = _postID;
 
@@ -126,7 +126,7 @@ abstract class _CommentStore extends SyncStore with Store {
       return;
     }
 
-    perform(
+    await perform(
       () async {
         if (comment.likedByMe) {
           try {
@@ -189,8 +189,8 @@ abstract class _CommentStore extends SyncStore with Store {
   }
 
   @action
-  void reply(String text) {
-    perform(
+  Future<void> reply(String text) async {
+    await perform(
       () async {
         try {
           final postID = _postID;
@@ -210,7 +210,7 @@ abstract class _CommentStore extends SyncStore with Store {
             _moveUp = false;
           });
 
-          commentReplyStore.setComments(comments);
+          await commentReplyStore.setComments(comments);
         } catch (e) {
           _error = _commentStringProvider.canNotReplyToPost;
         }
@@ -229,7 +229,7 @@ abstract class _CommentStore extends SyncStore with Store {
     final comment = _comment;
 
     if (comment == null) {
-      return ;
+      return;
     }
 
     _commentCoordinator.onAuthorPressed(userID: comment.authorID);

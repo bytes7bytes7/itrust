@@ -68,13 +68,13 @@ abstract class _FeedStore extends SyncStore with Store {
   }
 
   @action
-  void loadPosts(
+  Future<void> loadPosts(
     String? category, {
     bool refresh = false,
-  }) {
+  }) async {
     _processingCategory = category;
 
-    perform(
+    await perform(
       () async {
         try {
           final data = await _feedService.loadPosts(
@@ -94,8 +94,8 @@ abstract class _FeedStore extends SyncStore with Store {
   }
 
   @action
-  void loadMorePosts() {
-    perform(
+  Future<void> loadMorePosts() async {
+    await perform(
       () async {
         try {
           final category = _selectedCategory;
@@ -142,14 +142,14 @@ abstract class _FeedStore extends SyncStore with Store {
   }
 
   @action
-  void onLikeButtonPressed({required String postID}) {
+  Future<void> onLikeButtonPressed({required String postID}) async {
     final post = _posts.firstWhereOrNull((e) => e.id == postID);
 
     if (post == null) {
       return;
     }
 
-    perform(
+    await perform(
       () async {
         if (post.likedByMe) {
           try {

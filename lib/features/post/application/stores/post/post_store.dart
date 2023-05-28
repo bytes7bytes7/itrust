@@ -59,11 +59,11 @@ abstract class _PostStore extends SyncStore with Store {
       !postCommentStore.hasError;
 
   @action
-  void loadPost({
+  Future<void> loadPost({
     required String postID,
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         try {
           _postID = postID;
@@ -85,7 +85,7 @@ abstract class _PostStore extends SyncStore with Store {
 
           _post = _mapster.map2(post, author, To<PostVM>());
 
-          postCommentStore.loadPostComments(postID: postID);
+          await postCommentStore.loadPostComments(postID: postID);
         } catch (e) {
           _error = _postStringProvider.canNotLoadPost;
         }
@@ -105,14 +105,14 @@ abstract class _PostStore extends SyncStore with Store {
   }
 
   @action
-  void onLikePostPressed() {
+  Future<void> onLikePostPressed() async {
     final post = _post;
 
     if (post == null) {
       return;
     }
 
-    perform(
+    await perform(
       () async {
         if (post.likedByMe) {
           try {
@@ -171,8 +171,8 @@ abstract class _PostStore extends SyncStore with Store {
   }
 
   @action
-  void reply(String text) {
-    perform(
+  Future<void> reply(String text) async {
+    await perform(
       () async {
         try {
           final postID = _postID;
@@ -190,7 +190,7 @@ abstract class _PostStore extends SyncStore with Store {
             _moveUp = false;
           });
 
-          postCommentStore.setComments(comments);
+          await postCommentStore.setComments(comments);
         } catch (e) {
           _error = _postStringProvider.canNotReplyToPost;
         }
@@ -214,7 +214,6 @@ abstract class _PostStore extends SyncStore with Store {
 
     _postCoordinator.onAuthorPressed(userID: post.authorID);
   }
-
 
   void _updatePost({
     required bool likedByMe,

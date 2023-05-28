@@ -107,19 +107,24 @@ mixin _$CreateDialogueStore on _CreateDialogueStore, Store {
     });
   }
 
-  late final _$_CreateDialogueStoreActionController =
-      ActionController(name: '_CreateDialogueStore', context: context);
+  late final _$loadUsersAsyncAction =
+      AsyncAction('_CreateDialogueStore.loadUsers', context: context);
 
   @override
-  void loadUsers() {
-    final _$actionInfo = _$_CreateDialogueStoreActionController.startAction(
-        name: '_CreateDialogueStore.loadUsers');
-    try {
-      return super.loadUsers();
-    } finally {
-      _$_CreateDialogueStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadUsers() {
+    return _$loadUsersAsyncAction.run(() => super.loadUsers());
   }
+
+  late final _$loadMoreUsersAsyncAction =
+      AsyncAction('_CreateDialogueStore.loadMoreUsers', context: context);
+
+  @override
+  Future<void> loadMoreUsers() {
+    return _$loadMoreUsersAsyncAction.run(() => super.loadMoreUsers());
+  }
+
+  late final _$_CreateDialogueStoreActionController =
+      ActionController(name: '_CreateDialogueStore', context: context);
 
   @override
   void refresh() {
@@ -127,17 +132,6 @@ mixin _$CreateDialogueStore on _CreateDialogueStore, Store {
         name: '_CreateDialogueStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_CreateDialogueStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadMoreUsers() {
-    final _$actionInfo = _$_CreateDialogueStoreActionController.startAction(
-        name: '_CreateDialogueStore.loadMoreUsers');
-    try {
-      return super.loadMoreUsers();
     } finally {
       _$_CreateDialogueStoreActionController.endAction(_$actionInfo);
     }

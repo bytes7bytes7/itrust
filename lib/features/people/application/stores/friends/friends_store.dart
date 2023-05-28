@@ -63,10 +63,10 @@ abstract class _FriendsStore extends SyncStore with Store {
   }
 
   @action
-  void loadFriends({
+  Future<void> loadFriends({
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         try {
           final userID = _friendsTo;
@@ -102,8 +102,8 @@ abstract class _FriendsStore extends SyncStore with Store {
   }
 
   @action
-  void loadMoreFriends() {
-    perform(
+  Future<void> loadMoreFriends() async {
+    await perform(
       () async {
         try {
           final friendsTo = _friendsTo;

@@ -143,19 +143,26 @@ mixin _$SubscribersStore on _SubscribersStore, Store {
     });
   }
 
-  late final _$_SubscribersStoreActionController =
-      ActionController(name: '_SubscribersStore', context: context);
+  late final _$loadSubscribersAsyncAction =
+      AsyncAction('_SubscribersStore.loadSubscribers', context: context);
 
   @override
-  void loadSubscribers({bool refresh = false}) {
-    final _$actionInfo = _$_SubscribersStoreActionController.startAction(
-        name: '_SubscribersStore.loadSubscribers');
-    try {
-      return super.loadSubscribers(refresh: refresh);
-    } finally {
-      _$_SubscribersStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadSubscribers({bool refresh = false}) {
+    return _$loadSubscribersAsyncAction
+        .run(() => super.loadSubscribers(refresh: refresh));
   }
+
+  late final _$loadMoreSubscribersAsyncAction =
+      AsyncAction('_SubscribersStore.loadMoreSubscribers', context: context);
+
+  @override
+  Future<void> loadMoreSubscribers() {
+    return _$loadMoreSubscribersAsyncAction
+        .run(() => super.loadMoreSubscribers());
+  }
+
+  late final _$_SubscribersStoreActionController =
+      ActionController(name: '_SubscribersStore', context: context);
 
   @override
   void refresh() {
@@ -163,17 +170,6 @@ mixin _$SubscribersStore on _SubscribersStore, Store {
         name: '_SubscribersStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_SubscribersStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadMoreSubscribers() {
-    final _$actionInfo = _$_SubscribersStoreActionController.startAction(
-        name: '_SubscribersStore.loadMoreSubscribers');
-    try {
-      return super.loadMoreSubscribers();
     } finally {
       _$_SubscribersStoreActionController.endAction(_$actionInfo);
     }

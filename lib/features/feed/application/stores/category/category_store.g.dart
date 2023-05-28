@@ -88,19 +88,16 @@ mixin _$CategoryStore on _CategoryStore, Store {
     });
   }
 
-  late final _$_CategoryStoreActionController =
-      ActionController(name: '_CategoryStore', context: context);
+  late final _$loadCategoriesAsyncAction =
+      AsyncAction('_CategoryStore.loadCategories', context: context);
 
   @override
-  void loadCategories() {
-    final _$actionInfo = _$_CategoryStoreActionController.startAction(
-        name: '_CategoryStore.loadCategories');
-    try {
-      return super.loadCategories();
-    } finally {
-      _$_CategoryStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadCategories() {
+    return _$loadCategoriesAsyncAction.run(() => super.loadCategories());
   }
+
+  late final _$_CategoryStoreActionController =
+      ActionController(name: '_CategoryStore', context: context);
 
   @override
   void onCategoryPressed(String category) {

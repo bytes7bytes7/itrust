@@ -81,19 +81,16 @@ mixin _$DevicesStore on _DevicesStore, Store {
     });
   }
 
-  late final _$_DevicesStoreActionController =
-      ActionController(name: '_DevicesStore', context: context);
+  late final _$loadAsyncAction =
+      AsyncAction('_DevicesStore.load', context: context);
 
   @override
-  void load() {
-    final _$actionInfo =
-        _$_DevicesStoreActionController.startAction(name: '_DevicesStore.load');
-    try {
-      return super.load();
-    } finally {
-      _$_DevicesStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> load() {
+    return _$loadAsyncAction.run(() => super.load());
   }
+
+  late final _$_DevicesStoreActionController =
+      ActionController(name: '_DevicesStore', context: context);
 
   @override
   void refresh() {

@@ -39,8 +39,8 @@ abstract class _CategoryStore extends SyncStore with Store {
   bool get hasError => _error.isNotEmpty;
 
   @action
-  void loadCategories() {
-    perform(
+  Future<void> loadCategories() async {
+    await perform(
       () async {
         try {
           _categories = await _categoryService.loadCategories();

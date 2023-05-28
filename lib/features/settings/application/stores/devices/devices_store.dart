@@ -38,8 +38,8 @@ abstract class _DevicesStore extends SyncStore with Store {
   List<DeviceSessionVM> _otherSession = const [];
 
   @action
-  void load() {
-    perform(
+  Future<void> load() async {
+    await perform(
       () async {
         final devices = await _accountService.getDevices();
 

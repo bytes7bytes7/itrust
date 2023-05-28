@@ -55,11 +55,11 @@ abstract class _PostCommentStore extends SyncStore with Store {
   bool get hasError => _error.isNotEmpty;
 
   @action
-  void loadPostComments({
+  Future<void> loadPostComments({
     required String postID,
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         try {
           _postID = postID;
@@ -103,8 +103,8 @@ abstract class _PostCommentStore extends SyncStore with Store {
   }
 
   @action
-  void loadMoreComments() {
-    perform(
+  Future<void> loadMoreComments() async {
+    await perform(
       () async {
         try {
           final postID = _postID;
@@ -161,7 +161,7 @@ abstract class _PostCommentStore extends SyncStore with Store {
   }
 
   @action
-  void onLikeCommentPressed({required String commentID}) {
+  Future<void> onLikeCommentPressed({required String commentID}) async {
     final comment = _comments.firstWhereOrNull((e) => e.id == commentID);
     final postID = _postID;
 
@@ -169,7 +169,7 @@ abstract class _PostCommentStore extends SyncStore with Store {
       return;
     }
 
-    perform(
+    await perform(
       () async {
         if (comment.likedByMe) {
           try {
@@ -254,8 +254,8 @@ abstract class _PostCommentStore extends SyncStore with Store {
   }
 
   @action
-  void setComments(List<Comment> comments) {
-    perform(
+  Future<void> setComments(List<Comment> comments) async {
+    await perform(
       () async {
         final newComments = <CommentVM>[];
         for (final c in comments) {

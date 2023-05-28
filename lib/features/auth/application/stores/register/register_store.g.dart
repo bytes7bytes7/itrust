@@ -132,18 +132,12 @@ mixin _$RegisterStore on _RegisterStore, Store {
     });
   }
 
-  late final _$_RegisterStoreActionController =
-      ActionController(name: '_RegisterStore', context: context);
+  late final _$registerAsyncAction =
+      AsyncAction('_RegisterStore.register', context: context);
 
   @override
-  void register() {
-    final _$actionInfo = _$_RegisterStoreActionController.startAction(
-        name: '_RegisterStore.register');
-    try {
-      return super.register();
-    } finally {
-      _$_RegisterStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> register() {
+    return _$registerAsyncAction.run(() => super.register());
   }
 
   @override

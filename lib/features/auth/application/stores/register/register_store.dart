@@ -55,8 +55,8 @@ abstract class _RegisterStore extends SyncStore with Store {
       agreeWithRules;
 
   @action
-  void register() {
-    perform(
+  Future<void> register() async {
+    await perform(
       () async {
         try {
           await _authService.register(

@@ -117,6 +117,38 @@ mixin _$FriendBidsStore on _FriendBidsStore, Store {
     });
   }
 
+  late final _$loadAsyncAction =
+      AsyncAction('_FriendBidsStore.load', context: context);
+
+  @override
+  Future<void> load() {
+    return _$loadAsyncAction.run(() => super.load());
+  }
+
+  late final _$acceptBidAsyncAction =
+      AsyncAction('_FriendBidsStore.acceptBid', context: context);
+
+  @override
+  Future<void> acceptBid(String userID) {
+    return _$acceptBidAsyncAction.run(() => super.acceptBid(userID));
+  }
+
+  late final _$declineBidAsyncAction =
+      AsyncAction('_FriendBidsStore.declineBid', context: context);
+
+  @override
+  Future<void> declineBid(String userID) {
+    return _$declineBidAsyncAction.run(() => super.declineBid(userID));
+  }
+
+  late final _$cancelBidAsyncAction =
+      AsyncAction('_FriendBidsStore.cancelBid', context: context);
+
+  @override
+  Future<void> cancelBid(String userID) {
+    return _$cancelBidAsyncAction.run(() => super.cancelBid(userID));
+  }
+
   late final _$_FriendBidsStoreActionController =
       ActionController(name: '_FriendBidsStore', context: context);
 
@@ -126,17 +158,6 @@ mixin _$FriendBidsStore on _FriendBidsStore, Store {
         name: '_FriendBidsStore.loadMe');
     try {
       return super.loadMe();
-    } finally {
-      _$_FriendBidsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void load() {
-    final _$actionInfo = _$_FriendBidsStoreActionController.startAction(
-        name: '_FriendBidsStore.load');
-    try {
-      return super.load();
     } finally {
       _$_FriendBidsStoreActionController.endAction(_$actionInfo);
     }
@@ -159,39 +180,6 @@ mixin _$FriendBidsStore on _FriendBidsStore, Store {
         name: '_FriendBidsStore.selectTab');
     try {
       return super.selectTab(index: index);
-    } finally {
-      _$_FriendBidsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void acceptBid(String userID) {
-    final _$actionInfo = _$_FriendBidsStoreActionController.startAction(
-        name: '_FriendBidsStore.acceptBid');
-    try {
-      return super.acceptBid(userID);
-    } finally {
-      _$_FriendBidsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void declineBid(String userID) {
-    final _$actionInfo = _$_FriendBidsStoreActionController.startAction(
-        name: '_FriendBidsStore.declineBid');
-    try {
-      return super.declineBid(userID);
-    } finally {
-      _$_FriendBidsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void cancelBid(String userID) {
-    final _$actionInfo = _$_FriendBidsStoreActionController.startAction(
-        name: '_FriendBidsStore.cancelBid');
-    try {
-      return super.cancelBid(userID);
     } finally {
       _$_FriendBidsStoreActionController.endAction(_$actionInfo);
     }

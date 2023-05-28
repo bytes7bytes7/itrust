@@ -142,19 +142,25 @@ mixin _$FriendsStore on _FriendsStore, Store {
     });
   }
 
-  late final _$_FriendsStoreActionController =
-      ActionController(name: '_FriendsStore', context: context);
+  late final _$loadFriendsAsyncAction =
+      AsyncAction('_FriendsStore.loadFriends', context: context);
 
   @override
-  void loadFriends({bool refresh = false}) {
-    final _$actionInfo = _$_FriendsStoreActionController.startAction(
-        name: '_FriendsStore.loadFriends');
-    try {
-      return super.loadFriends(refresh: refresh);
-    } finally {
-      _$_FriendsStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> loadFriends({bool refresh = false}) {
+    return _$loadFriendsAsyncAction
+        .run(() => super.loadFriends(refresh: refresh));
   }
+
+  late final _$loadMoreFriendsAsyncAction =
+      AsyncAction('_FriendsStore.loadMoreFriends', context: context);
+
+  @override
+  Future<void> loadMoreFriends() {
+    return _$loadMoreFriendsAsyncAction.run(() => super.loadMoreFriends());
+  }
+
+  late final _$_FriendsStoreActionController =
+      ActionController(name: '_FriendsStore', context: context);
 
   @override
   void refresh() {
@@ -162,17 +168,6 @@ mixin _$FriendsStore on _FriendsStore, Store {
         name: '_FriendsStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_FriendsStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadMoreFriends() {
-    final _$actionInfo = _$_FriendsStoreActionController.startAction(
-        name: '_FriendsStore.loadMoreFriends');
-    try {
-      return super.loadMoreFriends();
     } finally {
       _$_FriendsStoreActionController.endAction(_$actionInfo);
     }

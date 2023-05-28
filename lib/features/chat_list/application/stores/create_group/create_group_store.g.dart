@@ -189,6 +189,30 @@ mixin _$CreateGroupStore on _CreateGroupStore, Store {
     });
   }
 
+  late final _$loadUsersAsyncAction =
+      AsyncAction('_CreateGroupStore.loadUsers', context: context);
+
+  @override
+  Future<void> loadUsers() {
+    return _$loadUsersAsyncAction.run(() => super.loadUsers());
+  }
+
+  late final _$loadMoreUsersAsyncAction =
+      AsyncAction('_CreateGroupStore.loadMoreUsers', context: context);
+
+  @override
+  Future<void> loadMoreUsers() {
+    return _$loadMoreUsersAsyncAction.run(() => super.loadMoreUsers());
+  }
+
+  late final _$createChatAsyncAction =
+      AsyncAction('_CreateGroupStore.createChat', context: context);
+
+  @override
+  Future<void> createChat() {
+    return _$createChatAsyncAction.run(() => super.createChat());
+  }
+
   late final _$_CreateGroupStoreActionController =
       ActionController(name: '_CreateGroupStore', context: context);
 
@@ -198,17 +222,6 @@ mixin _$CreateGroupStore on _CreateGroupStore, Store {
         name: '_CreateGroupStore.reset');
     try {
       return super.reset();
-    } finally {
-      _$_CreateGroupStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadUsers() {
-    final _$actionInfo = _$_CreateGroupStoreActionController.startAction(
-        name: '_CreateGroupStore.loadUsers');
-    try {
-      return super.loadUsers();
     } finally {
       _$_CreateGroupStoreActionController.endAction(_$actionInfo);
     }
@@ -226,33 +239,11 @@ mixin _$CreateGroupStore on _CreateGroupStore, Store {
   }
 
   @override
-  void loadMoreUsers() {
-    final _$actionInfo = _$_CreateGroupStoreActionController.startAction(
-        name: '_CreateGroupStore.loadMoreUsers');
-    try {
-      return super.loadMoreUsers();
-    } finally {
-      _$_CreateGroupStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void onUserCheckboxTap({required String userID}) {
     final _$actionInfo = _$_CreateGroupStoreActionController.startAction(
         name: '_CreateGroupStore.onUserCheckboxTap');
     try {
       return super.onUserCheckboxTap(userID: userID);
-    } finally {
-      _$_CreateGroupStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void createChat() {
-    final _$actionInfo = _$_CreateGroupStoreActionController.startAction(
-        name: '_CreateGroupStore.createChat');
-    try {
-      return super.createChat();
     } finally {
       _$_CreateGroupStoreActionController.endAction(_$actionInfo);
     }

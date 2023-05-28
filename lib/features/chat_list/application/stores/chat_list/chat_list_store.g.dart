@@ -99,30 +99,32 @@ mixin _$ChatListStore on _ChatListStore, Store {
     });
   }
 
+  late final _$loadChatsAsyncAction =
+      AsyncAction('_ChatListStore.loadChats', context: context);
+
+  @override
+  Future<void> loadChats({bool refresh = false}) {
+    return _$loadChatsAsyncAction.run(() => super.loadChats(refresh: refresh));
+  }
+
+  late final _$loadMoreChatsAsyncAction =
+      AsyncAction('_ChatListStore.loadMoreChats', context: context);
+
+  @override
+  Future<void> loadMoreChats() {
+    return _$loadMoreChatsAsyncAction.run(() => super.loadMoreChats());
+  }
+
+  late final _$_listenAsyncAction =
+      AsyncAction('_ChatListStore._listen', context: context);
+
+  @override
+  Future<void> _listen() {
+    return _$_listenAsyncAction.run(() => super._listen());
+  }
+
   late final _$_ChatListStoreActionController =
       ActionController(name: '_ChatListStore', context: context);
-
-  @override
-  void loadChats({bool refresh = false}) {
-    final _$actionInfo = _$_ChatListStoreActionController.startAction(
-        name: '_ChatListStore.loadChats');
-    try {
-      return super.loadChats(refresh: refresh);
-    } finally {
-      _$_ChatListStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void loadMoreChats() {
-    final _$actionInfo = _$_ChatListStoreActionController.startAction(
-        name: '_ChatListStore.loadMoreChats');
-    try {
-      return super.loadMoreChats();
-    } finally {
-      _$_ChatListStoreActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void refresh() {
@@ -130,17 +132,6 @@ mixin _$ChatListStore on _ChatListStore, Store {
         name: '_ChatListStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_ChatListStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void _listen() {
-    final _$actionInfo = _$_ChatListStoreActionController.startAction(
-        name: '_ChatListStore._listen');
-    try {
-      return super._listen();
     } finally {
       _$_ChatListStoreActionController.endAction(_$actionInfo);
     }

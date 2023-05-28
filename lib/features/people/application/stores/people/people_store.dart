@@ -99,8 +99,8 @@ abstract class _PeopleStore extends SyncStore with Store {
   }
 
   @action
-  void load() {
-    perform(
+  Future<void> load() async {
+    await perform(
       () async {
         try {
           final data = await _peopleService.getPeopleAmount();
@@ -123,16 +123,16 @@ abstract class _PeopleStore extends SyncStore with Store {
 
     switch (_currentTabIndex) {
       case _allUsersTabIndex:
-        allUsersStore.loadUsers();
+        await allUsersStore.loadUsers();
         break;
       case _friendsTabIndex:
-        friendsStore.loadFriends();
+        await friendsStore.loadFriends();
         break;
       case _subscribersTabIndex:
-        subscribersStore.loadSubscribers();
+        await subscribersStore.loadSubscribers();
         break;
       case _subscriptionsTabIndex:
-        subscriptionsStore.loadSubscriptions();
+        await subscriptionsStore.loadSubscriptions();
         break;
     }
   }

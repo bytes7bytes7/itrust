@@ -85,29 +85,20 @@ mixin _$ChangePersonalInfoStore on _ChangePersonalInfoStore, Store {
     });
   }
 
-  late final _$_ChangePersonalInfoStoreActionController =
-      ActionController(name: '_ChangePersonalInfoStore', context: context);
+  late final _$initAsyncAction =
+      AsyncAction('_ChangePersonalInfoStore.init', context: context);
 
   @override
-  void init() {
-    final _$actionInfo = _$_ChangePersonalInfoStoreActionController.startAction(
-        name: '_ChangePersonalInfoStore.init');
-    try {
-      return super.init();
-    } finally {
-      _$_ChangePersonalInfoStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> init() {
+    return _$initAsyncAction.run(() => super.init());
   }
 
+  late final _$applyChangesAsyncAction =
+      AsyncAction('_ChangePersonalInfoStore.applyChanges', context: context);
+
   @override
-  void applyChanges() {
-    final _$actionInfo = _$_ChangePersonalInfoStoreActionController.startAction(
-        name: '_ChangePersonalInfoStore.applyChanges');
-    try {
-      return super.applyChanges();
-    } finally {
-      _$_ChangePersonalInfoStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> applyChanges() {
+    return _$applyChangesAsyncAction.run(() => super.applyChanges());
   }
 
   @override

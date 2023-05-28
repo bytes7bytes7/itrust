@@ -61,8 +61,8 @@ abstract class _SettingsStore extends SyncStore with Store {
   }
 
   @action
-  void logOut() {
-    perform(
+  Future<void> logOut() async {
+    await perform(
       () async {
         try {
           await _authService.logOut();

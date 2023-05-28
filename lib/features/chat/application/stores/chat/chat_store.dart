@@ -84,10 +84,10 @@ abstract class _ChatStore extends SyncStore with Store {
   }
 
   @action
-  void loadChat({
+  Future<void> loadChat({
     bool refresh = false,
-  }) {
-    perform(
+  }) async {
+    await perform(
       () async {
         ChatID? id;
         if (chatID.isNotEmpty) {
@@ -181,7 +181,7 @@ abstract class _ChatStore extends SyncStore with Store {
             throw Exception('Unknown type of chat');
           }
 
-          loadMessages();
+          await loadMessages();
         } catch (e) {
           _error = _chatStringProvider.canNotLoadChatInfo;
         }
@@ -192,8 +192,8 @@ abstract class _ChatStore extends SyncStore with Store {
   }
 
   @action
-  void loadMessages() {
-    perform(
+  Future<void> loadMessages() async {
+    await perform(
       () async {
         ChatID? id;
         if (chatID.isNotEmpty) {
@@ -220,8 +220,8 @@ abstract class _ChatStore extends SyncStore with Store {
   }
 
   @action
-  void loadMoreMessages() {
-    perform(
+  Future<void> loadMoreMessages() async {
+    await perform(
       () async {
         ChatID? id;
         if (chatID.isNotEmpty) {
@@ -269,8 +269,8 @@ abstract class _ChatStore extends SyncStore with Store {
   }
 
   @action
-  void sendMessage({required String text}) {
-    perform(
+  Future<void> sendMessage({required String text}) async {
+    await perform(
       () async {
         ChatID? id;
         if (chatID.isNotEmpty) {
@@ -350,8 +350,8 @@ abstract class _ChatStore extends SyncStore with Store {
   }
 
   @action
-  void _listen() {
-    perform(
+  Future<void> _listen() async {
+    await perform(
       () async {
         ChatID? id;
         if (chatID.isNotEmpty) {

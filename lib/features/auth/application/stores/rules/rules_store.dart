@@ -34,8 +34,8 @@ abstract class _RulesStore extends SyncStore with Store {
   String? _rules;
 
   @action
-  void getRules() {
-    perform(
+  Future<void> getRules() async {
+    await perform(
       () async {
         try {
           _rules = await _rulesService.loadRules();
@@ -49,7 +49,7 @@ abstract class _RulesStore extends SyncStore with Store {
   }
 
   @action
-  void refresh () {
+  void refresh() {
     getRules();
   }
 

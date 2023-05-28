@@ -61,19 +61,16 @@ mixin _$RulesStore on _RulesStore, Store {
     });
   }
 
-  late final _$_RulesStoreActionController =
-      ActionController(name: '_RulesStore', context: context);
+  late final _$getRulesAsyncAction =
+      AsyncAction('_RulesStore.getRules', context: context);
 
   @override
-  void getRules() {
-    final _$actionInfo =
-        _$_RulesStoreActionController.startAction(name: '_RulesStore.getRules');
-    try {
-      return super.getRules();
-    } finally {
-      _$_RulesStoreActionController.endAction(_$actionInfo);
-    }
+  Future<void> getRules() {
+    return _$getRulesAsyncAction.run(() => super.getRules());
   }
+
+  late final _$_RulesStoreActionController =
+      ActionController(name: '_RulesStore', context: context);
 
   @override
   void refresh() {
