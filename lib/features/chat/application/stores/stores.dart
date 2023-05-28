@@ -1,1 +1,2 @@
-export 'chat_store/chat_store.dart';
+export 'chat/chat_store.dart';
+export 'chat_info/chat_info_store.dart';

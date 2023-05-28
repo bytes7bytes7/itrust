@@ -104,7 +104,9 @@ class PostService {
           // TODO: check exception title
           throw Exception();
         },
-        (r) {
+        (r) async {
+          await _postRepository.addOrUpdate(post: r.post);
+
           return r.post;
         },
       );
@@ -127,7 +129,9 @@ class PostService {
           // TODO: check exception title
           throw Exception();
         },
-        (r) {
+        (r) async {
+          await _postRepository.addOrUpdate(post: r.post);
+
           return r.post;
         },
       );

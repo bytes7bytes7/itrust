@@ -9,7 +9,7 @@ import '../../../../l10n/l10n.dart';
 import '../../../../utils/hooks/reaction.dart';
 import '../../../common/domain/domain.dart';
 import '../../../common/presentation/widgets/widgets.dart';
-import '../../application/stores/chat_store/chat_store.dart';
+import '../../application/stores/chat/chat_store.dart';
 import '../widgets/widgets.dart';
 
 const _appBarHeight = kToolbarHeight;
@@ -55,6 +55,7 @@ class ChatScreen extends HookWidget {
 
     return Scaffold(
       appBar: _AppBar(
+        l10n: l10n,
         chatStore: chatStore,
       ),
       body: _Body(
@@ -66,12 +67,13 @@ class ChatScreen extends HookWidget {
   }
 }
 
-// ignore: prefer_mixin
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({
+    required this.l10n,
     required this.chatStore,
   });
 
+  final AppLocalizations l10n;
   final ChatStore chatStore;
 
   @override
@@ -93,10 +95,38 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
         actions: [
           FilledIconButton(
             iconPath: Assets.image.svg.moreVert.path,
-            onPressed: () {},
+            onPressed: () => _showChatOptions(
+              context: context,
+              l10n: l10n,
+            ),
           ),
         ],
       ),
+    );
+  }
+
+  void _showChatOptions({
+    required BuildContext context,
+    required AppLocalizations l10n,
+  }) {
+    showOptions(
+      context: context,
+      items: [
+        OptionItem(
+          text: l10n.search_btn,
+          iconPath: Assets.image.svg.search.path,
+          onPressed: () {
+            // TODO: implement search
+          },
+        ),
+        OptionItem(
+          text: l10n.leave_chat_short_btn,
+          iconPath: Assets.image.svg.logout.path,
+          onPressed: () {
+            // TODO: implement chat leaving
+          },
+        ),
+      ],
     );
   }
 }

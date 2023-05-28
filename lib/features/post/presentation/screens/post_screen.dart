@@ -74,8 +74,7 @@ class PostScreen extends HookWidget {
   }
 }
 
-// ignore: prefer_mixin
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({
     required this.postStore,
     required this.l10n,

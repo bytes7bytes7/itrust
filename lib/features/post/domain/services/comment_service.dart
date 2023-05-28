@@ -174,7 +174,9 @@ class CommentService {
           // TODO: check exception title
           throw Exception();
         },
-        (r) {
+        (r) async {
+          await _commentRepository.addOrUpdate(comment: r.comment);
+
           return r.comment;
         },
       );
@@ -201,7 +203,9 @@ class CommentService {
           // TODO: check exception title
           throw Exception();
         },
-        (r) {
+        (r) async {
+          await _commentRepository.addOrUpdate(comment: r.comment);
+
           return r.comment;
         },
       );

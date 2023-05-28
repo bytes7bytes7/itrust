@@ -205,5 +205,9 @@
       }
     }
   },
-  "admin_chat_status": "Admin"
+  "admin_chat_status": "Admin",
+  "chat_info_screen_title": "Info",
+  "leave_chat_btn": "Leave chat",
+  "search_btn": "Search",
+  "leave_chat_short_btn": "Leave"
 }

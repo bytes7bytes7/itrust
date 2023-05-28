@@ -17,6 +17,7 @@ export 'outlined_text_field.dart';
 export 'post_list_tile.dart';
 export 'retry_button.dart';
 export 'section_title.dart';
+export 'show_options.dart';
 export 'sized_icon.dart';
 export 'small_loading_error_container.dart';
 export 'small_primary_button.dart';

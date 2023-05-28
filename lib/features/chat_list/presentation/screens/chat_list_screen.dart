@@ -7,7 +7,6 @@ import 'package:logging/logging.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
-import '../../../../themes/themes.dart';
 import '../../../../utils/hooks/reaction.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/chat_list/chat_list_store.dart';
@@ -58,8 +57,7 @@ class ChatListScreen extends HookWidget {
   }
 }
 
-// ignore: prefer_mixin
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({
     required this.chatListStore,
   });
@@ -72,7 +70,6 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
 
     return PreferredSize(
       preferredSize: preferredSize,
@@ -87,7 +84,6 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
             onPressed: () {
               _showCreateChat(
                 context: context,
-                theme: theme,
                 l10n: l10n,
               );
             },
@@ -105,68 +101,25 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 
   void _showCreateChat({
     required BuildContext context,
-    required ThemeData theme,
     required AppLocalizations l10n,
   }) {
-    final colorSchemeTX = theme.extension<ColorSchemeTX>()!;
-
-    showMenu(
+    showOptions(
       context: context,
-      position: const RelativeRect.fromLTRB(
-        double.maxFinite,
-        0,
-        0,
-        double.maxFinite,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-        side: BorderSide.none,
-      ),
       items: [
-        PopupMenuItem(
-          onTap: chatListStore.onCreateMonologueBtnPressed,
-          child: Row(
-            children: [
-              Assets.image.svg.person.svg(
-                color: colorSchemeTX.simpleIcon,
-              ),
-              const SizedBox(width: 12),
-              Text(
-                l10n.create_monologue_chat_btn,
-                style: theme.textTheme.bodyText1,
-              ),
-            ],
-          ),
+        OptionItem(
+          text: l10n.create_monologue_chat_btn,
+          iconPath: Assets.image.svg.person.path,
+          onPressed: chatListStore.onCreateMonologueBtnPressed,
         ),
-        PopupMenuItem(
-          onTap: chatListStore.onCreateDialogueBtnPressed,
-          child: Row(
-            children: [
-              Assets.image.svg.group.svg(
-                color: colorSchemeTX.simpleIcon,
-              ),
-              const SizedBox(width: 12),
-              Text(
-                l10n.create_dialogue_chat_btn,
-                style: theme.textTheme.bodyText1,
-              ),
-            ],
-          ),
+        OptionItem(
+          text: l10n.create_dialogue_chat_btn,
+          iconPath: Assets.image.svg.group.path,
+          onPressed: chatListStore.onCreateDialogueBtnPressed,
         ),
-        PopupMenuItem(
-          onTap: chatListStore.onCreateGroupBtnPressed,
-          child: Row(
-            children: [
-              Assets.image.svg.groups.svg(
-                color: colorSchemeTX.simpleIcon,
-              ),
-              const SizedBox(width: 12),
-              Text(
-                l10n.create_group_chat_btn,
-                style: theme.textTheme.bodyText1,
-              ),
-            ],
-          ),
+        OptionItem(
+          text: l10n.create_group_chat_btn,
+          iconPath: Assets.image.svg.groups.path,
+          onPressed: chatListStore.onCreateGroupBtnPressed,
         ),
       ],
     );

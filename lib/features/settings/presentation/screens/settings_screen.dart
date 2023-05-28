@@ -45,8 +45,8 @@ class SettingsScreen extends HookWidget {
 
     return Scaffold(
       appBar: _AppBar(
-        settingsStore: settingsStore,
         l10n: l10n,
+        settingsStore: settingsStore,
       ),
       body: _Body(
         l10n: l10n,

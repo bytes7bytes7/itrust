@@ -21,6 +21,7 @@ part 'chat_store.g.dart';
 @singleton
 class ChatStore = _ChatStore with _$ChatStore;
 
+// TODO: update chat title and other things somehow
 abstract class _ChatStore extends SyncStore with Store {
   _ChatStore({
     required ChatService chatService,

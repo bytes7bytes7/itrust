@@ -62,6 +62,7 @@ class FeedScreen extends HookWidget {
     return Scaffold(
       appBar: _AppBar(
         l10n: l10n,
+        feedStore: categoryStore.feedStore,
       ),
       body: _Body(
         l10n: l10n,
@@ -71,13 +72,14 @@ class FeedScreen extends HookWidget {
   }
 }
 
-// ignore: prefer_mixin
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({
     required this.l10n,
+    required this.feedStore,
   });
 
   final AppLocalizations l10n;
+  final FeedStore feedStore;
 
   @override
   Size get preferredSize => const Size.fromHeight(_appBarHeight);
@@ -90,6 +92,12 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
         title: Text(
           l10n.feed_tab_title,
         ),
+        actions: [
+          FilledIconButton(
+            iconPath: Assets.image.svg.add.path,
+            onPressed: () {},
+          ),
+        ],
       ),
     );
   }

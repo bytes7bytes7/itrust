@@ -93,9 +93,8 @@ class FriendBidsScreen extends HookWidget {
   }
 }
 
-// ignore: prefer_mixin
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
-  _AppBar({
+class _AppBar extends StatelessWidget implements PreferredSizeWidget {
+  const _AppBar({
     required this.l10n,
     required this.friendBidsStore,
   });
