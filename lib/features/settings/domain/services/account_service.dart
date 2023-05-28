@@ -7,6 +7,7 @@ import '../../../../repositories/interfaces/interfaces.dart';
 import '../../../common/domain/domain.dart';
 import '../dto/dto.dart';
 import '../providers/account_provider.dart';
+import '../value_objects/device_session_id/device_session_id.dart';
 import '../value_objects/device_session_list/device_session_list.dart';
 
 final _logger = Logger('$AccountService');
@@ -102,10 +103,41 @@ class AccountService {
     }
   }
 
-  Future<DeviceSessionList> getDevices() async {
+  Future<DeviceSessionList> getSessions() async {
     try {
       final response =
-          await _keepFreshTokenService.request(_accountProvider.getDevices);
+          await _keepFreshTokenService.request(_accountProvider.getSessions);
+
+      return response.value.fold(
+        (l) {
+          // TODO: check exception title
+          throw Exception();
+        },
+        (r) {
+          return DeviceSessionList(
+            thisSession: r.thisSession,
+            otherSessions: r.otherSessions,
+          );
+        },
+      );
+    } catch (e) {
+      // TODO: no internet
+      rethrow;
+    }
+  }
+
+  Future<DeviceSessionList> removeSession({
+    required DeviceSessionID sessionID,
+    required String password,
+  }) async {
+    try {
+      final request = RemoveSessionRequest(
+        sessionID: sessionID.str,
+        password: password,
+      );
+
+      final response = await _keepFreshTokenService
+          .request(() => _accountProvider.removeSession(request));
 
       return response.value.fold(
         (l) {

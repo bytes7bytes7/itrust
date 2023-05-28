@@ -8,6 +8,7 @@ class ButtonStyleTX extends ThemeExtension<ButtonStyleTX> {
     required this.unselectedCategoryItem,
     required this.smallPrimary,
     required this.smallSecondary,
+    required this.secondaryTextButton,
   });
 
   final ButtonStyle filledIcon;
@@ -16,6 +17,7 @@ class ButtonStyleTX extends ThemeExtension<ButtonStyleTX> {
   final ButtonStyle unselectedCategoryItem;
   final ButtonStyle smallPrimary;
   final ButtonStyle smallSecondary;
+  final ButtonStyle secondaryTextButton;
 
   @override
   ThemeExtension<ButtonStyleTX> copyWith({
@@ -25,6 +27,7 @@ class ButtonStyleTX extends ThemeExtension<ButtonStyleTX> {
     ButtonStyle? unselectedCategoryItem,
     ButtonStyle? smallPrimary,
     ButtonStyle? smallSecondary,
+    ButtonStyle? secondaryTextButton,
   }) {
     return ButtonStyleTX(
       filledIcon: filledIcon ?? this.filledIcon,
@@ -34,6 +37,7 @@ class ButtonStyleTX extends ThemeExtension<ButtonStyleTX> {
           unselectedCategoryItem ?? this.unselectedCategoryItem,
       smallPrimary: smallPrimary ?? this.smallPrimary,
       smallSecondary: smallSecondary ?? this.smallSecondary,
+      secondaryTextButton: secondaryTextButton ?? this.secondaryTextButton,
     );
   }
 
@@ -75,6 +79,11 @@ class ButtonStyleTX extends ThemeExtension<ButtonStyleTX> {
       smallSecondary: ButtonStyle.lerp(
         smallSecondary,
         other.smallSecondary,
+        t,
+      )!,
+      secondaryTextButton: ButtonStyle.lerp(
+        secondaryTextButton,
+        other.secondaryTextButton,
         t,
       )!,
     );

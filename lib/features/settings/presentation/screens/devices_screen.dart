@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../gen/assets.gen.dart';
 import '../../../../l10n/l10n.dart';
+import '../../../../themes/themes.dart';
 import '../../../../utils/hooks/reaction.dart';
 import '../../../common/presentation/widgets/widgets.dart';
 import '../../application/stores/devices/devices_store.dart';
@@ -105,15 +106,6 @@ class _Body extends StatelessWidget {
           );
         }
 
-        // return Padding(
-        //   padding: const EdgeInsets.symmetric(
-        //     horizontal: _paddingH,
-        //   ),
-        //   child: Column(
-        //     children: const [],
-        //   ),
-        // );
-
         final thisSession = devicesStore.thisSession;
         final otherSessions = devicesStore.otherSession;
 
@@ -146,6 +138,7 @@ class _Body extends StatelessWidget {
                     }
 
                     final session = otherSessions[index - 1];
+
                     return Column(
                       children: [
                         SectionTitle(
@@ -155,7 +148,7 @@ class _Body extends StatelessWidget {
                           session: session,
                           canBeTerminated: true,
                           onTerminatePressed: () =>
-                              devicesStore.terminate(sessionID: session.id),
+                              _terminateSession(context, session.id),
                         ),
                       ],
                     );
@@ -164,6 +157,123 @@ class _Body extends StatelessWidget {
               )
             ],
           ),
+        );
+      },
+    );
+  }
+
+  void _terminateSession(BuildContext context, String sessionID) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return _ConfirmationAlert(
+          sessionID: sessionID,
+          devicesStore: devicesStore,
+        );
+      },
+    );
+  }
+}
+
+class _ConfirmationAlert extends HookWidget {
+  const _ConfirmationAlert({
+    required this.sessionID,
+    required this.devicesStore,
+  });
+
+  final String sessionID;
+  final DevicesStore devicesStore;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+    final buttonStyleTX = theme.extension<ButtonStyleTX>()!;
+
+    final passwordController = useTextEditingController();
+
+    return Observer(
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            l10n.password_confirmation_title,
+            textAlign: TextAlign.center,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                l10n.password_confirmation_subtitle,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              _PasswordField(
+                controller: passwordController,
+                devicesStore: devicesStore,
+                l10n: l10n,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              style: buttonStyleTX.secondaryTextButton,
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(l10n.cancel_password_confirmation_btn),
+            ),
+            TextButton(
+              onPressed: () {
+                devicesStore.terminate(
+                  sessionID: sessionID,
+                  password: passwordController.text,
+                );
+
+                Navigator.of(context).pop();
+              },
+              child: Text(l10n.submit_password_confirmation_btn),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _PasswordField extends HookWidget {
+  const _PasswordField({
+    required this.controller,
+    required this.devicesStore,
+    required this.l10n,
+  });
+
+  final TextEditingController controller;
+  final DevicesStore devicesStore;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final obscureText = useValueNotifier(true);
+
+    return ValueListenableBuilder(
+      valueListenable: obscureText,
+      builder: (context, value, child) {
+        return Observer(
+          builder: (context) {
+            return OutlinedTextField(
+              hintText: l10n.password_confirmation_hint,
+              obscureText: value,
+              enabled: !devicesStore.isLoading,
+              suffixIconPath: value
+                  ? Assets.image.svg.removeRedEye.path
+                  : Assets.image.svg.visibilityOff.path,
+              onChanged: (value) {
+                controller.text = value;
+              },
+              onSuffixPressed: () {
+                obscureText.value = !value;
+              },
+            );
+          },
         );
       },
     );

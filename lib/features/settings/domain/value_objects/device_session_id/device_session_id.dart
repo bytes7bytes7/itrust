@@ -17,5 +17,7 @@ class DeviceSessionID with _$DeviceSessionID {
   factory DeviceSessionID.fromJson(JsonMap json) =>
       _$DeviceSessionIDFromJson(json);
 
+  factory DeviceSessionID.fromString(String string) => DeviceSessionID(string);
+
   String get str => value;
 }

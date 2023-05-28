@@ -191,15 +191,15 @@ class _PasswordField extends HookWidget {
         return Observer(
           builder: (context) {
             return OutlinedTextField(
-              onChanged: (value) {
-                registerStore.password = value;
-              },
               hintText: l10n.password_hint,
               obscureText: value,
               enabled: !registerStore.isLoading,
               suffixIconPath: value
                   ? Assets.image.svg.removeRedEye.path
                   : Assets.image.svg.visibilityOff.path,
+              onChanged: (value) {
+                registerStore.password = value;
+              },
               onSuffixPressed: () {
                 obscureText.value = !value;
               },

@@ -46,28 +46,54 @@ class _ProdAccountProvider implements ProdAccountProvider {
   }
 
   @override
-  Future<JsonEitherWrapper<ProblemDetails, GetDevicesResponse>>
-      getDevices() async {
+  Future<JsonEitherWrapper<ProblemDetails, DeviceSessionResponse>>
+      getSessions() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<JsonEitherWrapper<ProblemDetails, GetDevicesResponse>>(
-            Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
+        JsonEitherWrapper<ProblemDetails, DeviceSessionResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-                .compose(
-                  _dio.options,
-                  '/devices',
-                  queryParameters: queryParameters,
-                  data: _data,
-                )
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        .compose(
+          _dio.options,
+          '/devices',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value =
-        JsonEitherWrapper<ProblemDetails, GetDevicesResponse>.fromJson(
+        JsonEitherWrapper<ProblemDetails, DeviceSessionResponse>.fromJson(
+            _result.data!);
+    return value;
+  }
+
+  @override
+  Future<JsonEitherWrapper<ProblemDetails, DeviceSessionResponse>>
+      removeSession(request) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
+        JsonEitherWrapper<ProblemDetails, DeviceSessionResponse>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/remove_device',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value =
+        JsonEitherWrapper<ProblemDetails, DeviceSessionResponse>.fromJson(
             _result.data!);
     return value;
   }

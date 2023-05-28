@@ -211,6 +211,22 @@ final lightTheme = ThemeData.light().copyWith(
       borderSide: BorderSide.none,
     ),
   ),
+  dialogTheme: DialogTheme(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+      side: BorderSide.none,
+    ),
+    titleTextStyle: const TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
+      color: _LightColors.cFF000000,
+    ),
+    contentTextStyle: const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: _LightColors.cFF000000,
+    ),
+  ),
   textTheme: const TextTheme(
     headline1: TextStyle(
       fontSize: 50,
@@ -503,6 +519,26 @@ final lightTheme = ThemeData.light().copyWith(
           },
         ),
         backgroundColor: const MaterialStatePropertyAll(_LightColors.cFFFFFFFF),
+      ),
+      secondaryTextButton: ButtonStyle(
+        padding: const MaterialStatePropertyAll(
+          EdgeInsets.all(2),
+        ),
+        textStyle: const MaterialStatePropertyAll(
+          TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
+          ),
+        ),
+        foregroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.disabled)) {
+              return _LightColors.c38000000;
+            }
+
+            return _LightColors.cFF000000;
+          },
+        ),
       ),
     ),
   ],

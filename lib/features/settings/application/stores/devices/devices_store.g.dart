@@ -89,6 +89,16 @@ mixin _$DevicesStore on _DevicesStore, Store {
     return _$loadAsyncAction.run(() => super.load());
   }
 
+  late final _$terminateAsyncAction =
+      AsyncAction('_DevicesStore.terminate', context: context);
+
+  @override
+  Future<void> terminate(
+      {required String sessionID, required String password}) {
+    return _$terminateAsyncAction
+        .run(() => super.terminate(sessionID: sessionID, password: password));
+  }
+
   late final _$_DevicesStoreActionController =
       ActionController(name: '_DevicesStore', context: context);
 
@@ -98,17 +108,6 @@ mixin _$DevicesStore on _DevicesStore, Store {
         name: '_DevicesStore.refresh');
     try {
       return super.refresh();
-    } finally {
-      _$_DevicesStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void terminate({required String sessionID}) {
-    final _$actionInfo = _$_DevicesStoreActionController.startAction(
-        name: '_DevicesStore.terminate');
-    try {
-      return super.terminate(sessionID: sessionID);
     } finally {
       _$_DevicesStoreActionController.endAction(_$actionInfo);
     }

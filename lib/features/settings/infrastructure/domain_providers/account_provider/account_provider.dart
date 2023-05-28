@@ -37,5 +37,13 @@ abstract class ProdAccountProvider implements AccountProvider {
 
   @override
   @GET('/devices')
-  Future<JsonEitherWrapper<ProblemDetails, GetDevicesResponse>> getDevices();
+  Future<JsonEitherWrapper<ProblemDetails, DeviceSessionResponse>>
+      getSessions();
+
+  @override
+  @POST('/remove_device')
+  Future<JsonEitherWrapper<ProblemDetails, DeviceSessionResponse>>
+      removeSession(
+    @Body() RemoveSessionRequest request,
+  );
 }
