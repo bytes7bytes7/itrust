@@ -44,9 +44,6 @@ app.*.map.json
 /android/app/release
 
 # My list
-.fvm
-/android/keystore.properties
-/android/app/google-services.json
-/ios/Runner/GoogleService-Info.plist
+.fvm/
 .env.*
 **/env.g.dart
