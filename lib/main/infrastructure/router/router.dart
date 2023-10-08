@@ -24,7 +24,6 @@ abstract class RouterModule {
   @singleton
   GoRouter router(
     NavigatorKey key,
-    AuthService authService,
   ) {
     return GoRouter(
       navigatorKey: key,

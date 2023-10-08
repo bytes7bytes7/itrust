@@ -254,7 +254,7 @@ class _AppRoutes {
 
   static final home = ShellRoute(
     navigatorKey: _homeNavigatorKey,
-    builder: (context, st1ate, child) {
+    builder: (context, state, child) {
       return HomeScreen(
         body: child,
       );
