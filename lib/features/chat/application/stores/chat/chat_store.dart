@@ -216,6 +216,7 @@ abstract class _ChatStore extends SyncStore with Store {
       },
       setIsLoading: (v) => _isLoading = v,
       removeError: () => _error = '',
+      queueKey: 'load messages',
     );
   }
 

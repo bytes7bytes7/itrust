@@ -1,15 +1,18 @@
 import 'dart:async';
+import 'dart:collection';
 
 abstract class SyncStore {
-  var _queueLength = 0;
+  final _queue = HashMap<String, int>();
 
   Future<void> perform(
     FutureOr<void> Function() callback, {
     required void Function(bool) setIsLoading,
     required void Function() removeError,
     bool startLoading = true,
+    String queueKey = '',
   }) async {
-    _queueLength++;
+    final beforeV  = _queue[queueKey]  ?? 0;
+    _queue[queueKey] = beforeV + 1;
 
     if (startLoading) {
       setIsLoading(true);
@@ -19,8 +22,9 @@ abstract class SyncStore {
 
     await callback();
 
-    _queueLength--;
-    if (_queueLength == 0) {
+    final afterV = _queue[queueKey] ?? 0;
+    _queue[queueKey] = afterV - 1;
+    if ((_queue[queueKey] ?? 0) == 0) {
       setIsLoading(false);
     }
   }
